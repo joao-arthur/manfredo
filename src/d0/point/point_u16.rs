@@ -10,6 +10,12 @@ impl PointU16 {
     }
 }
 
+impl std::fmt::Display for PointU16 {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "({}, {})", self.x, self.y)
+    }
+}
+
 pub fn delta_x(p1: PointU16, p2: PointU16) -> u16 {
     p2.x - p1.x
 }
@@ -25,6 +31,7 @@ mod tests {
     #[test]
     fn point_u8() {
         assert_eq!(PointU16::of(0, 65_535), PointU16 { x: 0, y: 65_535 });
+        assert_eq!(PointU16::of(16_384, 32_768).to_string(), "(16384, 32768)");
     }
 
     #[test]

@@ -10,6 +10,12 @@ impl PointU64 {
     }
 }
 
+impl std::fmt::Display for PointU64 {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "({}, {})", self.x, self.y)
+    }
+}
+
 pub fn delta_x(p1: PointU64, p2: PointU64) -> u64 {
     p2.x - p1.x
 }
@@ -27,6 +33,10 @@ mod tests {
         assert_eq!(
             PointU64::of(0, 18_446_744_073_709_551_615),
             PointU64 { x: 0, y: 18_446_744_073_709_551_615 }
+        );
+        assert_eq!(
+            PointU64::of(4_611_686_018_427_387_904, 9_223_372_036_854_775_808).to_string(),
+            "(4611686018427387904, 9223372036854775808)"
         );
     }
 

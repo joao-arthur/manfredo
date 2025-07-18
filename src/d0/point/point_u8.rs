@@ -10,12 +10,30 @@ impl PointU8 {
     }
 }
 
+pub fn distance_x(p1: PointU8, p2: PointU8) -> u8 {
+    p2.x - p1.x
+}
+
+pub fn distance_y(p1: PointU8, p2: PointU8) -> u8 {
+    p2.y - p1.y
+}
+
 #[cfg(test)]
 mod tests {
-    use super::PointU8;
+    use super::{PointU8, distance_x, distance_y};
 
     #[test]
     fn point_u8() {
         assert_eq!(PointU8::from(0, 255), PointU8 { x: 0, y: 255 });
+    }
+
+    #[test]
+    fn test_distance_x() {
+        assert_eq!(distance_x(PointU8::from(0, 255), PointU8::from(255, 255)), 255);
+    }
+
+    #[test]
+    fn test_distance_y() {
+        assert_eq!(distance_y(PointU8::from(255, 0), PointU8::from(255, 255)), 255);
     }
 }

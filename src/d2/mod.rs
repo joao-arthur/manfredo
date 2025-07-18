@@ -1,1 +1,1 @@
-mod rect;
+pub mod rect;

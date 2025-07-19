@@ -45,9 +45,7 @@ pub fn inflate(r: &mut RectU8) {
 }
 
 pub fn deflate(r: &mut RectU8) {
-    let delta_x = r.max.x - r.min.x;
-    let delta_y = r.max.y - r.min.y;
-    if delta_x < 3 || delta_y < 3 {
+    if delta_x(&r) < 3 || delta_y(&r) < 3 {
         return;
     }
     r.min.x += 1;
@@ -112,45 +110,45 @@ mod tests {
         inflate(&mut r);
         assert_eq!(r, RectU8::of(198, 228, 252, 254));
         inflate(&mut r);
-        assert_eq!(r, RectU8::of(197, 227, 253, 255));
+        assert_eq!(r, RectU8::of(197, 227, 253, u8::MAX));
         inflate(&mut r);
-        assert_eq!(r, RectU8::of(196, 225, 254, 255));
+        assert_eq!(r, RectU8::of(196, 225, 254, u8::MAX));
         inflate(&mut r);
-        assert_eq!(r, RectU8::of(195, 223, 255, 255));
+        assert_eq!(r, RectU8::of(195, 223, u8::MAX, u8::MAX));
         inflate(&mut r);
-        assert_eq!(r, RectU8::of(193, 221, 255, 255));
+        assert_eq!(r, RectU8::of(193, 221, u8::MAX, u8::MAX));
         inflate(&mut r);
-        assert_eq!(r, RectU8::of(191, 219, 255, 255));
+        assert_eq!(r, RectU8::of(191, 219, u8::MAX, u8::MAX));
         inflate(&mut r);
-        assert_eq!(r, RectU8::of(189, 217, 255, 255));
+        assert_eq!(r, RectU8::of(189, 217, u8::MAX, u8::MAX));
     }
 
     #[test]
     fn inflate_almost_min_bounds() {
-        let mut r = RectU8::of(1, 1, 255, 255);
+        let mut r = RectU8::of(1, 1, u8::MAX, u8::MAX);
         inflate(&mut r);
-        assert_eq!(r, RectU8::of(0, 0, 255, 255));
+        assert_eq!(r, RectU8::of(0, 0, u8::MAX, u8::MAX));
     }
 
     #[test]
     fn inflate_almost_max_bounds() {
         let mut r = RectU8::of(0, 0, 254, 254);
         inflate(&mut r);
-        assert_eq!(r, RectU8::of(0, 0, 255, 255));
+        assert_eq!(r, RectU8::of(0, 0, u8::MAX, u8::MAX));
     }
 
     #[test]
-    fn test_nflate_max_width() {
-        let mut r = RectU8::of(0, 10, 255, 250);
+    fn inflate_max_width() {
+        let mut r = RectU8::of(0, 10, u8::MAX, 250);
         inflate(&mut r);
-        assert_eq!(r, RectU8::of(0, 10, 255, 250));
+        assert_eq!(r, RectU8::of(0, 10, u8::MAX, 250));
     }
 
     #[test]
     fn inflate_max_height() {
-        let mut r = RectU8::of(10, 0, 250, 255);
+        let mut r = RectU8::of(10, 0, 250, u8::MAX);
         inflate(&mut r);
-        assert_eq!(r, RectU8::of(10, 0, 250, 255));
+        assert_eq!(r, RectU8::of(10, 0, 250, u8::MAX));
     }
 
     #[test]

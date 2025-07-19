@@ -26,11 +26,29 @@ pub fn delta_y(r: &RectI32) -> u32 {
     point_i32::delta_y(&r.min, &r.max)
 }
 
+pub fn inflate(r: &mut RectI32) {
+    let is_min_x = r.min.x == i32::MIN;
+    let is_max_x = r.max.x == i32::MAX;
+    let is_min_y = r.min.y == i32::MIN;
+    let is_max_y = r.max.y == i32::MAX;
+    if (is_min_x && is_max_x) || (is_min_y && is_max_y) {
+        return;
+    }
+    let min_x_modifier = 1 - i32::from(is_min_x) + i32::from(is_max_x);
+    let max_x_modifier = 1 + i32::from(is_min_x) - i32::from(is_max_x);
+    let min_y_modifier = 1 - i32::from(is_min_y) + i32::from(is_max_y);
+    let max_y_modifier = 1 + i32::from(is_min_y) - i32::from(is_max_y);
+    r.min.x = r.min.x.saturating_sub(min_x_modifier);
+    r.max.x = r.max.x.saturating_add(max_x_modifier);
+    r.min.y = r.min.y.saturating_sub(min_y_modifier);
+    r.max.y = r.max.y.saturating_add(max_y_modifier);
+}
+
 #[cfg(test)]
 mod tests {
     use crate::cartesian::point::point_i32::PointI32;
 
-    use super::{RectI32, delta_x, delta_y};
+    use super::{RectI32, delta_x, delta_y, inflate};
 
     #[test]
     fn rect_i32() {
@@ -54,5 +72,75 @@ mod tests {
     fn test_delta_y() {
         assert_eq!(delta_y(&RectI32::of(i32::MIN, 0, i32::MAX, 0)), 0);
         assert_eq!(delta_y(&RectI32::of(0, i32::MIN, 0, i32::MAX)), u32::MAX);
+    }
+
+    #[test]
+    fn inflate_min_bounds() {
+        let mut r = RectI32::of(-2147483641, -2147483646, 4, 13);
+        inflate(&mut r);
+        assert_eq!(r, RectI32::of(-2147483642, -2147483647, 5, 14));
+        inflate(&mut r);
+        assert_eq!(r, RectI32::of(-2147483643, i32::MIN, 6, 15));
+        inflate(&mut r);
+        assert_eq!(r, RectI32::of(-2147483644, i32::MIN, 7, 17));
+        inflate(&mut r);
+        assert_eq!(r, RectI32::of(-2147483645, i32::MIN, 8, 19));
+        inflate(&mut r);
+        assert_eq!(r, RectI32::of(-2147483646, i32::MIN, 9, 21));
+        inflate(&mut r);
+        assert_eq!(r, RectI32::of(-2147483647, i32::MIN, 10, 23));
+        inflate(&mut r);
+        assert_eq!(r, RectI32::of(i32::MIN, i32::MIN, 11, 25));
+        inflate(&mut r);
+        assert_eq!(r, RectI32::of(i32::MIN, i32::MIN, 13, 27));
+    }
+
+    #[test]
+    fn inflate_max_bounds() {
+        let mut r = RectI32::of(-100, 30, 2147483642, 2147483644);
+        inflate(&mut r);
+        assert_eq!(r, RectI32::of(-101, 29, 2147483643, 2147483645));
+        inflate(&mut r);
+        assert_eq!(r, RectI32::of(-102, 28, 2147483644, 2147483646));
+        inflate(&mut r);
+        assert_eq!(r, RectI32::of(-103, 27, 2147483645, i32::MAX));
+        inflate(&mut r);
+        assert_eq!(r, RectI32::of(-104, 25, 2147483646, i32::MAX));
+        inflate(&mut r);
+        assert_eq!(r, RectI32::of(-105, 23, i32::MAX, i32::MAX));
+        inflate(&mut r);
+        assert_eq!(r, RectI32::of(-107, 21, i32::MAX, i32::MAX));
+        inflate(&mut r);
+        assert_eq!(r, RectI32::of(-109, 19, i32::MAX, i32::MAX));
+        inflate(&mut r);
+        assert_eq!(r, RectI32::of(-111, 17, i32::MAX, i32::MAX));
+    }
+
+    #[test]
+    fn inflate_almost_min_bounds() {
+        let mut r = RectI32::of(-2147483647, -2147483647, i32::MAX, i32::MAX);
+        inflate(&mut r);
+        assert_eq!(r, RectI32::of(i32::MIN, i32::MIN, i32::MAX, i32::MAX));
+    }
+
+    #[test]
+    fn inflate_almost_max_bounds() {
+        let mut r = RectI32::of(i32::MIN, i32::MIN, 2147483646, 2147483646);
+        inflate(&mut r);
+        assert_eq!(r, RectI32::of(i32::MIN, i32::MIN, i32::MAX, i32::MAX));
+    }
+
+    #[test]
+    fn inflate_max_width() {
+        let mut r = RectI32::of(i32::MIN, 10, i32::MAX, 50);
+        inflate(&mut r);
+        assert_eq!(r, RectI32::of(i32::MIN, 10, i32::MAX, 50));
+    }
+
+    #[test]
+    fn inflate_max_height() {
+        let mut r = RectI32::of(10, i32::MIN, 50, i32::MAX);
+        inflate(&mut r);
+        assert_eq!(r, RectI32::of(10, i32::MIN, 50, i32::MAX));
     }
 }

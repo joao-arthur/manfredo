@@ -1,23 +1,23 @@
-use crate::cartesian::point::point_i8::PointI8;
+use crate::cartesian::point::point_i8;
 
 #[derive(PartialEq, Debug, Clone)]
 pub struct RectI8 {
-    pub min: PointI8,
-    pub max: PointI8,
+    pub min: point_i8::PointI8,
+    pub max: point_i8::PointI8,
 }
 
 impl RectI8 {
     pub fn of(x1: i8, y1: i8, x2: i8, y2: i8) -> Self {
-        RectI8 { min: PointI8 { x: x1, y: y1 }, max: PointI8 { x: x2, y: y2 } }
+        RectI8 { min: point_i8::PointI8 { x: x1, y: y1 }, max: point_i8::PointI8 { x: x2, y: y2 } }
     }
 }
 
 pub fn delta_x(r: &RectI8) -> u8 {
-    (i16::from(r.max.x) - i16::from(r.min.x)).unsigned_abs() as u8
+    point_i8::delta_x(&r.min, &r.max)
 }
 
 pub fn delta_y(r: &RectI8) -> u8 {
-    (i16::from(r.max.y) - i16::from(r.min.y)).unsigned_abs() as u8
+    point_i8::delta_y(&r.min, &r.max)
 }
 
 impl std::fmt::Display for RectI8 {

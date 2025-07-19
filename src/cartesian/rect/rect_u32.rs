@@ -1,23 +1,26 @@
-use crate::cartesian::point::point_u32::PointU32;
+use crate::cartesian::point::point_u32;
 
 #[derive(PartialEq, Debug, Clone)]
 pub struct RectU32 {
-    pub min: PointU32,
-    pub max: PointU32,
+    pub min: point_u32::PointU32,
+    pub max: point_u32::PointU32,
 }
 
 impl RectU32 {
     pub fn of(x1: u32, y1: u32, x2: u32, y2: u32) -> Self {
-        RectU32 { min: PointU32 { x: x1, y: y1 }, max: PointU32 { x: x2, y: y2 } }
+        RectU32 {
+            min: point_u32::PointU32 { x: x1, y: y1 },
+            max: point_u32::PointU32 { x: x2, y: y2 },
+        }
     }
 }
 
 pub fn delta_x(r: &RectU32) -> u32 {
-    r.max.x - r.min.x
+    point_u32::delta_x(&r.min, &r.max)
 }
 
 pub fn delta_y(r: &RectU32) -> u32 {
-    r.max.y - r.min.y
+    point_u32::delta_y(&r.min, &r.max)
 }
 
 impl std::fmt::Display for RectU32 {

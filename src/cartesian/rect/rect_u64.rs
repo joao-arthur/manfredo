@@ -1,23 +1,26 @@
-use crate::cartesian::point::point_u64::PointU64;
+use crate::cartesian::point::point_u64;
 
 #[derive(PartialEq, Debug, Clone)]
 pub struct RectU64 {
-    pub min: PointU64,
-    pub max: PointU64,
+    pub min: point_u64::PointU64,
+    pub max: point_u64::PointU64,
 }
 
 impl RectU64 {
     pub fn of(x1: u64, y1: u64, x2: u64, y2: u64) -> Self {
-        RectU64 { min: PointU64 { x: x1, y: y1 }, max: PointU64 { x: x2, y: y2 } }
+        RectU64 {
+            min: point_u64::PointU64 { x: x1, y: y1 },
+            max: point_u64::PointU64 { x: x2, y: y2 },
+        }
     }
 }
 
 pub fn delta_x(r: &RectU64) -> u64 {
-    r.max.x - r.min.x
+    point_u64::delta_x(&r.min, &r.max)
 }
 
 pub fn delta_y(r: &RectU64) -> u64 {
-    r.max.y - r.min.y
+    point_u64::delta_y(&r.min, &r.max)
 }
 
 impl std::fmt::Display for RectU64 {

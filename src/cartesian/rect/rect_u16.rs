@@ -1,23 +1,26 @@
-use crate::cartesian::point::point_u16::PointU16;
+use crate::cartesian::point::point_u16;
 
 #[derive(PartialEq, Debug, Clone)]
 pub struct RectU16 {
-    pub min: PointU16,
-    pub max: PointU16,
+    pub min: point_u16::PointU16,
+    pub max: point_u16::PointU16,
 }
 
 impl RectU16 {
     pub fn of(x1: u16, y1: u16, x2: u16, y2: u16) -> Self {
-        RectU16 { min: PointU16 { x: x1, y: y1 }, max: PointU16 { x: x2, y: y2 } }
+        RectU16 {
+            min: point_u16::PointU16 { x: x1, y: y1 },
+            max: point_u16::PointU16 { x: x2, y: y2 },
+        }
     }
 }
 
 pub fn delta_x(r: &RectU16) -> u16 {
-    r.max.x - r.min.x
+    point_u16::delta_x(&r.min, &r.max)
 }
 
 pub fn delta_y(r: &RectU16) -> u16 {
-    r.max.y - r.min.y
+    point_u16::delta_y(&r.min, &r.max)
 }
 
 impl std::fmt::Display for RectU16 {

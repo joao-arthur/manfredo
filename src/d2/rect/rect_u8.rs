@@ -33,7 +33,7 @@ mod tests {
     use super::{RectU8, delta_x, delta_y};
 
     #[test]
-    fn point_u8() {
+    fn rect_u8() {
         assert_eq!(
             RectU8::of(0, 4, 64, 255),
             RectU8 { min: PointU8 { x: 0, y: 4 }, max: PointU8 { x: 64, y: 255 } }

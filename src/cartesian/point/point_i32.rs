@@ -42,6 +42,7 @@ mod tests {
 
     #[test]
     fn test_delta_x() {
+        assert_eq!(delta_x(PointI32::of(0, -2_147_483_648), PointI32::of(0, 2_147_483_647)), 0);
         assert_eq!(
             delta_x(PointI32::of(-2_147_483_648, 0), PointI32::of(2_147_483_647, 0)),
             4_294_967_295
@@ -50,6 +51,7 @@ mod tests {
 
     #[test]
     fn test_delta_y() {
+        assert_eq!(delta_y(PointI32::of(-2_147_483_648, 0), PointI32::of(2_147_483_647, 0)), 0);
         assert_eq!(
             delta_y(PointI32::of(0, -2_147_483_648), PointI32::of(0, 2_147_483_647)),
             4_294_967_295

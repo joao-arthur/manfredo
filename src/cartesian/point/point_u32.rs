@@ -39,17 +39,13 @@ mod tests {
 
     #[test]
     fn test_delta_x() {
-        assert_eq!(
-            delta_x(PointU32::of(0, 4_294_967_295), PointU32::of(4_294_967_295, 4_294_967_295)),
-            4_294_967_295
-        );
+        assert_eq!(delta_x(PointU32::of(0, 0), PointU32::of(0, 4_294_967_295)), 0);
+        assert_eq!(delta_x(PointU32::of(0, 0), PointU32::of(4_294_967_295, 0)), 4_294_967_295);
     }
 
     #[test]
     fn test_delta_y() {
-        assert_eq!(
-            delta_y(PointU32::of(4_294_967_295, 0), PointU32::of(4_294_967_295, 4_294_967_295)),
-            4_294_967_295
-        );
+        assert_eq!(delta_y(PointU32::of(0, 0), PointU32::of(4_294_967_295, 0)), 0);
+        assert_eq!(delta_y(PointU32::of(0, 0), PointU32::of(0, 4_294_967_295)), 4_294_967_295);
     }
 }

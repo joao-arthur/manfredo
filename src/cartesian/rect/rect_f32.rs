@@ -30,10 +30,10 @@ mod tests {
     #[test]
     fn rect_f32() {
         assert_eq!(
-            RectF32::of(-2147483648.0, -1.0, 1.0, 2147483647.0),
+            RectF32::of(-2147483648.0, -0.0, 0.0, 2147483647.0),
             RectF32 {
-                min: PointF32 { x: -2147483648.0, y: -1.0 },
-                max: PointF32 { x: 1.0, y: 2147483647.0 }
+                min: PointF32 { x: -2147483648.0, y: -0.0 },
+                max: PointF32 { x: 0.0, y: 2147483647.0 }
             }
         );
         assert_eq!(

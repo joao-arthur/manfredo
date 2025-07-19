@@ -9,3 +9,4 @@ pub mod rect_i64;
 pub mod rect_i8;
 
 pub mod rect_f32;
+pub mod rect_f64;

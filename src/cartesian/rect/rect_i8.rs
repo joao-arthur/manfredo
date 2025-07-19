@@ -35,21 +35,21 @@ mod tests {
     #[test]
     fn rect_i8() {
         assert_eq!(
-            RectI8::of(-128, -0, 0, 127),
-            RectI8 { min: PointI8 { x: -128, y: 0 }, max: PointI8 { x: 0, y: 127 } }
+            RectI8::of(i8::MIN, -1, 1, i8::MAX),
+            RectI8 { min: PointI8 { x: i8::MIN, y: -1 }, max: PointI8 { x: 1, y: i8::MAX } }
         );
-        assert_eq!(RectI8::of(-128, -0, 0, 127).to_string(), "((-128, 0), (0, 127))")
+        assert_eq!(RectI8::of(i8::MIN, -0, 0, i8::MAX).to_string(), "((-128, 0), (0, 127))");
     }
 
     #[test]
     fn test_delta_x() {
-        assert_eq!(delta_x(&RectI8::of(0, -128, 0, 127)), 0);
-        assert_eq!(delta_x(&RectI8::of(-128, 0, 127, 0)), 255);
+        assert_eq!(delta_x(&RectI8::of(0, i8::MIN, 0, i8::MAX)), 0);
+        assert_eq!(delta_x(&RectI8::of(i8::MIN, 0, i8::MAX, 0)), u8::MAX);
     }
 
     #[test]
     fn test_delta_y() {
-        assert_eq!(delta_y(&RectI8::of(-128, 0, 127, 0)), 0);
-        assert_eq!(delta_y(&RectI8::of(0, -128, 0, 127)), 255);
+        assert_eq!(delta_y(&RectI8::of(i8::MIN, 0, i8::MAX, 0)), 0);
+        assert_eq!(delta_y(&RectI8::of(0, i8::MIN, 0, i8::MAX)), u8::MAX);
     }
 }

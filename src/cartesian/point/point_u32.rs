@@ -30,22 +30,19 @@ mod tests {
 
     #[test]
     fn point_u8() {
-        assert_eq!(PointU32::of(0, 4_294_967_295), PointU32 { x: 0, y: 4_294_967_295 });
-        assert_eq!(
-            PointU32::of(1_073_741_824, 2_147_483_648).to_string(),
-            "(1073741824, 2147483648)"
-        );
+        assert_eq!(PointU32::of(0, u32::MAX), PointU32 { x: 0, y: u32::MAX });
+        assert_eq!(PointU32::of(0, u32::MAX).to_string(), "(0, 4294967295)");
     }
 
     #[test]
     fn test_delta_x() {
-        assert_eq!(delta_x(&PointU32::of(0, 0), &PointU32::of(0, 4_294_967_295)), 0);
-        assert_eq!(delta_x(&PointU32::of(0, 0), &PointU32::of(4_294_967_295, 0)), 4_294_967_295);
+        assert_eq!(delta_x(&PointU32::of(0, 0), &PointU32::of(0, u32::MAX)), 0);
+        assert_eq!(delta_x(&PointU32::of(0, 0), &PointU32::of(u32::MAX, 0)), u32::MAX);
     }
 
     #[test]
     fn test_delta_y() {
-        assert_eq!(delta_y(&PointU32::of(0, 0), &PointU32::of(4_294_967_295, 0)), 0);
-        assert_eq!(delta_y(&PointU32::of(0, 0), &PointU32::of(0, 4_294_967_295)), 4_294_967_295);
+        assert_eq!(delta_y(&PointU32::of(0, 0), &PointU32::of(u32::MAX, 0)), 0);
+        assert_eq!(delta_y(&PointU32::of(0, 0), &PointU32::of(0, u32::MAX)), u32::MAX);
     }
 }

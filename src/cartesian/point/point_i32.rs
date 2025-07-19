@@ -30,31 +30,19 @@ mod tests {
 
     #[test]
     fn point_u8() {
-        assert_eq!(
-            PointI32::of(-2_147_483_648, 2_147_483_647),
-            PointI32 { x: -2_147_483_648, y: 2_147_483_647 }
-        );
-        assert_eq!(
-            PointI32::of(-2_147_483_648, 2_147_483_647).to_string(),
-            "(-2147483648, 2147483647)"
-        );
+        assert_eq!(PointI32::of(i32::MIN, i32::MAX), PointI32 { x: i32::MIN, y: i32::MAX });
+        assert_eq!(PointI32::of(i32::MIN, i32::MAX).to_string(), "(-2147483648, 2147483647)");
     }
 
     #[test]
     fn test_delta_x() {
-        assert_eq!(delta_x(&PointI32::of(0, -2_147_483_648), &PointI32::of(0, 2_147_483_647)), 0);
-        assert_eq!(
-            delta_x(&PointI32::of(-2_147_483_648, 0), &PointI32::of(2_147_483_647, 0)),
-            4_294_967_295
-        );
+        assert_eq!(delta_x(&PointI32::of(0, i32::MIN), &PointI32::of(0, i32::MAX)), 0);
+        assert_eq!(delta_x(&PointI32::of(i32::MIN, 0), &PointI32::of(i32::MAX, 0)), u32::MAX);
     }
 
     #[test]
     fn test_delta_y() {
-        assert_eq!(delta_y(&PointI32::of(-2_147_483_648, 0), &PointI32::of(2_147_483_647, 0)), 0);
-        assert_eq!(
-            delta_y(&PointI32::of(0, -2_147_483_648), &PointI32::of(0, 2_147_483_647)),
-            4_294_967_295
-        );
+        assert_eq!(delta_y(&PointI32::of(i32::MIN, 0), &PointI32::of(i32::MAX, 0)), 0);
+        assert_eq!(delta_y(&PointI32::of(0, i32::MIN), &PointI32::of(0, i32::MAX)), u32::MAX);
     }
 }

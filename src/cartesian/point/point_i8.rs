@@ -30,19 +30,19 @@ mod tests {
 
     #[test]
     fn point_u8() {
-        assert_eq!(PointI8::of(-128, 127), PointI8 { x: -128, y: 127 });
-        assert_eq!(PointI8::of(-128, 127).to_string(), "(-128, 127)");
+        assert_eq!(PointI8::of(i8::MIN, i8::MAX), PointI8 { x: i8::MIN, y: i8::MAX });
+        assert_eq!(PointI8::of(i8::MIN, i8::MAX).to_string(), "(-128, 127)");
     }
 
     #[test]
     fn test_delta_x() {
-        assert_eq!(delta_x(&PointI8::of(0, -128), &PointI8::of(0, 127)), 0);
-        assert_eq!(delta_x(&PointI8::of(-128, 0), &PointI8::of(127, 0)), 255);
+        assert_eq!(delta_x(&PointI8::of(0, i8::MIN), &PointI8::of(0, i8::MAX)), 0);
+        assert_eq!(delta_x(&PointI8::of(i8::MIN, 0), &PointI8::of(i8::MAX, 0)), u8::MAX);
     }
 
     #[test]
     fn test_delta_y() {
-        assert_eq!(delta_y(&PointI8::of(-128, 0), &PointI8::of(127, 0)), 0);
-        assert_eq!(delta_y(&PointI8::of(0, -128), &PointI8::of(0, 127)), 255);
+        assert_eq!(delta_y(&PointI8::of(i8::MIN, 0), &PointI8::of(i8::MAX, 0)), 0);
+        assert_eq!(delta_y(&PointI8::of(0, i8::MIN), &PointI8::of(0, i8::MAX)), u8::MAX);
     }
 }

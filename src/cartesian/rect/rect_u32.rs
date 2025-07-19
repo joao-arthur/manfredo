@@ -38,21 +38,24 @@ mod tests {
     #[test]
     fn rect_u32() {
         assert_eq!(
-            RectU32::of(0, 4, 64, 255),
-            RectU32 { min: PointU32 { x: 0, y: 4 }, max: PointU32 { x: 64, y: 255 } }
+            RectU32::of(256, 512, 1024, 2048),
+            RectU32 { min: PointU32 { x: 256, y: 512 }, max: PointU32 { x: 1024, y: 2048 } }
         );
-        assert_eq!(RectU32::of(0, 8, 128, 1024).to_string(), "((0, 8), (128, 1024))")
+        assert_eq!(
+            RectU32::of(u32::MAX, 0, 0, u32::MAX).to_string(),
+            "((4294967295, 0), (0, 4294967295))"
+        );
     }
 
     #[test]
     fn test_delta_x() {
         assert_eq!(delta_x(&RectU32::of(0, 0, 0, 0)), 0);
-        assert_eq!(delta_x(&RectU32::of(0, 0, 4_294_967_295, 0)), 4_294_967_295);
+        assert_eq!(delta_x(&RectU32::of(0, 0, u32::MAX, 0)), u32::MAX);
     }
 
     #[test]
     fn test_delta_y() {
         assert_eq!(delta_y(&RectU32::of(0, 0, 0, 0)), 0);
-        assert_eq!(delta_y(&RectU32::of(0, 0, 0, 4_294_967_295)), 4_294_967_295);
+        assert_eq!(delta_y(&RectU32::of(0, 0, 0, u32::MAX)), u32::MAX);
     }
 }

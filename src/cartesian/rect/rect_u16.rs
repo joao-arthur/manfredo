@@ -38,21 +38,21 @@ mod tests {
     #[test]
     fn rect_u16() {
         assert_eq!(
-            RectU16::of(0, 4, 64, 255),
-            RectU16 { min: PointU16 { x: 0, y: 4 }, max: PointU16 { x: 64, y: 255 } }
+            RectU16::of(16, 32, 64, 128),
+            RectU16 { min: PointU16 { x: 16, y: 32 }, max: PointU16 { x: 64, y: 128 } }
         );
-        assert_eq!(RectU16::of(0, 4, 64, 255).to_string(), "((0, 4), (64, 255))")
+        assert_eq!(RectU16::of(u16::MAX, 0, 0, u16::MAX).to_string(), "((65535, 0), (0, 65535))");
     }
 
     #[test]
     fn test_delta_x() {
         assert_eq!(delta_x(&RectU16::of(0, 0, 0, 0)), 0);
-        assert_eq!(delta_x(&RectU16::of(0, 0, 65_535, 0)), 65_535);
+        assert_eq!(delta_x(&RectU16::of(0, 0, u16::MAX, 0)), u16::MAX);
     }
 
     #[test]
     fn test_delta_y() {
         assert_eq!(delta_y(&RectU16::of(0, 0, 0, 0)), 0);
-        assert_eq!(delta_y(&RectU16::of(0, 0, 0, 65_535)), 65_535);
+        assert_eq!(delta_y(&RectU16::of(0, 0, 0, u16::MAX)), u16::MAX);
     }
 }

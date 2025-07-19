@@ -38,21 +38,24 @@ mod tests {
     #[test]
     fn rect_i32() {
         assert_eq!(
-            RectI32::of(0, 4, 64, 255),
-            RectI32 { min: PointI32 { x: 0, y: 4 }, max: PointI32 { x: 64, y: 255 } }
+            RectI32::of(i32::MIN, -1, 1, i32::MAX),
+            RectI32 { min: PointI32 { x: i32::MIN, y: -1 }, max: PointI32 { x: 1, y: i32::MAX } }
         );
-        assert_eq!(RectI32::of(0, 8, 128, 1024).to_string(), "((0, 8), (128, 1024))")
+        assert_eq!(
+            RectI32::of(i32::MIN, -0, 0, i32::MAX).to_string(),
+            "((-2147483648, 0), (0, 2147483647))"
+        );
     }
 
     #[test]
     fn test_delta_x() {
-        assert_eq!(delta_x(&RectI32::of(0, -2_147_483_648, 0, 2_147_483_647)), 0);
-        assert_eq!(delta_x(&RectI32::of(-2_147_483_648, 0, 2_147_483_647, 0)), 4_294_967_295);
+        assert_eq!(delta_x(&RectI32::of(0, i32::MIN, 0, i32::MAX)), 0);
+        assert_eq!(delta_x(&RectI32::of(i32::MIN, 0, i32::MAX, 0)), u32::MAX);
     }
 
     #[test]
     fn test_delta_y() {
-        assert_eq!(delta_y(&RectI32::of(-2_147_483_648, 0, 2_147_483_647, 0)), 0);
-        assert_eq!(delta_y(&RectI32::of(0, -2_147_483_648, 0, 2_147_483_647)), 4_294_967_295);
+        assert_eq!(delta_y(&RectI32::of(i32::MIN, 0, i32::MAX, 0)), 0);
+        assert_eq!(delta_y(&RectI32::of(0, i32::MIN, 0, i32::MAX)), u32::MAX);
     }
 }

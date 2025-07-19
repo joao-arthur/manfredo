@@ -30,19 +30,19 @@ mod tests {
 
     #[test]
     fn point_u8() {
-        assert_eq!(PointU8::of(0, 255), PointU8 { x: 0, y: 255 });
-        assert_eq!(PointU8::of(64, 128).to_string(), "(64, 128)");
+        assert_eq!(PointU8::of(0, u8::MAX), PointU8 { x: 0, y: u8::MAX });
+        assert_eq!(PointU8::of(0, u8::MAX).to_string(), "(0, 255)");
     }
 
     #[test]
     fn test_delta_x() {
-        assert_eq!(delta_x(&PointU8::of(0, 0), &PointU8::of(0, 255)), 0);
-        assert_eq!(delta_x(&PointU8::of(0, 0), &PointU8::of(255, 0)), 255);
+        assert_eq!(delta_x(&PointU8::of(0, 0), &PointU8::of(0, u8::MAX)), 0);
+        assert_eq!(delta_x(&PointU8::of(0, 0), &PointU8::of(u8::MAX, 0)), u8::MAX);
     }
 
     #[test]
     fn test_delta_y() {
-        assert_eq!(delta_y(&PointU8::of(0, 0), &PointU8::of(255, 0)), 0);
-        assert_eq!(delta_y(&PointU8::of(0, 0), &PointU8::of(0, 255)), 255);
+        assert_eq!(delta_y(&PointU8::of(0, 0), &PointU8::of(u8::MAX, 0)), 0);
+        assert_eq!(delta_y(&PointU8::of(0, 0), &PointU8::of(0, u8::MAX)), u8::MAX);
     }
 }

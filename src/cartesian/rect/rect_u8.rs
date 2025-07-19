@@ -35,21 +35,21 @@ mod tests {
     #[test]
     fn rect_u8() {
         assert_eq!(
-            RectU8::of(0, 4, 64, 255),
-            RectU8 { min: PointU8 { x: 0, y: 4 }, max: PointU8 { x: 64, y: 255 } }
+            RectU8::of(0, 2, 4, 8),
+            RectU8 { min: PointU8 { x: 0, y: 2 }, max: PointU8 { x: 4, y: 8 } }
         );
-        assert_eq!(RectU8::of(0, 4, 64, 255).to_string(), "((0, 4), (64, 255))")
+        assert_eq!(RectU8::of(u8::MAX, 0, 0, u8::MAX).to_string(), "((255, 0), (0, 255))");
     }
 
     #[test]
     fn test_delta_x() {
         assert_eq!(delta_x(&RectU8::of(0, 0, 0, 0)), 0);
-        assert_eq!(delta_x(&RectU8::of(0, 0, 255, 0)), 255);
+        assert_eq!(delta_x(&RectU8::of(0, 0, u8::MAX, 0)), u8::MAX);
     }
 
     #[test]
     fn test_delta_y() {
         assert_eq!(delta_y(&RectU8::of(0, 0, 0, 0)), 0);
-        assert_eq!(delta_y(&RectU8::of(0, 0, 0, 255)), 255);
+        assert_eq!(delta_y(&RectU8::of(0, 0, 0, u8::MAX)), u8::MAX);
     }
 }

@@ -30,19 +30,19 @@ mod tests {
 
     #[test]
     fn point_u8() {
-        assert_eq!(PointU16::of(0, 65_535), PointU16 { x: 0, y: 65_535 });
-        assert_eq!(PointU16::of(16_384, 32_768).to_string(), "(16384, 32768)");
+        assert_eq!(PointU16::of(0, u16::MAX), PointU16 { x: 0, y: u16::MAX });
+        assert_eq!(PointU16::of(0, u16::MAX).to_string(), "(0, 65535)");
     }
 
     #[test]
     fn test_delta_x() {
-        assert_eq!(delta_x(&PointU16::of(0, 0), &PointU16::of(0, 65_535)), 0);
-        assert_eq!(delta_x(&PointU16::of(0, 0), &PointU16::of(65_535, 0)), 65_535);
+        assert_eq!(delta_x(&PointU16::of(0, 0), &PointU16::of(0, u16::MAX)), 0);
+        assert_eq!(delta_x(&PointU16::of(0, 0), &PointU16::of(u16::MAX, 0)), u16::MAX);
     }
 
     #[test]
     fn test_delta_y() {
-        assert_eq!(delta_y(&PointU16::of(0, 0), &PointU16::of(65_535, 0)), 0);
-        assert_eq!(delta_y(&PointU16::of(0, 0), &PointU16::of(0, 65_535)), 65_535);
+        assert_eq!(delta_y(&PointU16::of(0, 0), &PointU16::of(u16::MAX, 0)), 0);
+        assert_eq!(delta_y(&PointU16::of(0, 0), &PointU16::of(0, u16::MAX)), u16::MAX);
     }
 }

@@ -38,27 +38,24 @@ mod tests {
     #[test]
     fn rect_u64() {
         assert_eq!(
-            RectU64::of(0, 4, 64, 255),
-            RectU64 { min: PointU64 { x: 0, y: 4 }, max: PointU64 { x: 64, y: 255 } }
+            RectU64::of(4096, 8192, 16384, 32768),
+            RectU64 { min: PointU64 { x: 4096, y: 8192 }, max: PointU64 { x: 16384, y: 32768 } }
         );
-        assert_eq!(RectU64::of(0, 64, 2048, 65536).to_string(), "((0, 64), (2048, 65536))")
+        assert_eq!(
+            RectU64::of(u64::MAX, 0, 0, u64::MAX).to_string(),
+            "((18446744073709551615, 0), (0, 18446744073709551615))"
+        );
     }
 
     #[test]
     fn test_delta_x() {
         assert_eq!(delta_x(&RectU64::of(0, 0, 0, 0)), 0);
-        assert_eq!(
-            delta_x(&RectU64::of(0, 0, 18_446_744_073_709_551_615, 0)),
-            18_446_744_073_709_551_615
-        );
+        assert_eq!(delta_x(&RectU64::of(0, 0, u64::MAX, 0)), u64::MAX);
     }
 
     #[test]
     fn test_delta_y() {
         assert_eq!(delta_y(&RectU64::of(0, 0, 0, 0)), 0);
-        assert_eq!(
-            delta_y(&RectU64::of(0, 0, 0, 18_446_744_073_709_551_615)),
-            18_446_744_073_709_551_615
-        );
+        assert_eq!(delta_y(&RectU64::of(0, 0, 0, u64::MAX)), u64::MAX);
     }
 }

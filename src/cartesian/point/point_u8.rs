@@ -16,11 +16,11 @@ impl std::fmt::Display for PointU8 {
     }
 }
 
-pub fn delta_x(p1: PointU8, p2: PointU8) -> u8 {
+pub fn delta_x(p1: &PointU8, p2: &PointU8) -> u8 {
     p2.x - p1.x
 }
 
-pub fn delta_y(p1: PointU8, p2: PointU8) -> u8 {
+pub fn delta_y(p1: &PointU8, p2: &PointU8) -> u8 {
     p2.y - p1.y
 }
 
@@ -36,13 +36,13 @@ mod tests {
 
     #[test]
     fn test_delta_x() {
-        assert_eq!(delta_x(PointU8::of(0, 0), PointU8::of(0, 255)), 0);
-        assert_eq!(delta_x(PointU8::of(0, 0), PointU8::of(255, 0)), 255);
+        assert_eq!(delta_x(&PointU8::of(0, 0), &PointU8::of(0, 255)), 0);
+        assert_eq!(delta_x(&PointU8::of(0, 0), &PointU8::of(255, 0)), 255);
     }
 
     #[test]
     fn test_delta_y() {
-        assert_eq!(delta_y(PointU8::of(0, 0), PointU8::of(255, 0)), 0);
-        assert_eq!(delta_y(PointU8::of(0, 0), PointU8::of(0, 255)), 255);
+        assert_eq!(delta_y(&PointU8::of(0, 0), &PointU8::of(255, 0)), 0);
+        assert_eq!(delta_y(&PointU8::of(0, 0), &PointU8::of(0, 255)), 255);
     }
 }

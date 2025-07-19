@@ -16,11 +16,11 @@ impl std::fmt::Display for PointI8 {
     }
 }
 
-pub fn delta_x(p1: PointI8, p2: PointI8) -> u8 {
+pub fn delta_x(p1: &PointI8, p2: &PointI8) -> u8 {
     (i16::from(p2.x) - i16::from(p1.x)).unsigned_abs() as u8
 }
 
-pub fn delta_y(p1: PointI8, p2: PointI8) -> u8 {
+pub fn delta_y(p1: &PointI8, p2: &PointI8) -> u8 {
     (i16::from(p2.y) - i16::from(p1.y)).unsigned_abs() as u8
 }
 
@@ -36,13 +36,13 @@ mod tests {
 
     #[test]
     fn test_delta_x() {
-        assert_eq!(delta_x(PointI8::of(0, -128), PointI8::of(0, 127)), 0);
-        assert_eq!(delta_x(PointI8::of(-128, 0), PointI8::of(127, 0)), 255);
+        assert_eq!(delta_x(&PointI8::of(0, -128), &PointI8::of(0, 127)), 0);
+        assert_eq!(delta_x(&PointI8::of(-128, 0), &PointI8::of(127, 0)), 255);
     }
 
     #[test]
     fn test_delta_y() {
-        assert_eq!(delta_y(PointI8::of(-128, 0), PointI8::of(127, 0)), 0);
-        assert_eq!(delta_y(PointI8::of(0, -128), PointI8::of(0, 127)), 255);
+        assert_eq!(delta_y(&PointI8::of(-128, 0), &PointI8::of(127, 0)), 0);
+        assert_eq!(delta_y(&PointI8::of(0, -128), &PointI8::of(0, 127)), 255);
     }
 }

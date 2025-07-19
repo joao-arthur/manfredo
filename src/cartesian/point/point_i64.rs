@@ -16,11 +16,11 @@ impl std::fmt::Display for PointI64 {
     }
 }
 
-pub fn delta_x(p1: PointI64, p2: PointI64) -> u64 {
+pub fn delta_x(p1: &PointI64, p2: &PointI64) -> u64 {
     (i128::from(p2.x) - i128::from(p1.x)).unsigned_abs() as u64
 }
 
-pub fn delta_y(p1: PointI64, p2: PointI64) -> u64 {
+pub fn delta_y(p1: &PointI64, p2: &PointI64) -> u64 {
     (i128::from(p2.y) - i128::from(p1.y)).unsigned_abs() as u64
 }
 
@@ -44,15 +44,15 @@ mod tests {
     fn test_delta_x() {
         assert_eq!(
             delta_x(
-                PointI64::of(0, -9_223_372_036_854_775_808),
-                PointI64::of(0, 9_223_372_036_854_775_807)
+                &PointI64::of(0, -9_223_372_036_854_775_808),
+                &PointI64::of(0, 9_223_372_036_854_775_807)
             ),
             0
         );
         assert_eq!(
             delta_x(
-                PointI64::of(-9_223_372_036_854_775_808, 0),
-                PointI64::of(9_223_372_036_854_775_807, 0)
+                &PointI64::of(-9_223_372_036_854_775_808, 0),
+                &PointI64::of(9_223_372_036_854_775_807, 0)
             ),
             18_446_744_073_709_551_615
         );
@@ -62,15 +62,15 @@ mod tests {
     fn test_delta_y() {
         assert_eq!(
             delta_y(
-                PointI64::of(-9_223_372_036_854_775_808, 0),
-                PointI64::of(9_223_372_036_854_775_807, 0)
+                &PointI64::of(-9_223_372_036_854_775_808, 0),
+                &PointI64::of(9_223_372_036_854_775_807, 0)
             ),
             0
         );
         assert_eq!(
             delta_y(
-                PointI64::of(0, -9_223_372_036_854_775_808),
-                PointI64::of(0, 9_223_372_036_854_775_807)
+                &PointI64::of(0, -9_223_372_036_854_775_808),
+                &PointI64::of(0, 9_223_372_036_854_775_807)
             ),
             18_446_744_073_709_551_615
         );

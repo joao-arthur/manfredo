@@ -35,12 +35,12 @@ mod tests {
     }
 
     #[test]
-    fn test_distance_x() {
+    fn test_delta_x() {
         assert_eq!(delta_x(PointU8::of(0, 255), PointU8::of(255, 255)), 255);
     }
 
     #[test]
-    fn test_distance_y() {
+    fn test_delta_y() {
         assert_eq!(delta_y(PointU8::of(255, 0), PointU8::of(255, 255)), 255);
     }
 }

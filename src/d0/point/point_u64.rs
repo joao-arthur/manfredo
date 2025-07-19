@@ -41,7 +41,7 @@ mod tests {
     }
 
     #[test]
-    fn test_distance_x() {
+    fn test_delta_x() {
         assert_eq!(
             delta_x(
                 PointU64::of(0, 18_446_744_073_709_551_615),
@@ -52,7 +52,7 @@ mod tests {
     }
 
     #[test]
-    fn test_distance_y() {
+    fn test_delta_y() {
         assert_eq!(
             delta_y(
                 PointU64::of(18_446_744_073_709_551_615, 0),

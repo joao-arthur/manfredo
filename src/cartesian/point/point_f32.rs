@@ -5,7 +5,7 @@ pub struct PointF32 {
 }
 
 impl PointF32 {
-    fn of(x: f32, y: f32) -> Self {
+    pub fn of(x: f32, y: f32) -> Self {
         PointF32 { x, y }
     }
 }

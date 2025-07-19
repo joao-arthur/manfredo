@@ -8,10 +8,7 @@ pub struct RectI64 {
 
 impl RectI64 {
     pub fn of(x1: i64, y1: i64, x2: i64, y2: i64) -> Self {
-        RectI64 {
-            min: point_i64::PointI64 { x: x1, y: y1 },
-            max: point_i64::PointI64 { x: x2, y: y2 },
-        }
+        RectI64 { min: point_i64::PointI64::of(x1, y1), max: point_i64::PointI64::of(x2, y2) }
     }
 }
 

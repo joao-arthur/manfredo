@@ -8,10 +8,7 @@ pub struct RectU64 {
 
 impl RectU64 {
     pub fn of(x1: u64, y1: u64, x2: u64, y2: u64) -> Self {
-        RectU64 {
-            min: point_u64::PointU64 { x: x1, y: y1 },
-            max: point_u64::PointU64 { x: x2, y: y2 },
-        }
+        RectU64 { min: point_u64::PointU64::of(x1, y1), max: point_u64::PointU64::of(x2, y2) }
     }
 }
 

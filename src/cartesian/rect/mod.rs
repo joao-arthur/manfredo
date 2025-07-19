@@ -7,3 +7,5 @@ pub mod rect_i16;
 pub mod rect_i32;
 pub mod rect_i64;
 pub mod rect_i8;
+
+pub mod rect_f32;

@@ -8,10 +8,7 @@ pub struct RectU16 {
 
 impl RectU16 {
     pub fn of(x1: u16, y1: u16, x2: u16, y2: u16) -> Self {
-        RectU16 {
-            min: point_u16::PointU16 { x: x1, y: y1 },
-            max: point_u16::PointU16 { x: x2, y: y2 },
-        }
+        RectU16 { min: point_u16::PointU16::of(x1, y1), max: point_u16::PointU16::of(x2, y2) }
     }
 }
 

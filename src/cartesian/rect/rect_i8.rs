@@ -8,7 +8,7 @@ pub struct RectI8 {
 
 impl RectI8 {
     pub fn of(x1: i8, y1: i8, x2: i8, y2: i8) -> Self {
-        RectI8 { min: point_i8::PointI8 { x: x1, y: y1 }, max: point_i8::PointI8 { x: x2, y: y2 } }
+        RectI8 { min: point_i8::PointI8::of(x1, y1), max: point_i8::PointI8::of(x2, y2) }
     }
 }
 

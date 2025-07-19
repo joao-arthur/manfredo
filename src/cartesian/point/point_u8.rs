@@ -5,7 +5,7 @@ pub struct PointU8 {
 }
 
 impl PointU8 {
-    fn of(x: u8, y: u8) -> Self {
+    pub fn of(x: u8, y: u8) -> Self {
         PointU8 { x, y }
     }
 }

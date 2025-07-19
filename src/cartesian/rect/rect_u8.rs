@@ -12,18 +12,18 @@ impl RectU8 {
     }
 }
 
+impl std::fmt::Display for RectU8 {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "({}, {})", self.min.to_string(), self.max.to_string())
+    }
+}
+
 pub fn delta_x(r: &RectU8) -> u8 {
     point_u8::delta_x(&r.min, &r.max)
 }
 
 pub fn delta_y(r: &RectU8) -> u8 {
     point_u8::delta_y(&r.min, &r.max)
-}
-
-impl std::fmt::Display for RectU8 {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "({}, {})", self.min.to_string(), self.max.to_string())
-    }
 }
 
 #[cfg(test)]

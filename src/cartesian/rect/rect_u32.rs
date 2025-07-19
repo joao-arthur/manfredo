@@ -15,18 +15,18 @@ impl RectU32 {
     }
 }
 
+impl std::fmt::Display for RectU32 {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "({}, {})", self.min.to_string(), self.max.to_string())
+    }
+}
+
 pub fn delta_x(r: &RectU32) -> u32 {
     point_u32::delta_x(&r.min, &r.max)
 }
 
 pub fn delta_y(r: &RectU32) -> u32 {
     point_u32::delta_y(&r.min, &r.max)
-}
-
-impl std::fmt::Display for RectU32 {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "({}, {})", self.min.to_string(), self.max.to_string())
-    }
 }
 
 #[cfg(test)]

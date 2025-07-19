@@ -8,7 +8,16 @@ pub struct RectI16 {
 
 impl RectI16 {
     pub fn of(x1: i16, y1: i16, x2: i16, y2: i16) -> Self {
-        RectI16 { min: point_i16::PointI16 { x: x1, y: y1 }, max: point_i16::PointI16 { x: x2, y: y2 } }
+        RectI16 {
+            min: point_i16::PointI16 { x: x1, y: y1 },
+            max: point_i16::PointI16 { x: x2, y: y2 },
+        }
+    }
+}
+
+impl std::fmt::Display for RectI16 {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "({}, {})", self.min.to_string(), self.max.to_string())
     }
 }
 
@@ -18,12 +27,6 @@ pub fn delta_x(r: &RectI16) -> u16 {
 
 pub fn delta_y(r: &RectI16) -> u16 {
     point_i16::delta_y(&r.min, &r.max)
-}
-
-impl std::fmt::Display for RectI16 {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "({}, {})", self.min.to_string(), self.max.to_string())
-    }
 }
 
 #[cfg(test)]

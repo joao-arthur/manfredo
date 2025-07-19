@@ -15,18 +15,18 @@ impl RectU64 {
     }
 }
 
+impl std::fmt::Display for RectU64 {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "({}, {})", self.min.to_string(), self.max.to_string())
+    }
+}
+
 pub fn delta_x(r: &RectU64) -> u64 {
     point_u64::delta_x(&r.min, &r.max)
 }
 
 pub fn delta_y(r: &RectU64) -> u64 {
     point_u64::delta_y(&r.min, &r.max)
-}
-
-impl std::fmt::Display for RectU64 {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "({}, {})", self.min.to_string(), self.max.to_string())
-    }
 }
 
 #[cfg(test)]

@@ -44,11 +44,23 @@ pub fn inflate(r: &mut RectU8) {
     r.max.y = r.max.y.saturating_add(max_y_modifier);
 }
 
+pub fn deflate(r: &mut RectU8) {
+    let delta_x = r.max.x - r.min.x;
+    let delta_y = r.max.y - r.min.y;
+    if delta_x < 3 || delta_y < 3 {
+        return;
+    }
+    r.min.x += 1;
+    r.min.y += 1;
+    r.max.x -= 1;
+    r.max.y -= 1;
+}
+
 #[cfg(test)]
 mod tests {
     use crate::cartesian::point::point_u8::PointU8;
 
-    use super::{RectU8, delta_x, delta_y, inflate};
+    use super::{RectU8, deflate, delta_x, delta_y, inflate};
 
     #[test]
     fn rect_u8() {
@@ -114,30 +126,60 @@ mod tests {
     }
 
     #[test]
-    fn test_inflate_almost_min_bounds() {
+    fn inflate_almost_min_bounds() {
         let mut r = RectU8::of(1, 1, 255, 255);
         inflate(&mut r);
         assert_eq!(r, RectU8::of(0, 0, 255, 255));
     }
 
     #[test]
-    fn test_inflate_almost_max_bounds() {
+    fn inflate_almost_max_bounds() {
         let mut r = RectU8::of(0, 0, 254, 254);
         inflate(&mut r);
         assert_eq!(r, RectU8::of(0, 0, 255, 255));
     }
 
     #[test]
-    fn test_inflate_max_width() {
+    fn test_nflate_max_width() {
         let mut r = RectU8::of(0, 10, 255, 250);
         inflate(&mut r);
         assert_eq!(r, RectU8::of(0, 10, 255, 250));
     }
 
     #[test]
-    fn test_inflate_max_height() {
+    fn inflate_max_height() {
         let mut r = RectU8::of(10, 0, 250, 255);
         inflate(&mut r);
         assert_eq!(r, RectU8::of(10, 0, 250, 255));
+    }
+
+    #[test]
+    fn deflate_odd() {
+        let mut r = RectU8::of(0, 0, 9, 9);
+        deflate(&mut r);
+        assert_eq!(r, RectU8::of(1, 1, 8, 8));
+        deflate(&mut r);
+        assert_eq!(r, RectU8::of(2, 2, 7, 7));
+        deflate(&mut r);
+        assert_eq!(r, RectU8::of(3, 3, 6, 6));
+        deflate(&mut r);
+        assert_eq!(r, RectU8::of(4, 4, 5, 5));
+        deflate(&mut r);
+        assert_eq!(r, RectU8::of(4, 4, 5, 5));
+    }
+
+    #[test]
+    fn deflate_even() {
+        let mut r = RectU8::of(0, 0, 10, 10);
+        deflate(&mut r);
+        assert_eq!(r, RectU8::of(1, 1, 9, 9));
+        deflate(&mut r);
+        assert_eq!(r, RectU8::of(2, 2, 8, 8));
+        deflate(&mut r);
+        assert_eq!(r, RectU8::of(3, 3, 7, 7));
+        deflate(&mut r);
+        assert_eq!(r, RectU8::of(4, 4, 6, 6));
+        deflate(&mut r);
+        assert_eq!(r, RectU8::of(4, 4, 6, 6));
     }
 }

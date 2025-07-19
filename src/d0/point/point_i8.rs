@@ -36,11 +36,11 @@ mod tests {
 
     #[test]
     fn test_delta_x() {
-        assert_eq!(delta_x(PointI8::of(-128, 0), PointI8::of(127, 127)), 255);
+        assert_eq!(delta_x(PointI8::of(-128, 0), PointI8::of(127, 0)), 255);
     }
 
     #[test]
     fn test_delta_y() {
-        assert_eq!(delta_y(PointI8::of(0, -128), PointI8::of(127, 127)), 255);
+        assert_eq!(delta_y(PointI8::of(0, -128), PointI8::of(0, 127)), 255);
     }
 }

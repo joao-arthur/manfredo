@@ -1,4 +1,4 @@
-use crate::d0::point::point_u64::PointU64;
+use crate::cartesian::point::point_u64::PointU64;
 
 #[derive(PartialEq, Debug, Clone)]
 pub struct RectU64 {
@@ -28,7 +28,7 @@ impl std::fmt::Display for RectU64 {
 
 #[cfg(test)]
 mod tests {
-    use crate::d0::point::point_u64::PointU64;
+    use crate::cartesian::point::point_u64::PointU64;
 
     use super::{RectU64, delta_x, delta_y};
 

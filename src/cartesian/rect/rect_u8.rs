@@ -26,11 +26,29 @@ pub fn delta_y(r: &RectU8) -> u8 {
     point_u8::delta_y(&r.min, &r.max)
 }
 
+pub fn inflate(r: &mut RectU8) {
+    let is_min_x = r.min.x == 0;
+    let is_max_x = r.max.x == u8::MAX;
+    let is_min_y = r.min.y == 0;
+    let is_max_y = r.max.y == u8::MAX;
+    if (is_min_x && is_max_x) || (is_min_y && is_max_y) {
+        return;
+    }
+    let min_x_modifier = 1 - u8::from(is_min_x) + u8::from(is_max_x);
+    let max_x_modifier = 1 + u8::from(is_min_x) - u8::from(is_max_x);
+    let min_y_modifier = 1 - u8::from(is_min_y) + u8::from(is_max_y);
+    let max_y_modifier = 1 + u8::from(is_min_y) - u8::from(is_max_y);
+    r.min.x = r.min.x.saturating_sub(min_x_modifier);
+    r.max.x = r.max.x.saturating_add(max_x_modifier);
+    r.min.y = r.min.y.saturating_sub(min_y_modifier);
+    r.max.y = r.max.y.saturating_add(max_y_modifier);
+}
+
 #[cfg(test)]
 mod tests {
     use crate::cartesian::point::point_u8::PointU8;
 
-    use super::{RectU8, delta_x, delta_y};
+    use super::{RectU8, delta_x, delta_y, inflate};
 
     #[test]
     fn rect_u8() {
@@ -51,5 +69,75 @@ mod tests {
     fn test_delta_y() {
         assert_eq!(delta_y(&RectU8::of(0, 0, 0, 0)), 0);
         assert_eq!(delta_y(&RectU8::of(0, 0, 0, u8::MAX)), u8::MAX);
+    }
+
+    #[test]
+    fn inflate_min_bounds() {
+        let mut r = RectU8::of(7, 2, 4, 13);
+        inflate(&mut r);
+        assert_eq!(r, RectU8::of(6, 1, 5, 14));
+        inflate(&mut r);
+        assert_eq!(r, RectU8::of(5, 0, 6, 15));
+        inflate(&mut r);
+        assert_eq!(r, RectU8::of(4, 0, 7, 17));
+        inflate(&mut r);
+        assert_eq!(r, RectU8::of(3, 0, 8, 19));
+        inflate(&mut r);
+        assert_eq!(r, RectU8::of(2, 0, 9, 21));
+        inflate(&mut r);
+        assert_eq!(r, RectU8::of(1, 0, 10, 23));
+        inflate(&mut r);
+        assert_eq!(r, RectU8::of(0, 0, 11, 25));
+        inflate(&mut r);
+        assert_eq!(r, RectU8::of(0, 0, 13, 27));
+    }
+
+    #[test]
+    fn inflate_max_bounds() {
+        let mut r = RectU8::of(200, 230, 250, 252);
+        inflate(&mut r);
+        assert_eq!(r, RectU8::of(199, 229, 251, 253));
+        inflate(&mut r);
+        assert_eq!(r, RectU8::of(198, 228, 252, 254));
+        inflate(&mut r);
+        assert_eq!(r, RectU8::of(197, 227, 253, 255));
+        inflate(&mut r);
+        assert_eq!(r, RectU8::of(196, 225, 254, 255));
+        inflate(&mut r);
+        assert_eq!(r, RectU8::of(195, 223, 255, 255));
+        inflate(&mut r);
+        assert_eq!(r, RectU8::of(193, 221, 255, 255));
+        inflate(&mut r);
+        assert_eq!(r, RectU8::of(191, 219, 255, 255));
+        inflate(&mut r);
+        assert_eq!(r, RectU8::of(189, 217, 255, 255));
+    }
+
+    #[test]
+    fn test_inflate_almost_min_bounds() {
+        let mut r = RectU8::of(1, 1, 255, 255);
+        inflate(&mut r);
+        assert_eq!(r, RectU8::of(0, 0, 255, 255));
+    }
+
+    #[test]
+    fn test_inflate_almost_max_bounds() {
+        let mut r = RectU8::of(0, 0, 254, 254);
+        inflate(&mut r);
+        assert_eq!(r, RectU8::of(0, 0, 255, 255));
+    }
+
+    #[test]
+    fn test_inflate_max_width() {
+        let mut r = RectU8::of(0, 10, 255, 250);
+        inflate(&mut r);
+        assert_eq!(r, RectU8::of(0, 10, 255, 250));
+    }
+
+    #[test]
+    fn test_inflate_max_height() {
+        let mut r = RectU8::of(10, 0, 250, 255);
+        inflate(&mut r);
+        assert_eq!(r, RectU8::of(10, 0, 250, 255));
     }
 }

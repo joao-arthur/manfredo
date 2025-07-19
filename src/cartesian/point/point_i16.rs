@@ -29,7 +29,7 @@ mod tests {
     use super::{PointI16, delta_x, delta_y};
 
     #[test]
-    fn point_u8() {
+    fn point_i16() {
         assert_eq!(PointI16::of(i16::MIN, i16::MAX), PointI16 { x: i16::MIN, y: i16::MAX });
         assert_eq!(PointI16::of(i16::MIN, i16::MAX).to_string(), "(-32768, 32767)");
     }

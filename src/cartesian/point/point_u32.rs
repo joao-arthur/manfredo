@@ -29,7 +29,7 @@ mod tests {
     use super::{PointU32, delta_x, delta_y};
 
     #[test]
-    fn point_u8() {
+    fn point_u32() {
         assert_eq!(PointU32::of(0, u32::MAX), PointU32 { x: 0, y: u32::MAX });
         assert_eq!(PointU32::of(0, u32::MAX).to_string(), "(0, 4294967295)");
     }

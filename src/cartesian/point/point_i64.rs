@@ -29,7 +29,7 @@ mod tests {
     use super::{PointI64, delta_x, delta_y};
 
     #[test]
-    fn point_u8() {
+    fn point_i64() {
         assert_eq!(PointI64::of(i64::MIN, i64::MAX), PointI64 { x: i64::MIN, y: i64::MAX });
         assert_eq!(
             PointI64::of(i64::MIN, i64::MAX).to_string(),

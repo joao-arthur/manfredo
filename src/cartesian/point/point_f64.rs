@@ -16,12 +16,20 @@ impl std::fmt::Display for PointF64 {
     }
 }
 
+pub fn delta_x(p1: &PointF64, p2: &PointF64) -> f64 {
+    p2.x - p1.x
+}
+
+pub fn delta_y(p1: &PointF64, p2: &PointF64) -> f64 {
+    p2.y - p1.y
+}
+
 #[cfg(test)]
 mod tests {
-    use super::PointF64;
+    use super::{PointF64, delta_x, delta_y};
 
     #[test]
-    fn point_u8() {
+    fn point_f64() {
         assert_eq!(PointF64::of(f64::MIN, f64::MAX), PointF64 { x: f64::MIN, y: f64::MAX });
         assert_eq!(
             PointF64::of(f64::MIN, f64::MAX).to_string(),
@@ -41,5 +49,19 @@ mod tests {
             ]
             .join("")
         );
+    }
+
+    #[test]
+    fn test_delta_x() {
+        assert_eq!(delta_x(&PointF64::of(0.0, 0.0), &PointF64::of(0.0, 18446744073709551615.0)), 0.0);
+        assert_eq!(delta_x(&PointF64::of(0.0, 0.0), &PointF64::of(18446744073709551615.0, 0.0)), 18446744073709551615.0);
+        assert_eq!(delta_x(&PointF64::of(-9223372036854775808.0, 0.0), &PointF64::of(9223372036854775807.0, 0.0)), 18446744073709551615.0);
+    }
+
+    #[test]
+    fn test_delta_y() {
+        assert_eq!(delta_y(&PointF64::of(0.0, 0.0), &PointF64::of(18446744073709551615.0, 0.0)), 0.0);
+        assert_eq!(delta_y(&PointF64::of(0.0, 0.0), &PointF64::of(0.0, 18446744073709551615.0)), 18446744073709551615.0);
+        assert_eq!(delta_y(&PointF64::of(0.0, -9223372036854775808.0), &PointF64::of(0.0, 9223372036854775807.0)), 18446744073709551615.0);
     }
 }

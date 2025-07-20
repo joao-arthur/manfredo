@@ -52,10 +52,7 @@ mod tests {
 
     #[test]
     fn rect_i16() {
-        assert_eq!(
-            RectI16::of(i16::MIN, -1, 1, i16::MAX),
-            RectI16 { min: PointI16 { x: i16::MIN, y: -1 }, max: PointI16 { x: 1, y: i16::MAX } }
-        );
+        assert_eq!(RectI16::of(i16::MIN, -1, 1, i16::MAX), RectI16 { min: PointI16 { x: i16::MIN, y: -1 }, max: PointI16 { x: 1, y: i16::MAX } });
         assert_eq!(RectI16::of(i16::MIN, -0, 0, i16::MAX).to_string(), "((-32768, 0), (0, 32767))");
     }
 

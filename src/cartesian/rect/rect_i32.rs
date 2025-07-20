@@ -52,14 +52,8 @@ mod tests {
 
     #[test]
     fn rect_i32() {
-        assert_eq!(
-            RectI32::of(i32::MIN, -1, 1, i32::MAX),
-            RectI32 { min: PointI32 { x: i32::MIN, y: -1 }, max: PointI32 { x: 1, y: i32::MAX } }
-        );
-        assert_eq!(
-            RectI32::of(i32::MIN, -0, 0, i32::MAX).to_string(),
-            "((-2147483648, 0), (0, 2147483647))"
-        );
+        assert_eq!(RectI32::of(i32::MIN, -1, 1, i32::MAX), RectI32 { min: PointI32 { x: i32::MIN, y: -1 }, max: PointI32 { x: 1, y: i32::MAX } });
+        assert_eq!(RectI32::of(i32::MIN, -0, 0, i32::MAX).to_string(), "((-2147483648, 0), (0, 2147483647))");
     }
 
     #[test]

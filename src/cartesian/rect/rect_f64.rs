@@ -8,10 +8,7 @@ pub struct RectF64 {
 
 impl RectF64 {
     pub fn of(x1: f64, y1: f64, x2: f64, y2: f64) -> Self {
-        RectF64 {
-            min: point_f64::PointF64 { x: x1, y: y1 },
-            max: point_f64::PointF64 { x: x2, y: y2 },
-        }
+        RectF64 { min: point_f64::PointF64 { x: x1, y: y1 }, max: point_f64::PointF64 { x: x2, y: y2 } }
     }
 }
 
@@ -58,42 +55,24 @@ mod tests {
 
     #[test]
     fn rect_f64() {
-        assert_eq!(
-            RectF64::of(ART_MIN, -0.0, 0.0, ART_MAX),
-            RectF64 { min: PointF64 { x: ART_MIN, y: -0.0 }, max: PointF64 { x: 0.0, y: ART_MAX } }
-        );
-        assert_eq!(
-            RectF64::of(ART_MIN, -0.0, 0.0, ART_MAX).to_string(),
-            "((-9007199254740992, -0), (0, 9007199254740991))"
-        );
+        assert_eq!(RectF64::of(ART_MIN, -0.0, 0.0, ART_MAX), RectF64 { min: PointF64 { x: ART_MIN, y: -0.0 }, max: PointF64 { x: 0.0, y: ART_MAX } });
+        assert_eq!(RectF64::of(ART_MIN, -0.0, 0.0, ART_MAX).to_string(), "((-9007199254740992, -0), (0, 9007199254740991))");
     }
 
     #[test]
     fn test_delta_x() {
         assert_eq!(delta_x(&RectF64::of(0.0, 0.0, 0.0, ART_MAX)), 0.0);
-        assert_eq!(
-            delta_x(&RectF64::of(0.0, -4_503_599_627_370_496.0, 0.0, 4_503_599_627_370_495.0)),
-            0.0
-        );
+        assert_eq!(delta_x(&RectF64::of(0.0, -4_503_599_627_370_496.0, 0.0, 4_503_599_627_370_495.0)), 0.0);
         assert_eq!(delta_x(&RectF64::of(0.0, 0.0, ART_MAX, 0.0)), ART_MAX);
-        assert_eq!(
-            delta_x(&RectF64::of(-4_503_599_627_370_496.0, 0.0, 4_503_599_627_370_495.0, 0.0)),
-            ART_MAX
-        );
+        assert_eq!(delta_x(&RectF64::of(-4_503_599_627_370_496.0, 0.0, 4_503_599_627_370_495.0, 0.0)), ART_MAX);
     }
 
     #[test]
     fn test_delta_y() {
         assert_eq!(delta_y(&RectF64::of(0.0, 0.0, ART_MAX, 0.0)), 0.0);
-        assert_eq!(
-            delta_y(&RectF64::of(-4_503_599_627_370_496.0, 0.0, 4_503_599_627_370_495.0, 0.0)),
-            0.0
-        );
+        assert_eq!(delta_y(&RectF64::of(-4_503_599_627_370_496.0, 0.0, 4_503_599_627_370_495.0, 0.0)), 0.0);
         assert_eq!(delta_y(&RectF64::of(0.0, 0.0, 0.0, ART_MAX)), ART_MAX);
-        assert_eq!(
-            delta_y(&RectF64::of(0.0, -4_503_599_627_370_496.0, 0.0, 4_503_599_627_370_495.0)),
-            ART_MAX
-        );
+        assert_eq!(delta_y(&RectF64::of(0.0, -4_503_599_627_370_496.0, 0.0, 4_503_599_627_370_495.0)), ART_MAX);
     }
 
     #[test]
@@ -140,8 +119,7 @@ mod tests {
 
     #[test]
     fn inflate_almost_min_bounds() {
-        let mut r =
-            RectF64::of(-9_007_199_254_740_991.0, -9_007_199_254_740_991.0, ART_MAX, ART_MAX);
+        let mut r = RectF64::of(-9_007_199_254_740_991.0, -9_007_199_254_740_991.0, ART_MAX, ART_MAX);
         inflate(&mut r);
         assert_eq!(r, RectF64::of(ART_MIN, ART_MIN, ART_MAX, ART_MAX));
     }

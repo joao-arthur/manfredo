@@ -52,10 +52,7 @@ mod tests {
 
     #[test]
     fn rect_i8() {
-        assert_eq!(
-            RectI8::of(i8::MIN, -1, 1, i8::MAX),
-            RectI8 { min: PointI8 { x: i8::MIN, y: -1 }, max: PointI8 { x: 1, y: i8::MAX } }
-        );
+        assert_eq!(RectI8::of(i8::MIN, -1, 1, i8::MAX), RectI8 { min: PointI8 { x: i8::MIN, y: -1 }, max: PointI8 { x: 1, y: i8::MAX } });
         assert_eq!(RectI8::of(i8::MIN, -0, 0, i8::MAX).to_string(), "((-128, 0), (0, 127))");
     }
 

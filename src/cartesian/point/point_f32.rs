@@ -30,10 +30,7 @@ mod tests {
 
     #[test]
     fn point_f32() {
-        assert_eq!(
-            PointF32::of(-16_777_216.0, 16_777_215.0),
-            PointF32 { x: -16_777_216.0, y: 16_777_215.0 }
-        );
+        assert_eq!(PointF32::of(-16_777_216.0, 16_777_215.0), PointF32 { x: -16_777_216.0, y: 16_777_215.0 });
         assert_eq!(PointF32::of(-16_777_216.0, 16_777_215.0).to_string(), "(-16777216, 16777215)");
     }
 
@@ -41,27 +38,15 @@ mod tests {
     fn test_delta_x() {
         assert_eq!(delta_x(&PointF32::of(0.0, 0.0), &PointF32::of(0.0, 16_777_215.0)), 0.0);
         assert_eq!(delta_x(&PointF32::of(0.0, -8_388_608.0), &PointF32::of(0.0, 8_388_607.0)), 0.0);
-        assert_eq!(
-            delta_x(&PointF32::of(0.0, 0.0), &PointF32::of(16_777_215.0, 0.0)),
-            16_777_215.0
-        );
-        assert_eq!(
-            delta_x(&PointF32::of(-8_388_608.0, 0.0), &PointF32::of(8_388_607.0, 0.0)),
-            16_777_215.0
-        );
+        assert_eq!(delta_x(&PointF32::of(0.0, 0.0), &PointF32::of(16_777_215.0, 0.0)), 16_777_215.0);
+        assert_eq!(delta_x(&PointF32::of(-8_388_608.0, 0.0), &PointF32::of(8_388_607.0, 0.0)), 16_777_215.0);
     }
 
     #[test]
     fn test_delta_y() {
         assert_eq!(delta_y(&PointF32::of(0.0, 0.0), &PointF32::of(16_777_215.0, 0.0)), 0.0);
         assert_eq!(delta_y(&PointF32::of(0.0, 0.0), &PointF32::of(16_777_215.0, 0.0)), 0.0);
-        assert_eq!(
-            delta_y(&PointF32::of(0.0, 0.0), &PointF32::of(0.0, 16_777_215.0)),
-            16_777_215.0
-        );
-        assert_eq!(
-            delta_y(&PointF32::of(0.0, -8_388_608.0), &PointF32::of(0.0, 8_388_607.0)),
-            16_777_215.0
-        );
+        assert_eq!(delta_y(&PointF32::of(0.0, 0.0), &PointF32::of(0.0, 16_777_215.0)), 16_777_215.0);
+        assert_eq!(delta_y(&PointF32::of(0.0, -8_388_608.0), &PointF32::of(0.0, 8_388_607.0)), 16_777_215.0);
     }
 }

@@ -52,14 +52,8 @@ mod tests {
 
     #[test]
     fn rect_u32() {
-        assert_eq!(
-            RectU32::of(256, 512, 1024, 2048),
-            RectU32 { min: PointU32 { x: 256, y: 512 }, max: PointU32 { x: 1024, y: 2048 } }
-        );
-        assert_eq!(
-            RectU32::of(u32::MAX, 0, 0, u32::MAX).to_string(),
-            "((4294967295, 0), (0, 4294967295))"
-        );
+        assert_eq!(RectU32::of(256, 512, 1024, 2048), RectU32 { min: PointU32 { x: 256, y: 512 }, max: PointU32 { x: 1024, y: 2048 } });
+        assert_eq!(RectU32::of(u32::MAX, 0, 0, u32::MAX).to_string(), "((4294967295, 0), (0, 4294967295))");
     }
 
     #[test]

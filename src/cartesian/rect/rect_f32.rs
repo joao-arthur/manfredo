@@ -8,10 +8,7 @@ pub struct RectF32 {
 
 impl RectF32 {
     pub fn of(x1: f32, y1: f32, x2: f32, y2: f32) -> Self {
-        RectF32 {
-            min: point_f32::PointF32 { x: x1, y: y1 },
-            max: point_f32::PointF32 { x: x2, y: y2 },
-        }
+        RectF32 { min: point_f32::PointF32 { x: x1, y: y1 }, max: point_f32::PointF32 { x: x2, y: y2 } }
     }
 }
 
@@ -58,14 +55,8 @@ mod tests {
 
     #[test]
     fn rect_f32() {
-        assert_eq!(
-            RectF32::of(ART_MIN, -0.0, 0.0, ART_MAX),
-            RectF32 { min: PointF32 { x: ART_MIN, y: -0.0 }, max: PointF32 { x: 0.0, y: ART_MAX } }
-        );
-        assert_eq!(
-            RectF32::of(ART_MIN, -0.0, 0.0, ART_MAX).to_string(),
-            "((-16777216, -0), (0, 16777215))"
-        );
+        assert_eq!(RectF32::of(ART_MIN, -0.0, 0.0, ART_MAX), RectF32 { min: PointF32 { x: ART_MIN, y: -0.0 }, max: PointF32 { x: 0.0, y: ART_MAX } });
+        assert_eq!(RectF32::of(ART_MIN, -0.0, 0.0, ART_MAX).to_string(), "((-16777216, -0), (0, 16777215))");
     }
 
     #[test]

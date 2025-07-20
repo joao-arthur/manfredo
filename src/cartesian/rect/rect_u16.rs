@@ -52,10 +52,7 @@ mod tests {
 
     #[test]
     fn rect_u16() {
-        assert_eq!(
-            RectU16::of(16, 32, 64, 128),
-            RectU16 { min: PointU16 { x: 16, y: 32 }, max: PointU16 { x: 64, y: 128 } }
-        );
+        assert_eq!(RectU16::of(16, 32, 64, 128), RectU16 { min: PointU16 { x: 16, y: 32 }, max: PointU16 { x: 64, y: 128 } });
         assert_eq!(RectU16::of(u16::MAX, 0, 0, u16::MAX).to_string(), "((65535, 0), (0, 65535))");
     }
 

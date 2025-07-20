@@ -31,10 +31,7 @@ mod tests {
     #[test]
     fn point_i64() {
         assert_eq!(PointI64::of(i64::MIN, i64::MAX), PointI64 { x: i64::MIN, y: i64::MAX });
-        assert_eq!(
-            PointI64::of(i64::MIN, i64::MAX).to_string(),
-            "(-9223372036854775808, 9223372036854775807)"
-        );
+        assert_eq!(PointI64::of(i64::MIN, i64::MAX).to_string(), "(-9223372036854775808, 9223372036854775807)");
     }
 
     #[test]

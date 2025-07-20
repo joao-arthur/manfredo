@@ -44,11 +44,21 @@ pub fn inflate(r: &mut RectU64) {
     r.max.y = r.max.y.saturating_add(max_y_modifier);
 }
 
+pub fn deflate(r: &mut RectU64) {
+    if delta_x(&r) < 3 || delta_y(&r) < 3 {
+        return;
+    }
+    r.min.x += 1;
+    r.min.y += 1;
+    r.max.x -= 1;
+    r.max.y -= 1;
+}
+
 #[cfg(test)]
 mod tests {
     use crate::cartesian::point::point_u64::PointU64;
 
-    use super::{RectU64, delta_x, delta_y, inflate};
+    use super::{RectU64, deflate, delta_x, delta_y, inflate};
 
     #[test]
     fn rect_u64() {
@@ -136,5 +146,35 @@ mod tests {
         let mut r = RectU64::of(10, 0, 250, u64::MAX);
         inflate(&mut r);
         assert_eq!(r, RectU64::of(10, 0, 250, u64::MAX));
+    }
+
+    #[test]
+    fn deflate_odd() {
+        let mut r = RectU64::of(0, 0, 9, 9);
+        deflate(&mut r);
+        assert_eq!(r, RectU64::of(1, 1, 8, 8));
+        deflate(&mut r);
+        assert_eq!(r, RectU64::of(2, 2, 7, 7));
+        deflate(&mut r);
+        assert_eq!(r, RectU64::of(3, 3, 6, 6));
+        deflate(&mut r);
+        assert_eq!(r, RectU64::of(4, 4, 5, 5));
+        deflate(&mut r);
+        assert_eq!(r, RectU64::of(4, 4, 5, 5));
+    }
+
+    #[test]
+    fn deflate_even() {
+        let mut r = RectU64::of(0, 0, 10, 10);
+        deflate(&mut r);
+        assert_eq!(r, RectU64::of(1, 1, 9, 9));
+        deflate(&mut r);
+        assert_eq!(r, RectU64::of(2, 2, 8, 8));
+        deflate(&mut r);
+        assert_eq!(r, RectU64::of(3, 3, 7, 7));
+        deflate(&mut r);
+        assert_eq!(r, RectU64::of(4, 4, 6, 6));
+        deflate(&mut r);
+        assert_eq!(r, RectU64::of(4, 4, 6, 6));
     }
 }

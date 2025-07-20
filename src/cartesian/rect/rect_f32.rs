@@ -47,11 +47,21 @@ pub fn inflate(r: &mut RectF32) {
     r.max.y = (r.max.y + max_y_modifier).min(ART_MAX);
 }
 
+pub fn deflate(r: &mut RectF32) {
+    if delta_x(&r) < 3.0 || delta_y(&r) < 3.0 {
+        return;
+    }
+    r.min.x += 1.0;
+    r.min.y += 1.0;
+    r.max.x -= 1.0;
+    r.max.y -= 1.0;
+}
+
 #[cfg(test)]
 mod tests {
     use crate::cartesian::point::point_f32::PointF32;
 
-    use super::{ART_MAX, ART_MIN, RectF32, delta_x, delta_y, inflate};
+    use super::{ART_MAX, ART_MIN, RectF32, deflate, delta_x, delta_y, inflate};
 
     #[test]
     fn rect_f32() {
@@ -143,5 +153,35 @@ mod tests {
         let mut r = RectF32::of(10.0, ART_MIN, 50.0, ART_MAX);
         inflate(&mut r);
         assert_eq!(r, RectF32::of(10.0, ART_MIN, 50.0, ART_MAX));
+    }
+
+    #[test]
+    fn deflate_odd_size() {
+        let mut r = RectF32::of(-5.0, -5.0, 5.0, 5.0);
+        deflate(&mut r);
+        assert_eq!(r, RectF32::of(-4.0, -4.0, 4.0, 4.0));
+        deflate(&mut r);
+        assert_eq!(r, RectF32::of(-3.0, -3.0, 3.0, 3.0));
+        deflate(&mut r);
+        assert_eq!(r, RectF32::of(-2.0, -2.0, 2.0, 2.0));
+        deflate(&mut r);
+        assert_eq!(r, RectF32::of(-1.0, -1.0, 1.0, 1.0));
+        deflate(&mut r);
+        assert_eq!(r, RectF32::of(-1.0, -1.0, 1.0, 1.0));
+    }
+
+    #[test]
+    fn deflate_even_size() {
+        let mut r = RectF32::of(-5.0, -5.0, 4.0, 4.0);
+        deflate(&mut r);
+        assert_eq!(r, RectF32::of(-4.0, -4.0, 3.0, 3.0));
+        deflate(&mut r);
+        assert_eq!(r, RectF32::of(-3.0, -3.0, 2.0, 2.0));
+        deflate(&mut r);
+        assert_eq!(r, RectF32::of(-2.0, -2.0, 1.0, 1.0));
+        deflate(&mut r);
+        assert_eq!(r, RectF32::of(-1.0, -1.0, 0.0, 0.0));
+        deflate(&mut r);
+        assert_eq!(r, RectF32::of(-1.0, -1.0, 0.0, 0.0));
     }
 }

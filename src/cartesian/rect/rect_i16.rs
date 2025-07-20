@@ -44,11 +44,21 @@ pub fn inflate(r: &mut RectI16) {
     r.max.y = r.max.y.saturating_add(max_y_modifier);
 }
 
+pub fn deflate(r: &mut RectI16) {
+    if delta_x(&r) < 3 || delta_y(&r) < 3 {
+        return;
+    }
+    r.min.x += 1;
+    r.min.y += 1;
+    r.max.x -= 1;
+    r.max.y -= 1;
+}
+
 #[cfg(test)]
 mod tests {
     use crate::cartesian::point::point_i16::PointI16;
 
-    use super::{RectI16, delta_x, delta_y, inflate};
+    use super::{RectI16, deflate, delta_x, delta_y, inflate};
 
     #[test]
     fn rect_i16() {
@@ -136,5 +146,35 @@ mod tests {
         let mut r = RectI16::of(10, i16::MIN, 50, i16::MAX);
         inflate(&mut r);
         assert_eq!(r, RectI16::of(10, i16::MIN, 50, i16::MAX));
+    }
+
+    #[test]
+    fn deflate_odd_size() {
+        let mut r = RectI16::of(-5, -5, 5, 5);
+        deflate(&mut r);
+        assert_eq!(r, RectI16::of(-4, -4, 4, 4));
+        deflate(&mut r);
+        assert_eq!(r, RectI16::of(-3, -3, 3, 3));
+        deflate(&mut r);
+        assert_eq!(r, RectI16::of(-2, -2, 2, 2));
+        deflate(&mut r);
+        assert_eq!(r, RectI16::of(-1, -1, 1, 1));
+        deflate(&mut r);
+        assert_eq!(r, RectI16::of(-1, -1, 1, 1));
+    }
+
+    #[test]
+    fn deflate_even_size() {
+        let mut r = RectI16::of(-5, -5, 4, 4);
+        deflate(&mut r);
+        assert_eq!(r, RectI16::of(-4, -4, 3, 3));
+        deflate(&mut r);
+        assert_eq!(r, RectI16::of(-3, -3, 2, 2));
+        deflate(&mut r);
+        assert_eq!(r, RectI16::of(-2, -2, 1, 1));
+        deflate(&mut r);
+        assert_eq!(r, RectI16::of(-1, -1, 0, 0));
+        deflate(&mut r);
+        assert_eq!(r, RectI16::of(-1, -1, 0, 0));
     }
 }

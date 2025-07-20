@@ -14,7 +14,7 @@ impl RectF64 {
 
 impl std::fmt::Display for RectF64 {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "({}, {})", self.min.to_string(), self.max.to_string())
+        write!(f, "({}, {})", self.min, self.max)
     }
 }
 
@@ -48,7 +48,7 @@ pub fn inflate(r: &mut RectF64) {
 }
 
 pub fn deflate(r: &mut RectF64) {
-    if delta_x(&r) < 3.0 || delta_y(&r) < 3.0 {
+    if delta_x(r) < 3.0 || delta_y(r) < 3.0 {
         return;
     }
     r.min.x += 1.0;

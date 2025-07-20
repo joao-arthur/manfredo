@@ -14,7 +14,7 @@ impl RectI16 {
 
 impl std::fmt::Display for RectI16 {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "({}, {})", self.min.to_string(), self.max.to_string())
+        write!(f, "({}, {})", self.min, self.max)
     }
 }
 
@@ -45,7 +45,7 @@ pub fn inflate(r: &mut RectI16) {
 }
 
 pub fn deflate(r: &mut RectI16) {
-    if delta_x(&r) < 3 || delta_y(&r) < 3 {
+    if delta_x(r) < 3 || delta_y(r) < 3 {
         return;
     }
     r.min.x += 1;

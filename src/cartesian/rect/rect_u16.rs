@@ -1,4 +1,4 @@
-use crate::cartesian::point::point_u16;
+use crate::cartesian::point::{point_i16::PointI16, point_u16};
 
 #[derive(PartialEq, Debug, Clone)]
 pub struct RectU16 {
@@ -54,11 +54,24 @@ pub fn deflate(r: &mut RectU16) {
     r.max.y -= 1;
 }
 
+pub fn translate(r: &mut RectU16, delta: &PointI16) {
+    let dx = delta_x(r);
+    let dy = delta_y(r);
+    let temp_min_x = i32::from(r.min.x) + i32::from(delta.x);
+    let temp_min_y = i32::from(r.min.y) + i32::from(delta.y);
+    let min_x = temp_min_x.clamp(0, i32::from(u16::MAX) - i32::from(dx)) as u16;
+    let min_y = temp_min_y.clamp(0, i32::from(u16::MAX) - i32::from(dy)) as u16;
+    r.min.x = min_x;
+    r.min.y = min_y;
+    r.max.x = min_x + dx;
+    r.max.y = min_y + dy;
+}
+
 #[cfg(test)]
 mod tests {
-    use crate::cartesian::point::point_u16::PointU16;
+    use crate::cartesian::point::{point_i16::PointI16, point_u16::PointU16};
 
-    use super::{RectU16, deflate, delta_x, delta_y, inflate};
+    use super::{RectU16, deflate, delta_x, delta_y, inflate, translate};
 
     #[test]
     fn rect_u16() {
@@ -176,5 +189,58 @@ mod tests {
         assert_eq!(r, RectU16::of(4, 4, 6, 6));
         deflate(&mut r);
         assert_eq!(r, RectU16::of(4, 4, 6, 6));
+    }
+
+    #[test]
+    fn test_translate() {
+        let mut r = RectU16::of(0, 0, 10, 10);
+        translate(&mut r, &PointI16::of(10, 10));
+        assert_eq!(r, RectU16::of(10, 10, 20, 20));
+        translate(&mut r, &PointI16::of(-5, -5));
+        assert_eq!(r, RectU16::of(5, 5, 15, 15));
+        translate(&mut r, &PointI16::of(2, 2));
+        assert_eq!(r, RectU16::of(7, 7, 17, 17));
+    }
+
+    #[test]
+    fn translate_min_bounds() {
+        let mut r = RectU16::of(2, 5, 12, 15);
+        translate(&mut r, &PointI16::of(-10, -10));
+        assert_eq!(r, RectU16::of(0, 0, 10, 10));
+    }
+
+    #[test]
+    fn translate_max_bounds() {
+        let mut r = RectU16::of(240, 235, 65530, 65525);
+        translate(&mut r, &PointI16::of(20, 20));
+        assert_eq!(r, RectU16::of(245, 245, u16::MAX, u16::MAX));
+    }
+
+    #[test]
+    fn translate_min_bounds_big_delta() {
+        let mut r = RectU16::of(0, 0, 10, 10);
+        translate(&mut r, &PointI16::of(i16::MIN, i16::MIN));
+        assert_eq!(r, RectU16::of(0, 0, 10, 10));
+    }
+
+    #[test]
+    fn translate_max_bounds_big_delta() {
+        let mut r = RectU16::of(65525, 65525, u16::MAX, u16::MAX);
+        translate(&mut r, &PointI16::of(i16::MAX, i16::MAX));
+        assert_eq!(r, RectU16::of(65525, 65525, u16::MAX, u16::MAX));
+    }
+
+    #[test]
+    fn translate_min_bounds_big_rect_big_delta() {
+        let mut r = RectU16::of(1, 1, u16::MAX, u16::MAX);
+        translate(&mut r, &PointI16::of(i16::MIN, i16::MIN));
+        assert_eq!(r, RectU16::of(0, 0, 65534, 65534));
+    }
+
+    #[test]
+    fn translate_max_bounds_big_rect_big_delta() {
+        let mut r = RectU16::of(0, 0, 65534, 65534);
+        translate(&mut r, &PointI16::of(i16::MAX, i16::MAX));
+        assert_eq!(r, RectU16::of(1, 1, u16::MAX, u16::MAX));
     }
 }

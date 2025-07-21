@@ -1,4 +1,4 @@
-use crate::cartesian::point::point_u8;
+use crate::cartesian::point::{point_i8::PointI8, point_u8};
 
 #[derive(PartialEq, Debug, Clone)]
 pub struct RectU8 {
@@ -14,7 +14,7 @@ impl RectU8 {
 
 impl std::fmt::Display for RectU8 {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "({}, {})", self.min.to_string(), self.max.to_string())
+        write!(f, "({}, {})", self.min, self.max)
     }
 }
 
@@ -45,7 +45,7 @@ pub fn inflate(r: &mut RectU8) {
 }
 
 pub fn deflate(r: &mut RectU8) {
-    if delta_x(&r) < 3 || delta_y(&r) < 3 {
+    if delta_x(r) < 3 || delta_y(r) < 3 {
         return;
     }
     r.min.x += 1;
@@ -54,11 +54,24 @@ pub fn deflate(r: &mut RectU8) {
     r.max.y -= 1;
 }
 
+pub fn translate(r: &mut RectU8, delta: &PointI8) {
+    let dx = delta_x(r);
+    let dy = delta_y(r);
+    let temp_min_x = i16::from(r.min.x) + i16::from(delta.x);
+    let temp_min_y = i16::from(r.min.y) + i16::from(delta.y);
+    let min_x = temp_min_x.clamp(0, i16::from(u8::MAX) - i16::from(dx)) as u8;
+    let min_y = temp_min_y.clamp(0, i16::from(u8::MAX) - i16::from(dy)) as u8;
+    r.min.x = min_x;
+    r.min.y = min_y;
+    r.max.x = min_x + dx;
+    r.max.y = min_y + dy;
+}
+
 #[cfg(test)]
 mod tests {
-    use crate::cartesian::point::point_u8::PointU8;
+    use crate::cartesian::point::{point_i8::PointI8, point_u8::PointU8};
 
-    use super::{RectU8, deflate, delta_x, delta_y, inflate};
+    use super::{RectU8, deflate, delta_x, delta_y, inflate, translate};
 
     #[test]
     fn rect_u8() {
@@ -176,5 +189,58 @@ mod tests {
         assert_eq!(r, RectU8::of(4, 4, 6, 6));
         deflate(&mut r);
         assert_eq!(r, RectU8::of(4, 4, 6, 6));
+    }
+
+    #[test]
+    fn test_translate() {
+        let mut r = RectU8::of(0, 0, 10, 10);
+        translate(&mut r, &PointI8::of(10, 10));
+        assert_eq!(r, RectU8::of(10, 10, 20, 20));
+        translate(&mut r, &PointI8::of(-5, -5));
+        assert_eq!(r, RectU8::of(5, 5, 15, 15));
+        translate(&mut r, &PointI8::of(2, 2));
+        assert_eq!(r, RectU8::of(7, 7, 17, 17));
+    }
+
+    #[test]
+    fn translate_min_bounds() {
+        let mut r = RectU8::of(2, 5, 12, 15);
+        translate(&mut r, &PointI8::of(-10, -10));
+        assert_eq!(r, RectU8::of(0, 0, 10, 10));
+    }
+
+    #[test]
+    fn translate_max_bounds() {
+        let mut r = RectU8::of(240, 235, 250, 245);
+        translate(&mut r, &PointI8::of(20, 20));
+        assert_eq!(r, RectU8::of(245, 245, u8::MAX, u8::MAX));
+    }
+
+    #[test]
+    fn translate_min_bounds_big_delta() {
+        let mut r = RectU8::of(0, 0, 10, 10);
+        translate(&mut r, &PointI8::of(i8::MIN, i8::MIN));
+        assert_eq!(r, RectU8::of(0, 0, 10, 10));
+    }
+
+    #[test]
+    fn translate_max_bounds_big_delta() {
+        let mut r = RectU8::of(245, 245, u8::MAX, u8::MAX);
+        translate(&mut r, &PointI8::of(i8::MAX, i8::MAX));
+        assert_eq!(r, RectU8::of(245, 245, u8::MAX, u8::MAX));
+    }
+
+    #[test]
+    fn translate_min_bounds_big_rect_big_delta() {
+        let mut r = RectU8::of(1, 1, u8::MAX, u8::MAX);
+        translate(&mut r, &PointI8::of(i8::MIN, i8::MIN));
+        assert_eq!(r, RectU8::of(0, 0, 254, 254));
+    }
+
+    #[test]
+    fn translate_max_bounds_big_rect_big_delta() {
+        let mut r = RectU8::of(0, 0, 254, 254);
+        translate(&mut r, &PointI8::of(i8::MAX, i8::MAX));
+        assert_eq!(r, RectU8::of(1, 1, u8::MAX, u8::MAX));
     }
 }

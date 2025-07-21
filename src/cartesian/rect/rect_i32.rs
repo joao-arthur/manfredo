@@ -54,11 +54,24 @@ pub fn deflate(r: &mut RectI32) {
     r.max.y -= 1;
 }
 
+pub fn translate(r: &mut RectI32, delta: &point_i32::PointI32) {
+    let dx = delta_x(r);
+    let dy = delta_y(r);
+    let temp_min_x = i64::from(r.min.x) + i64::from(delta.x);
+    let temp_min_y = i64::from(r.min.y) + i64::from(delta.y);
+    let min_x = temp_min_x.clamp(i64::from(i32::MIN), i64::from(i32::MAX) - i64::from(dx));
+    let min_y = temp_min_y.clamp(i64::from(i32::MIN), i64::from(i32::MAX) - i64::from(dy));
+    r.min.x = min_x as i32;
+    r.min.y = min_y as i32;
+    r.max.x = (min_x + i64::from(dx)) as i32;
+    r.max.y = (min_y + i64::from(dy)) as i32;
+}
+
 #[cfg(test)]
 mod tests {
     use crate::cartesian::point::point_i32::PointI32;
 
-    use super::{RectI32, deflate, delta_x, delta_y, inflate};
+    use super::{RectI32, deflate, delta_x, delta_y, inflate, translate};
 
     #[test]
     fn rect_i32() {
@@ -176,5 +189,30 @@ mod tests {
         assert_eq!(r, RectI32::of(-1, -1, 0, 0));
         deflate(&mut r);
         assert_eq!(r, RectI32::of(-1, -1, 0, 0));
+    }
+
+    #[test]
+    fn test_translate() {
+        let mut r = RectI32::of(0, 0, 10, 10);
+        translate(&mut r, &PointI32::of(10, 10));
+        assert_eq!(r, RectI32::of(10, 10, 20, 20));
+        translate(&mut r, &PointI32::of(-20, -20));
+        assert_eq!(r, RectI32::of(-10, -10, 0, 0));
+        translate(&mut r, &PointI32::of(2, 2));
+        assert_eq!(r, RectI32::of(-8, -8, 2, 2));
+    }
+
+    #[test]
+    fn translate_min_bounds() {
+        let mut r = RectI32::of(-2147483643, -2147483638, 12, 15);
+        translate(&mut r, &PointI32::of(-10, -10));
+        assert_eq!(r, RectI32::of(i32::MIN, i32::MIN, 7, 5));
+    }
+
+    #[test]
+    fn translate_max_bounds() {
+        let mut r = RectI32::of(40, 35, 2147483642, 2147483637);
+        translate(&mut r, &PointI32::of(20, 20));
+        assert_eq!(r, RectI32::of(45, 45, i32::MAX, i32::MAX));
     }
 }

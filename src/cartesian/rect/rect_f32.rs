@@ -87,19 +87,19 @@ mod tests {
 
     #[test]
     fn inflate_min_bounds() {
-        let mut r = RectF32::of(-16_777_209.0, -16_777_214.0, 4.0, 13.0);
+        let mut r = RectF32::of(ART_MIN + 7.0, ART_MIN + 2.0, 4.0, 13.0);
         inflate(&mut r);
-        assert_eq!(r, RectF32::of(-16_777_210.0, -16_777_215.0, 5.0, 14.0));
+        assert_eq!(r, RectF32::of(ART_MIN + 6.0, ART_MIN + 1.0, 5.0, 14.0));
         inflate(&mut r);
-        assert_eq!(r, RectF32::of(-16_777_211.0, ART_MIN, 6.0, 15.0));
+        assert_eq!(r, RectF32::of(ART_MIN + 5.0, ART_MIN, 6.0, 15.0));
         inflate(&mut r);
-        assert_eq!(r, RectF32::of(-16_777_212.0, ART_MIN, 7.0, 17.0));
+        assert_eq!(r, RectF32::of(ART_MIN + 4.0, ART_MIN, 7.0, 17.0));
         inflate(&mut r);
-        assert_eq!(r, RectF32::of(-16_777_213.0, ART_MIN, 8.0, 19.0));
+        assert_eq!(r, RectF32::of(ART_MIN + 3.0, ART_MIN, 8.0, 19.0));
         inflate(&mut r);
-        assert_eq!(r, RectF32::of(-16_777_214.0, ART_MIN, 9.0, 21.0));
+        assert_eq!(r, RectF32::of(ART_MIN + 2.0, ART_MIN, 9.0, 21.0));
         inflate(&mut r);
-        assert_eq!(r, RectF32::of(-16_777_215.0, ART_MIN, 10.0, 23.0));
+        assert_eq!(r, RectF32::of(ART_MIN + 1.0, ART_MIN, 10.0, 23.0));
         inflate(&mut r);
         assert_eq!(r, RectF32::of(ART_MIN, ART_MIN, 11.0, 25.0));
         inflate(&mut r);
@@ -108,15 +108,15 @@ mod tests {
 
     #[test]
     fn inflate_max_bounds() {
-        let mut r = RectF32::of(-100.0, 30.0, 16_777_210.0, 16_777_212.0);
+        let mut r = RectF32::of(-100.0, 30.0, ART_MAX - 5.0, ART_MAX - 3.0);
         inflate(&mut r);
-        assert_eq!(r, RectF32::of(-101.0, 29.0, 16_777_211.0, 16_777_213.0));
+        assert_eq!(r, RectF32::of(-101.0, 29.0, ART_MAX - 4.0, ART_MAX - 2.0));
         inflate(&mut r);
-        assert_eq!(r, RectF32::of(-102.0, 28.0, 16_777_212.0, 16_777_214.0));
+        assert_eq!(r, RectF32::of(-102.0, 28.0, ART_MAX - 3.0, ART_MAX - 1.0));
         inflate(&mut r);
-        assert_eq!(r, RectF32::of(-103.0, 27.0, 16_777_213.0, ART_MAX));
+        assert_eq!(r, RectF32::of(-103.0, 27.0, ART_MAX - 2.0, ART_MAX));
         inflate(&mut r);
-        assert_eq!(r, RectF32::of(-104.0, 25.0, 16_777_214.0, ART_MAX));
+        assert_eq!(r, RectF32::of(-104.0, 25.0, ART_MAX - 1.0, ART_MAX));
         inflate(&mut r);
         assert_eq!(r, RectF32::of(-105.0, 23.0, ART_MAX, ART_MAX));
         inflate(&mut r);
@@ -129,14 +129,14 @@ mod tests {
 
     #[test]
     fn inflate_almost_min_bounds() {
-        let mut r = RectF32::of(-16_777_215.0, -16_777_215.0, ART_MAX, ART_MAX);
+        let mut r = RectF32::of(ART_MIN + 1.0, ART_MIN + 1.0, ART_MAX, ART_MAX);
         inflate(&mut r);
         assert_eq!(r, RectF32::of(ART_MIN, ART_MIN, ART_MAX, ART_MAX));
     }
 
     #[test]
     fn inflate_almost_max_bounds() {
-        let mut r = RectF32::of(ART_MIN, ART_MIN, 16_777_214.0, 16_777_214.0);
+        let mut r = RectF32::of(ART_MIN, ART_MIN, ART_MAX - 1.0, ART_MAX - 1.0);
         inflate(&mut r);
         assert_eq!(r, RectF32::of(ART_MIN, ART_MIN, ART_MAX, ART_MAX));
     }

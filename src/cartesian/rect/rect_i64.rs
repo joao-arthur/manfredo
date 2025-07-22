@@ -93,19 +93,19 @@ mod tests {
 
     #[test]
     fn inflate_min_bounds() {
-        let mut r = RectI64::of(-9223372036854775801, -9223372036854775806, 4, 13);
+        let mut r = RectI64::of(i64::MIN + 7, i64::MIN + 2, 4, 13);
         inflate(&mut r);
-        assert_eq!(r, RectI64::of(-9223372036854775802, -9223372036854775807, 5, 14));
+        assert_eq!(r, RectI64::of(i64::MIN + 6, i64::MIN + 1, 5, 14));
         inflate(&mut r);
-        assert_eq!(r, RectI64::of(-9223372036854775803, i64::MIN, 6, 15));
+        assert_eq!(r, RectI64::of(i64::MIN + 5, i64::MIN, 6, 15));
         inflate(&mut r);
-        assert_eq!(r, RectI64::of(-9223372036854775804, i64::MIN, 7, 17));
+        assert_eq!(r, RectI64::of(i64::MIN + 4, i64::MIN, 7, 17));
         inflate(&mut r);
-        assert_eq!(r, RectI64::of(-9223372036854775805, i64::MIN, 8, 19));
+        assert_eq!(r, RectI64::of(i64::MIN + 3, i64::MIN, 8, 19));
         inflate(&mut r);
-        assert_eq!(r, RectI64::of(-9223372036854775806, i64::MIN, 9, 21));
+        assert_eq!(r, RectI64::of(i64::MIN + 2, i64::MIN, 9, 21));
         inflate(&mut r);
-        assert_eq!(r, RectI64::of(-9223372036854775807, i64::MIN, 10, 23));
+        assert_eq!(r, RectI64::of(i64::MIN + 1, i64::MIN, 10, 23));
         inflate(&mut r);
         assert_eq!(r, RectI64::of(i64::MIN, i64::MIN, 11, 25));
         inflate(&mut r);
@@ -114,15 +114,15 @@ mod tests {
 
     #[test]
     fn inflate_max_bounds() {
-        let mut r = RectI64::of(-100, 30, 9223372036854775802, 9223372036854775804);
+        let mut r = RectI64::of(-100, 30, i64::MAX - 5, i64::MAX - 3);
         inflate(&mut r);
-        assert_eq!(r, RectI64::of(-101, 29, 9223372036854775803, 9223372036854775805));
+        assert_eq!(r, RectI64::of(-101, 29, i64::MAX - 4, i64::MAX - 2));
         inflate(&mut r);
-        assert_eq!(r, RectI64::of(-102, 28, 9223372036854775804, 9223372036854775806));
+        assert_eq!(r, RectI64::of(-102, 28, i64::MAX - 3, i64::MAX - 1));
         inflate(&mut r);
-        assert_eq!(r, RectI64::of(-103, 27, 9223372036854775805, i64::MAX));
+        assert_eq!(r, RectI64::of(-103, 27, i64::MAX - 2, i64::MAX));
         inflate(&mut r);
-        assert_eq!(r, RectI64::of(-104, 25, 9223372036854775806, i64::MAX));
+        assert_eq!(r, RectI64::of(-104, 25, i64::MAX - 1, i64::MAX));
         inflate(&mut r);
         assert_eq!(r, RectI64::of(-105, 23, i64::MAX, i64::MAX));
         inflate(&mut r);
@@ -135,14 +135,14 @@ mod tests {
 
     #[test]
     fn inflate_almost_min_bounds() {
-        let mut r = RectI64::of(-9223372036854775807, -9223372036854775807, i64::MAX, i64::MAX);
+        let mut r = RectI64::of(i64::MIN + 1, i64::MIN + 1, i64::MAX, i64::MAX);
         inflate(&mut r);
         assert_eq!(r, RectI64::of(i64::MIN, i64::MIN, i64::MAX, i64::MAX));
     }
 
     #[test]
     fn inflate_almost_max_bounds() {
-        let mut r = RectI64::of(i64::MIN, i64::MIN, 9223372036854775806, 9223372036854775806);
+        let mut r = RectI64::of(i64::MIN, i64::MIN, i64::MAX - 1, i64::MAX - 1);
         inflate(&mut r);
         assert_eq!(r, RectI64::of(i64::MIN, i64::MIN, i64::MAX, i64::MAX));
     }
@@ -204,14 +204,14 @@ mod tests {
 
     #[test]
     fn translate_min_bounds() {
-        let mut r = RectI64::of(-9223372036854775803, -9223372036854775798, 12, 15);
+        let mut r = RectI64::of(i64::MIN + 5, i64::MIN + 10, 12, 15);
         translate(&mut r, &PointI64::of(-10, -10));
         assert_eq!(r, RectI64::of(i64::MIN, i64::MIN, 7, 5));
     }
 
     #[test]
     fn translate_max_bounds() {
-        let mut r = RectI64::of(40, 35, 9223372036854775802, 9223372036854775797);
+        let mut r = RectI64::of(40, 35, i64::MAX - 5, i64::MAX - 10);
         translate(&mut r, &PointI64::of(20, 20));
         assert_eq!(r, RectI64::of(45, 45, i64::MAX, i64::MAX));
     }

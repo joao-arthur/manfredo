@@ -114,15 +114,15 @@ mod tests {
 
     #[test]
     fn inflate_max_bounds() {
-        let mut r = RectU8::of(200, 230, 250, 252);
+        let mut r = RectU8::of(200, 230, u8::MAX - 5, u8::MAX - 3);
         inflate(&mut r);
-        assert_eq!(r, RectU8::of(199, 229, 251, 253));
+        assert_eq!(r, RectU8::of(199, 229, u8::MAX - 4, u8::MAX - 2));
         inflate(&mut r);
-        assert_eq!(r, RectU8::of(198, 228, 252, 254));
+        assert_eq!(r, RectU8::of(198, 228, u8::MAX - 3, u8::MAX - 1));
         inflate(&mut r);
-        assert_eq!(r, RectU8::of(197, 227, 253, u8::MAX));
+        assert_eq!(r, RectU8::of(197, 227, u8::MAX - 2, u8::MAX));
         inflate(&mut r);
-        assert_eq!(r, RectU8::of(196, 225, 254, u8::MAX));
+        assert_eq!(r, RectU8::of(196, 225, u8::MAX - 1, u8::MAX));
         inflate(&mut r);
         assert_eq!(r, RectU8::of(195, 223, u8::MAX, u8::MAX));
         inflate(&mut r);
@@ -142,7 +142,7 @@ mod tests {
 
     #[test]
     fn inflate_almost_max_bounds() {
-        let mut r = RectU8::of(0, 0, 254, 254);
+        let mut r = RectU8::of(0, 0, u8::MAX - 1, u8::MAX - 1);
         inflate(&mut r);
         assert_eq!(r, RectU8::of(0, 0, u8::MAX, u8::MAX));
     }
@@ -211,7 +211,7 @@ mod tests {
 
     #[test]
     fn translate_max_bounds() {
-        let mut r = RectU8::of(240, 235, 250, 245);
+        let mut r = RectU8::of(240, 235, u8::MAX - 5, u8::MAX - 10);
         translate(&mut r, &PointI8::of(20, 20));
         assert_eq!(r, RectU8::of(245, 245, u8::MAX, u8::MAX));
     }
@@ -225,21 +225,21 @@ mod tests {
 
     #[test]
     fn translate_max_bounds_big_delta() {
-        let mut r = RectU8::of(245, 245, u8::MAX, u8::MAX);
+        let mut r = RectU8::of(u8::MAX - 10, u8::MAX - 10, u8::MAX, u8::MAX);
         translate(&mut r, &PointI8::of(i8::MAX, i8::MAX));
-        assert_eq!(r, RectU8::of(245, 245, u8::MAX, u8::MAX));
+        assert_eq!(r, RectU8::of(u8::MAX - 10, u8::MAX - 10, u8::MAX, u8::MAX));
     }
 
     #[test]
     fn translate_min_bounds_big_rect_big_delta() {
         let mut r = RectU8::of(1, 1, u8::MAX, u8::MAX);
         translate(&mut r, &PointI8::of(i8::MIN, i8::MIN));
-        assert_eq!(r, RectU8::of(0, 0, 254, 254));
+        assert_eq!(r, RectU8::of(0, 0, u8::MAX - 1, u8::MAX - 1));
     }
 
     #[test]
     fn translate_max_bounds_big_rect_big_delta() {
-        let mut r = RectU8::of(0, 0, 254, 254);
+        let mut r = RectU8::of(0, 0, u8::MAX - 1, u8::MAX - 1);
         translate(&mut r, &PointI8::of(i8::MAX, i8::MAX));
         assert_eq!(r, RectU8::of(1, 1, u8::MAX, u8::MAX));
     }

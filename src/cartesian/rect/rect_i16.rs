@@ -93,19 +93,19 @@ mod tests {
 
     #[test]
     fn inflate_min_bounds() {
-        let mut r = RectI16::of(-32761, -32766, 4, 13);
+        let mut r = RectI16::of(i16::MIN + 7, i16::MIN + 2, 4, 13);
         inflate(&mut r);
-        assert_eq!(r, RectI16::of(-32762, -32767, 5, 14));
+        assert_eq!(r, RectI16::of(i16::MIN + 6, i16::MIN + 1, 5, 14));
         inflate(&mut r);
-        assert_eq!(r, RectI16::of(-32763, i16::MIN, 6, 15));
+        assert_eq!(r, RectI16::of(i16::MIN + 5, i16::MIN, 6, 15));
         inflate(&mut r);
-        assert_eq!(r, RectI16::of(-32764, i16::MIN, 7, 17));
+        assert_eq!(r, RectI16::of(i16::MIN + 4, i16::MIN, 7, 17));
         inflate(&mut r);
-        assert_eq!(r, RectI16::of(-32765, i16::MIN, 8, 19));
+        assert_eq!(r, RectI16::of(i16::MIN + 3, i16::MIN, 8, 19));
         inflate(&mut r);
-        assert_eq!(r, RectI16::of(-32766, i16::MIN, 9, 21));
+        assert_eq!(r, RectI16::of(i16::MIN + 2, i16::MIN, 9, 21));
         inflate(&mut r);
-        assert_eq!(r, RectI16::of(-32767, i16::MIN, 10, 23));
+        assert_eq!(r, RectI16::of(i16::MIN + 1, i16::MIN, 10, 23));
         inflate(&mut r);
         assert_eq!(r, RectI16::of(i16::MIN, i16::MIN, 11, 25));
         inflate(&mut r);
@@ -114,15 +114,15 @@ mod tests {
 
     #[test]
     fn inflate_max_bounds() {
-        let mut r = RectI16::of(-100, 30, 32762, 32764);
+        let mut r = RectI16::of(-100, 30, i16::MAX - 5, i16::MAX - 3);
         inflate(&mut r);
-        assert_eq!(r, RectI16::of(-101, 29, 32763, 32765));
+        assert_eq!(r, RectI16::of(-101, 29, i16::MAX - 4, i16::MAX - 2));
         inflate(&mut r);
-        assert_eq!(r, RectI16::of(-102, 28, 32764, 32766));
+        assert_eq!(r, RectI16::of(-102, 28, i16::MAX - 3, i16::MAX - 1));
         inflate(&mut r);
-        assert_eq!(r, RectI16::of(-103, 27, 32765, i16::MAX));
+        assert_eq!(r, RectI16::of(-103, 27, i16::MAX - 2, i16::MAX));
         inflate(&mut r);
-        assert_eq!(r, RectI16::of(-104, 25, 32766, i16::MAX));
+        assert_eq!(r, RectI16::of(-104, 25, i16::MAX - 1, i16::MAX));
         inflate(&mut r);
         assert_eq!(r, RectI16::of(-105, 23, i16::MAX, i16::MAX));
         inflate(&mut r);
@@ -135,14 +135,14 @@ mod tests {
 
     #[test]
     fn inflate_almost_min_bounds() {
-        let mut r = RectI16::of(-32767, -32767, i16::MAX, i16::MAX);
+        let mut r = RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MAX, i16::MAX);
         inflate(&mut r);
         assert_eq!(r, RectI16::of(i16::MIN, i16::MIN, i16::MAX, i16::MAX));
     }
 
     #[test]
     fn inflate_almost_max_bounds() {
-        let mut r = RectI16::of(i16::MIN, i16::MIN, 32766, 32766);
+        let mut r = RectI16::of(i16::MIN, i16::MIN, i16::MAX - 1, i16::MAX - 1);
         inflate(&mut r);
         assert_eq!(r, RectI16::of(i16::MIN, i16::MIN, i16::MAX, i16::MAX));
     }
@@ -204,14 +204,14 @@ mod tests {
 
     #[test]
     fn translate_min_bounds() {
-        let mut r = RectI16::of(-32763, -32758, 12, 15);
+        let mut r = RectI16::of(i16::MIN + 5, i16::MIN + 10, 12, 15);
         translate(&mut r, &PointI16::of(-10, -10));
         assert_eq!(r, RectI16::of(i16::MIN, i16::MIN, 7, 5));
     }
 
     #[test]
     fn translate_max_bounds() {
-        let mut r = RectI16::of(40, 35, 32762, 32757);
+        let mut r = RectI16::of(40, 35, i16::MAX - 5, i16::MAX - 10);
         translate(&mut r, &PointI16::of(20, 20));
         assert_eq!(r, RectI16::of(45, 45, i16::MAX, i16::MAX));
     }

@@ -93,19 +93,19 @@ mod tests {
 
     #[test]
     fn inflate_min_bounds() {
-        let mut r = RectI8::of(-121, -126, 4, 13);
+        let mut r = RectI8::of(i8::MIN + 7, i8::MIN + 2, 4, 13);
         inflate(&mut r);
-        assert_eq!(r, RectI8::of(-122, -127, 5, 14));
+        assert_eq!(r, RectI8::of(i8::MIN + 6, i8::MIN + 1, 5, 14));
         inflate(&mut r);
-        assert_eq!(r, RectI8::of(-123, i8::MIN, 6, 15));
+        assert_eq!(r, RectI8::of(i8::MIN + 5, i8::MIN, 6, 15));
         inflate(&mut r);
-        assert_eq!(r, RectI8::of(-124, i8::MIN, 7, 17));
+        assert_eq!(r, RectI8::of(i8::MIN + 4, i8::MIN, 7, 17));
         inflate(&mut r);
-        assert_eq!(r, RectI8::of(-125, i8::MIN, 8, 19));
+        assert_eq!(r, RectI8::of(i8::MIN + 3, i8::MIN, 8, 19));
         inflate(&mut r);
-        assert_eq!(r, RectI8::of(-126, i8::MIN, 9, 21));
+        assert_eq!(r, RectI8::of(i8::MIN + 2, i8::MIN, 9, 21));
         inflate(&mut r);
-        assert_eq!(r, RectI8::of(-127, i8::MIN, 10, 23));
+        assert_eq!(r, RectI8::of(i8::MIN + 1, i8::MIN, 10, 23));
         inflate(&mut r);
         assert_eq!(r, RectI8::of(i8::MIN, i8::MIN, 11, 25));
         inflate(&mut r);
@@ -114,15 +114,15 @@ mod tests {
 
     #[test]
     fn inflate_max_bounds() {
-        let mut r = RectI8::of(-100, 30, 122, 124);
+        let mut r = RectI8::of(-100, 30, i8::MAX - 5, i8::MAX - 3);
         inflate(&mut r);
-        assert_eq!(r, RectI8::of(-101, 29, 123, 125));
+        assert_eq!(r, RectI8::of(-101, 29, i8::MAX - 4, i8::MAX - 2));
         inflate(&mut r);
-        assert_eq!(r, RectI8::of(-102, 28, 124, 126));
+        assert_eq!(r, RectI8::of(-102, 28, i8::MAX - 3, i8::MAX - 1));
         inflate(&mut r);
-        assert_eq!(r, RectI8::of(-103, 27, 125, i8::MAX));
+        assert_eq!(r, RectI8::of(-103, 27, i8::MAX - 2, i8::MAX));
         inflate(&mut r);
-        assert_eq!(r, RectI8::of(-104, 25, 126, i8::MAX));
+        assert_eq!(r, RectI8::of(-104, 25, i8::MAX - 1, i8::MAX));
         inflate(&mut r);
         assert_eq!(r, RectI8::of(-105, 23, i8::MAX, i8::MAX));
         inflate(&mut r);
@@ -135,14 +135,14 @@ mod tests {
 
     #[test]
     fn inflate_almost_min_bounds() {
-        let mut r = RectI8::of(-127, -127, i8::MAX, i8::MAX);
+        let mut r = RectI8::of(i8::MIN + 1, i8::MIN + 1, i8::MAX, i8::MAX);
         inflate(&mut r);
         assert_eq!(r, RectI8::of(i8::MIN, i8::MIN, i8::MAX, i8::MAX));
     }
 
     #[test]
     fn inflate_almost_max_bounds() {
-        let mut r = RectI8::of(i8::MIN, i8::MIN, 126, 126);
+        let mut r = RectI8::of(i8::MIN, i8::MIN, i8::MAX - 1, i8::MAX - 1);
         inflate(&mut r);
         assert_eq!(r, RectI8::of(i8::MIN, i8::MIN, i8::MAX, i8::MAX));
     }
@@ -204,14 +204,14 @@ mod tests {
 
     #[test]
     fn translate_min_bounds() {
-        let mut r = RectI8::of(-123, -118, 12, 15);
+        let mut r = RectI8::of(i8::MIN + 5, i8::MIN + 10, 12, 15);
         translate(&mut r, &PointI8::of(-10, -10));
         assert_eq!(r, RectI8::of(i8::MIN, i8::MIN, 7, 5));
     }
 
     #[test]
     fn translate_max_bounds() {
-        let mut r = RectI8::of(40, 35, 122, 117);
+        let mut r = RectI8::of(40, 35, i8::MAX - 5, i8::MAX - 10);
         translate(&mut r, &PointI8::of(20, 20));
         assert_eq!(r, RectI8::of(45, 45, i8::MAX, i8::MAX));
     }

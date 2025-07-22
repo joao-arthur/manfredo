@@ -93,19 +93,19 @@ mod tests {
 
     #[test]
     fn inflate_min_bounds() {
-        let mut r = RectI32::of(-2147483641, -2147483646, 4, 13);
+        let mut r = RectI32::of(i32::MIN + 7, i32::MIN + 2, 4, 13);
         inflate(&mut r);
-        assert_eq!(r, RectI32::of(-2147483642, -2147483647, 5, 14));
+        assert_eq!(r, RectI32::of(i32::MIN + 6, i32::MIN + 1, 5, 14));
         inflate(&mut r);
-        assert_eq!(r, RectI32::of(-2147483643, i32::MIN, 6, 15));
+        assert_eq!(r, RectI32::of(i32::MIN + 5, i32::MIN, 6, 15));
         inflate(&mut r);
-        assert_eq!(r, RectI32::of(-2147483644, i32::MIN, 7, 17));
+        assert_eq!(r, RectI32::of(i32::MIN + 4, i32::MIN, 7, 17));
         inflate(&mut r);
-        assert_eq!(r, RectI32::of(-2147483645, i32::MIN, 8, 19));
+        assert_eq!(r, RectI32::of(i32::MIN + 3, i32::MIN, 8, 19));
         inflate(&mut r);
-        assert_eq!(r, RectI32::of(-2147483646, i32::MIN, 9, 21));
+        assert_eq!(r, RectI32::of(i32::MIN + 2, i32::MIN, 9, 21));
         inflate(&mut r);
-        assert_eq!(r, RectI32::of(-2147483647, i32::MIN, 10, 23));
+        assert_eq!(r, RectI32::of(i32::MIN + 1, i32::MIN, 10, 23));
         inflate(&mut r);
         assert_eq!(r, RectI32::of(i32::MIN, i32::MIN, 11, 25));
         inflate(&mut r);
@@ -114,15 +114,15 @@ mod tests {
 
     #[test]
     fn inflate_max_bounds() {
-        let mut r = RectI32::of(-100, 30, 2147483642, 2147483644);
+        let mut r = RectI32::of(-100, 30, i32::MAX - 5, i32::MAX - 3);
         inflate(&mut r);
-        assert_eq!(r, RectI32::of(-101, 29, 2147483643, 2147483645));
+        assert_eq!(r, RectI32::of(-101, 29, i32::MAX - 4, i32::MAX - 2));
         inflate(&mut r);
-        assert_eq!(r, RectI32::of(-102, 28, 2147483644, 2147483646));
+        assert_eq!(r, RectI32::of(-102, 28, i32::MAX - 3, i32::MAX - 1));
         inflate(&mut r);
-        assert_eq!(r, RectI32::of(-103, 27, 2147483645, i32::MAX));
+        assert_eq!(r, RectI32::of(-103, 27, i32::MAX - 2, i32::MAX));
         inflate(&mut r);
-        assert_eq!(r, RectI32::of(-104, 25, 2147483646, i32::MAX));
+        assert_eq!(r, RectI32::of(-104, 25, i32::MAX - 1, i32::MAX));
         inflate(&mut r);
         assert_eq!(r, RectI32::of(-105, 23, i32::MAX, i32::MAX));
         inflate(&mut r);
@@ -135,14 +135,14 @@ mod tests {
 
     #[test]
     fn inflate_almost_min_bounds() {
-        let mut r = RectI32::of(-2147483647, -2147483647, i32::MAX, i32::MAX);
+        let mut r = RectI32::of(i32::MIN + 1, i32::MIN + 1, i32::MAX, i32::MAX);
         inflate(&mut r);
         assert_eq!(r, RectI32::of(i32::MIN, i32::MIN, i32::MAX, i32::MAX));
     }
 
     #[test]
     fn inflate_almost_max_bounds() {
-        let mut r = RectI32::of(i32::MIN, i32::MIN, 2147483646, 2147483646);
+        let mut r = RectI32::of(i32::MIN, i32::MIN, i32::MAX - 1, i32::MAX - 1);
         inflate(&mut r);
         assert_eq!(r, RectI32::of(i32::MIN, i32::MIN, i32::MAX, i32::MAX));
     }
@@ -204,14 +204,14 @@ mod tests {
 
     #[test]
     fn translate_min_bounds() {
-        let mut r = RectI32::of(-2147483643, -2147483638, 12, 15);
+        let mut r = RectI32::of(i32::MIN + 5, i32::MIN + 10, 12, 15);
         translate(&mut r, &PointI32::of(-10, -10));
         assert_eq!(r, RectI32::of(i32::MIN, i32::MIN, 7, 5));
     }
 
     #[test]
     fn translate_max_bounds() {
-        let mut r = RectI32::of(40, 35, 2147483642, 2147483637);
+        let mut r = RectI32::of(40, 35, i32::MAX - 5, i32::MAX - 10);
         translate(&mut r, &PointI32::of(20, 20));
         assert_eq!(r, RectI32::of(45, 45, i32::MAX, i32::MAX));
     }

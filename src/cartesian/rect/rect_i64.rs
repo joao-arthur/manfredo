@@ -215,4 +215,32 @@ mod tests {
         translate(&mut r, &PointI64::of(20, 20));
         assert_eq!(r, RectI64::of(45, 45, i64::MAX, i64::MAX));
     }
+
+    #[test]
+    fn translate_min_bounds_big_delta() {
+        let mut r = RectI64::of(i64::MIN, i64::MIN, i64::MIN + 10, i64::MIN + 10);
+        translate(&mut r, &PointI64::of(i64::MIN, i64::MIN));
+        assert_eq!(r, RectI64::of(i64::MIN, i64::MIN, i64::MIN + 10, i64::MIN + 10));
+    }
+
+    #[test]
+    fn translate_max_bounds_big_delta() {
+        let mut r = RectI64::of(i64::MAX - 10, i64::MAX - 10, i64::MAX, i64::MAX);
+        translate(&mut r, &PointI64::of(i64::MAX, i64::MAX));
+        assert_eq!(r, RectI64::of(i64::MAX - 10, i64::MAX - 10, i64::MAX, i64::MAX));
+    }
+
+    #[test]
+    fn translate_min_bounds_big_rect_big_delta() {
+        let mut r = RectI64::of(i64::MIN + 1, i64::MIN + 1, i64::MAX, i64::MAX);
+        translate(&mut r, &PointI64::of(i64::MIN, i64::MIN));
+        assert_eq!(r, RectI64::of(i64::MIN, i64::MIN, i64::MAX - 1, i64::MAX - 1));
+    }
+
+    #[test]
+    fn translate_max_bounds_big_rect_big_delta() {
+        let mut r = RectI64::of(i64::MIN, i64::MIN, i64::MAX - 1, i64::MAX - 1);
+        translate(&mut r, &PointI64::of(i64::MAX, i64::MAX));
+        assert_eq!(r, RectI64::of(i64::MIN + 1, i64::MIN + 1, i64::MAX, i64::MAX));
+    }
 }

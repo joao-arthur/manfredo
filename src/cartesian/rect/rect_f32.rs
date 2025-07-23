@@ -77,7 +77,7 @@ pub fn translate(r: &mut RectF32, delta: &point_f32::PointF32) {
 mod tests {
     use crate::cartesian::point::point_f32::{MAX, MIN, PointF32};
 
-    use super::{RectF32, deflate, delta_x, delta_y, inflate, translate};
+    use super::{RectF32, deflate, delta_x, delta_y, inflate, max_dimension, translate};
 
     #[test]
     fn rect_f32() {
@@ -99,6 +99,38 @@ mod tests {
         assert_eq!(delta_y(&RectF32::of(-8_388_608.0, 0.0, 8_388_607.0, 0.0)), 0.0);
         assert_eq!(delta_y(&RectF32::of(0.0, 0.0, 0.0, MAX)), MAX);
         assert_eq!(delta_y(&RectF32::of(0.0, -8_388_608.0, 0.0, 8_388_607.0)), MAX);
+    }
+
+    #[test]
+    fn test_max_dimension() {
+        assert_eq!(max_dimension(&RectF32::of(0.0, 5.0, 10.0, 10.0)), 10.0);
+        assert_eq!(max_dimension(&RectF32::of(-10.0, -10.0, -5.0, 0.0)), 10.0);
+        assert_eq!(max_dimension(&RectF32::of(-5.0, 0.0, 5.0, 5.0)), 10.0);
+    }
+
+    #[test]
+    fn max_dimension_0() {
+        assert_eq!(max_dimension(&RectF32::of(0.0, 0.0, 0.0, 0.0)), 0.0);
+        assert_eq!(max_dimension(&RectF32::of(1.0, 1.0, 1.0, 1.0)), 0.0);
+        assert_eq!(max_dimension(&RectF32::of(-1.0, -1.0, -1.0, -1.0)), 0.0);
+        assert_eq!(max_dimension(&RectF32::of(5.0, 10.0, 5.0, 10.0)), 0.0);
+    }
+
+    #[test]
+    fn max_dimension_1() {
+        assert_eq!(max_dimension(&RectF32::of(0.0, 0.0, 1.0, 1.0)), 1.0);
+        assert_eq!(max_dimension(&RectF32::of(5.0, 5.0, 6.0, 6.0)), 1.0);
+        assert_eq!(max_dimension(&RectF32::of(-6.0, -6.0, -5.0, -5.0)), 1.0);
+        assert_eq!(max_dimension(&RectF32::of(0.0, 0.0, 0.0, 1.0)), 1.0);
+        assert_eq!(max_dimension(&RectF32::of(5.0, 9.0, 5.0, 10.0)), 1.0);
+    }
+
+    #[test]
+    fn max_dimension_bounds() {
+        assert_eq!(max_dimension(&RectF32::of(MIN + 1.0, MIN + 2.0, 0.0, 0.0)), MAX);
+        assert_eq!(max_dimension(&RectF32::of(MIN + 2.0, MIN + 1.0, 0.0, 0.0)), MAX);
+        assert_eq!(max_dimension(&RectF32::of(0.0, 0.0, MAX - 1.0, MAX)), MAX);
+        assert_eq!(max_dimension(&RectF32::of(0.0, 0.0, MAX, MAX - 1.0)), MAX);
     }
 
     #[test]

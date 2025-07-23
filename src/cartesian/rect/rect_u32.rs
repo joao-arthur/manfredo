@@ -77,7 +77,7 @@ pub fn translate(r: &mut RectU32, delta: &PointI32) {
 mod tests {
     use crate::cartesian::point::{point_i32::PointI32, point_u32::PointU32};
 
-    use super::{RectU32, deflate, delta_x, delta_y, inflate, translate};
+    use super::{RectU32, deflate, delta_x, delta_y, inflate, max_dimension, translate};
 
     #[test]
     fn rect_u32() {
@@ -95,6 +95,33 @@ mod tests {
     fn test_delta_y() {
         assert_eq!(delta_y(&RectU32::of(0, 0, 0, 0)), 0);
         assert_eq!(delta_y(&RectU32::of(0, 0, 0, u32::MAX)), u32::MAX);
+    }
+
+    #[test]
+    fn test_max_dimension() {
+        assert_eq!(max_dimension(&RectU32::of(0, 5, 10, 10)), 10);
+        assert_eq!(max_dimension(&RectU32::of(5, 0, 9, 9)), 9);
+    }
+
+    #[test]
+    fn max_dimension_0() {
+        assert_eq!(max_dimension(&RectU32::of(0, 0, 0, 0)), 0);
+        assert_eq!(max_dimension(&RectU32::of(1, 1, 1, 1)), 0);
+        assert_eq!(max_dimension(&RectU32::of(5, 10, 5, 10)), 0);
+    }
+
+    #[test]
+    fn max_dimension_1() {
+        assert_eq!(max_dimension(&RectU32::of(0, 0, 1, 1)), 1);
+        assert_eq!(max_dimension(&RectU32::of(5, 5, 6, 6)), 1);
+        assert_eq!(max_dimension(&RectU32::of(0, 0, 0, 1)), 1);
+        assert_eq!(max_dimension(&RectU32::of(5, 9, 5, 10)), 1);
+    }
+
+    #[test]
+    fn max_dimension_max() {
+        assert_eq!(max_dimension(&RectU32::of(0, 0, u32::MAX, u32::MAX - 1)), u32::MAX);
+        assert_eq!(max_dimension(&RectU32::of(0, 0, u32::MAX - 1, u32::MAX)), u32::MAX);
     }
 
     #[test]

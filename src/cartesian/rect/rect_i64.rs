@@ -26,6 +26,12 @@ pub fn delta_y(r: &RectI64) -> u64 {
     point_i64::delta_y(&r.min, &r.max)
 }
 
+pub fn max_dimension(r: &RectI64) -> u64 {
+    let dx = delta_x(r);
+    let dy = delta_y(r);
+    std::cmp::max(dx, dy)
+}
+
 pub fn inflate(r: &mut RectI64) {
     let is_min_x = r.min.x == i64::MIN;
     let is_max_x = r.max.x == i64::MAX;

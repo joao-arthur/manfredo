@@ -26,6 +26,12 @@ pub fn delta_y(r: &RectI8) -> u8 {
     point_i8::delta_y(&r.min, &r.max)
 }
 
+pub fn max_dimension(r: &RectI8) -> u8 {
+    let dx = delta_x(r);
+    let dy = delta_y(r);
+    std::cmp::max(dx, dy)
+}
+
 pub fn inflate(r: &mut RectI8) {
     let is_min_x = r.min.x == i8::MIN;
     let is_max_x = r.max.x == i8::MAX;

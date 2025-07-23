@@ -26,6 +26,12 @@ pub fn delta_y(r: &RectF64) -> f64 {
     point_f64::delta_y(&r.min, &r.max)
 }
 
+pub fn max_dimension(r: &RectF64) -> f64 {
+    let dx = delta_x(r);
+    let dy = delta_y(r);
+    dx.max(dy)
+}
+
 pub fn inflate(r: &mut RectF64) {
     let is_min_x = r.min.x == point_f64::MIN;
     let is_max_x = r.max.x == point_f64::MAX;

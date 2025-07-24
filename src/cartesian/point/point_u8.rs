@@ -24,9 +24,13 @@ pub fn delta_y(p1: &PointU8, p2: &PointU8) -> u8 {
     p2.y - p1.y
 }
 
+pub fn delta(p1: &PointU8, p2: &PointU8) -> PointU8 {
+    PointU8 { x: delta_x(p1, p2), y: delta_y(p1, p2) }
+}
+
 #[cfg(test)]
 mod tests {
-    use super::{PointU8, delta_x, delta_y};
+    use super::{PointU8, delta, delta_x, delta_y};
 
     #[test]
     fn point_u8() {
@@ -44,5 +48,43 @@ mod tests {
     fn test_delta_y() {
         assert_eq!(delta_y(&PointU8::of(0, 0), &PointU8::of(u8::MAX, 0)), 0);
         assert_eq!(delta_y(&PointU8::of(0, 0), &PointU8::of(0, u8::MAX)), u8::MAX);
+    }
+
+    #[test]
+    fn test_delta() {
+        assert_eq!(delta(&PointU8::of(0, 0), &PointU8::of(0, 0)), PointU8::of(0, 0));
+        assert_eq!(delta(&PointU8::of(0, 0), &PointU8::of(u8::MAX, u8::MAX)), PointU8::of(u8::MAX, u8::MAX));
+    }
+
+    #[test]
+    fn delta_min() {
+        let p1 = PointU8::of(0, 0);
+        assert_eq!(delta(&p1, &PointU8::of(0, 0)), PointU8::of(0, 0));
+        assert_eq!(delta(&p1, &PointU8::of(0, 1)), PointU8::of(0, 1));
+        assert_eq!(delta(&p1, &PointU8::of(0, 2)), PointU8::of(0, 2));
+
+        assert_eq!(delta(&p1, &PointU8::of(1, 0)), PointU8::of(1, 0));
+        assert_eq!(delta(&p1, &PointU8::of(1, 1)), PointU8::of(1, 1));
+        assert_eq!(delta(&p1, &PointU8::of(1, 2)), PointU8::of(1, 2));
+
+        assert_eq!(delta(&p1, &PointU8::of(2, 0)), PointU8::of(2, 0));
+        assert_eq!(delta(&p1, &PointU8::of(2, 1)), PointU8::of(2, 1));
+        assert_eq!(delta(&p1, &PointU8::of(2, 2)), PointU8::of(2, 2));
+    }
+
+    #[test]
+    fn delta_max() {
+        let p1 = PointU8::of(u8::MAX - 2, u8::MAX - 2);
+        assert_eq!(delta(&p1, &PointU8::of(u8::MAX - 2, u8::MAX - 2)), PointU8::of(0, 0));
+        assert_eq!(delta(&p1, &PointU8::of(u8::MAX - 2, u8::MAX - 1)), PointU8::of(0, 1));
+        assert_eq!(delta(&p1, &PointU8::of(u8::MAX - 2, u8::MAX)), PointU8::of(0, 2));
+
+        assert_eq!(delta(&p1, &PointU8::of(u8::MAX - 1, u8::MAX - 2)), PointU8::of(1, 0));
+        assert_eq!(delta(&p1, &PointU8::of(u8::MAX - 1, u8::MAX - 1)), PointU8::of(1, 1));
+        assert_eq!(delta(&p1, &PointU8::of(u8::MAX - 1, u8::MAX)), PointU8::of(1, 2));
+
+        assert_eq!(delta(&p1, &PointU8::of(u8::MAX, u8::MAX - 2)), PointU8::of(2, 0));
+        assert_eq!(delta(&p1, &PointU8::of(u8::MAX, u8::MAX - 1)), PointU8::of(2, 1));
+        assert_eq!(delta(&p1, &PointU8::of(u8::MAX, u8::MAX)), PointU8::of(2, 2));
     }
 }

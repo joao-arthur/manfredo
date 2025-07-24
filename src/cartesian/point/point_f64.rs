@@ -27,9 +27,13 @@ pub fn delta_y(p1: &PointF64, p2: &PointF64) -> f64 {
     p2.y - p1.y
 }
 
+pub fn delta(p1: &PointF64, p2: &PointF64) -> PointF64 {
+    PointF64 { x: delta_x(p1, p2), y: delta_y(p1, p2) }
+}
+
 #[cfg(test)]
 mod tests {
-    use super::{MAX, MIN, PointF64, delta_x, delta_y};
+    use super::{MAX, MIN, PointF64, delta, delta_x, delta_y};
 
     #[test]
     fn point_f64() {
@@ -51,5 +55,46 @@ mod tests {
         assert_eq!(delta_y(&PointF64::of(-4_503_599_627_370_496.0, 0.0), &PointF64::of(4_503_599_627_370_495.0, 0.0)), 0.0);
         assert_eq!(delta_y(&PointF64::of(0.0, 0.0), &PointF64::of(0.0, MAX)), MAX);
         assert_eq!(delta_y(&PointF64::of(0.0, -4_503_599_627_370_496.0), &PointF64::of(0.0, 4_503_599_627_370_495.0)), MAX);
+    }
+
+    #[test]
+    fn test_delta() {
+        assert_eq!(delta(&PointF64::of(0.0, 0.0), &PointF64::of(0.0, 0.0)), PointF64::of(0.0, 0.0));
+        assert_eq!(
+            delta(&PointF64::of(-4_503_599_627_370_496.0, -4_503_599_627_370_496.0), &PointF64::of(4_503_599_627_370_495.0, 4_503_599_627_370_495.0)),
+            PointF64::of(MAX, MAX)
+        );
+    }
+
+    #[test]
+    fn delta_min() {
+        let p1 = PointF64::of(-4_503_599_627_370_496.0, -4_503_599_627_370_496.0);
+        assert_eq!(delta(&p1, &PointF64::of(-4_503_599_627_370_496.0, -4_503_599_627_370_496.0)), PointF64::of(0.0, 0.0));
+        assert_eq!(delta(&p1, &PointF64::of(-4_503_599_627_370_496.0, -4_503_599_627_370_495.0)), PointF64::of(0.0, 1.0));
+        assert_eq!(delta(&p1, &PointF64::of(-4_503_599_627_370_496.0, -4_503_599_627_370_494.0)), PointF64::of(0.0, 2.0));
+
+        assert_eq!(delta(&p1, &PointF64::of(-4_503_599_627_370_495.0, -4_503_599_627_370_496.0)), PointF64::of(1.0, 0.0));
+        assert_eq!(delta(&p1, &PointF64::of(-4_503_599_627_370_495.0, -4_503_599_627_370_495.0)), PointF64::of(1.0, 1.0));
+        assert_eq!(delta(&p1, &PointF64::of(-4_503_599_627_370_495.0, -4_503_599_627_370_494.0)), PointF64::of(1.0, 2.0));
+
+        assert_eq!(delta(&p1, &PointF64::of(-4_503_599_627_370_494.0, -4_503_599_627_370_496.0)), PointF64::of(2.0, 0.0));
+        assert_eq!(delta(&p1, &PointF64::of(-4_503_599_627_370_494.0, -4_503_599_627_370_495.0)), PointF64::of(2.0, 1.0));
+        assert_eq!(delta(&p1, &PointF64::of(-4_503_599_627_370_494.0, -4_503_599_627_370_494.0)), PointF64::of(2.0, 2.0));
+    }
+
+    #[test]
+    fn delta_max() {
+        let p1 = PointF64::of(4_503_599_627_370_493.0, 4_503_599_627_370_493.0);
+        assert_eq!(delta(&p1, &PointF64::of(4_503_599_627_370_493.0, 4_503_599_627_370_493.0)), PointF64::of(0.0, 0.0));
+        assert_eq!(delta(&p1, &PointF64::of(4_503_599_627_370_493.0, 4_503_599_627_370_494.0)), PointF64::of(0.0, 1.0));
+        assert_eq!(delta(&p1, &PointF64::of(4_503_599_627_370_493.0, 4_503_599_627_370_495.0)), PointF64::of(0.0, 2.0));
+
+        assert_eq!(delta(&p1, &PointF64::of(4_503_599_627_370_494.0, 4_503_599_627_370_493.0)), PointF64::of(1.0, 0.0));
+        assert_eq!(delta(&p1, &PointF64::of(4_503_599_627_370_494.0, 4_503_599_627_370_494.0)), PointF64::of(1.0, 1.0));
+        assert_eq!(delta(&p1, &PointF64::of(4_503_599_627_370_494.0, 4_503_599_627_370_495.0)), PointF64::of(1.0, 2.0));
+
+        assert_eq!(delta(&p1, &PointF64::of(4_503_599_627_370_495.0, 4_503_599_627_370_493.0)), PointF64::of(2.0, 0.0));
+        assert_eq!(delta(&p1, &PointF64::of(4_503_599_627_370_495.0, 4_503_599_627_370_494.0)), PointF64::of(2.0, 1.0));
+        assert_eq!(delta(&p1, &PointF64::of(4_503_599_627_370_495.0, 4_503_599_627_370_495.0)), PointF64::of(2.0, 2.0));
     }
 }

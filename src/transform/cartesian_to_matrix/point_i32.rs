@@ -14,10 +14,24 @@ mod tests {
     use super::{CartesianPoint, MatrixPoint, cartesian_to_matrix};
 
     #[test]
-    fn test_cartesian_to_matrix() {
+    fn cartesian_to_matrix_bounds() {
         assert_eq!(cartesian_to_matrix(&CartesianPoint::of(i32::MIN, i32::MIN)), MatrixPoint::of(u32::MAX, 0));
         assert_eq!(cartesian_to_matrix(&CartesianPoint::of(i32::MAX, i32::MIN)), MatrixPoint::of(u32::MAX, u32::MAX));
         assert_eq!(cartesian_to_matrix(&CartesianPoint::of(i32::MIN, i32::MAX)), MatrixPoint::of(0, 0));
         assert_eq!(cartesian_to_matrix(&CartesianPoint::of(i32::MAX, i32::MAX)), MatrixPoint::of(0, u32::MAX));
+    }
+
+    #[test]
+    fn cartesian_to_matrix_sequence_min() {
+        assert_eq!(cartesian_to_matrix(&CartesianPoint::of(i32::MIN + 1, i32::MIN + 1)), MatrixPoint::of(u32::MAX - 1, 1));
+        assert_eq!(cartesian_to_matrix(&CartesianPoint::of(i32::MIN + 2, i32::MIN + 2)), MatrixPoint::of(u32::MAX - 2, 2));
+        assert_eq!(cartesian_to_matrix(&CartesianPoint::of(i32::MIN + 3, i32::MIN + 3)), MatrixPoint::of(u32::MAX - 3, 3));
+    }
+
+    #[test]
+    fn cartesian_to_matrix_sequence_max() {
+        assert_eq!(cartesian_to_matrix(&CartesianPoint::of(i32::MAX - 1, i32::MAX - 1)), MatrixPoint::of(1, u32::MAX - 1));
+        assert_eq!(cartesian_to_matrix(&CartesianPoint::of(i32::MAX - 2, i32::MAX - 2)), MatrixPoint::of(2, u32::MAX - 2));
+        assert_eq!(cartesian_to_matrix(&CartesianPoint::of(i32::MAX - 3, i32::MAX - 3)), MatrixPoint::of(3, u32::MAX - 3));
     }
 }

@@ -2,10 +2,8 @@ type CartesianPoint = crate::cartesian::point::point_i64::PointI64;
 type MatrixPoint = crate::matrix::point::point_u64::PointU64;
 
 pub fn cartesian_to_matrix(point: &CartesianPoint) -> MatrixPoint {
-    let temp_row = i128::from(i64::MAX) - i128::from(point.y);
-    let temp_col = i128::from(i64::MAX) + i128::from(point.x) + 1;
-    let row = temp_row.clamp(0, i128::from(u64::MAX));
-    let col = temp_col.clamp(0, i128::from(u64::MAX));
+    let row = i128::from(i64::MAX) - i128::from(point.y);
+    let col = i128::from(i64::MAX) + i128::from(point.x) + 1;
     MatrixPoint { row: row as u64, col: col as u64 }
 }
 

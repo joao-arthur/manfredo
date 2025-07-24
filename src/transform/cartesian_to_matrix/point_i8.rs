@@ -16,8 +16,16 @@ mod tests {
     #[test]
     fn test_cartesian_to_matrix() {
         assert_eq!(cartesian_to_matrix(&CartesianPoint::of(i8::MIN, i8::MIN)), MatrixPoint::of(u8::MAX, 0));
-        assert_eq!(cartesian_to_matrix(&CartesianPoint::of(i8::MIN, i8::MAX)), MatrixPoint::of(0, 0));
         assert_eq!(cartesian_to_matrix(&CartesianPoint::of(i8::MAX, i8::MIN)), MatrixPoint::of(u8::MAX, u8::MAX));
+        assert_eq!(cartesian_to_matrix(&CartesianPoint::of(i8::MIN, i8::MAX)), MatrixPoint::of(0, 0));
+        assert_eq!(cartesian_to_matrix(&CartesianPoint::of(i8::MAX, i8::MAX)), MatrixPoint::of(0, u8::MAX));
+    }
+
+    #[test]
+    fn test_cartesian_to_matrix_edges() {
+        assert_eq!(cartesian_to_matrix(&CartesianPoint::of(i8::MIN, i8::MIN)), MatrixPoint::of(u8::MAX, 0));
+        assert_eq!(cartesian_to_matrix(&CartesianPoint::of(i8::MAX, i8::MIN)), MatrixPoint::of(u8::MAX, u8::MAX));
+        assert_eq!(cartesian_to_matrix(&CartesianPoint::of(i8::MIN, i8::MAX)), MatrixPoint::of(0, 0));
         assert_eq!(cartesian_to_matrix(&CartesianPoint::of(i8::MAX, i8::MAX)), MatrixPoint::of(0, u8::MAX));
     }
 }

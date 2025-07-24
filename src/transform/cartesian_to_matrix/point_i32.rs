@@ -16,8 +16,8 @@ mod tests {
     #[test]
     fn test_cartesian_to_matrix() {
         assert_eq!(cartesian_to_matrix(&CartesianPoint::of(i32::MIN, i32::MIN)), MatrixPoint::of(u32::MAX, 0));
-        assert_eq!(cartesian_to_matrix(&CartesianPoint::of(i32::MIN, i32::MAX)), MatrixPoint::of(0, 0));
         assert_eq!(cartesian_to_matrix(&CartesianPoint::of(i32::MAX, i32::MIN)), MatrixPoint::of(u32::MAX, u32::MAX));
+        assert_eq!(cartesian_to_matrix(&CartesianPoint::of(i32::MIN, i32::MAX)), MatrixPoint::of(0, 0));
         assert_eq!(cartesian_to_matrix(&CartesianPoint::of(i32::MAX, i32::MAX)), MatrixPoint::of(0, u32::MAX));
     }
 }

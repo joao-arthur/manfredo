@@ -4,11 +4,8 @@
 
 A geometry library written in rust.
 
+- [ ] transform matrix_cam => cartesian to matrix
+- [ ] transform matrix_cam => matrix to matrix
 
-- adicionar Matrix::Rect
-
-- transform matrix_cam => cartesian to matrix
-- transform matrix_cam => matrix to matrix
-
-- transform cartesian_cam => cartesian to matrix
-- transform cartesian_cam => matrix to matrix
+- [x] transform cartesian_cam => cartesian to matrix
+- [ ] transform cartesian_cam => matrix to matrix

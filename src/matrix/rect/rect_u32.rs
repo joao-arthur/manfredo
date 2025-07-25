@@ -77,7 +77,7 @@ pub fn translate(r: &mut RectU32, delta: &PointI32) {
 mod tests {
     use crate::matrix::point::{point_i32::PointI32, point_u32::PointU32};
 
-    use super::{RectU32, deflate, delta_row, delta_col, inflate, max_dimension, translate};
+    use super::{RectU32, deflate, delta_col, delta_row, inflate, max_dimension, translate};
 
     #[test]
     fn rect_u32() {

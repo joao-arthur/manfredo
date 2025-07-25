@@ -77,7 +77,7 @@ pub fn translate(r: &mut RectU8, delta: &PointI8) {
 mod tests {
     use crate::matrix::point::{point_i8::PointI8, point_u8::PointU8};
 
-    use super::{RectU8, deflate, delta_row, delta_col, inflate, max_dimension, translate};
+    use super::{RectU8, deflate, delta_col, delta_row, inflate, max_dimension, translate};
 
     #[test]
     fn rect_u8() {

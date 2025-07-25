@@ -77,11 +77,14 @@ pub fn translate(r: &mut RectU64, delta: &PointI64) {
 mod tests {
     use crate::matrix::point::{point_i64::PointI64, point_u64::PointU64};
 
-    use super::{RectU64, deflate, delta_row, delta_col, inflate, max_dimension, translate};
+    use super::{RectU64, deflate, delta_col, delta_row, inflate, max_dimension, translate};
 
     #[test]
     fn rect_u64() {
-        assert_eq!(RectU64::of(4096, 8192, 16384, 32768), RectU64 { min: PointU64 { row: 4096, col: 8192 }, max: PointU64 { row: 16384, col: 32768 } });
+        assert_eq!(
+            RectU64::of(4096, 8192, 16384, 32768),
+            RectU64 { min: PointU64 { row: 4096, col: 8192 }, max: PointU64 { row: 16384, col: 32768 } }
+        );
         assert_eq!(RectU64::of(u64::MAX, 0, 0, u64::MAX).to_string(), "((18446744073709551615, 0), (0, 18446744073709551615))");
     }
 

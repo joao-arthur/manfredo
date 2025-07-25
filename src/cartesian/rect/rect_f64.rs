@@ -45,8 +45,8 @@ pub fn inflate(r: &mut RectF64) {
     let min_y_modifier = 1.0 - f64::from(is_min_y) + f64::from(is_max_y);
     let max_y_modifier = 1.0 + f64::from(is_min_y) - f64::from(is_max_y);
     r.min.x = (r.min.x - min_x_modifier).max(point_f64::MIN);
-    r.max.x = (r.max.x + max_x_modifier).min(point_f64::MAX);
     r.min.y = (r.min.y - min_y_modifier).max(point_f64::MIN);
+    r.max.x = (r.max.x + max_x_modifier).min(point_f64::MAX);
     r.max.y = (r.max.y + max_y_modifier).min(point_f64::MAX);
 }
 

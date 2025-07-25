@@ -45,8 +45,8 @@ pub fn inflate(r: &mut RectU8) {
     let min_y_modifier = 1 - u8::from(is_min_y) + u8::from(is_max_y);
     let max_y_modifier = 1 + u8::from(is_min_y) - u8::from(is_max_y);
     r.min.x = r.min.x.saturating_sub(min_x_modifier);
-    r.max.x = r.max.x.saturating_add(max_x_modifier);
     r.min.y = r.min.y.saturating_sub(min_y_modifier);
+    r.max.x = r.max.x.saturating_add(max_x_modifier);
     r.max.y = r.max.y.saturating_add(max_y_modifier);
 }
 

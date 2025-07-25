@@ -6,5 +6,6 @@ A geometry library written in rust.
 
 ## todo
 
-- criar transform::camera relative_to(cartesian, cam)
-- criar transform::camera relative_to(matrix, cam)
+- renomear as funções em matrix_in_cam_to_cartesian
+- renomear as funções em cartesian_in_cam_to_matrix
+- adicionar as variacoes que falta (u, i)

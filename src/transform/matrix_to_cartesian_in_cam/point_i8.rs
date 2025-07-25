@@ -1,14 +1,16 @@
 use crate::cartesian::rect::rect_i8::RectI8;
 
-type CartesianPoint = crate::cartesian::point::point_u8::PointU8;
+type CartesianPoint = crate::cartesian::point::point_i8::PointI8;
 type MatrixPoint = crate::matrix::point::point_u8::PointU8;
 
 pub fn matrix_to_cartesian_in_cam(point: &MatrixPoint, cam: &RectI8) -> CartesianPoint {
-    CartesianPoint { x: cam.x1 + point.col as i64, y: cam.y2 - point.row as i64 }
+    CartesianPoint { x: cam.min.x + point.col as i8, y: cam.max.y - point.row as i8 }
 }
 
 #[cfg(test)]
 mod tests {
+    use crate::cartesian::rect::rect_i8::RectI8;
+
     use super::{matrix_to_cartesian_in_cam, MatrixPoint, CartesianPoint};
 
     #[test]

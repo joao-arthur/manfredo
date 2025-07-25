@@ -34,7 +34,7 @@ pub fn delta(p1: &PointI8, p2: &PointI8) -> PointU8 {
 mod tests {
     use crate::matrix::point::point_u8::PointU8;
 
-    use super::{PointI8, delta, delta_row, delta_col};
+    use super::{PointI8, delta, delta_col, delta_row};
 
     #[test]
     fn point_i8() {

@@ -34,15 +34,15 @@ pub fn max_dimension(r: &RectF64) -> f64 {
 
 pub fn inflate(r: &mut RectF64) {
     let is_min_x = r.min.x == point_f64::MIN;
-    let is_max_x = r.max.x == point_f64::MAX;
     let is_min_y = r.min.y == point_f64::MIN;
+    let is_max_x = r.max.x == point_f64::MAX;
     let is_max_y = r.max.y == point_f64::MAX;
     if (is_min_x && is_max_x) || (is_min_y && is_max_y) {
         return;
     }
     let min_x_modifier = 1.0 - f64::from(is_min_x) + f64::from(is_max_x);
-    let max_x_modifier = 1.0 + f64::from(is_min_x) - f64::from(is_max_x);
     let min_y_modifier = 1.0 - f64::from(is_min_y) + f64::from(is_max_y);
+    let max_x_modifier = 1.0 + f64::from(is_min_x) - f64::from(is_max_x);
     let max_y_modifier = 1.0 + f64::from(is_min_y) - f64::from(is_max_y);
     r.min.x = (r.min.x - min_x_modifier).max(point_f64::MIN);
     r.min.y = (r.min.y - min_y_modifier).max(point_f64::MIN);

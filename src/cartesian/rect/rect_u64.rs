@@ -34,15 +34,15 @@ pub fn max_dimension(r: &RectU64) -> u64 {
 
 pub fn inflate(r: &mut RectU64) {
     let is_min_x = r.min.x == 0;
-    let is_max_x = r.max.x == u64::MAX;
     let is_min_y = r.min.y == 0;
+    let is_max_x = r.max.x == u64::MAX;
     let is_max_y = r.max.y == u64::MAX;
     if (is_min_x && is_max_x) || (is_min_y && is_max_y) {
         return;
     }
     let min_x_modifier = 1 - u64::from(is_min_x) + u64::from(is_max_x);
-    let max_x_modifier = 1 + u64::from(is_min_x) - u64::from(is_max_x);
     let min_y_modifier = 1 - u64::from(is_min_y) + u64::from(is_max_y);
+    let max_x_modifier = 1 + u64::from(is_min_x) - u64::from(is_max_x);
     let max_y_modifier = 1 + u64::from(is_min_y) - u64::from(is_max_y);
     r.min.x = r.min.x.saturating_sub(min_x_modifier);
     r.min.y = r.min.y.saturating_sub(min_y_modifier);

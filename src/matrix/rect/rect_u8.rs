@@ -1,4 +1,4 @@
-use crate::cartesian::point::{point_i8::PointI8, point_u8};
+use crate::matrix::point::{point_i8::PointI8, point_u8};
 
 #[derive(PartialEq, Debug, Clone)]
 pub struct RectU8 {
@@ -7,8 +7,8 @@ pub struct RectU8 {
 }
 
 impl RectU8 {
-    pub fn of(x1: u8, y1: u8, x2: u8, y2: u8) -> Self {
-        RectU8 { min: point_u8::PointU8::of(x1, y1), max: point_u8::PointU8::of(x2, y2) }
+    pub fn of(row1: u8, col1: u8, row2: u8, col2: u8) -> Self {
+        RectU8 { min: point_u8::PointU8::of(row1, col1), max: point_u8::PointU8::of(row2, col2) }
     }
 }
 
@@ -18,83 +18,83 @@ impl std::fmt::Display for RectU8 {
     }
 }
 
-pub fn delta_x(r: &RectU8) -> u8 {
-    point_u8::delta_x(&r.min, &r.max)
+pub fn delta_row(r: &RectU8) -> u8 {
+    point_u8::delta_row(&r.min, &r.max)
 }
 
-pub fn delta_y(r: &RectU8) -> u8 {
-    point_u8::delta_y(&r.min, &r.max)
+pub fn delta_col(r: &RectU8) -> u8 {
+    point_u8::delta_col(&r.min, &r.max)
 }
 
 pub fn max_dimension(r: &RectU8) -> u8 {
-    let dx = delta_x(r);
-    let dy = delta_y(r);
-    std::cmp::max(dx, dy)
+    let d_row = delta_row(r);
+    let d_col = delta_col(r);
+    std::cmp::max(d_row, d_col)
 }
 
 pub fn inflate(r: &mut RectU8) {
-    let is_min_x = r.min.x == 0;
-    let is_min_y = r.min.y == 0;
-    let is_max_x = r.max.x == u8::MAX;
-    let is_max_y = r.max.y == u8::MAX;
-    if (is_min_x && is_max_x) || (is_min_y && is_max_y) {
+    let is_min_row = r.min.row == 0;
+    let is_min_col = r.min.col == 0;
+    let is_max_row = r.max.row == u8::MAX;
+    let is_max_col = r.max.col == u8::MAX;
+    if (is_min_row && is_max_row) || (is_min_col && is_max_col) {
         return;
     }
-    let min_x_modifier = 1 - u8::from(is_min_x) + u8::from(is_max_x);
-    let min_y_modifier = 1 - u8::from(is_min_y) + u8::from(is_max_y);
-    let max_x_modifier = 1 + u8::from(is_min_x) - u8::from(is_max_x);
-    let max_y_modifier = 1 + u8::from(is_min_y) - u8::from(is_max_y);
-    r.min.x = r.min.x.saturating_sub(min_x_modifier);
-    r.min.y = r.min.y.saturating_sub(min_y_modifier);
-    r.max.x = r.max.x.saturating_add(max_x_modifier);
-    r.max.y = r.max.y.saturating_add(max_y_modifier);
+    let min_row_modifier = 1 - u8::from(is_min_row) + u8::from(is_max_row);
+    let min_col_modifier = 1 - u8::from(is_min_col) + u8::from(is_max_col);
+    let max_row_modifier = 1 + u8::from(is_min_row) - u8::from(is_max_row);
+    let max_col_modifier = 1 + u8::from(is_min_col) - u8::from(is_max_col);
+    r.min.row = r.min.row.saturating_sub(min_row_modifier);
+    r.min.col = r.min.col.saturating_sub(min_col_modifier);
+    r.max.row = r.max.row.saturating_add(max_row_modifier);
+    r.max.col = r.max.col.saturating_add(max_col_modifier);
 }
 
 pub fn deflate(r: &mut RectU8) {
-    if delta_x(r) < 3 || delta_y(r) < 3 {
+    if delta_row(r) < 3 || delta_col(r) < 3 {
         return;
     }
-    r.min.x += 1;
-    r.min.y += 1;
-    r.max.x -= 1;
-    r.max.y -= 1;
+    r.min.row += 1;
+    r.min.col += 1;
+    r.max.row -= 1;
+    r.max.col -= 1;
 }
 
 pub fn translate(r: &mut RectU8, delta: &PointI8) {
-    let dx = delta_x(r);
-    let dy = delta_y(r);
-    let temp_min_x = i16::from(r.min.x) + i16::from(delta.x);
-    let temp_min_y = i16::from(r.min.y) + i16::from(delta.y);
-    let min_x = temp_min_x.clamp(0, i16::from(u8::MAX) - i16::from(dx)) as u8;
-    let min_y = temp_min_y.clamp(0, i16::from(u8::MAX) - i16::from(dy)) as u8;
-    r.min.x = min_x;
-    r.min.y = min_y;
-    r.max.x = min_x + dx;
-    r.max.y = min_y + dy;
+    let d_row = delta_row(r);
+    let d_col = delta_col(r);
+    let temp_min_row = i16::from(r.min.row) + i16::from(delta.row);
+    let temp_min_col = i16::from(r.min.col) + i16::from(delta.col);
+    let min_x = temp_min_row.clamp(0, i16::from(u8::MAX) - i16::from(d_row)) as u8;
+    let min_y = temp_min_col.clamp(0, i16::from(u8::MAX) - i16::from(d_col)) as u8;
+    r.min.row = min_x;
+    r.min.col = min_y;
+    r.max.row = min_x + d_row;
+    r.max.col = min_y + d_col;
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::cartesian::point::{point_i8::PointI8, point_u8::PointU8};
+    use crate::matrix::point::{point_i8::PointI8, point_u8::PointU8};
 
-    use super::{RectU8, deflate, delta_x, delta_y, inflate, max_dimension, translate};
+    use super::{RectU8, deflate, delta_row, delta_col, inflate, max_dimension, translate};
 
     #[test]
     fn rect_u8() {
-        assert_eq!(RectU8::of(0, 2, 4, 8), RectU8 { min: PointU8 { x: 0, y: 2 }, max: PointU8 { x: 4, y: 8 } });
+        assert_eq!(RectU8::of(0, 2, 4, 8), RectU8 { min: PointU8 { row: 0, col: 2 }, max: PointU8 { row: 4, col: 8 } });
         assert_eq!(RectU8::of(u8::MAX, 0, 0, u8::MAX).to_string(), "((255, 0), (0, 255))");
     }
 
     #[test]
-    fn test_delta_x() {
-        assert_eq!(delta_x(&RectU8::of(0, 0, 0, 0)), 0);
-        assert_eq!(delta_x(&RectU8::of(0, 0, u8::MAX, 0)), u8::MAX);
+    fn test_delta_row() {
+        assert_eq!(delta_row(&RectU8::of(0, 0, 0, 0)), 0);
+        assert_eq!(delta_row(&RectU8::of(0, 0, u8::MAX, 0)), u8::MAX);
     }
 
     #[test]
-    fn test_delta_y() {
-        assert_eq!(delta_y(&RectU8::of(0, 0, 0, 0)), 0);
-        assert_eq!(delta_y(&RectU8::of(0, 0, 0, u8::MAX)), u8::MAX);
+    fn test_delta_col() {
+        assert_eq!(delta_col(&RectU8::of(0, 0, 0, 0)), 0);
+        assert_eq!(delta_col(&RectU8::of(0, 0, 0, u8::MAX)), u8::MAX);
     }
 
     #[test]

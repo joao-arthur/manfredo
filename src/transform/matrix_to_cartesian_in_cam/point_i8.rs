@@ -11,7 +11,7 @@ pub fn matrix_to_cartesian_in_cam(point: &MatrixPoint, cam: &RectI8) -> Cartesia
 mod tests {
     use crate::cartesian::rect::rect_i8::RectI8;
 
-    use super::{matrix_to_cartesian_in_cam, MatrixPoint, CartesianPoint};
+    use super::{CartesianPoint, MatrixPoint, matrix_to_cartesian_in_cam};
 
     #[test]
     fn matrix_to_cartesian_in_cam_3x3() {
@@ -84,5 +84,4 @@ mod tests {
         assert_eq!(matrix_to_cartesian_in_cam(&MatrixPoint::of(2, 1), &cam), CartesianPoint::of(4, 5));
         assert_eq!(matrix_to_cartesian_in_cam(&MatrixPoint::of(2, 2), &cam), CartesianPoint::of(5, 5));
     }
-
 }

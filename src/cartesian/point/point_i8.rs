@@ -1,6 +1,6 @@
 use crate::cartesian::point::point_u8::PointU8;
 
-#[derive(PartialEq, Debug, Clone)]
+#[derive(Eq, PartialEq, Debug, Clone, Hash)]
 pub struct PointI8 {
     pub x: i8,
     pub y: i8,

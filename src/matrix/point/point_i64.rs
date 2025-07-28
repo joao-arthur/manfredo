@@ -1,6 +1,6 @@
 use crate::matrix::point::point_u64::PointU64;
 
-#[derive(PartialEq, Debug, Clone)]
+#[derive(Eq, PartialEq, Debug, Clone, Hash)]
 pub struct PointI64 {
     pub row: i64,
     pub col: i64,

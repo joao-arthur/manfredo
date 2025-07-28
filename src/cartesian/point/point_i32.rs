@@ -1,6 +1,6 @@
 use crate::cartesian::point::point_u32::PointU32;
 
-#[derive(PartialEq, Debug, Clone)]
+#[derive(Eq, PartialEq, Debug, Clone, Hash)]
 pub struct PointI32 {
     pub x: i32,
     pub y: i32,

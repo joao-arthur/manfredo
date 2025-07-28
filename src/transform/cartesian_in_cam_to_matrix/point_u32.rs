@@ -11,7 +11,7 @@ mod tests {
     use super::{Cam, CartesianPoint, MatrixPoint, cartesian_in_cam_to_matrix};
 
     #[test]
-    fn cartesian_to_matrix_in_cam_3x3() {
+    fn cartesian_in_cam_to_matrix_3x3() {
         let cam = Cam::of(0, 0, 2, 2);
         assert_eq!(cartesian_in_cam_to_matrix(&CartesianPoint::of(0, 0), &cam), MatrixPoint::of(2, 0));
         assert_eq!(cartesian_in_cam_to_matrix(&CartesianPoint::of(0, 1), &cam), MatrixPoint::of(1, 0));
@@ -27,7 +27,7 @@ mod tests {
     }
 
     #[test]
-    fn cartesian_to_matrix_in_cam_4x4() {
+    fn cartesian_in_cam_to_matrix_4x4() {
         let cam = Cam::of(10, 10, 13, 13);
         assert_eq!(cartesian_in_cam_to_matrix(&CartesianPoint::of(10, 10), &cam), MatrixPoint::of(3, 0));
         assert_eq!(cartesian_in_cam_to_matrix(&CartesianPoint::of(10, 11), &cam), MatrixPoint::of(2, 0));
@@ -51,7 +51,7 @@ mod tests {
     }
 
     #[test]
-    fn cartesian_to_matrix_in_cam_bounds() {
+    fn cartesian_in_cam_to_matrix_bounds() {
         let cam = Cam::of(0, 0, u32::MAX, u32::MAX);
         assert_eq!(cartesian_in_cam_to_matrix(&CartesianPoint::of(0, 0), &cam), MatrixPoint::of(u32::MAX, 0));
         assert_eq!(cartesian_in_cam_to_matrix(&CartesianPoint::of(u32::MAX, 0), &cam), MatrixPoint::of(u32::MAX, u32::MAX));
@@ -60,7 +60,7 @@ mod tests {
     }
 
     #[test]
-    fn cartesian_to_matrix_in_cam_sequence_min() {
+    fn cartesian_in_cam_to_matrix_sequence_min() {
         let cam = Cam::of(0, 0, u32::MAX, u32::MAX);
         assert_eq!(cartesian_in_cam_to_matrix(&CartesianPoint::of(1, 1), &cam), MatrixPoint::of(u32::MAX - 1, 1));
         assert_eq!(cartesian_in_cam_to_matrix(&CartesianPoint::of(2, 2), &cam), MatrixPoint::of(u32::MAX - 2, 2));
@@ -68,7 +68,7 @@ mod tests {
     }
 
     #[test]
-    fn cartesian_to_matrix_in_cam_sequence_max() {
+    fn cartesian_in_cam_to_matrix_sequence_max() {
         let cam = Cam::of(0, 0, u32::MAX, u32::MAX);
         assert_eq!(cartesian_in_cam_to_matrix(&CartesianPoint::of(u32::MAX - 1, u32::MAX - 1), &cam), MatrixPoint::of(1, u32::MAX - 1));
         assert_eq!(cartesian_in_cam_to_matrix(&CartesianPoint::of(u32::MAX - 2, u32::MAX - 2), &cam), MatrixPoint::of(2, u32::MAX - 2));

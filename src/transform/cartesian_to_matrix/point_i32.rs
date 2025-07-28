@@ -3,7 +3,7 @@ type MatrixPoint = crate::matrix::point::point_u32::PointU32;
 
 pub fn cartesian_to_matrix(point: &CartesianPoint) -> MatrixPoint {
     let row = i64::from(i32::MAX) - i64::from(point.y);
-    let col = i64::from(i32::MAX) + i64::from(point.x) + 1;
+    let col = i64::from(point.x) - i64::from(i32::MIN);
     MatrixPoint { row: row as u32, col: col as u32 }
 }
 

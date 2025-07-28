@@ -3,7 +3,7 @@ type MatrixPoint = crate::matrix::point::point_u16::PointU16;
 
 pub fn cartesian_to_matrix(point: &CartesianPoint) -> MatrixPoint {
     let row = i32::from(i16::MAX) - i32::from(point.y);
-    let col = i32::from(i16::MAX) + i32::from(point.x) + 1;
+    let col = i32::from(point.x) - i32::from(i16::MIN);
     MatrixPoint { row: row as u16, col: col as u16 }
 }
 

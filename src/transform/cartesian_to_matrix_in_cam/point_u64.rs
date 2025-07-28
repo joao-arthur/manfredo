@@ -3,9 +3,7 @@ type MatrixPoint = crate::matrix::point::point_u64::PointU64;
 type Cam = crate::matrix::rect::rect_u64::RectU64;
 
 pub fn cartesian_to_matrix_in_cam(point: &CartesianPoint, cam: &Cam) -> MatrixPoint {
-    let row = u128::from(u64::MAX) - u128::from(point.y) + u128::from(cam.min.row);
-    let col = u128::from(point.x) + u128::from(cam.min.col);
-    MatrixPoint { row: row as u64, col: col as u64 }
+    MatrixPoint { row: u64::MAX - point.y + cam.min.row, col: point.x + cam.min.col }
 }
 
 #[cfg(test)]

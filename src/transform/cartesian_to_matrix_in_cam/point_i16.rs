@@ -4,7 +4,7 @@ type Cam = crate::matrix::rect::rect_u16::RectU16;
 
 pub fn cartesian_to_matrix_in_cam(point: &CartesianPoint, cam: &Cam) -> MatrixPoint {
     let row = i32::from(i16::MAX) - i32::from(point.y) + i32::from(cam.min.row);
-    let col = i32::from(i16::MAX) + i32::from(point.x) + 1 + i32::from(cam.min.col);
+    let col = i32::from(point.x) - i32::from(i16::MIN) + i32::from(cam.min.col);
     MatrixPoint { row: row as u16, col: col as u16 }
 }
 

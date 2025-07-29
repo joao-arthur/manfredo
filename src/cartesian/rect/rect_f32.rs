@@ -30,6 +30,10 @@ pub fn max_delta(r: &RectF32) -> f32 {
     delta_x(r).max(delta_y(r))
 }
 
+pub fn len_x(r: &RectF32) -> f32 {
+    delta_x(r) + 1.0
+}
+
 pub fn inflate(r: &mut RectF32) {
     let is_min_x = r.min.x == point_f32::MIN;
     let is_min_y = r.min.y == point_f32::MIN;
@@ -75,7 +79,7 @@ pub fn translate(r: &mut RectF32, delta: &point_f32::PointF32) {
 mod tests {
     use crate::cartesian::point::point_f32::{MAX, MIN, PointF32};
 
-    use super::{RectF32, deflate, delta_x, delta_y, inflate, max_delta, translate};
+    use super::{RectF32, deflate, delta_x, delta_y, inflate, len_x, max_delta, translate};
 
     #[test]
     fn rect_f32() {
@@ -129,6 +133,14 @@ mod tests {
         assert_eq!(max_delta(&RectF32::of(MIN + 2.0, MIN + 1.0, 0.0, 0.0)), MAX);
         assert_eq!(max_delta(&RectF32::of(0.0, 0.0, MAX - 1.0, MAX)), MAX);
         assert_eq!(max_delta(&RectF32::of(0.0, 0.0, MAX, MAX - 1.0)), MAX);
+    }
+
+    #[test]
+    fn test_len_x() {
+        assert_eq!(len_x(&RectF32::of(0.0, 0.0, 0.0, MAX)), 1.0);
+        assert_eq!(len_x(&RectF32::of(0.0, -8_388_608.0, 0.0, 8_388_607.0)), 1.0);
+        assert_eq!(len_x(&RectF32::of(0.0, 0.0, MAX - 1.0, 0.0)), MAX);
+        assert_eq!(len_x(&RectF32::of(-8_388_608.0, 0.0, 8_388_606.0, 0.0)), MAX);
     }
 
     #[test]

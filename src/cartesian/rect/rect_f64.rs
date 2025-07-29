@@ -30,6 +30,10 @@ pub fn max_delta(r: &RectF64) -> f64 {
     delta_x(r).max(delta_y(r))
 }
 
+pub fn len_x(r: &RectF64) -> f64 {
+    delta_x(r) + 1.0
+}
+
 pub fn inflate(r: &mut RectF64) {
     let is_min_x = r.min.x == point_f64::MIN;
     let is_min_y = r.min.y == point_f64::MIN;
@@ -75,7 +79,7 @@ pub fn translate(r: &mut RectF64, delta: &point_f64::PointF64) {
 mod tests {
     use crate::cartesian::point::point_f64::{MAX, MIN, PointF64};
 
-    use super::{RectF64, deflate, delta_x, delta_y, inflate, max_delta, translate};
+    use super::{RectF64, deflate, delta_x, delta_y, inflate, len_x, max_delta, translate};
 
     #[test]
     fn rect_f64() {
@@ -129,6 +133,14 @@ mod tests {
         assert_eq!(max_delta(&RectF64::of(MIN + 2.0, MIN + 1.0, 0.0, 0.0)), MAX);
         assert_eq!(max_delta(&RectF64::of(0.0, 0.0, MAX - 1.0, MAX)), MAX);
         assert_eq!(max_delta(&RectF64::of(0.0, 0.0, MAX, MAX - 1.0)), MAX);
+    }
+
+    #[test]
+    fn test_len_x() {
+        assert_eq!(len_x(&RectF64::of(0.0, 0.0, 0.0, MAX)), 1.0);
+        assert_eq!(len_x(&RectF64::of(0.0, -4_503_599_627_370_496.0, 0.0, 4_503_599_627_370_495.0)), 1.0);
+        assert_eq!(len_x(&RectF64::of(0.0, 0.0, MAX - 1.0, 0.0)), MAX);
+        assert_eq!(len_x(&RectF64::of(-4_503_599_627_370_496.0, 0.0, 4_503_599_627_370_494.0, 0.0)), MAX);
     }
 
     #[test]

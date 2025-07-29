@@ -30,6 +30,10 @@ pub fn max_delta(r: &RectI8) -> u8 {
     std::cmp::max(delta_x(r), delta_y(r))
 }
 
+pub fn len_x(r: &RectI8) -> u8 {
+    delta_x(r) + 1
+}
+
 pub fn inflate(r: &mut RectI8) {
     let is_min_x = r.min.x == i8::MIN;
     let is_min_y = r.min.y == i8::MIN;
@@ -75,7 +79,7 @@ pub fn translate(r: &mut RectI8, delta: &point_i8::PointI8) {
 mod tests {
     use crate::cartesian::point::point_i8::PointI8;
 
-    use super::{RectI8, deflate, delta_x, delta_y, inflate, max_delta, translate};
+    use super::{RectI8, deflate, delta_x, delta_y, inflate, len_x, max_delta, translate};
 
     #[test]
     fn rect_i8() {
@@ -125,6 +129,12 @@ mod tests {
         assert_eq!(max_delta(&RectI8::of(i8::MIN, i8::MIN + 1, i8::MAX, i8::MAX)), u8::MAX);
         assert_eq!(max_delta(&RectI8::of(i8::MIN, i8::MIN, i8::MAX - 1, i8::MAX)), u8::MAX);
         assert_eq!(max_delta(&RectI8::of(i8::MIN, i8::MIN, i8::MAX, i8::MAX - 1)), u8::MAX);
+    }
+
+    #[test]
+    fn test_len_x() {
+        assert_eq!(len_x(&RectI8::of(0, i8::MIN, 0, i8::MAX)), 1);
+        assert_eq!(len_x(&RectI8::of(i8::MIN, 0, i8::MAX - 1, 0)), u8::MAX);
     }
 
     #[test]

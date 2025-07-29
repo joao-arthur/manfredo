@@ -38,6 +38,10 @@ pub fn len_col(r: &RectU32) -> u32 {
     delta_col(r) + 1
 }
 
+pub fn max_len(r: &RectU32) -> u32 {
+    std::cmp::max(len_row(r), len_col(r))
+}
+
 pub fn inflate(r: &mut RectU32) {
     let is_min_row = r.min.row == 0;
     let is_min_col = r.min.col == 0;
@@ -83,7 +87,7 @@ pub fn translate(r: &mut RectU32, delta: &PointI32) {
 mod tests {
     use crate::matrix::point::{point_i32::PointI32, point_u32::PointU32};
 
-    use super::{RectU32, deflate, delta_col, delta_row, inflate, len_col, len_row, max_delta, translate};
+    use super::{RectU32, deflate, delta_col, delta_row, inflate, len_col, len_row, max_delta, max_len, translate};
 
     #[test]
     fn rect_u32() {
@@ -140,6 +144,27 @@ mod tests {
     fn test_len_col() {
         assert_eq!(len_col(&RectU32::of(0, 0, 0, 0)), 1);
         assert_eq!(len_col(&RectU32::of(0, 0, 0, u32::MAX - 1)), u32::MAX);
+    }
+
+    #[test]
+    fn test_max_len() {
+        assert_eq!(max_len(&RectU32::of(0, 5, 10, 10)), 11);
+        assert_eq!(max_len(&RectU32::of(5, 0, 9, 9)), 10);
+    }
+
+    #[test]
+    fn max_len_1() {
+        assert_eq!(max_len(&RectU32::of(0, 0, 0, 0)), 1);
+        assert_eq!(max_len(&RectU32::of(1, 1, 1, 1)), 1);
+        assert_eq!(max_len(&RectU32::of(5, 10, 5, 10)), 1);
+    }
+
+    #[test]
+    fn max_len_2() {
+        assert_eq!(max_len(&RectU32::of(0, 0, 1, 1)), 2);
+        assert_eq!(max_len(&RectU32::of(5, 5, 6, 6)), 2);
+        assert_eq!(max_len(&RectU32::of(0, 0, 0, 1)), 2);
+        assert_eq!(max_len(&RectU32::of(5, 9, 5, 10)), 2);
     }
 
     #[test]

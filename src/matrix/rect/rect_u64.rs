@@ -34,6 +34,10 @@ pub fn len_row(r: &RectU64) -> u64 {
     delta_row(r) + 1
 }
 
+pub fn len_col(r: &RectU64) -> u64 {
+    delta_col(r) + 1
+}
+
 pub fn inflate(r: &mut RectU64) {
     let is_min_row = r.min.row == 0;
     let is_min_col = r.min.col == 0;
@@ -79,7 +83,7 @@ pub fn translate(r: &mut RectU64, delta: &PointI64) {
 mod tests {
     use crate::matrix::point::{point_i64::PointI64, point_u64::PointU64};
 
-    use super::{RectU64, deflate, delta_col, delta_row, inflate, len_row, max_delta, translate};
+    use super::{RectU64, deflate, delta_col, delta_row, inflate, len_col, len_row, max_delta, translate};
 
     #[test]
     fn rect_u64() {
@@ -133,6 +137,12 @@ mod tests {
     fn test_len_row() {
         assert_eq!(len_row(&RectU64::of(0, 0, 0, 0)), 1);
         assert_eq!(len_row(&RectU64::of(0, 0, u64::MAX - 1, 0)), u64::MAX);
+    }
+
+    #[test]
+    fn test_len_col() {
+        assert_eq!(len_col(&RectU64::of(0, 0, 0, 0)), 1);
+        assert_eq!(len_col(&RectU64::of(0, 0, 0, u64::MAX - 1)), u64::MAX);
     }
 
     #[test]

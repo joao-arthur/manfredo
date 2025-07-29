@@ -26,7 +26,7 @@ pub fn delta_col(r: &RectU64) -> u64 {
     point_u64::delta_col(&r.min, &r.max)
 }
 
-pub fn max_dimension(r: &RectU64) -> u64 {
+pub fn max_delta(r: &RectU64) -> u64 {
     std::cmp::max(delta_row(r), delta_col(r))
 }
 
@@ -75,7 +75,7 @@ pub fn translate(r: &mut RectU64, delta: &PointI64) {
 mod tests {
     use crate::matrix::point::{point_i64::PointI64, point_u64::PointU64};
 
-    use super::{RectU64, deflate, delta_col, delta_row, inflate, max_dimension, translate};
+    use super::{RectU64, deflate, delta_col, delta_row, inflate, max_delta, translate};
 
     #[test]
     fn rect_u64() {
@@ -99,30 +99,30 @@ mod tests {
     }
 
     #[test]
-    fn test_max_dimension() {
-        assert_eq!(max_dimension(&RectU64::of(0, 5, 10, 10)), 10);
-        assert_eq!(max_dimension(&RectU64::of(5, 0, 9, 9)), 9);
+    fn test_max_delta() {
+        assert_eq!(max_delta(&RectU64::of(0, 5, 10, 10)), 10);
+        assert_eq!(max_delta(&RectU64::of(5, 0, 9, 9)), 9);
     }
 
     #[test]
-    fn max_dimension_0() {
-        assert_eq!(max_dimension(&RectU64::of(0, 0, 0, 0)), 0);
-        assert_eq!(max_dimension(&RectU64::of(1, 1, 1, 1)), 0);
-        assert_eq!(max_dimension(&RectU64::of(5, 10, 5, 10)), 0);
+    fn max_delta_0() {
+        assert_eq!(max_delta(&RectU64::of(0, 0, 0, 0)), 0);
+        assert_eq!(max_delta(&RectU64::of(1, 1, 1, 1)), 0);
+        assert_eq!(max_delta(&RectU64::of(5, 10, 5, 10)), 0);
     }
 
     #[test]
-    fn max_dimension_1() {
-        assert_eq!(max_dimension(&RectU64::of(0, 0, 1, 1)), 1);
-        assert_eq!(max_dimension(&RectU64::of(5, 5, 6, 6)), 1);
-        assert_eq!(max_dimension(&RectU64::of(0, 0, 0, 1)), 1);
-        assert_eq!(max_dimension(&RectU64::of(5, 9, 5, 10)), 1);
+    fn max_delta_1() {
+        assert_eq!(max_delta(&RectU64::of(0, 0, 1, 1)), 1);
+        assert_eq!(max_delta(&RectU64::of(5, 5, 6, 6)), 1);
+        assert_eq!(max_delta(&RectU64::of(0, 0, 0, 1)), 1);
+        assert_eq!(max_delta(&RectU64::of(5, 9, 5, 10)), 1);
     }
 
     #[test]
-    fn max_dimension_max() {
-        assert_eq!(max_dimension(&RectU64::of(0, 0, u64::MAX, u64::MAX - 1)), u64::MAX);
-        assert_eq!(max_dimension(&RectU64::of(0, 0, u64::MAX - 1, u64::MAX)), u64::MAX);
+    fn max_delta_max() {
+        assert_eq!(max_delta(&RectU64::of(0, 0, u64::MAX, u64::MAX - 1)), u64::MAX);
+        assert_eq!(max_delta(&RectU64::of(0, 0, u64::MAX - 1, u64::MAX)), u64::MAX);
     }
 
     #[test]

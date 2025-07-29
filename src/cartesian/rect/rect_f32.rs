@@ -26,10 +26,8 @@ pub fn delta_y(r: &RectF32) -> f32 {
     point_f32::delta_y(&r.min, &r.max)
 }
 
-pub fn max_dimension(r: &RectF32) -> f32 {
-    let dx = delta_x(r);
-    let dy = delta_y(r);
-    dx.max(dy)
+pub fn max_delta(r: &RectF32) -> f32 {
+    delta_x(r).max(delta_y(r))
 }
 
 pub fn inflate(r: &mut RectF32) {
@@ -77,7 +75,7 @@ pub fn translate(r: &mut RectF32, delta: &point_f32::PointF32) {
 mod tests {
     use crate::cartesian::point::point_f32::{MAX, MIN, PointF32};
 
-    use super::{RectF32, deflate, delta_x, delta_y, inflate, max_dimension, translate};
+    use super::{RectF32, deflate, delta_x, delta_y, inflate, max_delta, translate};
 
     #[test]
     fn rect_f32() {
@@ -102,35 +100,35 @@ mod tests {
     }
 
     #[test]
-    fn test_max_dimension() {
-        assert_eq!(max_dimension(&RectF32::of(0.0, 5.0, 10.0, 10.0)), 10.0);
-        assert_eq!(max_dimension(&RectF32::of(-10.0, -10.0, -5.0, 0.0)), 10.0);
-        assert_eq!(max_dimension(&RectF32::of(-5.0, 0.0, 5.0, 5.0)), 10.0);
+    fn test_max_delta() {
+        assert_eq!(max_delta(&RectF32::of(0.0, 5.0, 10.0, 10.0)), 10.0);
+        assert_eq!(max_delta(&RectF32::of(-10.0, -10.0, -5.0, 0.0)), 10.0);
+        assert_eq!(max_delta(&RectF32::of(-5.0, 0.0, 5.0, 5.0)), 10.0);
     }
 
     #[test]
-    fn max_dimension_0() {
-        assert_eq!(max_dimension(&RectF32::of(0.0, 0.0, 0.0, 0.0)), 0.0);
-        assert_eq!(max_dimension(&RectF32::of(1.0, 1.0, 1.0, 1.0)), 0.0);
-        assert_eq!(max_dimension(&RectF32::of(-1.0, -1.0, -1.0, -1.0)), 0.0);
-        assert_eq!(max_dimension(&RectF32::of(5.0, 10.0, 5.0, 10.0)), 0.0);
+    fn max_delta_0() {
+        assert_eq!(max_delta(&RectF32::of(0.0, 0.0, 0.0, 0.0)), 0.0);
+        assert_eq!(max_delta(&RectF32::of(1.0, 1.0, 1.0, 1.0)), 0.0);
+        assert_eq!(max_delta(&RectF32::of(-1.0, -1.0, -1.0, -1.0)), 0.0);
+        assert_eq!(max_delta(&RectF32::of(5.0, 10.0, 5.0, 10.0)), 0.0);
     }
 
     #[test]
-    fn max_dimension_1() {
-        assert_eq!(max_dimension(&RectF32::of(0.0, 0.0, 1.0, 1.0)), 1.0);
-        assert_eq!(max_dimension(&RectF32::of(5.0, 5.0, 6.0, 6.0)), 1.0);
-        assert_eq!(max_dimension(&RectF32::of(-6.0, -6.0, -5.0, -5.0)), 1.0);
-        assert_eq!(max_dimension(&RectF32::of(0.0, 0.0, 0.0, 1.0)), 1.0);
-        assert_eq!(max_dimension(&RectF32::of(5.0, 9.0, 5.0, 10.0)), 1.0);
+    fn max_delta_1() {
+        assert_eq!(max_delta(&RectF32::of(0.0, 0.0, 1.0, 1.0)), 1.0);
+        assert_eq!(max_delta(&RectF32::of(5.0, 5.0, 6.0, 6.0)), 1.0);
+        assert_eq!(max_delta(&RectF32::of(-6.0, -6.0, -5.0, -5.0)), 1.0);
+        assert_eq!(max_delta(&RectF32::of(0.0, 0.0, 0.0, 1.0)), 1.0);
+        assert_eq!(max_delta(&RectF32::of(5.0, 9.0, 5.0, 10.0)), 1.0);
     }
 
     #[test]
-    fn max_dimension_bounds() {
-        assert_eq!(max_dimension(&RectF32::of(MIN + 1.0, MIN + 2.0, 0.0, 0.0)), MAX);
-        assert_eq!(max_dimension(&RectF32::of(MIN + 2.0, MIN + 1.0, 0.0, 0.0)), MAX);
-        assert_eq!(max_dimension(&RectF32::of(0.0, 0.0, MAX - 1.0, MAX)), MAX);
-        assert_eq!(max_dimension(&RectF32::of(0.0, 0.0, MAX, MAX - 1.0)), MAX);
+    fn max_delta_bounds() {
+        assert_eq!(max_delta(&RectF32::of(MIN + 1.0, MIN + 2.0, 0.0, 0.0)), MAX);
+        assert_eq!(max_delta(&RectF32::of(MIN + 2.0, MIN + 1.0, 0.0, 0.0)), MAX);
+        assert_eq!(max_delta(&RectF32::of(0.0, 0.0, MAX - 1.0, MAX)), MAX);
+        assert_eq!(max_delta(&RectF32::of(0.0, 0.0, MAX, MAX - 1.0)), MAX);
     }
 
     #[test]

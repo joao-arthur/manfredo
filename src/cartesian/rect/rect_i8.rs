@@ -26,7 +26,7 @@ pub fn delta_y(r: &RectI8) -> u8 {
     point_i8::delta_y(&r.min, &r.max)
 }
 
-pub fn max_dimension(r: &RectI8) -> u8 {
+pub fn max_delta(r: &RectI8) -> u8 {
     std::cmp::max(delta_x(r), delta_y(r))
 }
 
@@ -75,7 +75,7 @@ pub fn translate(r: &mut RectI8, delta: &point_i8::PointI8) {
 mod tests {
     use crate::cartesian::point::point_i8::PointI8;
 
-    use super::{RectI8, deflate, delta_x, delta_y, inflate, max_dimension, translate};
+    use super::{RectI8, deflate, delta_x, delta_y, inflate, max_delta, translate};
 
     #[test]
     fn rect_i8() {
@@ -96,35 +96,35 @@ mod tests {
     }
 
     #[test]
-    fn test_max_dimension() {
-        assert_eq!(max_dimension(&RectI8::of(0, 5, 10, 10)), 10);
-        assert_eq!(max_dimension(&RectI8::of(-10, -10, -5, 0)), 10);
-        assert_eq!(max_dimension(&RectI8::of(-5, 0, 5, 5)), 10);
+    fn test_max_delta() {
+        assert_eq!(max_delta(&RectI8::of(0, 5, 10, 10)), 10);
+        assert_eq!(max_delta(&RectI8::of(-10, -10, -5, 0)), 10);
+        assert_eq!(max_delta(&RectI8::of(-5, 0, 5, 5)), 10);
     }
 
     #[test]
-    fn max_dimension_0() {
-        assert_eq!(max_dimension(&RectI8::of(0, 0, 0, 0)), 0);
-        assert_eq!(max_dimension(&RectI8::of(1, 1, 1, 1)), 0);
-        assert_eq!(max_dimension(&RectI8::of(-1, -1, -1, -1)), 0);
-        assert_eq!(max_dimension(&RectI8::of(5, 10, 5, 10)), 0);
+    fn max_delta_0() {
+        assert_eq!(max_delta(&RectI8::of(0, 0, 0, 0)), 0);
+        assert_eq!(max_delta(&RectI8::of(1, 1, 1, 1)), 0);
+        assert_eq!(max_delta(&RectI8::of(-1, -1, -1, -1)), 0);
+        assert_eq!(max_delta(&RectI8::of(5, 10, 5, 10)), 0);
     }
 
     #[test]
-    fn max_dimension_1() {
-        assert_eq!(max_dimension(&RectI8::of(0, 0, 1, 1)), 1);
-        assert_eq!(max_dimension(&RectI8::of(5, 5, 6, 6)), 1);
-        assert_eq!(max_dimension(&RectI8::of(-6, -6, -5, -5)), 1);
-        assert_eq!(max_dimension(&RectI8::of(0, 0, 0, 1)), 1);
-        assert_eq!(max_dimension(&RectI8::of(5, 9, 5, 10)), 1);
+    fn max_delta_1() {
+        assert_eq!(max_delta(&RectI8::of(0, 0, 1, 1)), 1);
+        assert_eq!(max_delta(&RectI8::of(5, 5, 6, 6)), 1);
+        assert_eq!(max_delta(&RectI8::of(-6, -6, -5, -5)), 1);
+        assert_eq!(max_delta(&RectI8::of(0, 0, 0, 1)), 1);
+        assert_eq!(max_delta(&RectI8::of(5, 9, 5, 10)), 1);
     }
 
     #[test]
-    fn max_dimension_bounds() {
-        assert_eq!(max_dimension(&RectI8::of(i8::MIN + 1, i8::MIN, i8::MAX, i8::MAX)), u8::MAX);
-        assert_eq!(max_dimension(&RectI8::of(i8::MIN, i8::MIN + 1, i8::MAX, i8::MAX)), u8::MAX);
-        assert_eq!(max_dimension(&RectI8::of(i8::MIN, i8::MIN, i8::MAX - 1, i8::MAX)), u8::MAX);
-        assert_eq!(max_dimension(&RectI8::of(i8::MIN, i8::MIN, i8::MAX, i8::MAX - 1)), u8::MAX);
+    fn max_delta_bounds() {
+        assert_eq!(max_delta(&RectI8::of(i8::MIN + 1, i8::MIN, i8::MAX, i8::MAX)), u8::MAX);
+        assert_eq!(max_delta(&RectI8::of(i8::MIN, i8::MIN + 1, i8::MAX, i8::MAX)), u8::MAX);
+        assert_eq!(max_delta(&RectI8::of(i8::MIN, i8::MIN, i8::MAX - 1, i8::MAX)), u8::MAX);
+        assert_eq!(max_delta(&RectI8::of(i8::MIN, i8::MIN, i8::MAX, i8::MAX - 1)), u8::MAX);
     }
 
     #[test]

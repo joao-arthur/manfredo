@@ -38,6 +38,10 @@ pub fn len_y(r: &RectI8) -> u8 {
     delta_y(r) + 1
 }
 
+pub fn max_len(r: &RectI8) -> u8 {
+    std::cmp::max(len_x(r), len_y(r))
+}
+
 pub fn inflate(r: &mut RectI8) {
     let is_min_x = r.min.x == i8::MIN;
     let is_min_y = r.min.y == i8::MIN;
@@ -83,7 +87,7 @@ pub fn translate(r: &mut RectI8, delta: &point_i8::PointI8) {
 mod tests {
     use crate::cartesian::point::point_i8::PointI8;
 
-    use super::{RectI8, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, translate};
+    use super::{RectI8, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, translate};
 
     #[test]
     fn rect_i8() {
@@ -145,6 +149,38 @@ mod tests {
     fn test_len_y() {
         assert_eq!(len_y(&RectI8::of(i8::MIN, 0, i8::MAX, 0)), 1);
         assert_eq!(len_y(&RectI8::of(0, i8::MIN, 0, i8::MAX - 1)), u8::MAX);
+    }
+
+    #[test]
+    fn test_max_len() {
+        assert_eq!(max_len(&RectI8::of(0, 5, 10, 10)), 11);
+        assert_eq!(max_len(&RectI8::of(-10, -10, -5, 0)), 11);
+        assert_eq!(max_len(&RectI8::of(-5, 0, 5, 5)), 11);
+    }
+
+    #[test]
+    fn max_len_1() {
+        assert_eq!(max_len(&RectI8::of(0, 0, 0, 0)), 1);
+        assert_eq!(max_len(&RectI8::of(1, 1, 1, 1)), 1);
+        assert_eq!(max_len(&RectI8::of(-1, -1, -1, -1)), 1);
+        assert_eq!(max_len(&RectI8::of(5, 10, 5, 10)), 1);
+    }
+
+    #[test]
+    fn max_len_2() {
+        assert_eq!(max_len(&RectI8::of(0, 0, 1, 1)), 2);
+        assert_eq!(max_len(&RectI8::of(5, 5, 6, 6)), 2);
+        assert_eq!(max_len(&RectI8::of(-6, -6, -5, -5)), 2);
+        assert_eq!(max_len(&RectI8::of(0, 0, 0, 1)), 2);
+        assert_eq!(max_len(&RectI8::of(5, 9, 5, 10)), 2);
+    }
+
+    #[test]
+    fn max_len_bounds() {
+        assert_eq!(max_len(&RectI8::of(i8::MIN + 1, i8::MIN, i8::MAX - 1, i8::MAX - 1)), u8::MAX);
+        assert_eq!(max_len(&RectI8::of(i8::MIN, i8::MIN + 1, i8::MAX - 1, i8::MAX - 1)), u8::MAX);
+        assert_eq!(max_len(&RectI8::of(i8::MIN, i8::MIN, i8::MAX - 2, i8::MAX - 1)), u8::MAX);
+        assert_eq!(max_len(&RectI8::of(i8::MIN, i8::MIN, i8::MAX - 1, i8::MAX - 2)), u8::MAX);
     }
 
     #[test]

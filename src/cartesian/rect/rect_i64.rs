@@ -38,6 +38,10 @@ pub fn len_y(r: &RectI64) -> u64 {
     delta_y(r) + 1
 }
 
+pub fn max_len(r: &RectI64) -> u64 {
+    std::cmp::max(len_x(r), len_y(r))
+}
+
 pub fn inflate(r: &mut RectI64) {
     let is_min_x = r.min.x == i64::MIN;
     let is_min_y = r.min.y == i64::MIN;
@@ -83,7 +87,7 @@ pub fn translate(r: &mut RectI64, delta: &point_i64::PointI64) {
 mod tests {
     use crate::cartesian::point::point_i64::PointI64;
 
-    use super::{RectI64, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, translate};
+    use super::{RectI64, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, translate};
 
     #[test]
     fn rect_i64() {
@@ -145,6 +149,38 @@ mod tests {
     fn test_len_y() {
         assert_eq!(len_y(&RectI64::of(i64::MIN, 0, i64::MAX, 0)), 1);
         assert_eq!(len_y(&RectI64::of(0, i64::MIN, 0, i64::MAX - 1)), u64::MAX);
+    }
+
+    #[test]
+    fn test_max_len() {
+        assert_eq!(max_len(&RectI64::of(0, 5, 10, 10)), 11);
+        assert_eq!(max_len(&RectI64::of(-10, -10, -5, 0)), 11);
+        assert_eq!(max_len(&RectI64::of(-5, 0, 5, 5)), 11);
+    }
+
+    #[test]
+    fn max_len_1() {
+        assert_eq!(max_len(&RectI64::of(0, 0, 0, 0)), 1);
+        assert_eq!(max_len(&RectI64::of(1, 1, 1, 1)), 1);
+        assert_eq!(max_len(&RectI64::of(-1, -1, -1, -1)), 1);
+        assert_eq!(max_len(&RectI64::of(5, 10, 5, 10)), 1);
+    }
+
+    #[test]
+    fn max_len_2() {
+        assert_eq!(max_len(&RectI64::of(0, 0, 1, 1)), 2);
+        assert_eq!(max_len(&RectI64::of(5, 5, 6, 6)), 2);
+        assert_eq!(max_len(&RectI64::of(-6, -6, -5, -5)), 2);
+        assert_eq!(max_len(&RectI64::of(0, 0, 0, 1)), 2);
+        assert_eq!(max_len(&RectI64::of(5, 9, 5, 10)), 2);
+    }
+
+    #[test]
+    fn max_len_bounds() {
+        assert_eq!(max_len(&RectI64::of(i64::MIN + 1, i64::MIN, i64::MAX - 1, i64::MAX - 1)), u64::MAX);
+        assert_eq!(max_len(&RectI64::of(i64::MIN, i64::MIN + 1, i64::MAX - 1, i64::MAX - 1)), u64::MAX);
+        assert_eq!(max_len(&RectI64::of(i64::MIN, i64::MIN, i64::MAX - 2, i64::MAX - 1)), u64::MAX);
+        assert_eq!(max_len(&RectI64::of(i64::MIN, i64::MIN, i64::MAX - 1, i64::MAX - 2)), u64::MAX);
     }
 
     #[test]

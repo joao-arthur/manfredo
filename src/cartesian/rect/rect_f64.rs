@@ -38,6 +38,10 @@ pub fn len_y(r: &RectF64) -> f64 {
     delta_y(r) + 1.0
 }
 
+pub fn max_len(r: &RectF64) -> f64 {
+    len_x(r).max(len_y(r))
+}
+
 pub fn inflate(r: &mut RectF64) {
     let is_min_x = r.min.x == point_f64::MIN;
     let is_min_y = r.min.y == point_f64::MIN;
@@ -83,7 +87,7 @@ pub fn translate(r: &mut RectF64, delta: &point_f64::PointF64) {
 mod tests {
     use crate::cartesian::point::point_f64::{MAX, MIN, PointF64};
 
-    use super::{RectF64, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, translate};
+    use super::{RectF64, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, translate};
 
     #[test]
     fn rect_f64() {
@@ -153,6 +157,38 @@ mod tests {
         assert_eq!(len_y(&RectF64::of(-4_503_599_627_370_496.0, 0.0, 4_503_599_627_370_495.0, 0.0)), 1.0);
         assert_eq!(len_y(&RectF64::of(0.0, 0.0, 0.0, MAX - 1.0)), MAX);
         assert_eq!(len_y(&RectF64::of(0.0, -4_503_599_627_370_496.0, 0.0, 4_503_599_627_370_494.0)), MAX);
+    }
+
+    #[test]
+    fn test_max_len() {
+        assert_eq!(max_len(&RectF64::of(0.0, 5.0, 10.0, 10.0)), 11.0);
+        assert_eq!(max_len(&RectF64::of(-10.0, -10.0, -5.0, 0.0)), 11.0);
+        assert_eq!(max_len(&RectF64::of(-5.0, 0.0, 5.0, 5.0)), 11.0);
+    }
+
+    #[test]
+    fn max_len_1() {
+        assert_eq!(max_len(&RectF64::of(0.0, 0.0, 0.0, 0.0)), 1.0);
+        assert_eq!(max_len(&RectF64::of(1.0, 1.0, 1.0, 1.0)), 1.0);
+        assert_eq!(max_len(&RectF64::of(-1.0, -1.0, -1.0, -1.0)), 1.0);
+        assert_eq!(max_len(&RectF64::of(5.0, 10.0, 5.0, 10.0)), 1.0);
+    }
+
+    #[test]
+    fn max_len_2() {
+        assert_eq!(max_len(&RectF64::of(0.0, 0.0, 1.0, 1.0)), 2.0);
+        assert_eq!(max_len(&RectF64::of(5.0, 5.0, 6.0, 6.0)), 2.0);
+        assert_eq!(max_len(&RectF64::of(-6.0, -6.0, -5.0, -5.0)), 2.0);
+        assert_eq!(max_len(&RectF64::of(0.0, 0.0, 0.0, 1.0)), 2.0);
+        assert_eq!(max_len(&RectF64::of(5.0, 9.0, 5.0, 10.0)), 2.0);
+    }
+
+    #[test]
+    fn max_len_bounds() {
+        assert_eq!(max_len(&RectF64::of(MIN + 2.0, MIN + 3.0, 0.0, 0.0)), MAX);
+        assert_eq!(max_len(&RectF64::of(MIN + 3.0, MIN + 2.0, 0.0, 0.0)), MAX);
+        assert_eq!(max_len(&RectF64::of(0.0, 0.0, MAX - 2.0, MAX - 1.0)), MAX);
+        assert_eq!(max_len(&RectF64::of(0.0, 0.0, MAX - 1.0, MAX - 2.0)), MAX);
     }
 
     #[test]

@@ -30,6 +30,10 @@ pub fn max_delta(r: &RectU8) -> u8 {
     std::cmp::max(delta_row(r), delta_col(r))
 }
 
+pub fn len_row(r: &RectU8) -> u8 {
+    delta_row(r) + 1
+}
+
 pub fn inflate(r: &mut RectU8) {
     let is_min_row = r.min.row == 0;
     let is_min_col = r.min.col == 0;
@@ -75,7 +79,7 @@ pub fn translate(r: &mut RectU8, delta: &PointI8) {
 mod tests {
     use crate::matrix::point::{point_i8::PointI8, point_u8::PointU8};
 
-    use super::{RectU8, deflate, delta_col, delta_row, inflate, max_delta, translate};
+    use super::{RectU8, deflate, delta_col, delta_row, inflate, len_row, max_delta, translate};
 
     #[test]
     fn rect_u8() {
@@ -120,6 +124,12 @@ mod tests {
     fn max_delta_max() {
         assert_eq!(max_delta(&RectU8::of(0, 0, u8::MAX, u8::MAX - 1)), u8::MAX);
         assert_eq!(max_delta(&RectU8::of(0, 0, u8::MAX - 1, u8::MAX)), u8::MAX);
+    }
+
+    #[test]
+    fn test_len_row() {
+        assert_eq!(len_row(&RectU8::of(0, 0, 0, 0)), 1);
+        assert_eq!(len_row(&RectU8::of(0, 0, u8::MAX - 1, 0)), u8::MAX);
     }
 
     #[test]

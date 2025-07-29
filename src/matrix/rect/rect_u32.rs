@@ -30,6 +30,10 @@ pub fn max_delta(r: &RectU32) -> u32 {
     std::cmp::max(delta_row(r), delta_col(r))
 }
 
+pub fn len_row(r: &RectU32) -> u32 {
+    delta_row(r) + 1
+}
+
 pub fn inflate(r: &mut RectU32) {
     let is_min_row = r.min.row == 0;
     let is_min_col = r.min.col == 0;
@@ -75,7 +79,7 @@ pub fn translate(r: &mut RectU32, delta: &PointI32) {
 mod tests {
     use crate::matrix::point::{point_i32::PointI32, point_u32::PointU32};
 
-    use super::{RectU32, deflate, delta_col, delta_row, inflate, max_delta, translate};
+    use super::{RectU32, deflate, delta_col, delta_row, inflate, len_row, max_delta, translate};
 
     #[test]
     fn rect_u32() {
@@ -120,6 +124,12 @@ mod tests {
     fn max_delta_max() {
         assert_eq!(max_delta(&RectU32::of(0, 0, u32::MAX, u32::MAX - 1)), u32::MAX);
         assert_eq!(max_delta(&RectU32::of(0, 0, u32::MAX - 1, u32::MAX)), u32::MAX);
+    }
+
+    #[test]
+    fn test_len_row() {
+        assert_eq!(len_row(&RectU32::of(0, 0, 0, 0)), 1);
+        assert_eq!(len_row(&RectU32::of(0, 0, u32::MAX - 1, 0)), u32::MAX);
     }
 
     #[test]

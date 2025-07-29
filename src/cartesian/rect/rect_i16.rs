@@ -34,6 +34,10 @@ pub fn len_x(r: &RectI16) -> u16 {
     delta_x(r) + 1
 }
 
+pub fn len_y(r: &RectI16) -> u16 {
+    delta_y(r) + 1
+}
+
 pub fn inflate(r: &mut RectI16) {
     let is_min_x = r.min.x == i16::MIN;
     let is_min_y = r.min.y == i16::MIN;
@@ -79,7 +83,7 @@ pub fn translate(r: &mut RectI16, delta: &point_i16::PointI16) {
 mod tests {
     use crate::cartesian::point::point_i16::PointI16;
 
-    use super::{RectI16, deflate, delta_x, delta_y, inflate, len_x, max_delta, translate};
+    use super::{RectI16, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, translate};
 
     #[test]
     fn rect_i16() {
@@ -135,6 +139,12 @@ mod tests {
     fn test_len_x() {
         assert_eq!(len_x(&RectI16::of(0, i16::MIN, 0, i16::MAX)), 1);
         assert_eq!(len_x(&RectI16::of(i16::MIN, 0, i16::MAX - 1, 0)), u16::MAX);
+    }
+
+    #[test]
+    fn test_len_y() {
+        assert_eq!(len_y(&RectI16::of(i16::MIN, 0, i16::MAX, 0)), 1);
+        assert_eq!(len_y(&RectI16::of(0, i16::MIN, 0, i16::MAX - 1)), u16::MAX);
     }
 
     #[test]

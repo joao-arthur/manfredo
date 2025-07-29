@@ -34,6 +34,10 @@ pub fn len_x(r: &RectI64) -> u64 {
     delta_x(r) + 1
 }
 
+pub fn len_y(r: &RectI64) -> u64 {
+    delta_y(r) + 1
+}
+
 pub fn inflate(r: &mut RectI64) {
     let is_min_x = r.min.x == i64::MIN;
     let is_min_y = r.min.y == i64::MIN;
@@ -79,7 +83,7 @@ pub fn translate(r: &mut RectI64, delta: &point_i64::PointI64) {
 mod tests {
     use crate::cartesian::point::point_i64::PointI64;
 
-    use super::{RectI64, deflate, delta_x, delta_y, inflate, len_x, max_delta, translate};
+    use super::{RectI64, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, translate};
 
     #[test]
     fn rect_i64() {
@@ -135,6 +139,12 @@ mod tests {
     fn test_len_x() {
         assert_eq!(len_x(&RectI64::of(0, i64::MIN, 0, i64::MAX)), 1);
         assert_eq!(len_x(&RectI64::of(i64::MIN, 0, i64::MAX - 1, 0)), u64::MAX);
+    }
+
+    #[test]
+    fn test_len_y() {
+        assert_eq!(len_y(&RectI64::of(i64::MIN, 0, i64::MAX, 0)), 1);
+        assert_eq!(len_y(&RectI64::of(0, i64::MIN, 0, i64::MAX - 1)), u64::MAX);
     }
 
     #[test]

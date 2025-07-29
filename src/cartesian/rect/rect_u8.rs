@@ -34,6 +34,10 @@ pub fn len_x(r: &RectU8) -> u8 {
     delta_x(r) + 1
 }
 
+pub fn len_y(r: &RectU8) -> u8 {
+    delta_y(r) + 1
+}
+
 pub fn inflate(r: &mut RectU8) {
     let is_min_x = r.min.x == 0;
     let is_min_y = r.min.y == 0;
@@ -79,7 +83,7 @@ pub fn translate(r: &mut RectU8, delta: &PointI8) {
 mod tests {
     use crate::cartesian::point::{point_i8::PointI8, point_u8::PointU8};
 
-    use super::{RectU8, deflate, delta_x, delta_y, inflate, len_x, max_delta, translate};
+    use super::{RectU8, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, translate};
 
     #[test]
     fn rect_u8() {
@@ -130,6 +134,12 @@ mod tests {
     fn test_len_x() {
         assert_eq!(len_x(&RectU8::of(0, 0, 0, 0)), 1);
         assert_eq!(len_x(&RectU8::of(0, 0, u8::MAX - 1, 0)), u8::MAX);
+    }
+
+    #[test]
+    fn test_len_y() {
+        assert_eq!(len_y(&RectU8::of(0, 0, 0, 0)), 1);
+        assert_eq!(len_y(&RectU8::of(0, 0, 0, u8::MAX - 1)), u8::MAX);
     }
 
     #[test]

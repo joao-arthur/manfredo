@@ -34,6 +34,10 @@ pub fn len_x(r: &RectU32) -> u32 {
     delta_x(r) + 1
 }
 
+pub fn len_y(r: &RectU32) -> u32 {
+    delta_y(r) + 1
+}
+
 pub fn inflate(r: &mut RectU32) {
     let is_min_x = r.min.x == 0;
     let is_min_y = r.min.y == 0;
@@ -79,7 +83,7 @@ pub fn translate(r: &mut RectU32, delta: &PointI32) {
 mod tests {
     use crate::cartesian::point::{point_i32::PointI32, point_u32::PointU32};
 
-    use super::{RectU32, deflate, delta_x, delta_y, inflate, len_x, max_delta, translate};
+    use super::{RectU32, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, translate};
 
     #[test]
     fn rect_u32() {
@@ -130,6 +134,12 @@ mod tests {
     fn test_len_x() {
         assert_eq!(len_x(&RectU32::of(0, 0, 0, 0)), 1);
         assert_eq!(len_x(&RectU32::of(0, 0, u32::MAX - 1, 0)), u32::MAX);
+    }
+
+    #[test]
+    fn test_len_y() {
+        assert_eq!(len_y(&RectU32::of(0, 0, 0, 0)), 1);
+        assert_eq!(len_y(&RectU32::of(0, 0, 0, u32::MAX - 1)), u32::MAX);
     }
 
     #[test]

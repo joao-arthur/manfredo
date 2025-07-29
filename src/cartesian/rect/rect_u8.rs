@@ -27,9 +27,7 @@ pub fn delta_y(r: &RectU8) -> u8 {
 }
 
 pub fn max_dimension(r: &RectU8) -> u8 {
-    let dx = delta_x(r);
-    let dy = delta_y(r);
-    std::cmp::max(dx, dy)
+    std::cmp::max(delta_x(r), delta_y(r))
 }
 
 pub fn inflate(r: &mut RectU8) {

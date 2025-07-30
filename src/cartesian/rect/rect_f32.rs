@@ -70,6 +70,22 @@ pub fn deflate(r: &mut RectF32) {
     r.max.y -= 1.0;
 }
 
+pub fn resize(r: &mut RectF32, size: f32) {
+    if size < 3.0 {
+        return;
+    }
+    let diff_x = delta_x(r) + 1.0 - size;
+    let diff_y = delta_y(r) + 1.0 - size;
+    let temp_min_x = r.min.x + diff_x / 2.0;
+    let temp_min_y = r.min.y + diff_y / 2.0;
+    let min_x = temp_min_x.clamp(point_f32::MIN, point_f32::MAX - size + 1.0);
+    let min_y = temp_min_y.clamp(point_f32::MIN, point_f32::MAX - size + 1.0);
+    r.min.x = min_x;
+    r.min.y = min_y;
+    r.max.x = min_x + size - 1.0;
+    r.max.y = min_y + size - 1.0;
+}
+
 pub fn translate(r: &mut RectF32, delta: &point_f32::PointF32) {
     let dx = delta_x(r);
     let dy = delta_y(r);
@@ -87,7 +103,7 @@ pub fn translate(r: &mut RectF32, delta: &point_f32::PointF32) {
 mod tests {
     use crate::cartesian::point::point_f32::{MAX, MIN, PointF32};
 
-    use super::{RectF32, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, translate};
+    use super::{RectF32, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, resize, translate};
 
     #[test]
     fn rect_f32() {
@@ -289,6 +305,101 @@ mod tests {
         assert_eq!(r, RectF32::of(-1.0, -1.0, 0.0, 0.0));
         deflate(&mut r);
         assert_eq!(r, RectF32::of(-1.0, -1.0, 0.0, 0.0));
+    }
+
+    #[test]
+    fn resize_odd_size() {
+        let mut r = RectF32::of(-5.0, -5.0, 5.0, 5.0);
+        resize(&mut r, 11.0);
+        assert_eq!(r, RectF32::of(-5.0, -5.0, 5.0, 5.0));
+        resize(&mut r, 9.0);
+        assert_eq!(r, RectF32::of(-4.0, -4.0, 4.0, 4.0));
+        resize(&mut r, 7.0);
+        assert_eq!(r, RectF32::of(-3.0, -3.0, 3.0, 3.0));
+        resize(&mut r, 5.0);
+        assert_eq!(r, RectF32::of(-2.0, -2.0, 2.0, 2.0));
+        resize(&mut r, 3.0);
+        assert_eq!(r, RectF32::of(-1.0, -1.0, 1.0, 1.0));
+        resize(&mut r, 1.0);
+        assert_eq!(r, RectF32::of(-1.0, -1.0, 1.0, 1.0));
+        resize(&mut r, 1.0);
+        assert_eq!(r, RectF32::of(-1.0, -1.0, 1.0, 1.0));
+        resize(&mut r, 3.0);
+        assert_eq!(r, RectF32::of(-1.0, -1.0, 1.0, 1.0));
+        resize(&mut r, 5.0);
+        assert_eq!(r, RectF32::of(-2.0, -2.0, 2.0, 2.0));
+        resize(&mut r, 7.0);
+        assert_eq!(r, RectF32::of(-3.0, -3.0, 3.0, 3.0));
+    }
+
+    #[test]
+    fn resize_even_size() {
+        let mut r = RectF32::of(-5.0, -5.0, 4.0, 4.0);
+        resize(&mut r, 10.0);
+        assert_eq!(r, RectF32::of(-5.0, -5.0, 4.0, 4.0));
+        resize(&mut r, 8.0);
+        assert_eq!(r, RectF32::of(-4.0, -4.0, 3.0, 3.0));
+        resize(&mut r, 6.0);
+        assert_eq!(r, RectF32::of(-3.0, -3.0, 2.0, 2.0));
+        resize(&mut r, 4.0);
+        assert_eq!(r, RectF32::of(-2.0, -2.0, 1.0, 1.0));
+        resize(&mut r, 2.0);
+        assert_eq!(r, RectF32::of(-2.0, -2.0, 1.0, 1.0));
+        resize(&mut r, 2.0);
+        assert_eq!(r, RectF32::of(-2.0, -2.0, 1.0, 1.0));
+        resize(&mut r, 4.0);
+        assert_eq!(r, RectF32::of(-2.0, -2.0, 1.0, 1.0));
+        resize(&mut r, 6.0);
+        assert_eq!(r, RectF32::of(-3.0, -3.0, 2.0, 2.0));
+    }
+
+    #[test]
+    fn test_resize_even_size_2nd_scenario() {
+        let mut r = RectF32::of(-4.0, -4.0, 5.0, 5.0);
+        resize(&mut r, 10.0);
+        assert_eq!(r, RectF32::of(-4.0, -4.0, 5.0, 5.0));
+        resize(&mut r, 8.0);
+        assert_eq!(r, RectF32::of(-3.0, -3.0, 4.0, 4.0));
+        resize(&mut r, 6.0);
+        assert_eq!(r, RectF32::of(-2.0, -2.0, 3.0, 3.0));
+        resize(&mut r, 4.0);
+        assert_eq!(r, RectF32::of(-1.0, -1.0, 2.0, 2.0));
+        resize(&mut r, 2.0);
+        assert_eq!(r, RectF32::of(-1.0, -1.0, 2.0, 2.0));
+        resize(&mut r, 2.0);
+        assert_eq!(r, RectF32::of(-1.0, -1.0, 2.0, 2.0));
+        resize(&mut r, 4.0);
+        assert_eq!(r, RectF32::of(-1.0, -1.0, 2.0, 2.0));
+        resize(&mut r, 6.0);
+        assert_eq!(r, RectF32::of(-2.0, -2.0, 3.0, 3.0));
+    }
+
+    #[test]
+    fn resize_odd_min_bounds_big_delta() {
+        let mut r = RectF32::of(MIN, MIN, MIN + 2.0, MIN + 2.0);
+        resize(&mut r, MAX);
+        assert_eq!(r, RectF32::of(MIN, MIN, -2.0, -2.0));
+    }
+
+    #[test]
+    fn resize_even_min_bounds_big_delta() {
+        let mut r = RectF32::of(MIN, MIN, MIN + 3.0, MIN + 3.0);
+        resize(&mut r, MAX - 1.0);
+        assert_eq!(r, RectF32::of(MIN, MIN, -3.0, -3.0));
+    }
+
+    #[test]
+    fn resize_odd_max_bounds_big_delta() {
+        let mut r = RectF32::of(MAX - 2.0, MAX - 2.0, MAX, MAX);
+        resize(&mut r, MAX);
+        assert_eq!(r, RectF32::of(1.0, 1.0, MAX, MAX));
+    }
+
+    #[test]
+    fn resize_even_max_bounds_big_delta() {
+        let mut r = RectF32::of(MAX - 3.0, MAX - 3.0, MAX, MAX);
+        resize(&mut r, MAX - 1.0);
+        assert_eq!(r, RectF32::of(2.0, 2.0, MAX, MAX));
     }
 
     #[test]

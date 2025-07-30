@@ -70,24 +70,40 @@ pub fn deflate(r: &mut RectU8) {
     r.max.col -= 1;
 }
 
+pub fn resize(r: &mut RectU8, size: u8) {
+    if size < 3 {
+        return;
+    }
+    let diff_row = i16::from(delta_row(r)) + 1 - i16::from(size);
+    let diff_col = i16::from(delta_col(r)) + 1 - i16::from(size);
+    let temp_min_row = i16::from(r.min.row) + diff_row / 2;
+    let temp_min_col = i16::from(r.min.col) + diff_col / 2;
+    let min_row = temp_min_row.clamp(0, i16::from(u8::MAX) - i16::from(size) + 1);
+    let min_col = temp_min_col.clamp(0, i16::from(u8::MAX) - i16::from(size) + 1);
+    r.min.row = min_row as u8;
+    r.min.col = min_col as u8;
+    r.max.row = (min_row + i16::from(size) - 1) as u8;
+    r.max.col = (min_col + i16::from(size) - 1) as u8;
+}
+
 pub fn translate(r: &mut RectU8, delta: &PointI8) {
     let d_row = delta_row(r);
     let d_col = delta_col(r);
     let temp_min_row = i16::from(r.min.row) + i16::from(delta.row);
     let temp_min_col = i16::from(r.min.col) + i16::from(delta.col);
-    let min_x = temp_min_row.clamp(0, i16::from(u8::MAX) - i16::from(d_row)) as u8;
-    let min_y = temp_min_col.clamp(0, i16::from(u8::MAX) - i16::from(d_col)) as u8;
-    r.min.row = min_x;
-    r.min.col = min_y;
-    r.max.row = min_x + d_row;
-    r.max.col = min_y + d_col;
+    let min_row = temp_min_row.clamp(0, i16::from(u8::MAX) - i16::from(d_row)) as u8;
+    let min_col = temp_min_col.clamp(0, i16::from(u8::MAX) - i16::from(d_col)) as u8;
+    r.min.row = min_row;
+    r.min.col = min_col;
+    r.max.row = min_row + d_row;
+    r.max.col = min_col + d_col;
 }
 
 #[cfg(test)]
 mod tests {
     use crate::matrix::point::{point_i8::PointI8, point_u8::PointU8};
 
-    use super::{RectU8, deflate, delta_col, delta_row, inflate, len_col, len_row, max_delta, max_len, translate};
+    use super::{RectU8, deflate, delta_col, delta_row, inflate, len_col, len_row, max_delta, max_len, resize, translate};
 
     #[test]
     fn rect_u8() {
@@ -265,6 +281,74 @@ mod tests {
         assert_eq!(r, RectU8::of(4, 4, 6, 6));
         deflate(&mut r);
         assert_eq!(r, RectU8::of(4, 4, 6, 6));
+    }
+
+    #[test]
+    fn resize_odd_size() {
+        let mut r = RectU8::of(5, 5, 15, 15);
+        resize(&mut r, 11);
+        assert_eq!(r, RectU8::of(5, 5, 15, 15));
+        resize(&mut r, 9);
+        assert_eq!(r, RectU8::of(6, 6, 14, 14));
+        resize(&mut r, 7);
+        assert_eq!(r, RectU8::of(7, 7, 13, 13));
+        resize(&mut r, 5);
+        assert_eq!(r, RectU8::of(8, 8, 12, 12));
+        resize(&mut r, 3);
+        assert_eq!(r, RectU8::of(9, 9, 11, 11));
+        resize(&mut r, 1);
+        assert_eq!(r, RectU8::of(9, 9, 11, 11));
+        resize(&mut r, 3);
+        assert_eq!(r, RectU8::of(9, 9, 11, 11));
+        resize(&mut r, 9);
+        assert_eq!(r, RectU8::of(6, 6, 14, 14));
+    }
+
+    #[test]
+    fn resize_even_size() {
+        let mut r = RectU8::of(5, 5, 14, 14);
+        resize(&mut r, 10);
+        assert_eq!(r, RectU8::of(5, 5, 14, 14));
+        resize(&mut r, 8);
+        assert_eq!(r, RectU8::of(6, 6, 13, 13));
+        resize(&mut r, 6);
+        assert_eq!(r, RectU8::of(7, 7, 12, 12));
+        resize(&mut r, 4);
+        assert_eq!(r, RectU8::of(8, 8, 11, 11));
+        resize(&mut r, 2);
+        assert_eq!(r, RectU8::of(8, 8, 11, 11));
+        resize(&mut r, 4);
+        assert_eq!(r, RectU8::of(8, 8, 11, 11));
+        resize(&mut r, 8);
+        assert_eq!(r, RectU8::of(6, 6, 13, 13));
+    }
+
+    #[test]
+    fn resize_odd_min_bounds_big_delta() {
+        let mut r = RectU8::of(0, 0, 2, 2);
+        resize(&mut r, u8::MAX);
+        assert_eq!(r, RectU8::of(0, 0, u8::MAX - 1, u8::MAX - 1));
+    }
+
+    #[test]
+    fn resize_even_min_bounds_big_delta() {
+        let mut r = RectU8::of(0, 0, 3, 3);
+        resize(&mut r, u8::MAX - 1);
+        assert_eq!(r, RectU8::of(0, 0, u8::MAX - 2, u8::MAX - 2));
+    }
+
+    #[test]
+    fn resize_odd_max_bounds_big_delta() {
+        let mut r = RectU8::of(u8::MAX - 2, u8::MAX - 2, u8::MAX, u8::MAX);
+        resize(&mut r, u8::MAX);
+        assert_eq!(r, RectU8::of(1, 1, u8::MAX, u8::MAX));
+    }
+
+    #[test]
+    fn resize_even_max_bounds_big_delta() {
+        let mut r = RectU8::of(u8::MAX - 3, u8::MAX - 3, u8::MAX, u8::MAX);
+        resize(&mut r, u8::MAX - 1);
+        assert_eq!(r, RectU8::of(2, 2, u8::MAX, u8::MAX));
     }
 
     #[test]

@@ -70,6 +70,22 @@ pub fn deflate(r: &mut RectI8) {
     r.max.y -= 1;
 }
 
+pub fn resize(r: &mut RectI8, size: u8) {
+    if size < 3 {
+        return;
+    }
+    let diff_x = i16::from(delta_x(r)) + 1 - i16::from(size);
+    let diff_y = i16::from(delta_y(r)) + 1 - i16::from(size);
+    let temp_min_x = i16::from(r.min.x) + diff_x / 2;
+    let temp_min_y = i16::from(r.min.y) + diff_y / 2;
+    let min_x = temp_min_x.clamp(i16::from(i8::MIN), i16::from(i8::MAX) - i16::from(size) + 1);
+    let min_y = temp_min_y.clamp(i16::from(i8::MIN), i16::from(i8::MAX) - i16::from(size) + 1);
+    r.min.x = min_x as i8;
+    r.min.y = min_y as i8;
+    r.max.x = (min_x + i16::from(size) - 1) as i8;
+    r.max.y = (min_y + i16::from(size) - 1) as i8;
+}
+
 pub fn translate(r: &mut RectI8, delta: &point_i8::PointI8) {
     let dx = delta_x(r);
     let dy = delta_y(r);
@@ -87,7 +103,7 @@ pub fn translate(r: &mut RectI8, delta: &point_i8::PointI8) {
 mod tests {
     use crate::cartesian::point::point_i8::PointI8;
 
-    use super::{RectI8, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, translate};
+    use super::{RectI8, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, resize, translate};
 
     #[test]
     fn rect_i8() {
@@ -281,6 +297,101 @@ mod tests {
         assert_eq!(r, RectI8::of(-1, -1, 0, 0));
         deflate(&mut r);
         assert_eq!(r, RectI8::of(-1, -1, 0, 0));
+    }
+
+    #[test]
+    fn resize_odd_size() {
+        let mut r = RectI8::of(-5, -5, 5, 5);
+        resize(&mut r, 11);
+        assert_eq!(r, RectI8::of(-5, -5, 5, 5));
+        resize(&mut r, 9);
+        assert_eq!(r, RectI8::of(-4, -4, 4, 4));
+        resize(&mut r, 7);
+        assert_eq!(r, RectI8::of(-3, -3, 3, 3));
+        resize(&mut r, 5);
+        assert_eq!(r, RectI8::of(-2, -2, 2, 2));
+        resize(&mut r, 3);
+        assert_eq!(r, RectI8::of(-1, -1, 1, 1));
+        resize(&mut r, 1);
+        assert_eq!(r, RectI8::of(-1, -1, 1, 1));
+        resize(&mut r, 1);
+        assert_eq!(r, RectI8::of(-1, -1, 1, 1));
+        resize(&mut r, 3);
+        assert_eq!(r, RectI8::of(-1, -1, 1, 1));
+        resize(&mut r, 5);
+        assert_eq!(r, RectI8::of(-2, -2, 2, 2));
+        resize(&mut r, 7);
+        assert_eq!(r, RectI8::of(-3, -3, 3, 3));
+    }
+
+    #[test]
+    fn resize_even_size() {
+        let mut r = RectI8::of(-5, -5, 4, 4);
+        resize(&mut r, 10);
+        assert_eq!(r, RectI8::of(-5, -5, 4, 4));
+        resize(&mut r, 8);
+        assert_eq!(r, RectI8::of(-4, -4, 3, 3));
+        resize(&mut r, 6);
+        assert_eq!(r, RectI8::of(-3, -3, 2, 2));
+        resize(&mut r, 4);
+        assert_eq!(r, RectI8::of(-2, -2, 1, 1));
+        resize(&mut r, 2);
+        assert_eq!(r, RectI8::of(-2, -2, 1, 1));
+        resize(&mut r, 2);
+        assert_eq!(r, RectI8::of(-2, -2, 1, 1));
+        resize(&mut r, 4);
+        assert_eq!(r, RectI8::of(-2, -2, 1, 1));
+        resize(&mut r, 6);
+        assert_eq!(r, RectI8::of(-3, -3, 2, 2));
+    }
+
+    #[test]
+    fn test_resize_even_size_2nd_scenario() {
+        let mut r = RectI8::of(-4, -4, 5, 5);
+        resize(&mut r, 10);
+        assert_eq!(r, RectI8::of(-4, -4, 5, 5));
+        resize(&mut r, 8);
+        assert_eq!(r, RectI8::of(-3, -3, 4, 4));
+        resize(&mut r, 6);
+        assert_eq!(r, RectI8::of(-2, -2, 3, 3));
+        resize(&mut r, 4);
+        assert_eq!(r, RectI8::of(-1, -1, 2, 2));
+        resize(&mut r, 2);
+        assert_eq!(r, RectI8::of(-1, -1, 2, 2));
+        resize(&mut r, 2);
+        assert_eq!(r, RectI8::of(-1, -1, 2, 2));
+        resize(&mut r, 4);
+        assert_eq!(r, RectI8::of(-1, -1, 2, 2));
+        resize(&mut r, 6);
+        assert_eq!(r, RectI8::of(-2, -2, 3, 3));
+    }
+
+    #[test]
+    fn resize_odd_min_bounds_big_delta() {
+        let mut r = RectI8::of(i8::MIN, i8::MIN, i8::MIN + 2, i8::MIN + 2);
+        resize(&mut r, u8::MAX);
+        assert_eq!(r, RectI8::of(i8::MIN, i8::MIN, i8::MAX - 1, i8::MAX - 1));
+    }
+
+    #[test]
+    fn resize_even_min_bounds_big_delta() {
+        let mut r = RectI8::of(i8::MIN, i8::MIN, i8::MIN + 3, i8::MIN + 3);
+        resize(&mut r, u8::MAX - 1);
+        assert_eq!(r, RectI8::of(i8::MIN, i8::MIN, i8::MAX - 2, i8::MAX - 2));
+    }
+
+    #[test]
+    fn resize_odd_max_bounds_big_delta() {
+        let mut r = RectI8::of(i8::MAX - 2, i8::MAX - 2, i8::MAX, i8::MAX);
+        resize(&mut r, u8::MAX);
+        assert_eq!(r, RectI8::of(i8::MIN + 1, i8::MIN + 1, i8::MAX, i8::MAX));
+    }
+
+    #[test]
+    fn resize_even_max_bounds_big_delta() {
+        let mut r = RectI8::of(i8::MAX - 3, i8::MAX - 3, i8::MAX, i8::MAX);
+        resize(&mut r, u8::MAX - 1);
+        assert_eq!(r, RectI8::of(i8::MIN + 2, i8::MIN + 2, i8::MAX, i8::MAX));
     }
 
     #[test]

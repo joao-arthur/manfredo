@@ -70,6 +70,22 @@ pub fn deflate(r: &mut RectU16) {
     r.max.y -= 1;
 }
 
+pub fn resize(r: &mut RectU16, size: u16) {
+    if size < 3 {
+        return;
+    }
+    let diff_x = i32::from(delta_x(r)) + 1 - i32::from(size);
+    let diff_y = i32::from(delta_y(r)) + 1 - i32::from(size);
+    let temp_min_x = i32::from(r.min.x) + diff_x / 2;
+    let temp_min_y = i32::from(r.min.y) + diff_y / 2;
+    let min_x = temp_min_x.clamp(0, i32::from(u16::MAX) - i32::from(size) + 1);
+    let min_y = temp_min_y.clamp(0, i32::from(u16::MAX) - i32::from(size) + 1);
+    r.min.x = min_x as u16;
+    r.min.y = min_y as u16;
+    r.max.x = (min_x + i32::from(size) - 1) as u16;
+    r.max.y = (min_y + i32::from(size) - 1) as u16;
+}
+
 pub fn translate(r: &mut RectU16, delta: &PointI16) {
     let dx = delta_x(r);
     let dy = delta_y(r);
@@ -87,7 +103,7 @@ pub fn translate(r: &mut RectU16, delta: &PointI16) {
 mod tests {
     use crate::cartesian::point::{point_i16::PointI16, point_u16::PointU16};
 
-    use super::{RectU16, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, translate};
+    use super::{RectU16, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, resize, translate};
 
     #[test]
     fn rect_u16() {
@@ -265,6 +281,74 @@ mod tests {
         assert_eq!(r, RectU16::of(4, 4, 6, 6));
         deflate(&mut r);
         assert_eq!(r, RectU16::of(4, 4, 6, 6));
+    }
+
+    #[test]
+    fn resize_odd_size() {
+        let mut r = RectU16::of(5, 5, 15, 15);
+        resize(&mut r, 11);
+        assert_eq!(r, RectU16::of(5, 5, 15, 15));
+        resize(&mut r, 9);
+        assert_eq!(r, RectU16::of(6, 6, 14, 14));
+        resize(&mut r, 7);
+        assert_eq!(r, RectU16::of(7, 7, 13, 13));
+        resize(&mut r, 5);
+        assert_eq!(r, RectU16::of(8, 8, 12, 12));
+        resize(&mut r, 3);
+        assert_eq!(r, RectU16::of(9, 9, 11, 11));
+        resize(&mut r, 1);
+        assert_eq!(r, RectU16::of(9, 9, 11, 11));
+        resize(&mut r, 3);
+        assert_eq!(r, RectU16::of(9, 9, 11, 11));
+        resize(&mut r, 9);
+        assert_eq!(r, RectU16::of(6, 6, 14, 14));
+    }
+
+    #[test]
+    fn resize_even_size() {
+        let mut r = RectU16::of(5, 5, 14, 14);
+        resize(&mut r, 10);
+        assert_eq!(r, RectU16::of(5, 5, 14, 14));
+        resize(&mut r, 8);
+        assert_eq!(r, RectU16::of(6, 6, 13, 13));
+        resize(&mut r, 6);
+        assert_eq!(r, RectU16::of(7, 7, 12, 12));
+        resize(&mut r, 4);
+        assert_eq!(r, RectU16::of(8, 8, 11, 11));
+        resize(&mut r, 2);
+        assert_eq!(r, RectU16::of(8, 8, 11, 11));
+        resize(&mut r, 4);
+        assert_eq!(r, RectU16::of(8, 8, 11, 11));
+        resize(&mut r, 8);
+        assert_eq!(r, RectU16::of(6, 6, 13, 13));
+    }
+
+    #[test]
+    fn resize_odd_min_bounds_big_delta() {
+        let mut r = RectU16::of(0, 0, 2, 2);
+        resize(&mut r, u16::MAX);
+        assert_eq!(r, RectU16::of(0, 0, u16::MAX - 1, u16::MAX - 1));
+    }
+
+    #[test]
+    fn resize_even_min_bounds_big_delta() {
+        let mut r = RectU16::of(0, 0, 3, 3);
+        resize(&mut r, u16::MAX - 1);
+        assert_eq!(r, RectU16::of(0, 0, u16::MAX - 2, u16::MAX - 2));
+    }
+
+    #[test]
+    fn resize_odd_max_bounds_big_delta() {
+        let mut r = RectU16::of(u16::MAX - 2, u16::MAX - 2, u16::MAX, u16::MAX);
+        resize(&mut r, u16::MAX);
+        assert_eq!(r, RectU16::of(1, 1, u16::MAX, u16::MAX));
+    }
+
+    #[test]
+    fn resize_even_max_bounds_big_delta() {
+        let mut r = RectU16::of(u16::MAX - 3, u16::MAX - 3, u16::MAX, u16::MAX);
+        resize(&mut r, u16::MAX - 1);
+        assert_eq!(r, RectU16::of(2, 2, u16::MAX, u16::MAX));
     }
 
     #[test]

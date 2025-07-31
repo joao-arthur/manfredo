@@ -99,11 +99,15 @@ pub fn translate(r: &mut RectU64, delta: &PointI64) {
     r.max.y = min_y + dy;
 }
 
+pub fn contains(r: &RectU64, p: &point_u64::PointU64) -> bool {
+    p.x >= r.min.x && p.x <= r.max.x && p.y >= r.min.y && p.y <= r.max.y
+}
+
 #[cfg(test)]
 mod tests {
     use crate::cartesian::point::{point_i64::PointI64, point_u64::PointU64};
 
-    use super::{RectU64, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, resize, translate};
+    use super::{RectU64, contains, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, resize, translate};
 
     #[test]
     fn rect_u64() {
@@ -402,5 +406,27 @@ mod tests {
         let mut r = RectU64::of(0, 0, u64::MAX - 1, u64::MAX - 1);
         translate(&mut r, &PointI64::of(i64::MAX, i64::MAX));
         assert_eq!(r, RectU64::of(1, 1, u64::MAX, u64::MAX));
+    }
+
+    #[test]
+    fn contains_inside_borders() {
+        assert!(contains(&RectU64::of(1, 1, u64::MAX - 1, u64::MAX - 1), &PointU64::of(1, 1)));
+        assert!(contains(&RectU64::of(1, 1, u64::MAX - 1, u64::MAX - 1), &PointU64::of(1, u64::MAX - 1)));
+        assert!(contains(&RectU64::of(1, 1, u64::MAX - 1, u64::MAX - 1), &PointU64::of(u64::MAX - 1, 1)));
+        assert!(contains(&RectU64::of(1, 1, u64::MAX - 1, u64::MAX - 1), &PointU64::of(u64::MAX - 1, u64::MAX - 1)));
+    }
+
+    #[test]
+    fn contains_outside_borders() {
+        assert!(!contains(&RectU64::of(1, 1, u64::MAX - 1, u64::MAX - 1), &PointU64::of(0, 0)));
+        assert!(!contains(&RectU64::of(1, 1, u64::MAX - 1, u64::MAX - 1), &PointU64::of(0, u64::MAX)));
+        assert!(!contains(&RectU64::of(1, 1, u64::MAX - 1, u64::MAX - 1), &PointU64::of(u64::MAX, 0)));
+        assert!(!contains(&RectU64::of(1, 1, u64::MAX - 1, u64::MAX - 1), &PointU64::of(u64::MAX, u64::MAX)));
+    }
+
+    #[test]
+    fn contains_inside() {
+        assert!(contains(&RectU64::of(1, 1, u64::MAX - 1, u64::MAX - 1), &PointU64::of(10, 10)));
+        assert!(contains(&RectU64::of(1, 1, u64::MAX - 1, u64::MAX - 1), &PointU64::of(u64::MAX - 10, u64::MAX - 10)));
     }
 }

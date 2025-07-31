@@ -99,11 +99,15 @@ pub fn translate(r: &mut RectU8, delta: &PointI8) {
     r.max.y = min_y + dy;
 }
 
+pub fn contains(r: &RectU8, p: &point_u8::PointU8) -> bool {
+    p.x >= r.min.x && p.x <= r.max.x && p.y >= r.min.y && p.y <= r.max.y
+}
+
 #[cfg(test)]
 mod tests {
     use crate::cartesian::point::{point_i8::PointI8, point_u8::PointU8};
 
-    use super::{RectU8, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, resize, translate};
+    use super::{RectU8, contains, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, resize, translate};
 
     #[test]
     fn rect_u8() {
@@ -402,5 +406,27 @@ mod tests {
         let mut r = RectU8::of(0, 0, u8::MAX - 1, u8::MAX - 1);
         translate(&mut r, &PointI8::of(i8::MAX, i8::MAX));
         assert_eq!(r, RectU8::of(1, 1, u8::MAX, u8::MAX));
+    }
+
+    #[test]
+    fn contains_inside_borders() {
+        assert!(contains(&RectU8::of(1, 1, u8::MAX - 1, u8::MAX - 1), &PointU8::of(1, 1)));
+        assert!(contains(&RectU8::of(1, 1, u8::MAX - 1, u8::MAX - 1), &PointU8::of(1, u8::MAX - 1)));
+        assert!(contains(&RectU8::of(1, 1, u8::MAX - 1, u8::MAX - 1), &PointU8::of(u8::MAX - 1, 1)));
+        assert!(contains(&RectU8::of(1, 1, u8::MAX - 1, u8::MAX - 1), &PointU8::of(u8::MAX - 1, u8::MAX - 1)));
+    }
+
+    #[test]
+    fn contains_outside_borders() {
+        assert!(!contains(&RectU8::of(1, 1, u8::MAX - 1, u8::MAX - 1), &PointU8::of(0, 0)));
+        assert!(!contains(&RectU8::of(1, 1, u8::MAX - 1, u8::MAX - 1), &PointU8::of(0, u8::MAX)));
+        assert!(!contains(&RectU8::of(1, 1, u8::MAX - 1, u8::MAX - 1), &PointU8::of(u8::MAX, 0)));
+        assert!(!contains(&RectU8::of(1, 1, u8::MAX - 1, u8::MAX - 1), &PointU8::of(u8::MAX, u8::MAX)));
+    }
+
+    #[test]
+    fn contains_inside() {
+        assert!(contains(&RectU8::of(1, 1, u8::MAX - 1, u8::MAX - 1), &PointU8::of(10, 10)));
+        assert!(contains(&RectU8::of(1, 1, u8::MAX - 1, u8::MAX - 1), &PointU8::of(u8::MAX - 10, u8::MAX - 10)));
     }
 }

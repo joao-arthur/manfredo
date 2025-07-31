@@ -99,11 +99,15 @@ pub fn translate(r: &mut RectU16, delta: &PointI16) {
     r.max.col = min_col + d_col;
 }
 
+pub fn contains(r: &RectU16, p: &point_u16::PointU16) -> bool {
+    p.row >= r.min.row && p.row <= r.max.row && p.col >= r.min.col && p.col <= r.max.col
+}
+
 #[cfg(test)]
 mod tests {
     use crate::matrix::point::{point_i16::PointI16, point_u16::PointU16};
 
-    use super::{RectU16, deflate, delta_col, delta_row, inflate, len_col, len_row, max_delta, max_len, resize, translate};
+    use super::{RectU16, contains, deflate, delta_col, delta_row, inflate, len_col, len_row, max_delta, max_len, resize, translate};
 
     #[test]
     fn rect_u16() {
@@ -402,5 +406,27 @@ mod tests {
         let mut r = RectU16::of(0, 0, u16::MAX - 1, u16::MAX - 1);
         translate(&mut r, &PointI16::of(i16::MAX, i16::MAX));
         assert_eq!(r, RectU16::of(1, 1, u16::MAX, u16::MAX));
+    }
+
+    #[test]
+    fn contains_inside_borders() {
+        assert!(contains(&RectU16::of(1, 1, u16::MAX - 1, u16::MAX - 1), &PointU16::of(1, 1)));
+        assert!(contains(&RectU16::of(1, 1, u16::MAX - 1, u16::MAX - 1), &PointU16::of(1, u16::MAX - 1)));
+        assert!(contains(&RectU16::of(1, 1, u16::MAX - 1, u16::MAX - 1), &PointU16::of(u16::MAX - 1, 1)));
+        assert!(contains(&RectU16::of(1, 1, u16::MAX - 1, u16::MAX - 1), &PointU16::of(u16::MAX - 1, u16::MAX - 1)));
+    }
+
+    #[test]
+    fn contains_outside_borders() {
+        assert!(!contains(&RectU16::of(1, 1, u16::MAX - 1, u16::MAX - 1), &PointU16::of(0, 0)));
+        assert!(!contains(&RectU16::of(1, 1, u16::MAX - 1, u16::MAX - 1), &PointU16::of(0, u16::MAX)));
+        assert!(!contains(&RectU16::of(1, 1, u16::MAX - 1, u16::MAX - 1), &PointU16::of(u16::MAX, 0)));
+        assert!(!contains(&RectU16::of(1, 1, u16::MAX - 1, u16::MAX - 1), &PointU16::of(u16::MAX, u16::MAX)));
+    }
+
+    #[test]
+    fn contains_inside() {
+        assert!(contains(&RectU16::of(1, 1, u16::MAX - 1, u16::MAX - 1), &PointU16::of(10, 10)));
+        assert!(contains(&RectU16::of(1, 1, u16::MAX - 1, u16::MAX - 1), &PointU16::of(u16::MAX - 10, u16::MAX - 10)));
     }
 }

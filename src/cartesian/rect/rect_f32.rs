@@ -99,11 +99,15 @@ pub fn translate(r: &mut RectF32, delta: &point_f32::PointF32) {
     r.max.y = min_y + dy;
 }
 
+pub fn contains(r: &RectF32, p: &point_f32::PointF32) -> bool {
+    p.x >= r.min.x && p.x <= r.max.x && p.y >= r.min.y && p.y <= r.max.y
+}
+
 #[cfg(test)]
 mod tests {
     use crate::cartesian::point::point_f32::{MAX, MIN, PointF32};
 
-    use super::{RectF32, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, resize, translate};
+    use super::{RectF32, contains, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, resize, translate};
 
     #[test]
     fn rect_f32() {
@@ -453,5 +457,40 @@ mod tests {
         let mut r = RectF32::of(MIN, MIN, MAX - 1.0, MAX - 1.0);
         translate(&mut r, &PointF32::of(MAX, MAX));
         assert_eq!(r, RectF32::of(MIN + 1.0, MIN + 1.0, MAX, MAX));
+    }
+
+    #[test]
+    fn contains_inside_borders() {
+        assert!(contains(&RectF32::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0), &PointF32::of(MIN + 1.0, MIN + 1.0)));
+        assert!(contains(&RectF32::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0), &PointF32::of(MIN + 1.0, -1.0)));
+        assert!(contains(&RectF32::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0), &PointF32::of(-1.0, MIN + 1.0)));
+        assert!(contains(&RectF32::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0), &PointF32::of(-1.0, -1.0)));
+
+        assert!(contains(&RectF32::of(1.0, 1.0, MAX - 1.0, MAX - 1.0), &PointF32::of(1.0, 1.0)));
+        assert!(contains(&RectF32::of(1.0, 1.0, MAX - 1.0, MAX - 1.0), &PointF32::of(1.0, MAX - 1.0)));
+        assert!(contains(&RectF32::of(1.0, 1.0, MAX - 1.0, MAX - 1.0), &PointF32::of(MAX - 1.0, 1.0)));
+        assert!(contains(&RectF32::of(1.0, 1.0, MAX - 1.0, MAX - 1.0), &PointF32::of(MAX - 1.0, MAX - 1.0)));
+    }
+
+    #[test]
+    fn contains_outside_borders() {
+        assert!(!contains(&RectF32::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0), &PointF32::of(MIN, MIN)));
+        assert!(!contains(&RectF32::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0), &PointF32::of(MIN, 0.0)));
+        assert!(!contains(&RectF32::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0), &PointF32::of(0.0, MIN)));
+        assert!(!contains(&RectF32::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0), &PointF32::of(0.0, 0.0)));
+
+        assert!(!contains(&RectF32::of(1.0, 1.0, MAX - 1.0, MAX - 1.0), &PointF32::of(0.0, 0.0)));
+        assert!(!contains(&RectF32::of(1.0, 1.0, MAX - 1.0, MAX - 1.0), &PointF32::of(0.0, MAX)));
+        assert!(!contains(&RectF32::of(1.0, 1.0, MAX - 1.0, MAX - 1.0), &PointF32::of(MAX, 0.0)));
+        assert!(!contains(&RectF32::of(1.0, 1.0, MAX - 1.0, MAX - 1.0), &PointF32::of(MAX, MAX)));
+    }
+
+    #[test]
+    fn contains_inside() {
+        assert!(contains(&RectF32::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0), &PointF32::of(MIN + 10.0, MIN + 10.0)));
+        assert!(contains(&RectF32::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0), &PointF32::of(-10.0, -10.0)));
+
+        assert!(contains(&RectF32::of(1.0, 1.0, MAX - 1.0, MAX - 1.0), &PointF32::of(10.0, 10.0)));
+        assert!(contains(&RectF32::of(1.0, 1.0, MAX - 1.0, MAX - 1.0), &PointF32::of(MAX - 10.0, MAX - 10.0)));
     }
 }

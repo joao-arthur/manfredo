@@ -99,11 +99,15 @@ pub fn translate(r: &mut RectF64, delta: &point_f64::PointF64) {
     r.max.y = min_y + dy;
 }
 
+pub fn contains(r: &RectF64, p: &point_f64::PointF64) -> bool {
+    p.x >= r.min.x && p.x <= r.max.x && p.y >= r.min.y && p.y <= r.max.y
+}
+
 #[cfg(test)]
 mod tests {
     use crate::cartesian::point::point_f64::{MAX, MIN, PointF64};
 
-    use super::{RectF64, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, resize, translate};
+    use super::{RectF64, contains, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, resize, translate};
 
     #[test]
     fn rect_f64() {
@@ -453,5 +457,40 @@ mod tests {
         let mut r = RectF64::of(MIN, MIN, MAX - 1.0, MAX - 1.0);
         translate(&mut r, &PointF64::of(MAX, MAX));
         assert_eq!(r, RectF64::of(MIN + 1.0, MIN + 1.0, MAX, MAX));
+    }
+
+    #[test]
+    fn contains_inside_borders() {
+        assert!(contains(&RectF64::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0), &PointF64::of(MIN + 1.0, MIN + 1.0)));
+        assert!(contains(&RectF64::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0), &PointF64::of(MIN + 1.0, -1.0)));
+        assert!(contains(&RectF64::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0), &PointF64::of(-1.0, MIN + 1.0)));
+        assert!(contains(&RectF64::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0), &PointF64::of(-1.0, -1.0)));
+
+        assert!(contains(&RectF64::of(1.0, 1.0, MAX - 1.0, MAX - 1.0), &PointF64::of(1.0, 1.0)));
+        assert!(contains(&RectF64::of(1.0, 1.0, MAX - 1.0, MAX - 1.0), &PointF64::of(1.0, MAX - 1.0)));
+        assert!(contains(&RectF64::of(1.0, 1.0, MAX - 1.0, MAX - 1.0), &PointF64::of(MAX - 1.0, 1.0)));
+        assert!(contains(&RectF64::of(1.0, 1.0, MAX - 1.0, MAX - 1.0), &PointF64::of(MAX - 1.0, MAX - 1.0)));
+    }
+
+    #[test]
+    fn contains_outside_borders() {
+        assert!(!contains(&RectF64::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0), &PointF64::of(MIN, MIN)));
+        assert!(!contains(&RectF64::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0), &PointF64::of(MIN, 0.0)));
+        assert!(!contains(&RectF64::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0), &PointF64::of(0.0, MIN)));
+        assert!(!contains(&RectF64::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0), &PointF64::of(0.0, 0.0)));
+
+        assert!(!contains(&RectF64::of(1.0, 1.0, MAX - 1.0, MAX - 1.0), &PointF64::of(0.0, 0.0)));
+        assert!(!contains(&RectF64::of(1.0, 1.0, MAX - 1.0, MAX - 1.0), &PointF64::of(0.0, MAX)));
+        assert!(!contains(&RectF64::of(1.0, 1.0, MAX - 1.0, MAX - 1.0), &PointF64::of(MAX, 0.0)));
+        assert!(!contains(&RectF64::of(1.0, 1.0, MAX - 1.0, MAX - 1.0), &PointF64::of(MAX, MAX)));
+    }
+
+    #[test]
+    fn contains_inside() {
+        assert!(contains(&RectF64::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0), &PointF64::of(MIN + 10.0, MIN + 10.0)));
+        assert!(contains(&RectF64::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0), &PointF64::of(-10.0, -10.0)));
+
+        assert!(contains(&RectF64::of(1.0, 1.0, MAX - 1.0, MAX - 1.0), &PointF64::of(10.0, 10.0)));
+        assert!(contains(&RectF64::of(1.0, 1.0, MAX - 1.0, MAX - 1.0), &PointF64::of(MAX - 10.0, MAX - 10.0)));
     }
 }

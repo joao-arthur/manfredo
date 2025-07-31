@@ -99,11 +99,15 @@ pub fn translate(r: &mut RectI8, delta: &point_i8::PointI8) {
     r.max.y = (min_y + i16::from(dy)) as i8;
 }
 
+pub fn contains(r: &RectI8, p: &point_i8::PointI8) -> bool {
+    p.x >= r.min.x && p.x <= r.max.x && p.y >= r.min.y && p.y <= r.max.y
+}
+
 #[cfg(test)]
 mod tests {
     use crate::cartesian::point::point_i8::PointI8;
 
-    use super::{RectI8, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, resize, translate};
+    use super::{RectI8, contains, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, resize, translate};
 
     #[test]
     fn rect_i8() {
@@ -445,5 +449,27 @@ mod tests {
         let mut r = RectI8::of(i8::MIN, i8::MIN, i8::MAX - 1, i8::MAX - 1);
         translate(&mut r, &PointI8::of(i8::MAX, i8::MAX));
         assert_eq!(r, RectI8::of(i8::MIN + 1, i8::MIN + 1, i8::MAX, i8::MAX));
+    }
+
+    #[test]
+    fn contains_inside_borders() {
+        assert!(contains(&RectI8::of(i8::MIN + 1, i8::MIN + 1, i8::MAX - 1, i8::MAX - 1), &PointI8::of(i8::MIN + 1, i8::MIN + 1)));
+        assert!(contains(&RectI8::of(i8::MIN + 1, i8::MIN + 1, i8::MAX - 1, i8::MAX - 1), &PointI8::of(i8::MIN + 1, i8::MAX - 1)));
+        assert!(contains(&RectI8::of(i8::MIN + 1, i8::MIN + 1, i8::MAX - 1, i8::MAX - 1), &PointI8::of(i8::MAX - 1, i8::MIN + 1)));
+        assert!(contains(&RectI8::of(i8::MIN + 1, i8::MIN + 1, i8::MAX - 1, i8::MAX - 1), &PointI8::of(i8::MAX - 1, i8::MAX - 1)));
+    }
+
+    #[test]
+    fn contains_outside_borders() {
+        assert!(!contains(&RectI8::of(i8::MIN + 1, i8::MIN + 1, i8::MAX - 1, i8::MAX - 1), &PointI8::of(i8::MIN, i8::MIN)));
+        assert!(!contains(&RectI8::of(i8::MIN + 1, i8::MIN + 1, i8::MAX - 1, i8::MAX - 1), &PointI8::of(i8::MIN, i8::MAX)));
+        assert!(!contains(&RectI8::of(i8::MIN + 1, i8::MIN + 1, i8::MAX - 1, i8::MAX - 1), &PointI8::of(i8::MAX, i8::MIN)));
+        assert!(!contains(&RectI8::of(i8::MIN + 1, i8::MIN + 1, i8::MAX - 1, i8::MAX - 1), &PointI8::of(i8::MAX, i8::MAX)));
+    }
+
+    #[test]
+    fn contains_inside() {
+        assert!(contains(&RectI8::of(i8::MIN + 1, i8::MIN + 1, i8::MAX - 1, i8::MAX - 1), &PointI8::of(i8::MIN + 10, i8::MIN + 10)));
+        assert!(contains(&RectI8::of(i8::MIN + 1, i8::MIN + 1, i8::MAX - 1, i8::MAX - 1), &PointI8::of(i8::MAX - 10, i8::MAX - 10)));
     }
 }

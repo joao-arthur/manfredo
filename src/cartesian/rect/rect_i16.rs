@@ -99,11 +99,15 @@ pub fn translate(r: &mut RectI16, delta: &point_i16::PointI16) {
     r.max.y = (min_y + i32::from(dy)) as i16;
 }
 
+pub fn contains(r: &RectI16, p: &point_i16::PointI16) -> bool {
+    p.x >= r.min.x && p.x <= r.max.x && p.y >= r.min.y && p.y <= r.max.y
+}
+
 #[cfg(test)]
 mod tests {
     use crate::cartesian::point::point_i16::PointI16;
 
-    use super::{RectI16, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, resize, translate};
+    use super::{RectI16, contains, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, resize, translate};
 
     #[test]
     fn rect_i16() {
@@ -445,5 +449,27 @@ mod tests {
         let mut r = RectI16::of(i16::MIN, i16::MIN, i16::MAX - 1, i16::MAX - 1);
         translate(&mut r, &PointI16::of(i16::MAX, i16::MAX));
         assert_eq!(r, RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MAX, i16::MAX));
+    }
+
+    #[test]
+    fn contains_inside_borders() {
+        assert!(contains(&RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MAX - 1, i16::MAX - 1), &PointI16::of(i16::MIN + 1, i16::MIN + 1)));
+        assert!(contains(&RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MAX - 1, i16::MAX - 1), &PointI16::of(i16::MIN + 1, i16::MAX - 1)));
+        assert!(contains(&RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MAX - 1, i16::MAX - 1), &PointI16::of(i16::MAX - 1, i16::MIN + 1)));
+        assert!(contains(&RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MAX - 1, i16::MAX - 1), &PointI16::of(i16::MAX - 1, i16::MAX - 1)));
+    }
+
+    #[test]
+    fn contains_outside_borders() {
+        assert!(!contains(&RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MAX - 1, i16::MAX - 1), &PointI16::of(i16::MIN, i16::MIN)));
+        assert!(!contains(&RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MAX - 1, i16::MAX - 1), &PointI16::of(i16::MIN, i16::MAX)));
+        assert!(!contains(&RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MAX - 1, i16::MAX - 1), &PointI16::of(i16::MAX, i16::MIN)));
+        assert!(!contains(&RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MAX - 1, i16::MAX - 1), &PointI16::of(i16::MAX, i16::MAX)));
+    }
+
+    #[test]
+    fn contains_inside() {
+        assert!(contains(&RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MAX - 1, i16::MAX - 1), &PointI16::of(i16::MIN + 10, i16::MIN + 10)));
+        assert!(contains(&RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MAX - 1, i16::MAX - 1), &PointI16::of(i16::MAX - 10, i16::MAX - 10)));
     }
 }

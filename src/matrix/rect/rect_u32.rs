@@ -99,11 +99,15 @@ pub fn translate(r: &mut RectU32, delta: &PointI32) {
     r.max.col = min_col + d_col;
 }
 
+pub fn contains(r: &RectU32, p: &point_u32::PointU32) -> bool {
+    p.row >= r.min.row && p.row <= r.max.row && p.col >= r.min.col && p.col <= r.max.col
+}
+
 #[cfg(test)]
 mod tests {
     use crate::matrix::point::{point_i32::PointI32, point_u32::PointU32};
 
-    use super::{RectU32, deflate, delta_col, delta_row, inflate, len_col, len_row, max_delta, max_len, resize, translate};
+    use super::{RectU32, contains, deflate, delta_col, delta_row, inflate, len_col, len_row, max_delta, max_len, resize, translate};
 
     #[test]
     fn rect_u32() {
@@ -402,5 +406,27 @@ mod tests {
         let mut r = RectU32::of(0, 0, u32::MAX - 1, u32::MAX - 1);
         translate(&mut r, &PointI32::of(i32::MAX, i32::MAX));
         assert_eq!(r, RectU32::of(1, 1, u32::MAX, u32::MAX));
+    }
+
+    #[test]
+    fn contains_inside_borders() {
+        assert!(contains(&RectU32::of(1, 1, u32::MAX - 1, u32::MAX - 1), &PointU32::of(1, 1)));
+        assert!(contains(&RectU32::of(1, 1, u32::MAX - 1, u32::MAX - 1), &PointU32::of(1, u32::MAX - 1)));
+        assert!(contains(&RectU32::of(1, 1, u32::MAX - 1, u32::MAX - 1), &PointU32::of(u32::MAX - 1, 1)));
+        assert!(contains(&RectU32::of(1, 1, u32::MAX - 1, u32::MAX - 1), &PointU32::of(u32::MAX - 1, u32::MAX - 1)));
+    }
+
+    #[test]
+    fn contains_outside_borders() {
+        assert!(!contains(&RectU32::of(1, 1, u32::MAX - 1, u32::MAX - 1), &PointU32::of(0, 0)));
+        assert!(!contains(&RectU32::of(1, 1, u32::MAX - 1, u32::MAX - 1), &PointU32::of(0, u32::MAX)));
+        assert!(!contains(&RectU32::of(1, 1, u32::MAX - 1, u32::MAX - 1), &PointU32::of(u32::MAX, 0)));
+        assert!(!contains(&RectU32::of(1, 1, u32::MAX - 1, u32::MAX - 1), &PointU32::of(u32::MAX, u32::MAX)));
+    }
+
+    #[test]
+    fn contains_inside() {
+        assert!(contains(&RectU32::of(1, 1, u32::MAX - 1, u32::MAX - 1), &PointU32::of(10, 10)));
+        assert!(contains(&RectU32::of(1, 1, u32::MAX - 1, u32::MAX - 1), &PointU32::of(u32::MAX - 10, u32::MAX - 10)));
     }
 }

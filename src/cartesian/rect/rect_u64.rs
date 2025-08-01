@@ -6,9 +6,36 @@ pub struct RectU64 {
     pub max: point_u64::PointU64,
 }
 
+pub struct RectU64Iterator {
+    current: u64,
+    end: u64,
+    done: bool,
+}
+
+impl Iterator for RectU64Iterator {
+    type Item = u64;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.done {
+            return None;
+        }
+        let result = self.current;
+        if self.current == self.end {
+            self.done = true;
+        } else {
+            self.current += 1;
+        }
+        Some(result)
+    }
+}
+
 impl RectU64 {
     pub fn of(x1: u64, y1: u64, x2: u64, y2: u64) -> Self {
         RectU64 { min: point_u64::PointU64::of(x1, y1), max: point_u64::PointU64::of(x2, y2) }
+    }
+
+    pub fn iter_x(&self) -> RectU64Iterator {
+        RectU64Iterator { current: self.min.x, end: self.max.x, done: false }
     }
 }
 
@@ -113,6 +140,14 @@ mod tests {
     fn rect_u64() {
         assert_eq!(RectU64::of(4096, 8192, 16384, 32768), RectU64 { min: PointU64 { x: 4096, y: 8192 }, max: PointU64 { x: 16384, y: 32768 } });
         assert_eq!(RectU64::of(u64::MAX, 0, 0, u64::MAX).to_string(), "((18446744073709551615, 0), (0, 18446744073709551615))");
+    }
+
+    #[test]
+    fn rect_u64_iter_x() {
+        assert_eq!(RectU64::of(3, 6, 3, 8).iter_x().collect::<Vec<u64>>(), [3]);
+        assert_eq!(RectU64::of(3, 6, 4, 8).iter_x().collect::<Vec<u64>>(), [3, 4]);
+        assert_eq!(RectU64::of(3, 6, 5, 8).iter_x().collect::<Vec<u64>>(), [3, 4, 5]);
+        assert_eq!(RectU64::of(3, 6, 6, 8).iter_x().collect::<Vec<u64>>(), [3, 4, 5, 6]);
     }
 
     #[test]

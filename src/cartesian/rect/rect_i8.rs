@@ -6,9 +6,36 @@ pub struct RectI8 {
     pub max: point_i8::PointI8,
 }
 
+pub struct RectI8Iterator {
+    current: i8,
+    end: i8,
+    done: bool,
+}
+
+impl Iterator for RectI8Iterator {
+    type Item = i8;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.done {
+            return None;
+        }
+        let result = self.current;
+        if self.current == self.end {
+            self.done = true;
+        } else {
+            self.current += 1;
+        }
+        Some(result)
+    }
+}
+
 impl RectI8 {
     pub fn of(x1: i8, y1: i8, x2: i8, y2: i8) -> Self {
         RectI8 { min: point_i8::PointI8::of(x1, y1), max: point_i8::PointI8::of(x2, y2) }
+    }
+
+    pub fn iter_x(&self) -> RectI8Iterator {
+        RectI8Iterator { current: self.min.x, end: self.max.x, done: false }
     }
 }
 
@@ -113,6 +140,14 @@ mod tests {
     fn rect_i8() {
         assert_eq!(RectI8::of(i8::MIN, -1, 1, i8::MAX), RectI8 { min: PointI8 { x: i8::MIN, y: -1 }, max: PointI8 { x: 1, y: i8::MAX } });
         assert_eq!(RectI8::of(i8::MIN, -0, 0, i8::MAX).to_string(), "((-128, 0), (0, 127))");
+    }
+
+    #[test]
+    fn rect_i8_iter_x() {
+        assert_eq!(RectI8::of(-6, -8, -6, -6).iter_x().collect::<Vec<i8>>(), [-6]);
+        assert_eq!(RectI8::of(-6, -8, -5, -6).iter_x().collect::<Vec<i8>>(), [-6, -5]);
+        assert_eq!(RectI8::of(-6, -8, -4, -6).iter_x().collect::<Vec<i8>>(), [-6, -5, -4]);
+        assert_eq!(RectI8::of(-6, -8, -3, -6).iter_x().collect::<Vec<i8>>(), [-6, -5, -4, -3]);
     }
 
     #[test]

@@ -6,9 +6,37 @@ pub struct RectU8 {
     pub max: point_u8::PointU8,
 }
 
+#[derive(Debug, Clone)]
+pub struct RectU8Iterator {
+    current: u8,
+    end: u8,
+    done: bool,
+}
+
+impl Iterator for RectU8Iterator {
+    type Item = u8;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.done {
+            return None;
+        }
+        let result = self.current;
+        if self.current == self.end {
+            self.done = true;
+        } else {
+            self.current += 1;
+        }
+        Some(result)
+    }
+}
+
 impl RectU8 {
     pub fn of(row1: u8, col1: u8, row2: u8, col2: u8) -> Self {
         RectU8 { min: point_u8::PointU8::of(row1, col1), max: point_u8::PointU8::of(row2, col2) }
+    }
+
+    pub fn iter_row(&self) -> RectU8Iterator {
+        RectU8Iterator { current: self.min.row, end: self.max.row, done: false }
     }
 }
 

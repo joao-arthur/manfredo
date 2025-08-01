@@ -6,9 +6,36 @@ pub struct RectF32 {
     pub max: point_f32::PointF32,
 }
 
+pub struct RectF32Iterator {
+    current: f32,
+    end: f32,
+    done: bool,
+}
+
+impl Iterator for RectF32Iterator {
+    type Item = f32;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.done {
+            return None;
+        }
+        let result = self.current;
+        if self.current == self.end {
+            self.done = true;
+        } else {
+            self.current += 1.0;
+        }
+        Some(result)
+    }
+}
+
 impl RectF32 {
     pub fn of(x1: f32, y1: f32, x2: f32, y2: f32) -> Self {
         RectF32 { min: point_f32::PointF32 { x: x1, y: y1 }, max: point_f32::PointF32 { x: x2, y: y2 } }
+    }
+
+    pub fn iter_x(&self) -> RectF32Iterator {
+        RectF32Iterator { current: self.min.x, end: self.max.x, done: false }
     }
 }
 
@@ -113,6 +140,14 @@ mod tests {
     fn rect_f32() {
         assert_eq!(RectF32::of(MIN, -0.0, 0.0, MAX), RectF32 { min: PointF32 { x: MIN, y: -0.0 }, max: PointF32 { x: 0.0, y: MAX } });
         assert_eq!(RectF32::of(MIN, -0.0, 0.0, MAX).to_string(), "((-16777216, -0), (0, 16777215))");
+    }
+
+    #[test]
+    fn rect_i8_iter_x() {
+        assert_eq!(RectF32::of(-6.0, -8.0, -6.0, -6.0).iter_x().collect::<Vec<f32>>(), [-6.0]);
+        assert_eq!(RectF32::of(-6.0, -8.0, -5.0, -6.0).iter_x().collect::<Vec<f32>>(), [-6.0, -5.0]);
+        assert_eq!(RectF32::of(-6.0, -8.0, -4.0, -6.0).iter_x().collect::<Vec<f32>>(), [-6.0, -5.0, -4.0]);
+        assert_eq!(RectF32::of(-6.0, -8.0, -3.0, -6.0).iter_x().collect::<Vec<f32>>(), [-6.0, -5.0, -4.0, -3.0]);
     }
 
     #[test]

@@ -6,9 +6,36 @@ pub struct RectU32 {
     pub max: point_u32::PointU32,
 }
 
+pub struct RectU32Iterator {
+    current: u32,
+    end: u32,
+    done: bool,
+}
+
+impl Iterator for RectU32Iterator {
+    type Item = u32;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.done {
+            return None;
+        }
+        let result = self.current;
+        if self.current == self.end {
+            self.done = true;
+        } else {
+            self.current += 1;
+        }
+        Some(result)
+    }
+}
+
 impl RectU32 {
     pub fn of(x1: u32, y1: u32, x2: u32, y2: u32) -> Self {
         RectU32 { min: point_u32::PointU32::of(x1, y1), max: point_u32::PointU32::of(x2, y2) }
+    }
+
+    pub fn iter_x(&self) -> RectU32Iterator {
+        RectU32Iterator { current: self.min.x, end: self.max.x, done: false }
     }
 }
 
@@ -113,6 +140,14 @@ mod tests {
     fn rect_u32() {
         assert_eq!(RectU32::of(256, 512, 1024, 2048), RectU32 { min: PointU32 { x: 256, y: 512 }, max: PointU32 { x: 1024, y: 2048 } });
         assert_eq!(RectU32::of(u32::MAX, 0, 0, u32::MAX).to_string(), "((4294967295, 0), (0, 4294967295))");
+    }
+
+    #[test]
+    fn rect_u32_iter_x() {
+        assert_eq!(RectU32::of(3, 6, 3, 8).iter_x().collect::<Vec<u32>>(), [3]);
+        assert_eq!(RectU32::of(3, 6, 4, 8).iter_x().collect::<Vec<u32>>(), [3, 4]);
+        assert_eq!(RectU32::of(3, 6, 5, 8).iter_x().collect::<Vec<u32>>(), [3, 4, 5]);
+        assert_eq!(RectU32::of(3, 6, 6, 8).iter_x().collect::<Vec<u32>>(), [3, 4, 5, 6]);
     }
 
     #[test]

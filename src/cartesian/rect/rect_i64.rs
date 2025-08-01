@@ -6,9 +6,36 @@ pub struct RectI64 {
     pub max: point_i64::PointI64,
 }
 
+pub struct RectI64Iterator {
+    current: i64,
+    end: i64,
+    done: bool,
+}
+
+impl Iterator for RectI64Iterator {
+    type Item = i64;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.done {
+            return None;
+        }
+        let result = self.current;
+        if self.current == self.end {
+            self.done = true;
+        } else {
+            self.current += 1;
+        }
+        Some(result)
+    }
+}
+
 impl RectI64 {
     pub fn of(x1: i64, y1: i64, x2: i64, y2: i64) -> Self {
         RectI64 { min: point_i64::PointI64::of(x1, y1), max: point_i64::PointI64::of(x2, y2) }
+    }
+
+    pub fn iter_x(&self) -> RectI64Iterator {
+        RectI64Iterator { current: self.min.x, end: self.max.x, done: false }
     }
 }
 
@@ -113,6 +140,14 @@ mod tests {
     fn rect_i64() {
         assert_eq!(RectI64::of(i64::MIN, -1, 1, i64::MAX), RectI64 { min: PointI64 { x: i64::MIN, y: -1 }, max: PointI64 { x: 1, y: i64::MAX } });
         assert_eq!(RectI64::of(i64::MIN, -0, 0, i64::MAX).to_string(), "((-9223372036854775808, 0), (0, 9223372036854775807))");
+    }
+
+    #[test]
+    fn rect_i8_iter_x() {
+        assert_eq!(RectI64::of(-6, -8, -6, -6).iter_x().collect::<Vec<i64>>(), [-6]);
+        assert_eq!(RectI64::of(-6, -8, -5, -6).iter_x().collect::<Vec<i64>>(), [-6, -5]);
+        assert_eq!(RectI64::of(-6, -8, -4, -6).iter_x().collect::<Vec<i64>>(), [-6, -5, -4]);
+        assert_eq!(RectI64::of(-6, -8, -3, -6).iter_x().collect::<Vec<i64>>(), [-6, -5, -4, -3]);
     }
 
     #[test]

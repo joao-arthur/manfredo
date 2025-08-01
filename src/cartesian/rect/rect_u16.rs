@@ -6,9 +6,36 @@ pub struct RectU16 {
     pub max: point_u16::PointU16,
 }
 
+pub struct RectU16Iterator {
+    current: u16,
+    end: u16,
+    done: bool,
+}
+
+impl Iterator for RectU16Iterator {
+    type Item = u16;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.done {
+            return None;
+        }
+        let result = self.current;
+        if self.current == self.end {
+            self.done = true;
+        } else {
+            self.current += 1;
+        }
+        Some(result)
+    }
+}
+
 impl RectU16 {
     pub fn of(x1: u16, y1: u16, x2: u16, y2: u16) -> Self {
         RectU16 { min: point_u16::PointU16::of(x1, y1), max: point_u16::PointU16::of(x2, y2) }
+    }
+
+    pub fn iter_x(&self) -> RectU16Iterator {
+        RectU16Iterator { current: self.min.x, end: self.max.x, done: false }
     }
 }
 
@@ -113,6 +140,14 @@ mod tests {
     fn rect_u16() {
         assert_eq!(RectU16::of(16, 32, 64, 128), RectU16 { min: PointU16 { x: 16, y: 32 }, max: PointU16 { x: 64, y: 128 } });
         assert_eq!(RectU16::of(u16::MAX, 0, 0, u16::MAX).to_string(), "((65535, 0), (0, 65535))");
+    }
+
+    #[test]
+    fn rect_u16_iter_x() {
+        assert_eq!(RectU16::of(3, 6, 3, 8).iter_x().collect::<Vec<u16>>(), [3]);
+        assert_eq!(RectU16::of(3, 6, 4, 8).iter_x().collect::<Vec<u16>>(), [3, 4]);
+        assert_eq!(RectU16::of(3, 6, 5, 8).iter_x().collect::<Vec<u16>>(), [3, 4, 5]);
+        assert_eq!(RectU16::of(3, 6, 6, 8).iter_x().collect::<Vec<u16>>(), [3, 4, 5, 6]);
     }
 
     #[test]

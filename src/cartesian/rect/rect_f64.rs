@@ -6,9 +6,36 @@ pub struct RectF64 {
     pub max: point_f64::PointF64,
 }
 
+pub struct RectF64Iterator {
+    current: f64,
+    end: f64,
+    done: bool,
+}
+
+impl Iterator for RectF64Iterator {
+    type Item = f64;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.done {
+            return None;
+        }
+        let result = self.current;
+        if self.current == self.end {
+            self.done = true;
+        } else {
+            self.current += 1.0;
+        }
+        Some(result)
+    }
+}
+
 impl RectF64 {
     pub fn of(x1: f64, y1: f64, x2: f64, y2: f64) -> Self {
         RectF64 { min: point_f64::PointF64 { x: x1, y: y1 }, max: point_f64::PointF64 { x: x2, y: y2 } }
+    }
+
+    pub fn iter_x(&self) -> RectF64Iterator {
+        RectF64Iterator { current: self.min.x, end: self.max.x, done: false }
     }
 }
 

@@ -16,6 +16,10 @@ impl RectU32 {
     pub fn iter_row(&self) -> RangeInclusive<u32> {
         self.min.row..=self.max.row
     }
+
+    pub fn iter_col(&self) -> RangeInclusive<u32> {
+        self.min.col..=self.max.col
+    }
 }
 
 impl std::fmt::Display for RectU32 {
@@ -133,6 +137,20 @@ mod tests {
         assert_eq!(RectU32::of(3, 6, 4, 8).iter_row().rev().collect::<Vec<u32>>(), [4, 3]);
         assert_eq!(RectU32::of(3, 6, 3, 8).iter_row().rev().collect::<Vec<u32>>(), [3]);
         assert_eq!(RectU32::of(3, 6, 2, 8).iter_row().rev().collect::<Vec<u32>>(), []);
+    }
+
+    #[test]
+    fn iter_col() {
+        assert_eq!(RectU32::of(3, 6, 4, 5).iter_col().collect::<Vec<u32>>(), []);
+        assert_eq!(RectU32::of(3, 6, 4, 6).iter_col().collect::<Vec<u32>>(), [6]);
+        assert_eq!(RectU32::of(3, 6, 4, 7).iter_col().collect::<Vec<u32>>(), [6, 7]);
+        assert_eq!(RectU32::of(3, 6, 4, 8).iter_col().collect::<Vec<u32>>(), [6, 7, 8]);
+        assert_eq!(RectU32::of(3, 6, 4, 9).iter_col().collect::<Vec<u32>>(), [6, 7, 8, 9]);
+        assert_eq!(RectU32::of(3, 6, 4, 9).iter_col().rev().collect::<Vec<u32>>(), [9, 8, 7, 6]);
+        assert_eq!(RectU32::of(3, 6, 4, 8).iter_col().rev().collect::<Vec<u32>>(), [8, 7, 6]);
+        assert_eq!(RectU32::of(3, 6, 4, 7).iter_col().rev().collect::<Vec<u32>>(), [7, 6]);
+        assert_eq!(RectU32::of(3, 6, 4, 6).iter_col().rev().collect::<Vec<u32>>(), [6]);
+        assert_eq!(RectU32::of(3, 6, 4, 5).iter_col().rev().collect::<Vec<u32>>(), []);
     }
 
     #[test]

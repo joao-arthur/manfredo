@@ -1,3 +1,5 @@
+use std::ops::RangeInclusive;
+
 use crate::cartesian::point::point_i64;
 
 #[derive(PartialEq, Debug, Clone)]
@@ -6,40 +8,17 @@ pub struct RectI64 {
     pub max: point_i64::PointI64,
 }
 
-pub struct RectI64Iterator {
-    current: i64,
-    end: i64,
-    done: bool,
-}
-
-impl Iterator for RectI64Iterator {
-    type Item = i64;
-
-    fn next(&mut self) -> Option<Self::Item> {
-        if self.done {
-            return None;
-        }
-        let result = self.current;
-        if self.current == self.end {
-            self.done = true;
-        } else {
-            self.current += 1;
-        }
-        Some(result)
-    }
-}
-
 impl RectI64 {
     pub fn of(x1: i64, y1: i64, x2: i64, y2: i64) -> Self {
         RectI64 { min: point_i64::PointI64::of(x1, y1), max: point_i64::PointI64::of(x2, y2) }
     }
 
-    pub fn iter_x(&self) -> RectI64Iterator {
-        RectI64Iterator { current: self.min.x, end: self.max.x, done: false }
+    pub fn iter_x(&self) -> RangeInclusive<i64> {
+        self.min.x..=self.max.x
     }
 
-    pub fn iter_y(&self) -> RectI64Iterator {
-        RectI64Iterator { current: self.min.y, end: self.max.y, done: false }
+    pub fn iter_y(&self) -> RangeInclusive<i64> {
+        self.min.y..=self.max.y
     }
 }
 

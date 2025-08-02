@@ -1,3 +1,5 @@
+use std::ops::RangeInclusive;
+
 use crate::cartesian::point::point_i16;
 
 #[derive(PartialEq, Debug, Clone)]
@@ -6,40 +8,17 @@ pub struct RectI16 {
     pub max: point_i16::PointI16,
 }
 
-pub struct RectI16Iterator {
-    current: i16,
-    end: i16,
-    done: bool,
-}
-
-impl Iterator for RectI16Iterator {
-    type Item = i16;
-
-    fn next(&mut self) -> Option<Self::Item> {
-        if self.done {
-            return None;
-        }
-        let result = self.current;
-        if self.current == self.end {
-            self.done = true;
-        } else {
-            self.current += 1;
-        }
-        Some(result)
-    }
-}
-
 impl RectI16 {
     pub fn of(x1: i16, y1: i16, x2: i16, y2: i16) -> Self {
         RectI16 { min: point_i16::PointI16::of(x1, y1), max: point_i16::PointI16::of(x2, y2) }
     }
 
-    pub fn iter_x(&self) -> RectI16Iterator {
-        RectI16Iterator { current: self.min.x, end: self.max.x, done: false }
+    pub fn iter_x(&self) -> RangeInclusive<i16> {
+        self.min.x..=self.max.x
     }
 
-    pub fn iter_y(&self) -> RectI16Iterator {
-        RectI16Iterator { current: self.min.y, end: self.max.y, done: false }
+    pub fn iter_y(&self) -> RangeInclusive<i16> {
+        self.min.y..=self.max.y
     }
 }
 

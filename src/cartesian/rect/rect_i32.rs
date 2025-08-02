@@ -1,3 +1,5 @@
+use std::ops::RangeInclusive;
+
 use crate::cartesian::point::point_i32;
 
 #[derive(PartialEq, Debug, Clone)]
@@ -6,40 +8,17 @@ pub struct RectI32 {
     pub max: point_i32::PointI32,
 }
 
-pub struct RectI32Iterator {
-    current: i32,
-    end: i32,
-    done: bool,
-}
-
-impl Iterator for RectI32Iterator {
-    type Item = i32;
-
-    fn next(&mut self) -> Option<Self::Item> {
-        if self.done {
-            return None;
-        }
-        let result = self.current;
-        if self.current == self.end {
-            self.done = true;
-        } else {
-            self.current += 1;
-        }
-        Some(result)
-    }
-}
-
 impl RectI32 {
     pub fn of(x1: i32, y1: i32, x2: i32, y2: i32) -> Self {
         RectI32 { min: point_i32::PointI32::of(x1, y1), max: point_i32::PointI32::of(x2, y2) }
     }
 
-    pub fn iter_x(&self) -> RectI32Iterator {
-        RectI32Iterator { current: self.min.x, end: self.max.x, done: false }
+    pub fn iter_x(&self) -> RangeInclusive<i32> {
+        self.min.x..=self.max.x
     }
 
-    pub fn iter_y(&self) -> RectI32Iterator {
-        RectI32Iterator { current: self.min.y, end: self.max.y, done: false }
+    pub fn iter_y(&self) -> RangeInclusive<i32> {
+        self.min.y..=self.max.y
     }
 }
 

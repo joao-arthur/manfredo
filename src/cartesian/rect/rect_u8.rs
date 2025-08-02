@@ -1,3 +1,5 @@
+use std::ops::RangeInclusive;
+
 use crate::cartesian::point::{point_i8::PointI8, point_u8};
 
 #[derive(PartialEq, Debug, Clone)]
@@ -6,40 +8,17 @@ pub struct RectU8 {
     pub max: point_u8::PointU8,
 }
 
-pub struct RectU8Iterator {
-    current: u8,
-    end: u8,
-    done: bool,
-}
-
-impl Iterator for RectU8Iterator {
-    type Item = u8;
-
-    fn next(&mut self) -> Option<Self::Item> {
-        if self.done {
-            return None;
-        }
-        let result = self.current;
-        if self.current == self.end {
-            self.done = true;
-        } else {
-            self.current += 1;
-        }
-        Some(result)
-    }
-}
-
 impl RectU8 {
     pub fn of(x1: u8, y1: u8, x2: u8, y2: u8) -> Self {
         RectU8 { min: point_u8::PointU8::of(x1, y1), max: point_u8::PointU8::of(x2, y2) }
     }
 
-    pub fn iter_x(&self) -> RectU8Iterator {
-        RectU8Iterator { current: self.min.x, end: self.max.x, done: false }
+    pub fn iter_x(&self) -> RangeInclusive<u8> {
+        self.min.x..=self.max.x
     }
 
-    pub fn iter_y(&self) -> RectU8Iterator {
-        RectU8Iterator { current: self.min.y, end: self.max.y, done: false }
+    pub fn iter_y(&self) -> RangeInclusive<u8> {
+        self.min.y..=self.max.y
     }
 }
 

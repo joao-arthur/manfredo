@@ -37,6 +37,10 @@ impl RectF64 {
     pub fn iter_x(&self) -> RectF64Iterator {
         RectF64Iterator { current: self.min.x, end: self.max.x, done: false }
     }
+
+    pub fn iter_y(&self) -> RectF64Iterator {
+        RectF64Iterator { current: self.min.y, end: self.max.y, done: false }
+    }
 }
 
 impl std::fmt::Display for RectF64 {
@@ -140,6 +144,22 @@ mod tests {
     fn rect_f64() {
         assert_eq!(RectF64::of(MIN, -0.0, 0.0, MAX), RectF64 { min: PointF64 { x: MIN, y: -0.0 }, max: PointF64 { x: 0.0, y: MAX } });
         assert_eq!(RectF64::of(MIN, -0.0, 0.0, MAX).to_string(), "((-9007199254740992, -0), (0, 9007199254740991))");
+    }
+
+    #[test]
+    fn iter_x() {
+        assert_eq!(RectF64::of(-6.0, -8.0, -6.0, -6.0).iter_x().collect::<Vec<f64>>(), [-6.0]);
+        assert_eq!(RectF64::of(-6.0, -8.0, -5.0, -6.0).iter_x().collect::<Vec<f64>>(), [-6.0, -5.0]);
+        assert_eq!(RectF64::of(-6.0, -8.0, -4.0, -6.0).iter_x().collect::<Vec<f64>>(), [-6.0, -5.0, -4.0]);
+        assert_eq!(RectF64::of(-6.0, -8.0, -3.0, -6.0).iter_x().collect::<Vec<f64>>(), [-6.0, -5.0, -4.0, -3.0]);
+    }
+
+    #[test]
+    fn iter_y() {
+        assert_eq!(RectF64::of(-6.0, -8.0, -4.0, -8.0).iter_y().collect::<Vec<f64>>(), [-8.0]);
+        assert_eq!(RectF64::of(-6.0, -8.0, -4.0, -7.0).iter_y().collect::<Vec<f64>>(), [-8.0, -7.0]);
+        assert_eq!(RectF64::of(-6.0, -8.0, -4.0, -6.0).iter_y().collect::<Vec<f64>>(), [-8.0, -7.0, -6.0]);
+        assert_eq!(RectF64::of(-6.0, -8.0, -4.0, -5.0).iter_y().collect::<Vec<f64>>(), [-8.0, -7.0, -6.0, -5.0]);
     }
 
     #[test]

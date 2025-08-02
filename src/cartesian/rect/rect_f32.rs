@@ -37,6 +37,10 @@ impl RectF32 {
     pub fn iter_x(&self) -> RectF32Iterator {
         RectF32Iterator { current: self.min.x, end: self.max.x, done: false }
     }
+
+    pub fn iter_y(&self) -> RectF32Iterator {
+        RectF32Iterator { current: self.min.y, end: self.max.y, done: false }
+    }
 }
 
 impl std::fmt::Display for RectF32 {
@@ -143,11 +147,19 @@ mod tests {
     }
 
     #[test]
-    fn rect_i8_iter_x() {
+    fn iter_x() {
         assert_eq!(RectF32::of(-6.0, -8.0, -6.0, -6.0).iter_x().collect::<Vec<f32>>(), [-6.0]);
         assert_eq!(RectF32::of(-6.0, -8.0, -5.0, -6.0).iter_x().collect::<Vec<f32>>(), [-6.0, -5.0]);
         assert_eq!(RectF32::of(-6.0, -8.0, -4.0, -6.0).iter_x().collect::<Vec<f32>>(), [-6.0, -5.0, -4.0]);
         assert_eq!(RectF32::of(-6.0, -8.0, -3.0, -6.0).iter_x().collect::<Vec<f32>>(), [-6.0, -5.0, -4.0, -3.0]);
+    }
+
+    #[test]
+    fn iter_y() {
+        assert_eq!(RectF32::of(-6.0, -8.0, -4.0, -8.0).iter_y().collect::<Vec<f32>>(), [-8.0]);
+        assert_eq!(RectF32::of(-6.0, -8.0, -4.0, -7.0).iter_y().collect::<Vec<f32>>(), [-8.0, -7.0]);
+        assert_eq!(RectF32::of(-6.0, -8.0, -4.0, -6.0).iter_y().collect::<Vec<f32>>(), [-8.0, -7.0, -6.0]);
+        assert_eq!(RectF32::of(-6.0, -8.0, -4.0, -5.0).iter_y().collect::<Vec<f32>>(), [-8.0, -7.0, -6.0, -5.0]);
     }
 
     #[test]

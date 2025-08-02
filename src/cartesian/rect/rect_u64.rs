@@ -37,6 +37,10 @@ impl RectU64 {
     pub fn iter_x(&self) -> RectU64Iterator {
         RectU64Iterator { current: self.min.x, end: self.max.x, done: false }
     }
+
+    pub fn iter_y(&self) -> RectU64Iterator {
+        RectU64Iterator { current: self.min.y, end: self.max.y, done: false }
+    }
 }
 
 impl std::fmt::Display for RectU64 {
@@ -143,11 +147,19 @@ mod tests {
     }
 
     #[test]
-    fn rect_u64_iter_x() {
+    fn iter_x() {
         assert_eq!(RectU64::of(3, 6, 3, 8).iter_x().collect::<Vec<u64>>(), [3]);
         assert_eq!(RectU64::of(3, 6, 4, 8).iter_x().collect::<Vec<u64>>(), [3, 4]);
         assert_eq!(RectU64::of(3, 6, 5, 8).iter_x().collect::<Vec<u64>>(), [3, 4, 5]);
         assert_eq!(RectU64::of(3, 6, 6, 8).iter_x().collect::<Vec<u64>>(), [3, 4, 5, 6]);
+    }
+
+    #[test]
+    fn iter_y() {
+        assert_eq!(RectU64::of(3, 6, 4, 6).iter_y().collect::<Vec<u64>>(), [6]);
+        assert_eq!(RectU64::of(3, 6, 4, 7).iter_y().collect::<Vec<u64>>(), [6, 7]);
+        assert_eq!(RectU64::of(3, 6, 4, 8).iter_y().collect::<Vec<u64>>(), [6, 7, 8]);
+        assert_eq!(RectU64::of(3, 6, 4, 9).iter_y().collect::<Vec<u64>>(), [6, 7, 8, 9]);
     }
 
     #[test]

@@ -1,3 +1,5 @@
+use std::ops::RangeInclusive;
+
 use crate::matrix::point::{point_i16::PointI16, point_u16};
 
 #[derive(PartialEq, Debug, Clone)]
@@ -9,6 +11,10 @@ pub struct RectU16 {
 impl RectU16 {
     pub fn of(row1: u16, col1: u16, row2: u16, col2: u16) -> Self {
         RectU16 { min: point_u16::PointU16::of(row1, col1), max: point_u16::PointU16::of(row2, col2) }
+    }
+
+    pub fn iter_row(&self) -> RangeInclusive<u16> {
+        self.min.row..=self.max.row
     }
 }
 
@@ -113,6 +119,20 @@ mod tests {
     fn rect_u16() {
         assert_eq!(RectU16::of(16, 32, 64, 128), RectU16 { min: PointU16 { row: 16, col: 32 }, max: PointU16 { row: 64, col: 128 } });
         assert_eq!(RectU16::of(u16::MAX, 0, 0, u16::MAX).to_string(), "((65535, 0), (0, 65535))");
+    }
+
+    #[test]
+    fn iter_row() {
+        assert_eq!(RectU16::of(3, 6, 2, 8).iter_row().collect::<Vec<u16>>(), []);
+        assert_eq!(RectU16::of(3, 6, 3, 8).iter_row().collect::<Vec<u16>>(), [3]);
+        assert_eq!(RectU16::of(3, 6, 4, 8).iter_row().collect::<Vec<u16>>(), [3, 4]);
+        assert_eq!(RectU16::of(3, 6, 5, 8).iter_row().collect::<Vec<u16>>(), [3, 4, 5]);
+        assert_eq!(RectU16::of(3, 6, 6, 8).iter_row().collect::<Vec<u16>>(), [3, 4, 5, 6]);
+        assert_eq!(RectU16::of(3, 6, 6, 8).iter_row().rev().collect::<Vec<u16>>(), [6, 5, 4, 3]);
+        assert_eq!(RectU16::of(3, 6, 5, 8).iter_row().rev().collect::<Vec<u16>>(), [5, 4, 3]);
+        assert_eq!(RectU16::of(3, 6, 4, 8).iter_row().rev().collect::<Vec<u16>>(), [4, 3]);
+        assert_eq!(RectU16::of(3, 6, 3, 8).iter_row().rev().collect::<Vec<u16>>(), [3]);
+        assert_eq!(RectU16::of(3, 6, 2, 8).iter_row().rev().collect::<Vec<u16>>(), []);
     }
 
     #[test]

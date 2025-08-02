@@ -1,3 +1,5 @@
+use std::ops::RangeInclusive;
+
 use crate::matrix::point::{point_i8::PointI8, point_u8};
 
 #[derive(PartialEq, Debug, Clone)]
@@ -6,37 +8,13 @@ pub struct RectU8 {
     pub max: point_u8::PointU8,
 }
 
-#[derive(Debug, Clone)]
-pub struct RectU8Iterator {
-    current: u8,
-    end: u8,
-    done: bool,
-}
-
-impl Iterator for RectU8Iterator {
-    type Item = u8;
-
-    fn next(&mut self) -> Option<Self::Item> {
-        if self.done {
-            return None;
-        }
-        let result = self.current;
-        if self.current == self.end {
-            self.done = true;
-        } else {
-            self.current += 1;
-        }
-        Some(result)
-    }
-}
-
 impl RectU8 {
     pub fn of(row1: u8, col1: u8, row2: u8, col2: u8) -> Self {
         RectU8 { min: point_u8::PointU8::of(row1, col1), max: point_u8::PointU8::of(row2, col2) }
     }
 
-    pub fn iter_row(&self) -> RectU8Iterator {
-        RectU8Iterator { current: self.min.row, end: self.max.row, done: false }
+    pub fn iter_row(&self) -> RangeInclusive<u8> {
+        self.min.row..=self.max.row
     }
 }
 
@@ -141,6 +119,20 @@ mod tests {
     fn rect_u8() {
         assert_eq!(RectU8::of(0, 2, 4, 8), RectU8 { min: PointU8 { row: 0, col: 2 }, max: PointU8 { row: 4, col: 8 } });
         assert_eq!(RectU8::of(u8::MAX, 0, 0, u8::MAX).to_string(), "((255, 0), (0, 255))");
+    }
+
+    #[test]
+    fn iter_row() {
+        assert_eq!(RectU8::of(3, 6, 2, 8).iter_row().collect::<Vec<u8>>(), []);
+        assert_eq!(RectU8::of(3, 6, 3, 8).iter_row().collect::<Vec<u8>>(), [3]);
+        assert_eq!(RectU8::of(3, 6, 4, 8).iter_row().collect::<Vec<u8>>(), [3, 4]);
+        assert_eq!(RectU8::of(3, 6, 5, 8).iter_row().collect::<Vec<u8>>(), [3, 4, 5]);
+        assert_eq!(RectU8::of(3, 6, 6, 8).iter_row().collect::<Vec<u8>>(), [3, 4, 5, 6]);
+        assert_eq!(RectU8::of(3, 6, 6, 8).iter_row().rev().collect::<Vec<u8>>(), [6, 5, 4, 3]);
+        assert_eq!(RectU8::of(3, 6, 5, 8).iter_row().rev().collect::<Vec<u8>>(), [5, 4, 3]);
+        assert_eq!(RectU8::of(3, 6, 4, 8).iter_row().rev().collect::<Vec<u8>>(), [4, 3]);
+        assert_eq!(RectU8::of(3, 6, 3, 8).iter_row().rev().collect::<Vec<u8>>(), [3]);
+        assert_eq!(RectU8::of(3, 6, 2, 8).iter_row().rev().collect::<Vec<u8>>(), []);
     }
 
     #[test]

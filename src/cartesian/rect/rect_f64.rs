@@ -7,24 +7,30 @@ pub struct RectF64 {
 }
 
 pub struct RectF64Iterator {
-    current: f64,
+    begin: f64,
     end: f64,
-    done: bool,
 }
 
 impl Iterator for RectF64Iterator {
     type Item = f64;
 
     fn next(&mut self) -> Option<Self::Item> {
-        if self.done {
+        if self.begin > self.end {
             return None;
         }
-        let result = self.current;
-        if self.current == self.end {
-            self.done = true;
-        } else {
-            self.current += 1.0;
+        let result = self.begin;
+        self.begin += 1.0;
+        Some(result)
+    }
+}
+
+impl DoubleEndedIterator for RectF64Iterator {
+    fn next_back(&mut self) -> Option<Self::Item> {
+        if self.begin > self.end {
+            return None;
         }
+        let result = self.end;
+        self.end -= 1.0;
         Some(result)
     }
 }
@@ -35,11 +41,11 @@ impl RectF64 {
     }
 
     pub fn iter_x(&self) -> RectF64Iterator {
-        RectF64Iterator { current: self.min.x, end: self.max.x, done: false }
+        RectF64Iterator { begin: self.min.x, end: self.max.x }
     }
 
     pub fn iter_y(&self) -> RectF64Iterator {
-        RectF64Iterator { current: self.min.y, end: self.max.y, done: false }
+        RectF64Iterator { begin: self.min.y, end: self.max.y }
     }
 }
 
@@ -148,18 +154,30 @@ mod tests {
 
     #[test]
     fn iter_x() {
+        assert_eq!(RectF64::of(-6.0, -8.0, -7.0, -6.0).iter_x().collect::<Vec<f64>>(), []);
         assert_eq!(RectF64::of(-6.0, -8.0, -6.0, -6.0).iter_x().collect::<Vec<f64>>(), [-6.0]);
         assert_eq!(RectF64::of(-6.0, -8.0, -5.0, -6.0).iter_x().collect::<Vec<f64>>(), [-6.0, -5.0]);
         assert_eq!(RectF64::of(-6.0, -8.0, -4.0, -6.0).iter_x().collect::<Vec<f64>>(), [-6.0, -5.0, -4.0]);
         assert_eq!(RectF64::of(-6.0, -8.0, -3.0, -6.0).iter_x().collect::<Vec<f64>>(), [-6.0, -5.0, -4.0, -3.0]);
+        assert_eq!(RectF64::of(-6.0, -8.0, -3.0, -6.0).iter_x().rev().collect::<Vec<f64>>(), [-3.0, -4.0, -5.0, -6.0]);
+        assert_eq!(RectF64::of(-6.0, -8.0, -4.0, -6.0).iter_x().rev().collect::<Vec<f64>>(), [-4.0, -5.0, -6.0]);
+        assert_eq!(RectF64::of(-6.0, -8.0, -5.0, -6.0).iter_x().rev().collect::<Vec<f64>>(), [-5.0, -6.0]);
+        assert_eq!(RectF64::of(-6.0, -8.0, -6.0, -6.0).iter_x().rev().collect::<Vec<f64>>(), [-6.0]);
+        assert_eq!(RectF64::of(-6.0, -8.0, -7.0, -6.0).iter_x().rev().collect::<Vec<f64>>(), []);
     }
 
     #[test]
     fn iter_y() {
+        assert_eq!(RectF64::of(-6.0, -8.0, -4.0, -9.0).iter_y().collect::<Vec<f64>>(), []);
         assert_eq!(RectF64::of(-6.0, -8.0, -4.0, -8.0).iter_y().collect::<Vec<f64>>(), [-8.0]);
         assert_eq!(RectF64::of(-6.0, -8.0, -4.0, -7.0).iter_y().collect::<Vec<f64>>(), [-8.0, -7.0]);
         assert_eq!(RectF64::of(-6.0, -8.0, -4.0, -6.0).iter_y().collect::<Vec<f64>>(), [-8.0, -7.0, -6.0]);
         assert_eq!(RectF64::of(-6.0, -8.0, -4.0, -5.0).iter_y().collect::<Vec<f64>>(), [-8.0, -7.0, -6.0, -5.0]);
+        assert_eq!(RectF64::of(-6.0, -8.0, -4.0, -5.0).iter_y().rev().collect::<Vec<f64>>(), [-5.0, -6.0, -7.0, -8.0]);
+        assert_eq!(RectF64::of(-6.0, -8.0, -4.0, -6.0).iter_y().rev().collect::<Vec<f64>>(), [-6.0, -7.0, -8.0]);
+        assert_eq!(RectF64::of(-6.0, -8.0, -4.0, -7.0).iter_y().rev().collect::<Vec<f64>>(), [-7.0, -8.0]);
+        assert_eq!(RectF64::of(-6.0, -8.0, -4.0, -8.0).iter_y().rev().collect::<Vec<f64>>(), [-8.0]);
+        assert_eq!(RectF64::of(-6.0, -8.0, -4.0, -9.0).iter_y().rev().collect::<Vec<f64>>(), []);
     }
 
     #[test]

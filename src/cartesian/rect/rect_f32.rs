@@ -7,24 +7,30 @@ pub struct RectF32 {
 }
 
 pub struct RectF32Iterator {
-    current: f32,
+    begin: f32,
     end: f32,
-    done: bool,
 }
 
 impl Iterator for RectF32Iterator {
     type Item = f32;
 
     fn next(&mut self) -> Option<Self::Item> {
-        if self.done {
+        if self.begin > self.end {
             return None;
         }
-        let result = self.current;
-        if self.current == self.end {
-            self.done = true;
-        } else {
-            self.current += 1.0;
+        let result = self.begin;
+        self.begin += 1.0;
+        Some(result)
+    }
+}
+
+impl DoubleEndedIterator for RectF32Iterator {
+    fn next_back(&mut self) -> Option<Self::Item> {
+        if self.begin > self.end {
+            return None;
         }
+        let result = self.end;
+        self.end -= 1.0;
         Some(result)
     }
 }
@@ -35,11 +41,11 @@ impl RectF32 {
     }
 
     pub fn iter_x(&self) -> RectF32Iterator {
-        RectF32Iterator { current: self.min.x, end: self.max.x, done: false }
+        RectF32Iterator { begin: self.min.x, end: self.max.x }
     }
 
     pub fn iter_y(&self) -> RectF32Iterator {
-        RectF32Iterator { current: self.min.y, end: self.max.y, done: false }
+        RectF32Iterator { begin: self.min.y, end: self.max.y }
     }
 }
 
@@ -148,18 +154,30 @@ mod tests {
 
     #[test]
     fn iter_x() {
+        assert_eq!(RectF32::of(-6.0, -8.0, -7.0, -6.0).iter_x().collect::<Vec<f32>>(), []);
         assert_eq!(RectF32::of(-6.0, -8.0, -6.0, -6.0).iter_x().collect::<Vec<f32>>(), [-6.0]);
         assert_eq!(RectF32::of(-6.0, -8.0, -5.0, -6.0).iter_x().collect::<Vec<f32>>(), [-6.0, -5.0]);
         assert_eq!(RectF32::of(-6.0, -8.0, -4.0, -6.0).iter_x().collect::<Vec<f32>>(), [-6.0, -5.0, -4.0]);
         assert_eq!(RectF32::of(-6.0, -8.0, -3.0, -6.0).iter_x().collect::<Vec<f32>>(), [-6.0, -5.0, -4.0, -3.0]);
+        assert_eq!(RectF32::of(-6.0, -8.0, -3.0, -6.0).iter_x().rev().collect::<Vec<f32>>(), [-3.0, -4.0, -5.0, -6.0]);
+        assert_eq!(RectF32::of(-6.0, -8.0, -4.0, -6.0).iter_x().rev().collect::<Vec<f32>>(), [-4.0, -5.0, -6.0]);
+        assert_eq!(RectF32::of(-6.0, -8.0, -5.0, -6.0).iter_x().rev().collect::<Vec<f32>>(), [-5.0, -6.0]);
+        assert_eq!(RectF32::of(-6.0, -8.0, -6.0, -6.0).iter_x().rev().collect::<Vec<f32>>(), [-6.0]);
+        assert_eq!(RectF32::of(-6.0, -8.0, -7.0, -6.0).iter_x().rev().collect::<Vec<f32>>(), []);
     }
 
     #[test]
     fn iter_y() {
+        assert_eq!(RectF32::of(-6.0, -8.0, -4.0, -9.0).iter_y().collect::<Vec<f32>>(), []);
         assert_eq!(RectF32::of(-6.0, -8.0, -4.0, -8.0).iter_y().collect::<Vec<f32>>(), [-8.0]);
         assert_eq!(RectF32::of(-6.0, -8.0, -4.0, -7.0).iter_y().collect::<Vec<f32>>(), [-8.0, -7.0]);
         assert_eq!(RectF32::of(-6.0, -8.0, -4.0, -6.0).iter_y().collect::<Vec<f32>>(), [-8.0, -7.0, -6.0]);
         assert_eq!(RectF32::of(-6.0, -8.0, -4.0, -5.0).iter_y().collect::<Vec<f32>>(), [-8.0, -7.0, -6.0, -5.0]);
+        assert_eq!(RectF32::of(-6.0, -8.0, -4.0, -5.0).iter_y().rev().collect::<Vec<f32>>(), [-5.0, -6.0, -7.0, -8.0]);
+        assert_eq!(RectF32::of(-6.0, -8.0, -4.0, -6.0).iter_y().rev().collect::<Vec<f32>>(), [-6.0, -7.0, -8.0]);
+        assert_eq!(RectF32::of(-6.0, -8.0, -4.0, -7.0).iter_y().rev().collect::<Vec<f32>>(), [-7.0, -8.0]);
+        assert_eq!(RectF32::of(-6.0, -8.0, -4.0, -8.0).iter_y().rev().collect::<Vec<f32>>(), [-8.0]);
+        assert_eq!(RectF32::of(-6.0, -8.0, -4.0, -9.0).iter_y().rev().collect::<Vec<f32>>(), []);
     }
 
     #[test]

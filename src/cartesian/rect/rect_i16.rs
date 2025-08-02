@@ -127,18 +127,30 @@ mod tests {
 
     #[test]
     fn iter_x() {
+        assert_eq!(RectI16::of(-6, -8, -7, -6).iter_x().collect::<Vec<i16>>(), []);
         assert_eq!(RectI16::of(-6, -8, -6, -6).iter_x().collect::<Vec<i16>>(), [-6]);
         assert_eq!(RectI16::of(-6, -8, -5, -6).iter_x().collect::<Vec<i16>>(), [-6, -5]);
         assert_eq!(RectI16::of(-6, -8, -4, -6).iter_x().collect::<Vec<i16>>(), [-6, -5, -4]);
         assert_eq!(RectI16::of(-6, -8, -3, -6).iter_x().collect::<Vec<i16>>(), [-6, -5, -4, -3]);
+        assert_eq!(RectI16::of(-6, -8, -3, -6).iter_x().rev().collect::<Vec<i16>>(), [-3, -4, -5, -6]);
+        assert_eq!(RectI16::of(-6, -8, -4, -6).iter_x().rev().collect::<Vec<i16>>(), [-4, -5, -6]);
+        assert_eq!(RectI16::of(-6, -8, -5, -6).iter_x().rev().collect::<Vec<i16>>(), [-5, -6]);
+        assert_eq!(RectI16::of(-6, -8, -6, -6).iter_x().rev().collect::<Vec<i16>>(), [-6]);
+        assert_eq!(RectI16::of(-6, -8, -7, -6).iter_x().rev().collect::<Vec<i16>>(), []);
     }
 
     #[test]
     fn iter_y() {
+        assert_eq!(RectI16::of(-6, -8, -4, -9).iter_y().collect::<Vec<i16>>(), []);
         assert_eq!(RectI16::of(-6, -8, -4, -8).iter_y().collect::<Vec<i16>>(), [-8]);
         assert_eq!(RectI16::of(-6, -8, -4, -7).iter_y().collect::<Vec<i16>>(), [-8, -7]);
         assert_eq!(RectI16::of(-6, -8, -4, -6).iter_y().collect::<Vec<i16>>(), [-8, -7, -6]);
         assert_eq!(RectI16::of(-6, -8, -4, -5).iter_y().collect::<Vec<i16>>(), [-8, -7, -6, -5]);
+        assert_eq!(RectI16::of(-6, -8, -4, -5).iter_y().rev().collect::<Vec<i16>>(), [-5, -6, -7, -8]);
+        assert_eq!(RectI16::of(-6, -8, -4, -6).iter_y().rev().collect::<Vec<i16>>(), [-6, -7, -8]);
+        assert_eq!(RectI16::of(-6, -8, -4, -7).iter_y().rev().collect::<Vec<i16>>(), [-7, -8]);
+        assert_eq!(RectI16::of(-6, -8, -4, -8).iter_y().rev().collect::<Vec<i16>>(), [-8]);
+        assert_eq!(RectI16::of(-6, -8, -4, -9).iter_y().rev().collect::<Vec<i16>>(), []);
     }
 
     #[test]

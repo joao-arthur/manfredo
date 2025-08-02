@@ -127,18 +127,30 @@ mod tests {
 
     #[test]
     fn iter_x() {
+        assert_eq!(RectU32::of(3, 6, 2, 8).iter_x().collect::<Vec<u32>>(), []);
         assert_eq!(RectU32::of(3, 6, 3, 8).iter_x().collect::<Vec<u32>>(), [3]);
         assert_eq!(RectU32::of(3, 6, 4, 8).iter_x().collect::<Vec<u32>>(), [3, 4]);
         assert_eq!(RectU32::of(3, 6, 5, 8).iter_x().collect::<Vec<u32>>(), [3, 4, 5]);
         assert_eq!(RectU32::of(3, 6, 6, 8).iter_x().collect::<Vec<u32>>(), [3, 4, 5, 6]);
+        assert_eq!(RectU32::of(3, 6, 6, 8).iter_x().rev().collect::<Vec<u32>>(), [6, 5, 4, 3]);
+        assert_eq!(RectU32::of(3, 6, 5, 8).iter_x().rev().collect::<Vec<u32>>(), [5, 4, 3]);
+        assert_eq!(RectU32::of(3, 6, 4, 8).iter_x().rev().collect::<Vec<u32>>(), [4, 3]);
+        assert_eq!(RectU32::of(3, 6, 3, 8).iter_x().rev().collect::<Vec<u32>>(), [3]);
+        assert_eq!(RectU32::of(3, 6, 2, 8).iter_x().rev().collect::<Vec<u32>>(), []);
     }
 
     #[test]
     fn iter_y() {
+        assert_eq!(RectU32::of(3, 6, 4, 5).iter_y().collect::<Vec<u32>>(), []);
         assert_eq!(RectU32::of(3, 6, 4, 6).iter_y().collect::<Vec<u32>>(), [6]);
         assert_eq!(RectU32::of(3, 6, 4, 7).iter_y().collect::<Vec<u32>>(), [6, 7]);
         assert_eq!(RectU32::of(3, 6, 4, 8).iter_y().collect::<Vec<u32>>(), [6, 7, 8]);
         assert_eq!(RectU32::of(3, 6, 4, 9).iter_y().collect::<Vec<u32>>(), [6, 7, 8, 9]);
+        assert_eq!(RectU32::of(3, 6, 4, 9).iter_y().rev().collect::<Vec<u32>>(), [9, 8, 7, 6]);
+        assert_eq!(RectU32::of(3, 6, 4, 8).iter_y().rev().collect::<Vec<u32>>(), [8, 7, 6]);
+        assert_eq!(RectU32::of(3, 6, 4, 7).iter_y().rev().collect::<Vec<u32>>(), [7, 6]);
+        assert_eq!(RectU32::of(3, 6, 4, 6).iter_y().rev().collect::<Vec<u32>>(), [6]);
+        assert_eq!(RectU32::of(3, 6, 4, 5).iter_y().rev().collect::<Vec<u32>>(), []);
     }
 
     #[test]

@@ -2,7 +2,7 @@ use std::ops::RangeInclusive;
 
 use crate::matrix::point::{point_i32::PointI32, point_u32};
 
-#[derive(PartialEq, Debug, Clone)]
+#[derive(Eq, PartialEq, Debug, Clone)]
 pub struct RectU32 {
     pub min: point_u32::PointU32,
     pub max: point_u32::PointU32,

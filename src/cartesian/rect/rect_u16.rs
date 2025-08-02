@@ -2,7 +2,7 @@ use std::ops::RangeInclusive;
 
 use crate::cartesian::point::{point_i16::PointI16, point_u16};
 
-#[derive(PartialEq, Debug, Clone)]
+#[derive(Eq, PartialEq, Debug, Clone)]
 pub struct RectU16 {
     pub min: point_u16::PointU16,
     pub max: point_u16::PointU16,

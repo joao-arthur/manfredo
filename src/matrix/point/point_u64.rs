@@ -1,4 +1,4 @@
-#[derive(Debug, PartialEq, Clone)]
+#[derive(Eq, PartialEq, Debug, Clone)]
 pub struct PointU64 {
     pub row: u64,
     pub col: u64,

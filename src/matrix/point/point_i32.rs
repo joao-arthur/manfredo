@@ -10,6 +10,14 @@ impl PointI32 {
     pub fn of(row: i32, col: i32) -> Self {
         PointI32 { row, col }
     }
+
+    pub fn min() -> Self {
+        PointI32 { row: i32::MIN, col: i32::MIN }
+    }
+
+    pub fn max() -> Self {
+        PointI32 { row: i32::MAX, col: i32::MAX }
+    }
 }
 
 impl std::fmt::Display for PointI32 {
@@ -39,7 +47,11 @@ mod tests {
     #[test]
     fn point_i32() {
         assert_eq!(PointI32::of(i32::MIN, i32::MAX), PointI32 { row: i32::MIN, col: i32::MAX });
+        assert_eq!(PointI32::min(), PointI32 { row: i32::MIN, col: i32::MIN });
+        assert_eq!(PointI32::max(), PointI32 { row: i32::MAX, col: i32::MAX });
         assert_eq!(PointI32::of(i32::MIN, i32::MAX).to_string(), "(-2147483648, 2147483647)");
+        assert_eq!(PointI32::min().to_string(), "(-2147483648, -2147483648)");
+        assert_eq!(PointI32::max().to_string(), "(2147483647, 2147483647)");
     }
 
     #[test]

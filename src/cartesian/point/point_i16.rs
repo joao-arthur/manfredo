@@ -10,6 +10,14 @@ impl PointI16 {
     pub fn of(x: i16, y: i16) -> Self {
         PointI16 { x, y }
     }
+
+    pub fn min() -> Self {
+        PointI16 { x: i16::MIN, y: i16::MIN }
+    }
+
+    pub fn max() -> Self {
+        PointI16 { x: i16::MAX, y: i16::MAX }
+    }
 }
 
 impl std::fmt::Display for PointI16 {
@@ -39,7 +47,11 @@ mod tests {
     #[test]
     fn point_i16() {
         assert_eq!(PointI16::of(i16::MIN, i16::MAX), PointI16 { x: i16::MIN, y: i16::MAX });
+        assert_eq!(PointI16::min(), PointI16 { x: i16::MIN, y: i16::MIN });
+        assert_eq!(PointI16::max(), PointI16 { x: i16::MAX, y: i16::MAX });
         assert_eq!(PointI16::of(i16::MIN, i16::MAX).to_string(), "(-32768, 32767)");
+        assert_eq!(PointI16::min().to_string(), "(-32768, -32768)");
+        assert_eq!(PointI16::max().to_string(), "(32767, 32767)");
     }
 
     #[test]

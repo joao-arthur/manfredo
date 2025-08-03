@@ -1,3 +1,6 @@
+pub const MIN: f32 = -16_777_216.0;
+pub const MAX: f32 = 16_777_215.0;
+
 #[derive(PartialEq, Debug, Clone)]
 pub struct PointF32 {
     pub x: f32,
@@ -8,6 +11,14 @@ impl PointF32 {
     pub fn of(x: f32, y: f32) -> Self {
         PointF32 { x, y }
     }
+
+    pub fn min() -> Self {
+        PointF32 { x: MIN, y: MIN }
+    }
+
+    pub fn max() -> Self {
+        PointF32 { x: MAX, y: MAX }
+    }
 }
 
 impl std::fmt::Display for PointF32 {
@@ -15,9 +26,6 @@ impl std::fmt::Display for PointF32 {
         write!(f, "({}, {})", self.x, self.y)
     }
 }
-
-pub const MIN: f32 = -16_777_216.0;
-pub const MAX: f32 = 16_777_215.0;
 
 pub fn delta_x(p1: &PointF32, p2: &PointF32) -> f32 {
     p2.x - p1.x
@@ -38,7 +46,11 @@ mod tests {
     #[test]
     fn point_f32() {
         assert_eq!(PointF32::of(MIN, MAX), PointF32 { x: MIN, y: MAX });
+        assert_eq!(PointF32::min(), PointF32 { x: MIN, y: MIN });
+        assert_eq!(PointF32::max(), PointF32 { x: MAX, y: MAX });
         assert_eq!(PointF32::of(MIN, MAX).to_string(), "(-16777216, 16777215)");
+        assert_eq!(PointF32::min().to_string(), "(-16777216, -16777216)");
+        assert_eq!(PointF32::max().to_string(), "(16777215, 16777215)");
     }
 
     #[test]

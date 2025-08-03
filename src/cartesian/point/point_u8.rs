@@ -8,6 +8,14 @@ impl PointU8 {
     pub fn of(x: u8, y: u8) -> Self {
         PointU8 { x, y }
     }
+
+    pub fn min() -> Self {
+        PointU8 { x: 0, y: 0 }
+    }
+
+    pub fn max() -> Self {
+        PointU8 { x: u8::MAX, y: u8::MAX }
+    }
 }
 
 impl std::fmt::Display for PointU8 {
@@ -35,7 +43,11 @@ mod tests {
     #[test]
     fn point_u8() {
         assert_eq!(PointU8::of(0, u8::MAX), PointU8 { x: 0, y: u8::MAX });
+        assert_eq!(PointU8::min(), PointU8 { x: 0, y: 0 });
+        assert_eq!(PointU8::max(), PointU8 { x: u8::MAX, y: u8::MAX });
         assert_eq!(PointU8::of(0, u8::MAX).to_string(), "(0, 255)");
+        assert_eq!(PointU8::min().to_string(), "(0, 0)");
+        assert_eq!(PointU8::max().to_string(), "(255, 255)");
     }
 
     #[test]

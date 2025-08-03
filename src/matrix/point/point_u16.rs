@@ -8,6 +8,14 @@ impl PointU16 {
     pub fn of(row: u16, col: u16) -> Self {
         PointU16 { row, col }
     }
+
+    pub fn min() -> Self {
+        PointU16 { row: 0, col: 0 }
+    }
+
+    pub fn max() -> Self {
+        PointU16 { row: u16::MAX, col: u16::MAX }
+    }
 }
 
 impl std::fmt::Display for PointU16 {
@@ -35,7 +43,11 @@ mod tests {
     #[test]
     fn point_u16() {
         assert_eq!(PointU16::of(0, u16::MAX), PointU16 { row: 0, col: u16::MAX });
+        assert_eq!(PointU16::min(), PointU16 { row: 0, col: 0 });
+        assert_eq!(PointU16::max(), PointU16 { row: u16::MAX, col: u16::MAX });
         assert_eq!(PointU16::of(0, u16::MAX).to_string(), "(0, 65535)");
+        assert_eq!(PointU16::min().to_string(), "(0, 0)");
+        assert_eq!(PointU16::max().to_string(), "(65535, 65535)");
     }
 
     #[test]

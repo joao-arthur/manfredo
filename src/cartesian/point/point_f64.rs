@@ -1,3 +1,6 @@
+pub const MIN: f64 = -9_007_199_254_740_992.0;
+pub const MAX: f64 = 9_007_199_254_740_991.0;
+
 #[derive(PartialEq, Debug, Clone)]
 pub struct PointF64 {
     pub x: f64,
@@ -8,6 +11,14 @@ impl PointF64 {
     pub fn of(x: f64, y: f64) -> Self {
         PointF64 { x, y }
     }
+
+    pub fn min() -> Self {
+        PointF64 { x: MIN, y: MIN }
+    }
+
+    pub fn max() -> Self {
+        PointF64 { x: MAX, y: MAX }
+    }
 }
 
 impl std::fmt::Display for PointF64 {
@@ -15,9 +26,6 @@ impl std::fmt::Display for PointF64 {
         write!(f, "({}, {})", self.x, self.y)
     }
 }
-
-pub const MIN: f64 = -9_007_199_254_740_992.0;
-pub const MAX: f64 = 9_007_199_254_740_991.0;
 
 pub fn delta_x(p1: &PointF64, p2: &PointF64) -> f64 {
     p2.x - p1.x
@@ -38,7 +46,11 @@ mod tests {
     #[test]
     fn point_f64() {
         assert_eq!(PointF64::of(MIN, MAX), PointF64 { x: MIN, y: MAX });
+        assert_eq!(PointF64::min(), PointF64 { x: MIN, y: MIN });
+        assert_eq!(PointF64::max(), PointF64 { x: MAX, y: MAX });
         assert_eq!(PointF64::of(MIN, MAX).to_string(), "(-9007199254740992, 9007199254740991)");
+        assert_eq!(PointF64::min().to_string(), "(-9007199254740992, -9007199254740992)");
+        assert_eq!(PointF64::max().to_string(), "(9007199254740991, 9007199254740991)");
     }
 
     #[test]

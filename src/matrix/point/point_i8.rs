@@ -10,6 +10,14 @@ impl PointI8 {
     pub fn of(row: i8, col: i8) -> Self {
         PointI8 { row, col }
     }
+
+    pub fn min() -> Self {
+        PointI8 { row: i8::MIN, col: i8::MIN }
+    }
+
+    pub fn max() -> Self {
+        PointI8 { row: i8::MAX, col: i8::MAX }
+    }
 }
 
 impl std::fmt::Display for PointI8 {
@@ -39,7 +47,11 @@ mod tests {
     #[test]
     fn point_i8() {
         assert_eq!(PointI8::of(i8::MIN, i8::MAX), PointI8 { row: i8::MIN, col: i8::MAX });
+        assert_eq!(PointI8::min(), PointI8 { row: i8::MIN, col: i8::MIN });
+        assert_eq!(PointI8::max(), PointI8 { row: i8::MAX, col: i8::MAX });
         assert_eq!(PointI8::of(i8::MIN, i8::MAX).to_string(), "(-128, 127)");
+        assert_eq!(PointI8::min().to_string(), "(-128, -128)");
+        assert_eq!(PointI8::max().to_string(), "(127, 127)");
     }
 
     #[test]

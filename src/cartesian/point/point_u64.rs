@@ -8,6 +8,14 @@ impl PointU64 {
     pub fn of(x: u64, y: u64) -> Self {
         PointU64 { x, y }
     }
+
+    pub fn min() -> Self {
+        PointU64 { x: 0, y: 0 }
+    }
+
+    pub fn max() -> Self {
+        PointU64 { x: u64::MAX, y: u64::MAX }
+    }
 }
 
 impl std::fmt::Display for PointU64 {
@@ -35,7 +43,11 @@ mod tests {
     #[test]
     fn point_u64() {
         assert_eq!(PointU64::of(0, u64::MAX), PointU64 { x: 0, y: u64::MAX });
+        assert_eq!(PointU64::min(), PointU64 { x: 0, y: 0 });
+        assert_eq!(PointU64::max(), PointU64 { x: u64::MAX, y: u64::MAX });
         assert_eq!(PointU64::of(0, u64::MAX).to_string(), "(0, 18446744073709551615)");
+        assert_eq!(PointU64::min().to_string(), "(0, 0)");
+        assert_eq!(PointU64::max().to_string(), "(18446744073709551615, 18446744073709551615)");
     }
 
     #[test]

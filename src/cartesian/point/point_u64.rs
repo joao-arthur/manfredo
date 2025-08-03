@@ -52,25 +52,25 @@ mod tests {
 
     #[test]
     fn test_delta_x() {
-        assert_eq!(delta_x(&PointU64::of(0, 0), &PointU64::of(0, u64::MAX)), 0);
-        assert_eq!(delta_x(&PointU64::of(0, 0), &PointU64::of(u64::MAX, 0)), u64::MAX);
+        assert_eq!(delta_x(&PointU64::min(), &PointU64::of(0, u64::MAX)), 0);
+        assert_eq!(delta_x(&PointU64::min(), &PointU64::of(u64::MAX, 0)), u64::MAX);
     }
 
     #[test]
     fn test_delta_y() {
-        assert_eq!(delta_y(&PointU64::of(0, 0), &PointU64::of(u64::MAX, 0)), 0);
-        assert_eq!(delta_y(&PointU64::of(0, 0), &PointU64::of(0, u64::MAX)), u64::MAX);
+        assert_eq!(delta_y(&PointU64::min(), &PointU64::of(u64::MAX, 0)), 0);
+        assert_eq!(delta_y(&PointU64::min(), &PointU64::of(0, u64::MAX)), u64::MAX);
     }
 
     #[test]
     fn test_delta() {
-        assert_eq!(delta(&PointU64::of(0, 0), &PointU64::of(0, 0)), PointU64::of(0, 0));
-        assert_eq!(delta(&PointU64::of(0, 0), &PointU64::of(u64::MAX, u64::MAX)), PointU64::of(u64::MAX, u64::MAX));
+        assert_eq!(delta(&PointU64::min(), &PointU64::min()), PointU64::min());
+        assert_eq!(delta(&PointU64::min(), &PointU64::max()), PointU64::max());
     }
 
     #[test]
     fn delta_min() {
-        let p1 = PointU64::of(0, 0);
+        let p1 = PointU64::min();
         assert_eq!(delta(&p1, &PointU64::of(0, 0)), PointU64::of(0, 0));
         assert_eq!(delta(&p1, &PointU64::of(0, 1)), PointU64::of(0, 1));
         assert_eq!(delta(&p1, &PointU64::of(0, 2)), PointU64::of(0, 2));

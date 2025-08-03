@@ -69,7 +69,7 @@ mod tests {
     #[test]
     fn test_delta() {
         assert_eq!(delta(&PointI8::of(0, 0), &PointI8::of(0, 0)), PointU8::of(0, 0));
-        assert_eq!(delta(&PointI8::of(i8::MIN, i8::MIN), &PointI8::of(i8::MAX, i8::MAX)), PointU8::of(u8::MAX, u8::MAX));
+        assert_eq!(delta(&PointI8::min(), &PointI8::of(i8::MAX, i8::MAX)), PointU8::of(u8::MAX, u8::MAX));
     }
 
     #[test]

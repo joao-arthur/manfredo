@@ -69,7 +69,7 @@ mod tests {
     #[test]
     fn test_delta() {
         assert_eq!(delta(&PointI32::of(0, 0), &PointI32::of(0, 0)), PointU32::of(0, 0));
-        assert_eq!(delta(&PointI32::of(i32::MIN, i32::MIN), &PointI32::of(i32::MAX, i32::MAX)), PointU32::of(u32::MAX, u32::MAX));
+        assert_eq!(delta(&PointI32::min(), &PointI32::of(i32::MAX, i32::MAX)), PointU32::of(u32::MAX, u32::MAX));
     }
 
     #[test]

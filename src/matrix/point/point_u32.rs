@@ -1,4 +1,4 @@
-#[derive(Eq, PartialEq, Debug, Clone)]
+#[derive(Eq, PartialEq, Debug, Clone, Hash)]
 pub struct PointU32 {
     pub row: u32,
     pub col: u32,

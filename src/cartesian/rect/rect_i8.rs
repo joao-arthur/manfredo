@@ -464,28 +464,28 @@ mod tests {
     #[test]
     fn translate_min_bounds_big_delta() {
         let mut r = RectI8::of(i8::MIN, i8::MIN, i8::MIN + 10, i8::MIN + 10);
-        translate(&mut r, &PointI8::of(i8::MIN, i8::MIN));
+        translate(&mut r, &PointI8::min());
         assert_eq!(r, RectI8::of(i8::MIN, i8::MIN, i8::MIN + 10, i8::MIN + 10));
     }
 
     #[test]
     fn translate_max_bounds_big_delta() {
         let mut r = RectI8::of(i8::MAX - 10, i8::MAX - 10, i8::MAX, i8::MAX);
-        translate(&mut r, &PointI8::of(i8::MAX, i8::MAX));
+        translate(&mut r, &PointI8::max());
         assert_eq!(r, RectI8::of(i8::MAX - 10, i8::MAX - 10, i8::MAX, i8::MAX));
     }
 
     #[test]
     fn translate_min_bounds_big_rect_big_delta() {
         let mut r = RectI8::of(i8::MIN + 1, i8::MIN + 1, i8::MAX, i8::MAX);
-        translate(&mut r, &PointI8::of(i8::MIN, i8::MIN));
+        translate(&mut r, &PointI8::min());
         assert_eq!(r, RectI8::of(i8::MIN, i8::MIN, i8::MAX - 1, i8::MAX - 1));
     }
 
     #[test]
     fn translate_max_bounds_big_rect_big_delta() {
         let mut r = RectI8::of(i8::MIN, i8::MIN, i8::MAX - 1, i8::MAX - 1);
-        translate(&mut r, &PointI8::of(i8::MAX, i8::MAX));
+        translate(&mut r, &PointI8::max());
         assert_eq!(r, RectI8::of(i8::MIN + 1, i8::MIN + 1, i8::MAX, i8::MAX));
     }
 

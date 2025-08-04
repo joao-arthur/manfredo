@@ -499,28 +499,28 @@ mod tests {
     #[test]
     fn translate_min_bounds_big_delta() {
         let mut r = RectF64::of(MIN, MIN, MIN + 10.0, MIN + 10.0);
-        translate(&mut r, &PointF64::of(MIN, MIN));
+        translate(&mut r, &PointF64::min());
         assert_eq!(r, RectF64::of(MIN, MIN, MIN + 10.0, MIN + 10.0));
     }
 
     #[test]
     fn translate_max_bounds_big_delta() {
         let mut r = RectF64::of(MAX - 10.0, MAX - 10.0, MAX, MAX);
-        translate(&mut r, &PointF64::of(MAX, MAX));
+        translate(&mut r, &PointF64::max());
         assert_eq!(r, RectF64::of(MAX - 10.0, MAX - 10.0, MAX, MAX));
     }
 
     #[test]
     fn translate_min_bounds_big_rect_big_delta() {
         let mut r = RectF64::of(MIN + 1.0, MIN + 1.0, MAX, MAX);
-        translate(&mut r, &PointF64::of(MIN, MIN));
+        translate(&mut r, &PointF64::min());
         assert_eq!(r, RectF64::of(MIN, MIN, MAX - 1.0, MAX - 1.0));
     }
 
     #[test]
     fn translate_max_bounds_big_rect_big_delta() {
         let mut r = RectF64::of(MIN, MIN, MAX - 1.0, MAX - 1.0);
-        translate(&mut r, &PointF64::of(MAX, MAX));
+        translate(&mut r, &PointF64::max());
         assert_eq!(r, RectF64::of(MIN + 1.0, MIN + 1.0, MAX, MAX));
     }
 

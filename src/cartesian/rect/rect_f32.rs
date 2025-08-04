@@ -499,28 +499,28 @@ mod tests {
     #[test]
     fn translate_min_bounds_big_delta() {
         let mut r = RectF32::of(MIN, MIN, MIN + 10.0, MIN + 10.0);
-        translate(&mut r, &PointF32::of(MIN, MIN));
+        translate(&mut r, &PointF32::min());
         assert_eq!(r, RectF32::of(MIN, MIN, MIN + 10.0, MIN + 10.0));
     }
 
     #[test]
     fn translate_max_bounds_big_delta() {
         let mut r = RectF32::of(MAX - 10.0, MAX - 10.0, MAX, MAX);
-        translate(&mut r, &PointF32::of(MAX, MAX));
+        translate(&mut r, &PointF32::max());
         assert_eq!(r, RectF32::of(MAX - 10.0, MAX - 10.0, MAX, MAX));
     }
 
     #[test]
     fn translate_min_bounds_big_rect_big_delta() {
         let mut r = RectF32::of(MIN + 1.0, MIN + 1.0, MAX, MAX);
-        translate(&mut r, &PointF32::of(MIN, MIN));
+        translate(&mut r, &PointF32::min());
         assert_eq!(r, RectF32::of(MIN, MIN, MAX - 1.0, MAX - 1.0));
     }
 
     #[test]
     fn translate_max_bounds_big_rect_big_delta() {
         let mut r = RectF32::of(MIN, MIN, MAX - 1.0, MAX - 1.0);
-        translate(&mut r, &PointF32::of(MAX, MAX));
+        translate(&mut r, &PointF32::max());
         assert_eq!(r, RectF32::of(MIN + 1.0, MIN + 1.0, MAX, MAX));
     }
 

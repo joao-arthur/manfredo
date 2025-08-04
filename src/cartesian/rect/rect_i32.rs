@@ -464,28 +464,28 @@ mod tests {
     #[test]
     fn translate_min_bounds_big_delta() {
         let mut r = RectI32::of(i32::MIN, i32::MIN, i32::MIN + 10, i32::MIN + 10);
-        translate(&mut r, &PointI32::of(i32::MIN, i32::MIN));
+        translate(&mut r, &PointI32::min());
         assert_eq!(r, RectI32::of(i32::MIN, i32::MIN, i32::MIN + 10, i32::MIN + 10));
     }
 
     #[test]
     fn translate_max_bounds_big_delta() {
         let mut r = RectI32::of(i32::MAX - 10, i32::MAX - 10, i32::MAX, i32::MAX);
-        translate(&mut r, &PointI32::of(i32::MAX, i32::MAX));
+        translate(&mut r, &PointI32::max());
         assert_eq!(r, RectI32::of(i32::MAX - 10, i32::MAX - 10, i32::MAX, i32::MAX));
     }
 
     #[test]
     fn translate_min_bounds_big_rect_big_delta() {
         let mut r = RectI32::of(i32::MIN + 1, i32::MIN + 1, i32::MAX, i32::MAX);
-        translate(&mut r, &PointI32::of(i32::MIN, i32::MIN));
+        translate(&mut r, &PointI32::min());
         assert_eq!(r, RectI32::of(i32::MIN, i32::MIN, i32::MAX - 1, i32::MAX - 1));
     }
 
     #[test]
     fn translate_max_bounds_big_rect_big_delta() {
         let mut r = RectI32::of(i32::MIN, i32::MIN, i32::MAX - 1, i32::MAX - 1);
-        translate(&mut r, &PointI32::of(i32::MAX, i32::MAX));
+        translate(&mut r, &PointI32::max());
         assert_eq!(r, RectI32::of(i32::MIN + 1, i32::MIN + 1, i32::MAX, i32::MAX));
     }
 

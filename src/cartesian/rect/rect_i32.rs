@@ -96,7 +96,7 @@ pub fn resize(r: &mut RectI32, size: u32) {
     r.max.y = (min_y + i64::from(size) - 1) as i32;
 }
 
-pub fn translate(r: &mut RectI32, delta: &point_i32::PointI32) {
+pub fn saturating_translate(r: &mut RectI32, delta: &point_i32::PointI32) {
     let dx = delta_x(r);
     let dy = delta_y(r);
     let temp_min_x = i64::from(r.min.x) + i64::from(delta.x);
@@ -117,7 +117,7 @@ pub fn contains(r: &RectI32, p: &point_i32::PointI32) -> bool {
 mod tests {
     use crate::cartesian::point::point_i32::PointI32;
 
-    use super::{RectI32, contains, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, resize, translate};
+    use super::{RectI32, contains, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, resize, saturating_translate};
 
     #[test]
     fn rect_i32() {
@@ -437,55 +437,55 @@ mod tests {
     }
 
     #[test]
-    fn test_translate() {
+    fn test_saturating_translate() {
         let mut r = RectI32::of(0, 0, 10, 10);
-        translate(&mut r, &PointI32::of(10, 10));
+        saturating_translate(&mut r, &PointI32::of(10, 10));
         assert_eq!(r, RectI32::of(10, 10, 20, 20));
-        translate(&mut r, &PointI32::of(-20, -20));
+        saturating_translate(&mut r, &PointI32::of(-20, -20));
         assert_eq!(r, RectI32::of(-10, -10, 0, 0));
-        translate(&mut r, &PointI32::of(2, 2));
+        saturating_translate(&mut r, &PointI32::of(2, 2));
         assert_eq!(r, RectI32::of(-8, -8, 2, 2));
     }
 
     #[test]
-    fn translate_min_bounds() {
+    fn saturating_translate_min_bounds() {
         let mut r = RectI32::of(i32::MIN + 5, i32::MIN + 10, 12, 15);
-        translate(&mut r, &PointI32::of(-10, -10));
+        saturating_translate(&mut r, &PointI32::of(-10, -10));
         assert_eq!(r, RectI32::of(i32::MIN, i32::MIN, 7, 5));
     }
 
     #[test]
-    fn translate_max_bounds() {
+    fn saturating_translate_max_bounds() {
         let mut r = RectI32::of(40, 35, i32::MAX - 5, i32::MAX - 10);
-        translate(&mut r, &PointI32::of(20, 20));
+        saturating_translate(&mut r, &PointI32::of(20, 20));
         assert_eq!(r, RectI32::of(45, 45, i32::MAX, i32::MAX));
     }
 
     #[test]
-    fn translate_min_bounds_big_delta() {
+    fn saturating_translate_min_bounds_big_delta() {
         let mut r = RectI32::of(i32::MIN, i32::MIN, i32::MIN + 10, i32::MIN + 10);
-        translate(&mut r, &PointI32::min());
+        saturating_translate(&mut r, &PointI32::min());
         assert_eq!(r, RectI32::of(i32::MIN, i32::MIN, i32::MIN + 10, i32::MIN + 10));
     }
 
     #[test]
-    fn translate_max_bounds_big_delta() {
+    fn saturating_translate_max_bounds_big_delta() {
         let mut r = RectI32::of(i32::MAX - 10, i32::MAX - 10, i32::MAX, i32::MAX);
-        translate(&mut r, &PointI32::max());
+        saturating_translate(&mut r, &PointI32::max());
         assert_eq!(r, RectI32::of(i32::MAX - 10, i32::MAX - 10, i32::MAX, i32::MAX));
     }
 
     #[test]
-    fn translate_min_bounds_big_rect_big_delta() {
+    fn saturating_translate_min_bounds_big_rect_big_delta() {
         let mut r = RectI32::of(i32::MIN + 1, i32::MIN + 1, i32::MAX, i32::MAX);
-        translate(&mut r, &PointI32::min());
+        saturating_translate(&mut r, &PointI32::min());
         assert_eq!(r, RectI32::of(i32::MIN, i32::MIN, i32::MAX - 1, i32::MAX - 1));
     }
 
     #[test]
-    fn translate_max_bounds_big_rect_big_delta() {
+    fn saturating_translate_max_bounds_big_rect_big_delta() {
         let mut r = RectI32::of(i32::MIN, i32::MIN, i32::MAX - 1, i32::MAX - 1);
-        translate(&mut r, &PointI32::max());
+        saturating_translate(&mut r, &PointI32::max());
         assert_eq!(r, RectI32::of(i32::MIN + 1, i32::MIN + 1, i32::MAX, i32::MAX));
     }
 

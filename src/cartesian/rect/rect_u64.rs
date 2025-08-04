@@ -101,8 +101,10 @@ pub fn saturating_translate(r: &mut RectU64, delta: &PointI64) {
     let dy = delta_y(r);
     let temp_min_x = i128::from(r.min.x) + i128::from(delta.x);
     let temp_min_y = i128::from(r.min.y) + i128::from(delta.y);
-    let min_x = temp_min_x.clamp(0, i128::from(u64::MAX) - i128::from(dx)) as u64;
-    let min_y = temp_min_y.clamp(0, i128::from(u64::MAX) - i128::from(dy)) as u64;
+    let clamped_x = temp_min_x.clamp(0, i128::from(u64::MAX) - i128::from(dx));
+    let clamped_y = temp_min_y.clamp(0, i128::from(u64::MAX) - i128::from(dy));
+    let min_x = clamped_x as u64;
+    let min_y = clamped_y as u64;
     r.min.x = min_x;
     r.min.y = min_y;
     r.max.x = min_x + dx;

@@ -39,9 +39,16 @@ pub fn delta(p1: &PointF64, p2: &PointF64) -> PointF64 {
     PointF64 { x: delta_x(p1, p2), y: delta_y(p1, p2) }
 }
 
+pub fn saturating_translate(p: &mut PointF64, delta: &PointF64) {
+    let temp_x = p.x + delta.x;
+    let temp_y = p.y + delta.y;
+    p.x = temp_x.clamp(MIN, MAX);
+    p.y = temp_y.clamp(MIN, MAX);
+}
+
 #[cfg(test)]
 mod tests {
-    use super::{MAX, MIN, PointF64, delta, delta_x, delta_y};
+    use super::{MAX, MIN, PointF64, delta, delta_x, delta_y, saturating_translate};
 
     #[test]
     fn point_f64() {
@@ -108,5 +115,44 @@ mod tests {
         assert_eq!(delta(&p1, &PointF64::of(4_503_599_627_370_495.0, 4_503_599_627_370_493.0)), PointF64::of(2.0, 0.0));
         assert_eq!(delta(&p1, &PointF64::of(4_503_599_627_370_495.0, 4_503_599_627_370_494.0)), PointF64::of(2.0, 1.0));
         assert_eq!(delta(&p1, &PointF64::of(4_503_599_627_370_495.0, 4_503_599_627_370_495.0)), PointF64::of(2.0, 2.0));
+    }
+
+    #[test]
+    fn test_saturating_translate() {
+        let mut r = PointF64::of(0.0, 0.0);
+        saturating_translate(&mut r, &PointF64::of(10.0, 10.0));
+        assert_eq!(r, PointF64::of(10.0, 10.0));
+        saturating_translate(&mut r, &PointF64::of(-15.0, -15.0));
+        assert_eq!(r, PointF64::of(-5.0, -5.0));
+        saturating_translate(&mut r, &PointF64::of(2.0, 2.0));
+        assert_eq!(r, PointF64::of(-3.0, -3.0));
+    }
+
+    #[test]
+    fn saturating_translate_min_bounds() {
+        let mut r = PointF64::of(MIN + 2.0, MIN + 5.0);
+        saturating_translate(&mut r, &PointF64::of(-10.0, -10.0));
+        assert_eq!(r, PointF64::of(MIN, MIN));
+    }
+
+    #[test]
+    fn saturating_translate_max_bounds() {
+        let mut r = PointF64::of(MAX - 2.0, MAX - 5.0);
+        saturating_translate(&mut r, &PointF64::of(10.0, 10.0));
+        assert_eq!(r, PointF64::of(MAX, MAX));
+    }
+
+    #[test]
+    fn saturating_translate_min_bounds_min_delta() {
+        let mut r = PointF64::of(MIN + 1.0, MIN + 1.0);
+        saturating_translate(&mut r, &PointF64::min());
+        assert_eq!(r, PointF64::of(MIN, MIN));
+    }
+
+    #[test]
+    fn saturating_translate_max_bounds_max_delta() {
+        let mut r = PointF64::of(MAX - 1.0, MAX - 1.0);
+        saturating_translate(&mut r, &PointF64::max());
+        assert_eq!(r, PointF64::of(MAX, MAX));
     }
 }

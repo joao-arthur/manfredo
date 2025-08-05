@@ -38,11 +38,20 @@ pub fn delta(p1: &PointI16, p2: &PointI16) -> PointU16 {
     PointU16 { x: delta_x(p1, p2), y: delta_y(p1, p2) }
 }
 
+pub fn saturating_translate(p: &mut PointI16, delta: &PointI16) {
+    let temp_x = i32::from(p.x) + i32::from(delta.x);
+    let temp_y = i32::from(p.y) + i32::from(delta.y);
+    let clamped_x = temp_x.clamp(i32::from(i16::MIN), i32::from(i16::MAX));
+    let clamped_y = temp_y.clamp(i32::from(i16::MIN), i32::from(i16::MAX));
+    p.x = clamped_x as i16;
+    p.y = clamped_y as i16;
+}
+
 #[cfg(test)]
 mod tests {
     use crate::cartesian::point::point_u16::PointU16;
 
-    use super::{PointI16, delta, delta_x, delta_y};
+    use super::{PointI16, delta, delta_x, delta_y, saturating_translate};
 
     #[test]
     fn point_i16() {
@@ -102,5 +111,44 @@ mod tests {
         assert_eq!(delta(&p1, &PointI16::of(i16::MAX, i16::MAX - 2)), PointU16::of(2, 0));
         assert_eq!(delta(&p1, &PointI16::of(i16::MAX, i16::MAX - 1)), PointU16::of(2, 1));
         assert_eq!(delta(&p1, &PointI16::of(i16::MAX, i16::MAX)), PointU16::of(2, 2));
+    }
+
+    #[test]
+    fn test_saturating_translate() {
+        let mut r = PointI16::of(0, 0);
+        saturating_translate(&mut r, &PointI16::of(10, 10));
+        assert_eq!(r, PointI16::of(10, 10));
+        saturating_translate(&mut r, &PointI16::of(-15, -15));
+        assert_eq!(r, PointI16::of(-5, -5));
+        saturating_translate(&mut r, &PointI16::of(2, 2));
+        assert_eq!(r, PointI16::of(-3, -3));
+    }
+
+    #[test]
+    fn saturating_translate_min_bounds() {
+        let mut r = PointI16::of(i16::MIN + 2, i16::MIN + 5);
+        saturating_translate(&mut r, &PointI16::of(-10, -10));
+        assert_eq!(r, PointI16::of(i16::MIN, i16::MIN));
+    }
+
+    #[test]
+    fn saturating_translate_max_bounds() {
+        let mut r = PointI16::of(i16::MAX - 2, i16::MAX - 5);
+        saturating_translate(&mut r, &PointI16::of(10, 10));
+        assert_eq!(r, PointI16::of(i16::MAX, i16::MAX));
+    }
+
+    #[test]
+    fn saturating_translate_min_bounds_min_delta() {
+        let mut r = PointI16::of(i16::MIN + 1, i16::MIN + 1);
+        saturating_translate(&mut r, &PointI16::min());
+        assert_eq!(r, PointI16::of(i16::MIN, i16::MIN));
+    }
+
+    #[test]
+    fn saturating_translate_max_bounds_max_delta() {
+        let mut r = PointI16::of(i16::MAX - 1, i16::MAX - 1);
+        saturating_translate(&mut r, &PointI16::max());
+        assert_eq!(r, PointI16::of(i16::MAX, i16::MAX));
     }
 }

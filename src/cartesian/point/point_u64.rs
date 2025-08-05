@@ -1,3 +1,5 @@
+use crate::cartesian::point::point_i64::PointI64;
+
 #[derive(Eq, PartialEq, Debug, Clone, Hash)]
 pub struct PointU64 {
     pub x: u64,
@@ -36,9 +38,20 @@ pub fn delta(p1: &PointU64, p2: &PointU64) -> PointU64 {
     PointU64 { x: delta_x(p1, p2), y: delta_y(p1, p2) }
 }
 
+pub fn saturating_translate(p: &mut PointU64, delta: &PointI64) {
+    let temp_x = i128::from(p.x) + i128::from(delta.x);
+    let temp_y = i128::from(p.y) + i128::from(delta.y);
+    let clamped_x = temp_x.clamp(0, i128::from(u64::MAX));
+    let clamped_y = temp_y.clamp(0, i128::from(u64::MAX));
+    p.x = clamped_x as u64;
+    p.y = clamped_y as u64;
+}
+
 #[cfg(test)]
 mod tests {
-    use super::{PointU64, delta, delta_x, delta_y};
+    use crate::cartesian::point::point_i64::PointI64;
+
+    use super::{PointU64, delta, delta_x, delta_y, saturating_translate};
 
     #[test]
     fn point_u64() {
@@ -98,5 +111,44 @@ mod tests {
         assert_eq!(delta(&p1, &PointU64::of(u64::MAX, u64::MAX - 2)), PointU64::of(2, 0));
         assert_eq!(delta(&p1, &PointU64::of(u64::MAX, u64::MAX - 1)), PointU64::of(2, 1));
         assert_eq!(delta(&p1, &PointU64::of(u64::MAX, u64::MAX)), PointU64::of(2, 2));
+    }
+
+    #[test]
+    fn test_saturating_translate() {
+        let mut r = PointU64::of(0, 0);
+        saturating_translate(&mut r, &PointI64::of(10, 10));
+        assert_eq!(r, PointU64::of(10, 10));
+        saturating_translate(&mut r, &PointI64::of(-5, -5));
+        assert_eq!(r, PointU64::of(5, 5));
+        saturating_translate(&mut r, &PointI64::of(2, 2));
+        assert_eq!(r, PointU64::of(7, 7));
+    }
+
+    #[test]
+    fn saturating_translate_min_bounds() {
+        let mut r = PointU64::of(2, 5);
+        saturating_translate(&mut r, &PointI64::of(-10, -10));
+        assert_eq!(r, PointU64::of(0, 0));
+    }
+
+    #[test]
+    fn saturating_translate_max_bounds() {
+        let mut r = PointU64::of(u64::MAX - 2, u64::MAX - 5);
+        saturating_translate(&mut r, &PointI64::of(10, 10));
+        assert_eq!(r, PointU64::of(u64::MAX, u64::MAX));
+    }
+
+    #[test]
+    fn saturating_translate_min_bounds_min_delta() {
+        let mut r = PointU64::of(1, 1);
+        saturating_translate(&mut r, &PointI64::min());
+        assert_eq!(r, PointU64::of(0, 0));
+    }
+
+    #[test]
+    fn saturating_translate_max_bounds_max_delta() {
+        let mut r = PointU64::of(u64::MAX - 1, u64::MAX - 1);
+        saturating_translate(&mut r, &PointI64::max());
+        assert_eq!(r, PointU64::of(u64::MAX, u64::MAX));
     }
 }

@@ -38,11 +38,20 @@ pub fn delta(p1: &PointI8, p2: &PointI8) -> PointU8 {
     PointU8 { row: delta_row(p1, p2), col: delta_col(p1, p2) }
 }
 
+pub fn saturating_translate(p: &mut PointI8, delta: &PointI8) {
+    let temp_row = i16::from(p.row) + i16::from(delta.row);
+    let temp_col = i16::from(p.col) + i16::from(delta.col);
+    let clamped_row = temp_row.clamp(i16::from(i8::MIN), i16::from(i8::MAX));
+    let clamped_col = temp_col.clamp(i16::from(i8::MIN), i16::from(i8::MAX));
+    p.row = clamped_row as i8;
+    p.col = clamped_col as i8;
+}
+
 #[cfg(test)]
 mod tests {
     use crate::matrix::point::point_u8::PointU8;
 
-    use super::{PointI8, delta, delta_col, delta_row};
+    use super::{PointI8, delta, delta_col, delta_row, saturating_translate};
 
     #[test]
     fn point_i8() {
@@ -102,5 +111,44 @@ mod tests {
         assert_eq!(delta(&p1, &PointI8::of(i8::MAX, i8::MAX - 2)), PointU8::of(2, 0));
         assert_eq!(delta(&p1, &PointI8::of(i8::MAX, i8::MAX - 1)), PointU8::of(2, 1));
         assert_eq!(delta(&p1, &PointI8::of(i8::MAX, i8::MAX)), PointU8::of(2, 2));
+    }
+
+    #[test]
+    fn test_saturating_translate() {
+        let mut r = PointI8::of(0, 0);
+        saturating_translate(&mut r, &PointI8::of(10, 10));
+        assert_eq!(r, PointI8::of(10, 10));
+        saturating_translate(&mut r, &PointI8::of(-15, -15));
+        assert_eq!(r, PointI8::of(-5, -5));
+        saturating_translate(&mut r, &PointI8::of(2, 2));
+        assert_eq!(r, PointI8::of(-3, -3));
+    }
+
+    #[test]
+    fn saturating_translate_min_bounds() {
+        let mut r = PointI8::of(i8::MIN + 2, i8::MIN + 5);
+        saturating_translate(&mut r, &PointI8::of(-10, -10));
+        assert_eq!(r, PointI8::of(i8::MIN, i8::MIN));
+    }
+
+    #[test]
+    fn saturating_translate_max_bounds() {
+        let mut r = PointI8::of(i8::MAX - 2, i8::MAX - 5);
+        saturating_translate(&mut r, &PointI8::of(10, 10));
+        assert_eq!(r, PointI8::of(i8::MAX, i8::MAX));
+    }
+
+    #[test]
+    fn saturating_translate_min_bounds_min_delta() {
+        let mut r = PointI8::of(i8::MIN + 1, i8::MIN + 1);
+        saturating_translate(&mut r, &PointI8::min());
+        assert_eq!(r, PointI8::of(i8::MIN, i8::MIN));
+    }
+
+    #[test]
+    fn saturating_translate_max_bounds_max_delta() {
+        let mut r = PointI8::of(i8::MAX - 1, i8::MAX - 1);
+        saturating_translate(&mut r, &PointI8::max());
+        assert_eq!(r, PointI8::of(i8::MAX, i8::MAX));
     }
 }

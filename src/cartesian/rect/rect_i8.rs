@@ -326,7 +326,7 @@ mod tests {
     }
 
     #[test]
-    fn deflate_odd_size() {
+    fn deflate_odd() {
         let mut r = RectI8::of(-5, -5, 5, 5);
         deflate(&mut r);
         assert_eq!(r, RectI8::of(-4, -4, 4, 4));
@@ -341,7 +341,7 @@ mod tests {
     }
 
     #[test]
-    fn deflate_even_size() {
+    fn deflate_even() {
         let mut r = RectI8::of(-5, -5, 4, 4);
         deflate(&mut r);
         assert_eq!(r, RectI8::of(-4, -4, 3, 3));
@@ -356,7 +356,7 @@ mod tests {
     }
 
     #[test]
-    fn resize_odd_size() {
+    fn resize_odd() {
         let mut r = RectI8::of(-5, -5, 5, 5);
         resize(&mut r, 11);
         assert_eq!(r, RectI8::of(-5, -5, 5, 5));
@@ -381,7 +381,7 @@ mod tests {
     }
 
     #[test]
-    fn resize_even_size() {
+    fn resize_even() {
         let mut r = RectI8::of(-5, -5, 4, 4);
         resize(&mut r, 10);
         assert_eq!(r, RectI8::of(-5, -5, 4, 4));
@@ -402,7 +402,7 @@ mod tests {
     }
 
     #[test]
-    fn test_resize_even_size_2nd_scenario() {
+    fn resize_even_2nd_scenario() {
         let mut r = RectI8::of(-4, -4, 5, 5);
         resize(&mut r, 10);
         assert_eq!(r, RectI8::of(-4, -4, 5, 5));

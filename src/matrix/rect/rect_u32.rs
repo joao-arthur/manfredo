@@ -204,7 +204,7 @@ mod tests {
     }
 
     #[test]
-    fn max_delta_max() {
+    fn max_delta_bounds() {
         assert_eq!(max_delta(&RectU32::of(0, 0, u32::MAX, u32::MAX - 1)), u32::MAX);
         assert_eq!(max_delta(&RectU32::of(0, 0, u32::MAX - 1, u32::MAX)), u32::MAX);
     }
@@ -240,6 +240,14 @@ mod tests {
         assert_eq!(max_len(&RectU32::of(5, 5, 6, 6)), 2);
         assert_eq!(max_len(&RectU32::of(0, 0, 0, 1)), 2);
         assert_eq!(max_len(&RectU32::of(5, 9, 5, 10)), 2);
+    }
+
+    #[test]
+    fn max_len_bounds() {
+        assert_eq!(max_len(&RectU32::of(1, 0, u32::MAX - 1, u32::MAX - 1)), u32::MAX);
+        assert_eq!(max_len(&RectU32::of(0, 1, u32::MAX - 1, u32::MAX - 1)), u32::MAX);
+        assert_eq!(max_len(&RectU32::of(0, 0, u32::MAX - 2, u32::MAX - 1)), u32::MAX);
+        assert_eq!(max_len(&RectU32::of(0, 0, u32::MAX - 1, u32::MAX - 2)), u32::MAX);
     }
 
     #[test]
@@ -343,7 +351,7 @@ mod tests {
     }
 
     #[test]
-    fn resize_odd_size() {
+    fn resize_odd() {
         let mut r = RectU32::of(5, 5, 15, 15);
         resize(&mut r, 11);
         assert_eq!(r, RectU32::of(5, 5, 15, 15));
@@ -364,7 +372,7 @@ mod tests {
     }
 
     #[test]
-    fn resize_even_size() {
+    fn resize_even() {
         let mut r = RectU32::of(5, 5, 14, 14);
         resize(&mut r, 10);
         assert_eq!(r, RectU32::of(5, 5, 14, 14));

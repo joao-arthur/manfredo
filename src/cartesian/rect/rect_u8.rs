@@ -203,7 +203,7 @@ mod tests {
     }
 
     #[test]
-    fn max_delta_max() {
+    fn max_delta_bounds() {
         assert_eq!(max_delta(&RectU8::of(0, 0, u8::MAX, u8::MAX - 1)), u8::MAX);
         assert_eq!(max_delta(&RectU8::of(0, 0, u8::MAX - 1, u8::MAX)), u8::MAX);
     }
@@ -239,6 +239,14 @@ mod tests {
         assert_eq!(max_len(&RectU8::of(5, 5, 6, 6)), 2);
         assert_eq!(max_len(&RectU8::of(0, 0, 0, 1)), 2);
         assert_eq!(max_len(&RectU8::of(5, 9, 5, 10)), 2);
+    }
+
+    #[test]
+    fn max_len_bounds() {
+        assert_eq!(max_len(&RectU8::of(1, 0, u8::MAX - 1, u8::MAX - 1)), u8::MAX);
+        assert_eq!(max_len(&RectU8::of(0, 1, u8::MAX - 1, u8::MAX - 1)), u8::MAX);
+        assert_eq!(max_len(&RectU8::of(0, 0, u8::MAX - 2, u8::MAX - 1)), u8::MAX);
+        assert_eq!(max_len(&RectU8::of(0, 0, u8::MAX - 1, u8::MAX - 2)), u8::MAX);
     }
 
     #[test]
@@ -342,7 +350,7 @@ mod tests {
     }
 
     #[test]
-    fn resize_odd_size() {
+    fn resize_odd() {
         let mut r = RectU8::of(5, 5, 15, 15);
         resize(&mut r, 11);
         assert_eq!(r, RectU8::of(5, 5, 15, 15));
@@ -363,7 +371,7 @@ mod tests {
     }
 
     #[test]
-    fn resize_even_size() {
+    fn resize_even() {
         let mut r = RectU8::of(5, 5, 14, 14);
         resize(&mut r, 10);
         assert_eq!(r, RectU8::of(5, 5, 14, 14));

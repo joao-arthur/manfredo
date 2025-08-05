@@ -347,7 +347,7 @@ mod tests {
     }
 
     #[test]
-    fn deflate_odd_size() {
+    fn deflate_odd() {
         let mut r = RectF64::of(-5.0, -5.0, 5.0, 5.0);
         deflate(&mut r);
         assert_eq!(r, RectF64::of(-4.0, -4.0, 4.0, 4.0));
@@ -362,7 +362,7 @@ mod tests {
     }
 
     #[test]
-    fn deflate_even_size() {
+    fn deflate_even() {
         let mut r = RectF64::of(-5.0, -5.0, 4.0, 4.0);
         deflate(&mut r);
         assert_eq!(r, RectF64::of(-4.0, -4.0, 3.0, 3.0));
@@ -377,7 +377,7 @@ mod tests {
     }
 
     #[test]
-    fn resize_odd_size() {
+    fn resize_odd() {
         let mut r = RectF64::of(-5.0, -5.0, 5.0, 5.0);
         resize(&mut r, 11.0);
         assert_eq!(r, RectF64::of(-5.0, -5.0, 5.0, 5.0));
@@ -402,7 +402,7 @@ mod tests {
     }
 
     #[test]
-    fn resize_even_size() {
+    fn resize_even() {
         let mut r = RectF64::of(-5.0, -5.0, 4.0, 4.0);
         resize(&mut r, 10.0);
         assert_eq!(r, RectF64::of(-5.0, -5.0, 4.0, 4.0));
@@ -423,7 +423,7 @@ mod tests {
     }
 
     #[test]
-    fn test_resize_even_size_2nd_scenario() {
+    fn resize_even_2nd_scenario() {
         let mut r = RectF64::of(-4.0, -4.0, 5.0, 5.0);
         resize(&mut r, 10.0);
         assert_eq!(r, RectF64::of(-4.0, -4.0, 5.0, 5.0));

@@ -39,12 +39,8 @@ pub fn delta(p1: &PointI8, p2: &PointI8) -> PointU8 {
 }
 
 pub fn saturating_translate(p: &mut PointI8, delta: &PointI8) {
-    let temp_x = i16::from(p.x) + i16::from(delta.x);
-    let temp_y = i16::from(p.y) + i16::from(delta.y);
-    let clamped_x = temp_x.clamp(i16::from(i8::MIN), i16::from(i8::MAX));
-    let clamped_y = temp_y.clamp(i16::from(i8::MIN), i16::from(i8::MAX));
-    p.x = clamped_x as i8;
-    p.y = clamped_y as i8;
+    p.x = p.x.saturating_add(delta.x);
+    p.y = p.y.saturating_add(delta.y);
 }
 
 #[cfg(test)]

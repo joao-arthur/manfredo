@@ -199,6 +199,8 @@ mod tests {
     fn checked_translate_min_bounds_min_delta() {
         let mut r = PointI8::of(i8::MIN + 1, i8::MIN + 1);
         assert_eq!(checked_translate(&mut r, &PointI8::min()), Err(()));
+        assert_eq!(checked_translate(&mut r, &PointI8::of(i8::MIN, 0)), Err(()));
+        assert_eq!(checked_translate(&mut r, &PointI8::of(0, i8::MIN)), Err(()));
         assert_eq!(r, PointI8::of(i8::MIN + 1, i8::MIN + 1));
     }
 
@@ -206,6 +208,8 @@ mod tests {
     fn checked_translate_max_bounds_max_delta() {
         let mut r = PointI8::of(i8::MAX - 1, i8::MAX - 1);
         assert_eq!(checked_translate(&mut r, &PointI8::max()), Err(()));
+        assert_eq!(checked_translate(&mut r, &PointI8::of(i8::MAX, 0)), Err(()));
+        assert_eq!(checked_translate(&mut r, &PointI8::of(0, i8::MAX)), Err(()));
         assert_eq!(r, PointI8::of(i8::MAX - 1, i8::MAX - 1));
     }
 }

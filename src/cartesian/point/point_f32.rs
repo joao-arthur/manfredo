@@ -207,6 +207,8 @@ mod tests {
     fn checked_translate_min_bounds_min_delta() {
         let mut r = PointF32::of(MIN + 1.0, MIN + 1.0);
         assert_eq!(checked_translate(&mut r, &PointF32::min()), Err(()));
+        assert_eq!(checked_translate(&mut r, &PointF32::of(MIN, 0.0)), Err(()));
+        assert_eq!(checked_translate(&mut r, &PointF32::of(0.0, MIN)), Err(()));
         assert_eq!(r, PointF32::of(MIN + 1.0, MIN + 1.0));
     }
 
@@ -214,6 +216,8 @@ mod tests {
     fn checked_translate_max_bounds_max_delta() {
         let mut r = PointF32::of(MAX - 1.0, MAX - 1.0);
         assert_eq!(checked_translate(&mut r, &PointF32::max()), Err(()));
+        assert_eq!(checked_translate(&mut r, &PointF32::of(MAX, 0.0)), Err(()));
+        assert_eq!(checked_translate(&mut r, &PointF32::of(0.0, MAX)), Err(()));
         assert_eq!(r, PointF32::of(MAX - 1.0, MAX - 1.0));
     }
 }

@@ -47,11 +47,19 @@ pub fn saturating_translate(p: &mut PointU8, delta: &PointI8) {
     p.y = clamped_y as u8;
 }
 
+pub fn checked_translate(p: &mut PointU8, delta: &PointI8) -> Result<(), ()> {
+    let x = u8::try_from(i16::from(p.x) + i16::from(delta.x)).map_err(|_| ())?;
+    let y = u8::try_from(i16::from(p.y) + i16::from(delta.y)).map_err(|_| ())?;
+    p.x = x as u8;
+    p.y = y as u8;
+    Ok(())
+}
+
 #[cfg(test)]
 mod tests {
     use crate::cartesian::point::point_i8::PointI8;
 
-    use super::{PointU8, delta, delta_x, delta_y, saturating_translate};
+    use super::{PointU8, checked_translate, delta, delta_x, delta_y, saturating_translate};
 
     #[test]
     fn point_u8() {
@@ -130,7 +138,7 @@ mod tests {
         saturating_translate(&mut r, &PointI8::of(-10, -10));
         assert_eq!(r, PointU8::of(0, 0));
     }
- 
+
     #[test]
     fn saturating_translate_max_bounds() {
         let mut r = PointU8::of(u8::MAX - 2, u8::MAX - 5);
@@ -150,5 +158,58 @@ mod tests {
         let mut r = PointU8::of(u8::MAX - 1, u8::MAX - 1);
         saturating_translate(&mut r, &PointI8::max());
         assert_eq!(r, PointU8::of(u8::MAX, u8::MAX));
+    }
+
+    #[test]
+    fn test_checked_translate() {
+        let mut r = PointU8::of(0, 0);
+        assert_eq!(checked_translate(&mut r, &PointI8::of(10, 10)), Ok(()));
+        assert_eq!(r, PointU8::of(10, 10));
+        assert_eq!(checked_translate(&mut r, &PointI8::of(-5, -5)), Ok(()));
+        assert_eq!(r, PointU8::of(5, 5));
+        assert_eq!(checked_translate(&mut r, &PointI8::of(2, 2)), Ok(()));
+        assert_eq!(r, PointU8::of(7, 7));
+    }
+
+    #[test]
+    fn checked_translate_min_bounds_err() {
+        let mut r = PointU8::of(2, 5);
+        assert_eq!(checked_translate(&mut r, &PointI8::of(-10, -10)), Err(()));
+        assert_eq!(r, PointU8::of(2, 5));
+    }
+
+    #[test]
+    fn checked_translate_max_bounds_err() {
+        let mut r = PointU8::of(u8::MAX - 2, u8::MAX - 5);
+        assert_eq!(checked_translate(&mut r, &PointI8::of(10, 10)), Err(()));
+        assert_eq!(r, PointU8::of(u8::MAX - 2, u8::MAX - 5));
+    }
+
+    #[test]
+    fn checked_translate_min_bounds_ok() {
+        let mut r = PointU8::of(2, 5);
+        assert_eq!(checked_translate(&mut r, &PointI8::of(-2, -5)), Ok(()));
+        assert_eq!(r, PointU8::of(0, 0));
+    }
+
+    #[test]
+    fn checked_translate_max_bounds_ok() {
+        let mut r = PointU8::of(u8::MAX - 2, u8::MAX - 5);
+        assert_eq!(checked_translate(&mut r, &PointI8::of(2, 5)), Ok(()));
+        assert_eq!(r, PointU8::of(u8::MAX, u8::MAX));
+    }
+
+    #[test]
+    fn checked_translate_min_bounds_min_delta() {
+        let mut r = PointU8::of(1, 1);
+        assert_eq!(checked_translate(&mut r, &PointI8::min()), Err(()));
+        assert_eq!(r, PointU8::of(1, 1));
+    }
+
+    #[test]
+    fn checked_translate_max_bounds_max_delta() {
+        let mut r = PointU8::of(u8::MAX - 1, u8::MAX - 1);
+        assert_eq!(checked_translate(&mut r, &PointI8::max()), Err(()));
+        assert_eq!(r, PointU8::of(u8::MAX - 1, u8::MAX - 1));
     }
 }

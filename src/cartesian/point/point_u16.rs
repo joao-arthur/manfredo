@@ -47,11 +47,19 @@ pub fn saturating_translate(p: &mut PointU16, delta: &PointI16) {
     p.y = clamped_y as u16;
 }
 
+pub fn checked_translate(p: &mut PointU16, delta: &PointI16) -> Result<(), ()> {
+    let x = u16::try_from(i32::from(p.x) + i32::from(delta.x)).map_err(|_| ())?;
+    let y = u16::try_from(i32::from(p.y) + i32::from(delta.y)).map_err(|_| ())?;
+    p.x = x as u16;
+    p.y = y as u16;
+    Ok(())
+}
+
 #[cfg(test)]
 mod tests {
     use crate::cartesian::point::point_i16::PointI16;
 
-    use super::{PointU16, delta, delta_x, delta_y, saturating_translate};
+    use super::{PointU16, checked_translate, delta, delta_x, delta_y, saturating_translate};
 
     #[test]
     fn point_u16() {
@@ -150,5 +158,58 @@ mod tests {
         let mut r = PointU16::of(u16::MAX - 1, u16::MAX - 1);
         saturating_translate(&mut r, &PointI16::max());
         assert_eq!(r, PointU16::of(u16::MAX, u16::MAX));
+    }
+
+    #[test]
+    fn test_checked_translate() {
+        let mut r = PointU16::of(0, 0);
+        assert_eq!(checked_translate(&mut r, &PointI16::of(10, 10)), Ok(()));
+        assert_eq!(r, PointU16::of(10, 10));
+        assert_eq!(checked_translate(&mut r, &PointI16::of(-5, -5)), Ok(()));
+        assert_eq!(r, PointU16::of(5, 5));
+        assert_eq!(checked_translate(&mut r, &PointI16::of(2, 2)), Ok(()));
+        assert_eq!(r, PointU16::of(7, 7));
+    }
+
+    #[test]
+    fn checked_translate_min_bounds_err() {
+        let mut r = PointU16::of(2, 5);
+        assert_eq!(checked_translate(&mut r, &PointI16::of(-10, -10)), Err(()));
+        assert_eq!(r, PointU16::of(2, 5));
+    }
+
+    #[test]
+    fn checked_translate_max_bounds_err() {
+        let mut r = PointU16::of(u16::MAX - 2, u16::MAX - 5);
+        assert_eq!(checked_translate(&mut r, &PointI16::of(10, 10)), Err(()));
+        assert_eq!(r, PointU16::of(u16::MAX - 2, u16::MAX - 5));
+    }
+
+    #[test]
+    fn checked_translate_min_bounds_ok() {
+        let mut r = PointU16::of(2, 5);
+        assert_eq!(checked_translate(&mut r, &PointI16::of(-2, -5)), Ok(()));
+        assert_eq!(r, PointU16::of(0, 0));
+    }
+
+    #[test]
+    fn checked_translate_max_bounds_ok() {
+        let mut r = PointU16::of(u16::MAX - 2, u16::MAX - 5);
+        assert_eq!(checked_translate(&mut r, &PointI16::of(2, 5)), Ok(()));
+        assert_eq!(r, PointU16::of(u16::MAX, u16::MAX));
+    }
+
+    #[test]
+    fn checked_translate_min_bounds_min_delta() {
+        let mut r = PointU16::of(1, 1);
+        assert_eq!(checked_translate(&mut r, &PointI16::min()), Err(()));
+        assert_eq!(r, PointU16::of(1, 1));
+    }
+
+    #[test]
+    fn checked_translate_max_bounds_max_delta() {
+        let mut r = PointU16::of(u16::MAX - 1, u16::MAX - 1);
+        assert_eq!(checked_translate(&mut r, &PointI16::max()), Err(()));
+        assert_eq!(r, PointU16::of(u16::MAX - 1, u16::MAX - 1));
     }
 }

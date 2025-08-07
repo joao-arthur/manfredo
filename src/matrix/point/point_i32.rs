@@ -43,11 +43,19 @@ pub fn saturating_translate(p: &mut PointI32, delta: &PointI32) {
     p.col = p.col.saturating_add(delta.col);
 }
 
+pub fn checked_translate(p: &mut PointI32, delta: &PointI32) -> Result<(), ()> {
+    let row = p.row.checked_add(delta.row).ok_or(())?;
+    let col = p.col.checked_add(delta.col).ok_or(())?;
+    p.row = row;
+    p.col = col;
+    Ok(())
+}
+
 #[cfg(test)]
 mod tests {
     use crate::matrix::point::point_u32::PointU32;
 
-    use super::{PointI32, delta, delta_col, delta_row, saturating_translate};
+    use super::{PointI32, delta, delta_col, delta_row, saturating_translate, checked_translate};
 
     #[test]
     fn point_i32() {
@@ -146,5 +154,58 @@ mod tests {
         let mut r = PointI32::of(i32::MAX - 1, i32::MAX - 1);
         saturating_translate(&mut r, &PointI32::max());
         assert_eq!(r, PointI32::of(i32::MAX, i32::MAX));
+    }
+
+    #[test]
+    fn test_checked_translate() {
+        let mut r = PointI32::of(0, 0);
+        assert_eq!(checked_translate(&mut r, &PointI32::of(10, 10)), Ok(()));
+        assert_eq!(r, PointI32::of(10, 10));
+        assert_eq!(checked_translate(&mut r, &PointI32::of(-15, -15)), Ok(()));
+        assert_eq!(r, PointI32::of(-5, -5));
+        assert_eq!(checked_translate(&mut r, &PointI32::of(2, 2)), Ok(()));
+        assert_eq!(r, PointI32::of(-3, -3));
+    }
+
+    #[test]
+    fn checked_translate_min_bounds_err() {
+        let mut r = PointI32::of(i32::MIN + 2, i32::MIN + 5);
+        assert_eq!(checked_translate(&mut r, &PointI32::of(-10, -10)), Err(()));
+        assert_eq!(r, PointI32::of(i32::MIN + 2, i32::MIN + 5));
+    }
+
+    #[test]
+    fn checked_translate_max_bounds_err() {
+        let mut r = PointI32::of(i32::MAX - 2, i32::MAX - 5);
+        assert_eq!(checked_translate(&mut r, &PointI32::of(10, 10)), Err(()));
+        assert_eq!(r, PointI32::of(i32::MAX - 2, i32::MAX - 5));
+    }
+
+    #[test]
+    fn checked_translate_min_bounds_ok() {
+        let mut r = PointI32::of(i32::MIN + 2, i32::MIN + 5);
+        assert_eq!(checked_translate(&mut r, &PointI32::of(-2, -5)), Ok(()));
+        assert_eq!(r, PointI32::of(i32::MIN, i32::MIN));
+    }
+
+    #[test]
+    fn checked_translate_max_bounds_ok() {
+        let mut r = PointI32::of(i32::MAX - 2, i32::MAX - 5);
+        assert_eq!(checked_translate(&mut r, &PointI32::of(2, 5)), Ok(()));
+        assert_eq!(r, PointI32::of(i32::MAX, i32::MAX));
+    }
+
+    #[test]
+    fn checked_translate_min_bounds_min_delta() {
+        let mut r = PointI32::of(i32::MIN + 1, i32::MIN + 1);
+        assert_eq!(checked_translate(&mut r, &PointI32::min()), Err(()));
+        assert_eq!(r, PointI32::of(i32::MIN + 1, i32::MIN + 1));
+    }
+
+    #[test]
+    fn checked_translate_max_bounds_max_delta() {
+        let mut r = PointI32::of(i32::MAX - 1, i32::MAX - 1);
+        assert_eq!(checked_translate(&mut r, &PointI32::max()), Err(()));
+        assert_eq!(r, PointI32::of(i32::MAX - 1, i32::MAX - 1));
     }
 }

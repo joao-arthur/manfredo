@@ -50,8 +50,8 @@ pub fn saturating_translate(p: &mut PointU32, delta: &PointI32) {
 pub fn checked_translate(p: &mut PointU32, delta: &PointI32) -> Result<(), ()> {
     let row = u32::try_from(i64::from(p.row) + i64::from(delta.row)).map_err(|_| ())?;
     let col = u32::try_from(i64::from(p.col) + i64::from(delta.col)).map_err(|_| ())?;
-    p.row = row as u32;
-    p.col = col as u32;
+    p.row = row;
+    p.col = col;
     Ok(())
 }
 

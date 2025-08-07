@@ -514,6 +514,20 @@ mod tests {
     }
 
     #[test]
+    fn checked_translate_min_bounds_big_rect_small_delta() {
+        let mut r = RectU64::of(1, 1, u64::MAX, u64::MAX);
+        assert_eq!(checked_translate(&mut r, &PointI64::of(-1, -1)), Ok(()));
+        assert_eq!(r, RectU64::of(0, 0, u64::MAX - 1, u64::MAX - 1));
+    }
+
+    #[test]
+    fn checked_translate_max_bounds_big_rect_small_delta() {
+        let mut r = RectU64::of(0, 0, u64::MAX - 1, u64::MAX - 1);
+        assert_eq!(checked_translate(&mut r, &PointI64::of(1, 1)), Ok(()));
+        assert_eq!(r, RectU64::of(1, 1, u64::MAX, u64::MAX));
+    }
+
+    #[test]
     fn contains_inside_borders() {
         assert!(contains(&RectU64::of(1, 1, u64::MAX - 1, u64::MAX - 1), &PointU64::of(1, 1)));
         assert!(contains(&RectU64::of(1, 1, u64::MAX - 1, u64::MAX - 1), &PointU64::of(1, u64::MAX - 1)));

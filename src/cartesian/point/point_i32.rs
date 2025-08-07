@@ -55,7 +55,7 @@ pub fn checked_translate(p: &mut PointI32, delta: &PointI32) -> Result<(), ()> {
 mod tests {
     use crate::cartesian::point::point_u32::PointU32;
 
-    use super::{PointI32, delta, delta_x, delta_y, saturating_translate,  checked_translate};
+    use super::{PointI32, checked_translate, delta, delta_x, delta_y, saturating_translate};
 
     #[test]
     fn point_i32() {

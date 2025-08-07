@@ -59,7 +59,7 @@ pub fn checked_translate(p: &mut PointU64, delta: &PointI64) -> Result<(), ()> {
 mod tests {
     use crate::matrix::point::point_i64::PointI64;
 
-    use super::{PointU64, delta, delta_col, delta_row, saturating_translate, checked_translate};
+    use super::{PointU64, checked_translate, delta, delta_col, delta_row, saturating_translate};
 
     #[test]
     fn point_u64() {

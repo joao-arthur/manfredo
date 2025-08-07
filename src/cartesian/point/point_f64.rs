@@ -59,7 +59,7 @@ pub fn checked_translate(p: &mut PointF64, delta: &PointF64) -> Result<(), ()> {
 
 #[cfg(test)]
 mod tests {
-    use super::{MAX, MIN, PointF64, delta, delta_x, delta_y, saturating_translate, checked_translate};
+    use super::{MAX, MIN, PointF64, checked_translate, delta, delta_x, delta_y, saturating_translate};
 
     #[test]
     fn point_f64() {

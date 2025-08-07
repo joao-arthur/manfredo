@@ -55,7 +55,7 @@ pub fn checked_translate(p: &mut PointI64, delta: &PointI64) -> Result<(), ()> {
 mod tests {
     use crate::cartesian::point::point_u64::PointU64;
 
-    use super::{PointI64, delta, delta_x, delta_y, saturating_translate,  checked_translate};
+    use super::{PointI64, checked_translate, delta, delta_x, delta_y, saturating_translate};
 
     #[test]
     fn point_i64() {

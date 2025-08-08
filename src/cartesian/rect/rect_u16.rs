@@ -419,13 +419,13 @@ mod tests {
 
     #[test]
     fn test_saturating_translate() {
-        let mut r = RectU16::of(0, 0, 10, 10);
-        saturating_translate(&mut r, &PointI16::of(10, 10));
-        assert_eq!(r, RectU16::of(10, 10, 20, 20));
-        saturating_translate(&mut r, &PointI16::of(-5, -5));
-        assert_eq!(r, RectU16::of(5, 5, 15, 15));
-        saturating_translate(&mut r, &PointI16::of(2, 2));
-        assert_eq!(r, RectU16::of(7, 7, 17, 17));
+        let mut r = RectU16::of(0, 0, 12, 15);
+        saturating_translate(&mut r, &PointI16::of(5, 4));
+        assert_eq!(r, RectU16::of(5, 4, 17, 19));
+        saturating_translate(&mut r, &PointI16::of(-4, -2));
+        assert_eq!(r, RectU16::of(1, 2, 13, 17));
+        saturating_translate(&mut r, &PointI16::of(10, 20));
+        assert_eq!(r, RectU16::of(11, 22, 23, 37));
     }
 
     #[test]
@@ -472,13 +472,13 @@ mod tests {
 
     #[test]
     fn test_checked_translate() {
-        let mut r = RectU16::of(0, 0, 10, 10);
-        assert_eq!(checked_translate(&mut r, &PointI16::of(10, 10)), Ok(()));
-        assert_eq!(r, RectU16::of(10, 10, 20, 20));
-        assert_eq!(checked_translate(&mut r, &PointI16::of(-5, -5)), Ok(()));
-        assert_eq!(r, RectU16::of(5, 5, 15, 15));
-        assert_eq!(checked_translate(&mut r, &PointI16::of(2, 2)), Ok(()));
-        assert_eq!(r, RectU16::of(7, 7, 17, 17));
+        let mut r = RectU16::of(0, 0, 12, 15);
+        assert_eq!(checked_translate(&mut r, &PointI16::of(5, 4)), Ok(()));
+        assert_eq!(r, RectU16::of(5, 4, 17, 19));
+        assert_eq!(checked_translate(&mut r, &PointI16::of(-4, -2)), Ok(()));
+        assert_eq!(r, RectU16::of(1, 2, 13, 17));
+        assert_eq!(checked_translate(&mut r, &PointI16::of(10, 20)), Ok(()));
+        assert_eq!(r, RectU16::of(11, 22, 23, 37));
     }
 
     #[test]

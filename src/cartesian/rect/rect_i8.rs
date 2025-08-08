@@ -453,12 +453,12 @@ mod tests {
     #[test]
     fn test_saturating_translate() {
         let mut r = RectI8::of(0, 0, 10, 10);
-        saturating_translate(&mut r, &PointI8::of(10, 10));
-        assert_eq!(r, RectI8::of(10, 10, 20, 20));
-        saturating_translate(&mut r, &PointI8::of(-20, -20));
-        assert_eq!(r, RectI8::of(-10, -10, 0, 0));
-        saturating_translate(&mut r, &PointI8::of(2, 2));
-        assert_eq!(r, RectI8::of(-8, -8, 2, 2));
+        saturating_translate(&mut r, &PointI8::of(10, 20));
+        assert_eq!(r, RectI8::of(10, 20, 20, 30));
+        saturating_translate(&mut r, &PointI8::of(-20, -15));
+        assert_eq!(r, RectI8::of(-10, 5, 0, 15));
+        saturating_translate(&mut r, &PointI8::of(3, -2));
+        assert_eq!(r, RectI8::of(-7, 3, 3, 13));
     }
 
     #[test]
@@ -506,12 +506,12 @@ mod tests {
     #[test]
     fn test_checked_translate() {
         let mut r = RectI8::of(0, 0, 10, 10);
-        assert_eq!(checked_translate(&mut r, &PointI8::of(10, 10)), Ok(()));
-        assert_eq!(r, RectI8::of(10, 10, 20, 20));
-        assert_eq!(checked_translate(&mut r, &PointI8::of(-15, -15)), Ok(()));
-        assert_eq!(r, RectI8::of(-5, -5, 5, 5));
-        assert_eq!(checked_translate(&mut r, &PointI8::of(2, 2)), Ok(()));
-        assert_eq!(r, RectI8::of(-3, -3, 7, 7));
+        assert_eq!(checked_translate(&mut r, &PointI8::of(10, 20)), Ok(()));
+        assert_eq!(r, RectI8::of(10, 20, 20, 30));
+        assert_eq!(checked_translate(&mut r, &PointI8::of(-20, -15)), Ok(()));
+        assert_eq!(r, RectI8::of(-10, 5, 0, 15));
+        assert_eq!(checked_translate(&mut r, &PointI8::of(3, -2)), Ok(()));
+        assert_eq!(r, RectI8::of(-7, 3, 3, 13));
     }
 
     #[test]

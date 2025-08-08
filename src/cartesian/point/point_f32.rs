@@ -128,12 +128,12 @@ mod tests {
     #[test]
     fn test_saturating_translate() {
         let mut r = PointF32::of(0.0, 0.0);
-        saturating_translate(&mut r, &PointF32::of(10.0, 10.0));
-        assert_eq!(r, PointF32::of(10.0, 10.0));
-        saturating_translate(&mut r, &PointF32::of(-15.0, -15.0));
-        assert_eq!(r, PointF32::of(-5.0, -5.0));
-        saturating_translate(&mut r, &PointF32::of(2.0, 2.0));
-        assert_eq!(r, PointF32::of(-3.0, -3.0));
+        saturating_translate(&mut r, &PointF32::of(10.0, 15.0));
+        assert_eq!(r, PointF32::of(10.0, 15.0));
+        saturating_translate(&mut r, &PointF32::of(-15.0, -25.0));
+        assert_eq!(r, PointF32::of(-5.0, -10.0));
+        saturating_translate(&mut r, &PointF32::of(2.0, 3.0));
+        assert_eq!(r, PointF32::of(-3.0, -7.0));
     }
 
     #[test]
@@ -167,12 +167,12 @@ mod tests {
     #[test]
     fn test_checked_translate() {
         let mut r = PointF32::of(0.0, 0.0);
-        assert_eq!(checked_translate(&mut r, &PointF32::of(10.0, 10.0)), Ok(()));
-        assert_eq!(r, PointF32::of(10.0, 10.0));
-        assert_eq!(checked_translate(&mut r, &PointF32::of(-15.0, -15.0)), Ok(()));
-        assert_eq!(r, PointF32::of(-5.0, -5.0));
-        assert_eq!(checked_translate(&mut r, &PointF32::of(2.0, 2.0)), Ok(()));
-        assert_eq!(r, PointF32::of(-3.0, -3.0));
+        assert_eq!(checked_translate(&mut r, &PointF32::of(10.0, 15.0)), Ok(()));
+        assert_eq!(r, PointF32::of(10.0, 15.0));
+        assert_eq!(checked_translate(&mut r, &PointF32::of(-15.0, -25.0)), Ok(()));
+        assert_eq!(r, PointF32::of(-5.0, -10.0));
+        assert_eq!(checked_translate(&mut r, &PointF32::of(2.0, 3.0)), Ok(()));
+        assert_eq!(r, PointF32::of(-3.0, -7.0));
     }
 
     #[test]

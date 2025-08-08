@@ -124,12 +124,12 @@ mod tests {
     #[test]
     fn test_saturating_translate() {
         let mut r = PointU64::of(0, 0);
-        saturating_translate(&mut r, &PointI64::of(10, 10));
-        assert_eq!(r, PointU64::of(10, 10));
-        saturating_translate(&mut r, &PointI64::of(-5, -5));
-        assert_eq!(r, PointU64::of(5, 5));
-        saturating_translate(&mut r, &PointI64::of(2, 2));
-        assert_eq!(r, PointU64::of(7, 7));
+        saturating_translate(&mut r, &PointI64::of(10, 13));
+        assert_eq!(r, PointU64::of(10, 13));
+        saturating_translate(&mut r, &PointI64::of(-5, -3));
+        assert_eq!(r, PointU64::of(5, 10));
+        saturating_translate(&mut r, &PointI64::of(2, -4));
+        assert_eq!(r, PointU64::of(7, 6));
     }
 
     #[test]

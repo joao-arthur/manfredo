@@ -503,6 +503,8 @@ mod tests {
     fn checked_translate_min_bounds_big_rect_big_delta() {
         let mut r = RectU64::of(1, 1, u64::MAX, u64::MAX);
         assert_eq!(checked_translate(&mut r, &PointI64::min()), Err(()));
+        assert_eq!(checked_translate(&mut r, &PointI64::of(i64::MIN, 0)), Err(()));
+        assert_eq!(checked_translate(&mut r, &PointI64::of(0, i64::MIN)), Err(()));
         assert_eq!(r, RectU64::of(1, 1, u64::MAX, u64::MAX));
     }
 
@@ -510,6 +512,8 @@ mod tests {
     fn checked_translate_max_bounds_big_rect_big_delta() {
         let mut r = RectU64::of(0, 0, u64::MAX - 1, u64::MAX - 1);
         assert_eq!(checked_translate(&mut r, &PointI64::max()), Err(()));
+        assert_eq!(checked_translate(&mut r, &PointI64::of(i64::MAX, 0)), Err(()));
+        assert_eq!(checked_translate(&mut r, &PointI64::of(0, i64::MAX)), Err(()));
         assert_eq!(r, RectU64::of(0, 0, u64::MAX - 1, u64::MAX - 1));
     }
 
@@ -529,23 +533,34 @@ mod tests {
 
     #[test]
     fn contains_inside_borders() {
-        assert!(contains(&RectU64::of(1, 1, u64::MAX - 1, u64::MAX - 1), &PointU64::of(1, 1)));
-        assert!(contains(&RectU64::of(1, 1, u64::MAX - 1, u64::MAX - 1), &PointU64::of(1, u64::MAX - 1)));
-        assert!(contains(&RectU64::of(1, 1, u64::MAX - 1, u64::MAX - 1), &PointU64::of(u64::MAX - 1, 1)));
-        assert!(contains(&RectU64::of(1, 1, u64::MAX - 1, u64::MAX - 1), &PointU64::of(u64::MAX - 1, u64::MAX - 1)));
+        let r = RectU64::of(1, 1, u64::MAX - 1, u64::MAX - 1);
+        assert!(contains(&r, &PointU64::of(1, 1)));
+        assert!(contains(&r, &PointU64::of(1, u64::MAX - 1)));
+        assert!(contains(&r, &PointU64::of(u64::MAX - 1, 1)));
+        assert!(contains(&r, &PointU64::of(u64::MAX - 1, u64::MAX - 1)));
     }
 
     #[test]
     fn contains_outside_borders() {
-        assert!(!contains(&RectU64::of(1, 1, u64::MAX - 1, u64::MAX - 1), &PointU64::of(0, 0)));
-        assert!(!contains(&RectU64::of(1, 1, u64::MAX - 1, u64::MAX - 1), &PointU64::of(0, u64::MAX)));
-        assert!(!contains(&RectU64::of(1, 1, u64::MAX - 1, u64::MAX - 1), &PointU64::of(u64::MAX, 0)));
-        assert!(!contains(&RectU64::of(1, 1, u64::MAX - 1, u64::MAX - 1), &PointU64::of(u64::MAX, u64::MAX)));
+        let r = RectU64::of(1, 1, u64::MAX - 1, u64::MAX - 1);
+        assert!(!contains(&r, &PointU64::of(0, 0)));
+        assert!(!contains(&r, &PointU64::of(0, u64::MAX)));
+        assert!(!contains(&r, &PointU64::of(u64::MAX, 0)));
+        assert!(!contains(&r, &PointU64::of(u64::MAX, u64::MAX)));
+        assert!(!contains(&r, &PointU64::of(1, 0)));
+        assert!(!contains(&r, &PointU64::of(1, u64::MAX)));
+        assert!(!contains(&r, &PointU64::of(u64::MAX - 1, 0)));
+        assert!(!contains(&r, &PointU64::of(u64::MAX - 1, u64::MAX)));
+        assert!(!contains(&r, &PointU64::of(0, 1)));
+        assert!(!contains(&r, &PointU64::of(0, u64::MAX - 1)));
+        assert!(!contains(&r, &PointU64::of(u64::MAX, 1)));
+        assert!(!contains(&r, &PointU64::of(u64::MAX, u64::MAX - 1)));
     }
 
     #[test]
     fn contains_inside() {
-        assert!(contains(&RectU64::of(1, 1, u64::MAX - 1, u64::MAX - 1), &PointU64::of(10, 10)));
-        assert!(contains(&RectU64::of(1, 1, u64::MAX - 1, u64::MAX - 1), &PointU64::of(u64::MAX - 10, u64::MAX - 10)));
+        let r = RectU64::of(1, 1, u64::MAX - 1, u64::MAX - 1);
+        assert!(contains(&r, &PointU64::of(10, 10)));
+        assert!(contains(&r, &PointU64::of(u64::MAX - 10, u64::MAX - 10)));
     }
 }

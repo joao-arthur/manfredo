@@ -532,6 +532,8 @@ mod tests {
     fn checked_translate_min_bounds_big_rect_big_delta() {
         let mut r = RectI64::of(i64::MIN + 1, i64::MIN + 1, i64::MAX, i64::MAX);
         assert_eq!(checked_translate(&mut r, &PointI64::min()), Err(()));
+        assert_eq!(checked_translate(&mut r, &PointI64::of(i64::MIN, 0)), Err(()));
+        assert_eq!(checked_translate(&mut r, &PointI64::of(0, i64::MIN)), Err(()));
         assert_eq!(r, RectI64::of(i64::MIN + 1, i64::MIN + 1, i64::MAX, i64::MAX));
     }
 
@@ -539,6 +541,8 @@ mod tests {
     fn checked_translate_max_bounds_big_rect_big_delta() {
         let mut r = RectI64::of(i64::MIN, i64::MIN, i64::MAX - 1, i64::MAX - 1);
         assert_eq!(checked_translate(&mut r, &PointI64::max()), Err(()));
+        assert_eq!(checked_translate(&mut r, &PointI64::of(i64::MAX, 0)), Err(()));
+        assert_eq!(checked_translate(&mut r, &PointI64::of(0, i64::MAX)), Err(()));
         assert_eq!(r, RectI64::of(i64::MIN, i64::MIN, i64::MAX - 1, i64::MAX - 1));
     }
 
@@ -558,23 +562,34 @@ mod tests {
 
     #[test]
     fn contains_inside_borders() {
-        assert!(contains(&RectI64::of(i64::MIN + 1, i64::MIN + 1, i64::MAX - 1, i64::MAX - 1), &PointI64::of(i64::MIN + 1, i64::MIN + 1)));
-        assert!(contains(&RectI64::of(i64::MIN + 1, i64::MIN + 1, i64::MAX - 1, i64::MAX - 1), &PointI64::of(i64::MIN + 1, i64::MAX - 1)));
-        assert!(contains(&RectI64::of(i64::MIN + 1, i64::MIN + 1, i64::MAX - 1, i64::MAX - 1), &PointI64::of(i64::MAX - 1, i64::MIN + 1)));
-        assert!(contains(&RectI64::of(i64::MIN + 1, i64::MIN + 1, i64::MAX - 1, i64::MAX - 1), &PointI64::of(i64::MAX - 1, i64::MAX - 1)));
+        let r = RectI64::of(i64::MIN + 1, i64::MIN + 1, i64::MAX - 1, i64::MAX - 1);
+        assert!(contains(&r, &PointI64::of(i64::MIN + 1, i64::MIN + 1)));
+        assert!(contains(&r, &PointI64::of(i64::MIN + 1, i64::MAX - 1)));
+        assert!(contains(&r, &PointI64::of(i64::MAX - 1, i64::MIN + 1)));
+        assert!(contains(&r, &PointI64::of(i64::MAX - 1, i64::MAX - 1)));
     }
 
     #[test]
     fn contains_outside_borders() {
-        assert!(!contains(&RectI64::of(i64::MIN + 1, i64::MIN + 1, i64::MAX - 1, i64::MAX - 1), &PointI64::of(i64::MIN, i64::MIN)));
-        assert!(!contains(&RectI64::of(i64::MIN + 1, i64::MIN + 1, i64::MAX - 1, i64::MAX - 1), &PointI64::of(i64::MIN, i64::MAX)));
-        assert!(!contains(&RectI64::of(i64::MIN + 1, i64::MIN + 1, i64::MAX - 1, i64::MAX - 1), &PointI64::of(i64::MAX, i64::MIN)));
-        assert!(!contains(&RectI64::of(i64::MIN + 1, i64::MIN + 1, i64::MAX - 1, i64::MAX - 1), &PointI64::of(i64::MAX, i64::MAX)));
+        let r = RectI64::of(i64::MIN + 1, i64::MIN + 1, i64::MAX - 1, i64::MAX - 1);
+        assert!(!contains(&r, &PointI64::of(i64::MIN, i64::MIN)));
+        assert!(!contains(&r, &PointI64::of(i64::MIN, i64::MAX)));
+        assert!(!contains(&r, &PointI64::of(i64::MAX, i64::MIN)));
+        assert!(!contains(&r, &PointI64::of(i64::MAX, i64::MAX)));
+        assert!(!contains(&r, &PointI64::of(i64::MIN + 1, i64::MIN)));
+        assert!(!contains(&r, &PointI64::of(i64::MIN + 1, i64::MAX)));
+        assert!(!contains(&r, &PointI64::of(i64::MAX - 1, i64::MIN)));
+        assert!(!contains(&r, &PointI64::of(i64::MAX - 1, i64::MAX)));
+        assert!(!contains(&r, &PointI64::of(i64::MIN, i64::MIN + 1)));
+        assert!(!contains(&r, &PointI64::of(i64::MIN, i64::MAX - 1)));
+        assert!(!contains(&r, &PointI64::of(i64::MAX, i64::MIN + 1)));
+        assert!(!contains(&r, &PointI64::of(i64::MAX, i64::MAX - 1)));
     }
 
     #[test]
     fn contains_inside() {
-        assert!(contains(&RectI64::of(i64::MIN + 1, i64::MIN + 1, i64::MAX - 1, i64::MAX - 1), &PointI64::of(i64::MIN + 10, i64::MIN + 10)));
-        assert!(contains(&RectI64::of(i64::MIN + 1, i64::MIN + 1, i64::MAX - 1, i64::MAX - 1), &PointI64::of(i64::MAX - 10, i64::MAX - 10)));
+        let r = RectI64::of(i64::MIN + 1, i64::MIN + 1, i64::MAX - 1, i64::MAX - 1);
+        assert!(contains(&r, &PointI64::of(i64::MIN + 10, i64::MIN + 10)));
+        assert!(contains(&r, &PointI64::of(i64::MAX - 10, i64::MAX - 10)));
     }
 }

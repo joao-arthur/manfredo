@@ -532,6 +532,8 @@ mod tests {
     fn checked_translate_min_bounds_big_rect_big_delta() {
         let mut r = RectI32::of(i32::MIN + 1, i32::MIN + 1, i32::MAX, i32::MAX);
         assert_eq!(checked_translate(&mut r, &PointI32::min()), Err(()));
+        assert_eq!(checked_translate(&mut r, &PointI32::of(i32::MIN, 0)), Err(()));
+        assert_eq!(checked_translate(&mut r, &PointI32::of(0, i32::MIN)), Err(()));
         assert_eq!(r, RectI32::of(i32::MIN + 1, i32::MIN + 1, i32::MAX, i32::MAX));
     }
 
@@ -539,6 +541,8 @@ mod tests {
     fn checked_translate_max_bounds_big_rect_big_delta() {
         let mut r = RectI32::of(i32::MIN, i32::MIN, i32::MAX - 1, i32::MAX - 1);
         assert_eq!(checked_translate(&mut r, &PointI32::max()), Err(()));
+        assert_eq!(checked_translate(&mut r, &PointI32::of(i32::MAX, 0)), Err(()));
+        assert_eq!(checked_translate(&mut r, &PointI32::of(0, i32::MAX)), Err(()));
         assert_eq!(r, RectI32::of(i32::MIN, i32::MIN, i32::MAX - 1, i32::MAX - 1));
     }
 
@@ -558,23 +562,34 @@ mod tests {
 
     #[test]
     fn contains_inside_borders() {
-        assert!(contains(&RectI32::of(i32::MIN + 1, i32::MIN + 1, i32::MAX - 1, i32::MAX - 1), &PointI32::of(i32::MIN + 1, i32::MIN + 1)));
-        assert!(contains(&RectI32::of(i32::MIN + 1, i32::MIN + 1, i32::MAX - 1, i32::MAX - 1), &PointI32::of(i32::MIN + 1, i32::MAX - 1)));
-        assert!(contains(&RectI32::of(i32::MIN + 1, i32::MIN + 1, i32::MAX - 1, i32::MAX - 1), &PointI32::of(i32::MAX - 1, i32::MIN + 1)));
-        assert!(contains(&RectI32::of(i32::MIN + 1, i32::MIN + 1, i32::MAX - 1, i32::MAX - 1), &PointI32::of(i32::MAX - 1, i32::MAX - 1)));
+        let r = RectI32::of(i32::MIN + 1, i32::MIN + 1, i32::MAX - 1, i32::MAX - 1);
+        assert!(contains(&r, &PointI32::of(i32::MIN + 1, i32::MIN + 1)));
+        assert!(contains(&r, &PointI32::of(i32::MIN + 1, i32::MAX - 1)));
+        assert!(contains(&r, &PointI32::of(i32::MAX - 1, i32::MIN + 1)));
+        assert!(contains(&r, &PointI32::of(i32::MAX - 1, i32::MAX - 1)));
     }
 
     #[test]
     fn contains_outside_borders() {
-        assert!(!contains(&RectI32::of(i32::MIN + 1, i32::MIN + 1, i32::MAX - 1, i32::MAX - 1), &PointI32::of(i32::MIN, i32::MIN)));
-        assert!(!contains(&RectI32::of(i32::MIN + 1, i32::MIN + 1, i32::MAX - 1, i32::MAX - 1), &PointI32::of(i32::MIN, i32::MAX)));
-        assert!(!contains(&RectI32::of(i32::MIN + 1, i32::MIN + 1, i32::MAX - 1, i32::MAX - 1), &PointI32::of(i32::MAX, i32::MIN)));
-        assert!(!contains(&RectI32::of(i32::MIN + 1, i32::MIN + 1, i32::MAX - 1, i32::MAX - 1), &PointI32::of(i32::MAX, i32::MAX)));
+        let r = RectI32::of(i32::MIN + 1, i32::MIN + 1, i32::MAX - 1, i32::MAX - 1);
+        assert!(!contains(&r, &PointI32::of(i32::MIN, i32::MIN)));
+        assert!(!contains(&r, &PointI32::of(i32::MIN, i32::MAX)));
+        assert!(!contains(&r, &PointI32::of(i32::MAX, i32::MIN)));
+        assert!(!contains(&r, &PointI32::of(i32::MAX, i32::MAX)));
+        assert!(!contains(&r, &PointI32::of(i32::MIN + 1, i32::MIN)));
+        assert!(!contains(&r, &PointI32::of(i32::MIN + 1, i32::MAX)));
+        assert!(!contains(&r, &PointI32::of(i32::MAX - 1, i32::MIN)));
+        assert!(!contains(&r, &PointI32::of(i32::MAX - 1, i32::MAX)));
+        assert!(!contains(&r, &PointI32::of(i32::MIN, i32::MIN + 1)));
+        assert!(!contains(&r, &PointI32::of(i32::MIN, i32::MAX - 1)));
+        assert!(!contains(&r, &PointI32::of(i32::MAX, i32::MIN + 1)));
+        assert!(!contains(&r, &PointI32::of(i32::MAX, i32::MAX - 1)));
     }
 
     #[test]
     fn contains_inside() {
-        assert!(contains(&RectI32::of(i32::MIN + 1, i32::MIN + 1, i32::MAX - 1, i32::MAX - 1), &PointI32::of(i32::MIN + 10, i32::MIN + 10)));
-        assert!(contains(&RectI32::of(i32::MIN + 1, i32::MIN + 1, i32::MAX - 1, i32::MAX - 1), &PointI32::of(i32::MAX - 10, i32::MAX - 10)));
+        let r = RectI32::of(i32::MIN + 1, i32::MIN + 1, i32::MAX - 1, i32::MAX - 1);
+        assert!(contains(&r, &PointI32::of(i32::MIN + 10, i32::MIN + 10)));
+        assert!(contains(&r, &PointI32::of(i32::MAX - 10, i32::MAX - 10)));
     }
 }

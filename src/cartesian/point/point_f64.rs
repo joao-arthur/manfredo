@@ -1,3 +1,5 @@
+use super::point_f32::PointF32;
+
 pub const MIN: f64 = -9_007_199_254_740_992.0;
 pub const MAX: f64 = 9_007_199_254_740_991.0;
 
@@ -18,6 +20,12 @@ impl PointF64 {
 
     pub fn max() -> Self {
         PointF64 { x: MAX, y: MAX }
+    }
+}
+
+impl From<PointF32> for PointF64 {
+    fn from(p: PointF32) -> Self {
+        PointF64 { x: p.x.into(), y: p.y.into() }
     }
 }
 
@@ -74,6 +82,8 @@ pub fn checked_translated(p: &PointF64, delta: &PointF64) -> Option<PointF64> {
 
 #[cfg(test)]
 mod tests {
+    use crate::cartesian::point::point_f32::PointF32;
+
     use super::{MAX, MIN, PointF64, checked_translate, checked_translated, delta, delta_x, delta_y, saturating_translate, saturating_translated};
 
     #[test]
@@ -81,6 +91,16 @@ mod tests {
         assert_eq!(PointF64::of(MIN, MAX), PointF64 { x: MIN, y: MAX });
         assert_eq!(PointF64::min(), PointF64 { x: MIN, y: MIN });
         assert_eq!(PointF64::max(), PointF64 { x: MAX, y: MAX });
+    }
+
+    #[test]
+    fn from() {
+        assert_eq!(PointF64::from(PointF32::min()), PointF64 { x: -16777216.0, y: -16777216.0 });
+        assert_eq!(PointF64::from(PointF32::max()), PointF64 { x: 16777215.0, y: 16777215.0 });
+    }
+
+    #[test]
+    fn to_string() {
         assert_eq!(PointF64::of(MIN, MAX).to_string(), "(-9007199254740992, 9007199254740991)");
         assert_eq!(PointF64::min().to_string(), "(-9007199254740992, -9007199254740992)");
         assert_eq!(PointF64::max().to_string(), "(9007199254740991, 9007199254740991)");

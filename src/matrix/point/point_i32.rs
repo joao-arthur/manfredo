@@ -1,4 +1,4 @@
-use crate::matrix::point::point_u32::PointU32;
+use crate::matrix::point::{point_i8::PointI8, point_i16::PointI16, point_u32::PointU32};
 
 #[derive(Eq, PartialEq, Debug, Clone, Hash)]
 pub struct PointI32 {
@@ -17,6 +17,18 @@ impl PointI32 {
 
     pub fn max() -> Self {
         PointI32 { row: i32::MAX, col: i32::MAX }
+    }
+}
+
+impl From<PointI8> for PointI32 {
+    fn from(p: PointI8) -> Self {
+        PointI32 { row: p.row.into(), col: p.col.into() }
+    }
+}
+
+impl From<PointI16> for PointI32 {
+    fn from(p: PointI16) -> Self {
+        PointI32 { row: p.row.into(), col: p.col.into() }
     }
 }
 
@@ -63,7 +75,7 @@ pub fn checked_translated(p: &PointI32, delta: &PointI32) -> Option<PointI32> {
 
 #[cfg(test)]
 mod tests {
-    use crate::matrix::point::point_u32::PointU32;
+    use crate::matrix::point::{point_i8::PointI8, point_i16::PointI16, point_u32::PointU32};
 
     use super::{PointI32, checked_translate, checked_translated, delta, delta_col, delta_row, saturating_translate, saturating_translated};
 
@@ -72,6 +84,18 @@ mod tests {
         assert_eq!(PointI32::of(i32::MIN, i32::MAX), PointI32 { row: i32::MIN, col: i32::MAX });
         assert_eq!(PointI32::min(), PointI32 { row: i32::MIN, col: i32::MIN });
         assert_eq!(PointI32::max(), PointI32 { row: i32::MAX, col: i32::MAX });
+    }
+
+    #[test]
+    fn from() {
+        assert_eq!(PointI32::from(PointI8::min()), PointI32 { row: i8::MIN.into(), col: i8::MIN.into() });
+        assert_eq!(PointI32::from(PointI8::max()), PointI32 { row: i8::MAX.into(), col: i8::MAX.into() });
+        assert_eq!(PointI32::from(PointI16::min()), PointI32 { row: i16::MIN.into(), col: i16::MIN.into() });
+        assert_eq!(PointI32::from(PointI16::max()), PointI32 { row: i16::MAX.into(), col: i16::MAX.into() });
+    }
+
+    #[test]
+    fn to_string() {
         assert_eq!(PointI32::of(i32::MIN, i32::MAX).to_string(), "(-2147483648, 2147483647)");
         assert_eq!(PointI32::min().to_string(), "(-2147483648, -2147483648)");
         assert_eq!(PointI32::max().to_string(), "(2147483647, 2147483647)");

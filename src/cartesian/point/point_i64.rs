@@ -1,3 +1,5 @@
+use super::{point_i8::PointI8, point_i16::PointI16, point_i32::PointI32};
+
 use crate::cartesian::point::point_u64::PointU64;
 
 #[derive(Eq, PartialEq, Debug, Clone, Hash)]
@@ -17,6 +19,24 @@ impl PointI64 {
 
     pub fn max() -> Self {
         PointI64 { x: i64::MAX, y: i64::MAX }
+    }
+}
+
+impl From<PointI8> for PointI64 {
+    fn from(p: PointI8) -> Self {
+        PointI64 { x: p.x.into(), y: p.y.into() }
+    }
+}
+
+impl From<PointI16> for PointI64 {
+    fn from(p: PointI16) -> Self {
+        PointI64 { x: p.x.into(), y: p.y.into() }
+    }
+}
+
+impl From<PointI32> for PointI64 {
+    fn from(p: PointI32) -> Self {
+        PointI64 { x: p.x.into(), y: p.y.into() }
     }
 }
 
@@ -63,7 +83,7 @@ pub fn checked_translated(p: &PointI64, delta: &PointI64) -> Option<PointI64> {
 
 #[cfg(test)]
 mod tests {
-    use crate::cartesian::point::point_u64::PointU64;
+    use crate::cartesian::point::{point_i8::PointI8, point_i16::PointI16, point_i32::PointI32, point_u64::PointU64};
 
     use super::{PointI64, checked_translate, checked_translated, delta, delta_x, delta_y, saturating_translate, saturating_translated};
 
@@ -72,6 +92,20 @@ mod tests {
         assert_eq!(PointI64::of(i64::MIN, i64::MAX), PointI64 { x: i64::MIN, y: i64::MAX });
         assert_eq!(PointI64::min(), PointI64 { x: i64::MIN, y: i64::MIN });
         assert_eq!(PointI64::max(), PointI64 { x: i64::MAX, y: i64::MAX });
+    }
+
+    #[test]
+    fn from() {
+        assert_eq!(PointI64::from(PointI8::min()), PointI64 { x: i8::MIN.into(), y: i8::MIN.into() });
+        assert_eq!(PointI64::from(PointI8::max()), PointI64 { x: i8::MAX.into(), y: i8::MAX.into() });
+        assert_eq!(PointI64::from(PointI16::min()), PointI64 { x: i16::MIN.into(), y: i16::MIN.into() });
+        assert_eq!(PointI64::from(PointI16::max()), PointI64 { x: i16::MAX.into(), y: i16::MAX.into() });
+        assert_eq!(PointI64::from(PointI32::min()), PointI64 { x: i32::MIN.into(), y: i32::MIN.into() });
+        assert_eq!(PointI64::from(PointI32::max()), PointI64 { x: i32::MAX.into(), y: i32::MAX.into() });
+    }
+
+    #[test]
+    fn to_string() {
         assert_eq!(PointI64::of(i64::MIN, i64::MAX).to_string(), "(-9223372036854775808, 9223372036854775807)");
         assert_eq!(PointI64::min().to_string(), "(-9223372036854775808, -9223372036854775808)");
         assert_eq!(PointI64::max().to_string(), "(9223372036854775807, 9223372036854775807)");

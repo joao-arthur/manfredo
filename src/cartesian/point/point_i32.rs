@@ -1,3 +1,5 @@
+use super::{point_i8::PointI8, point_i16::PointI16};
+
 use crate::cartesian::point::point_u32::PointU32;
 
 #[derive(Eq, PartialEq, Debug, Clone, Hash)]
@@ -17,6 +19,18 @@ impl PointI32 {
 
     pub fn max() -> Self {
         PointI32 { x: i32::MAX, y: i32::MAX }
+    }
+}
+
+impl From<PointI8> for PointI32 {
+    fn from(p: PointI8) -> Self {
+        PointI32 { x: p.x.into(), y: p.y.into() }
+    }
+}
+
+impl From<PointI16> for PointI32 {
+    fn from(p: PointI16) -> Self {
+        PointI32 { x: p.x.into(), y: p.y.into() }
     }
 }
 
@@ -63,7 +77,7 @@ pub fn checked_translated(p: &PointI32, delta: &PointI32) -> Option<PointI32> {
 
 #[cfg(test)]
 mod tests {
-    use crate::cartesian::point::point_u32::PointU32;
+    use crate::cartesian::point::{point_i8::PointI8, point_i16::PointI16, point_u32::PointU32};
 
     use super::{PointI32, checked_translate, checked_translated, delta, delta_x, delta_y, saturating_translate, saturating_translated};
 
@@ -72,6 +86,18 @@ mod tests {
         assert_eq!(PointI32::of(i32::MIN, i32::MAX), PointI32 { x: i32::MIN, y: i32::MAX });
         assert_eq!(PointI32::min(), PointI32 { x: i32::MIN, y: i32::MIN });
         assert_eq!(PointI32::max(), PointI32 { x: i32::MAX, y: i32::MAX });
+    }
+
+    #[test]
+    fn from() {
+        assert_eq!(PointI32::from(PointI8::min()), PointI32 { x: i8::MIN.into(), y: i8::MIN.into() });
+        assert_eq!(PointI32::from(PointI8::max()), PointI32 { x: i8::MAX.into(), y: i8::MAX.into() });
+        assert_eq!(PointI32::from(PointI16::min()), PointI32 { x: i16::MIN.into(), y: i16::MIN.into() });
+        assert_eq!(PointI32::from(PointI16::max()), PointI32 { x: i16::MAX.into(), y: i16::MAX.into() });
+    }
+
+    #[test]
+    fn to_string() {
         assert_eq!(PointI32::of(i32::MIN, i32::MAX).to_string(), "(-2147483648, 2147483647)");
         assert_eq!(PointI32::min().to_string(), "(-2147483648, -2147483648)");
         assert_eq!(PointI32::max().to_string(), "(2147483647, 2147483647)");

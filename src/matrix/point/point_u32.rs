@@ -1,4 +1,4 @@
-use crate::matrix::point::point_i32::PointI32;
+use crate::matrix::point::{point_i32::PointI32, point_u8::PointU8, point_u16::PointU16};
 
 #[derive(Eq, PartialEq, Debug, Clone, Hash)]
 pub struct PointU32 {
@@ -17,6 +17,18 @@ impl PointU32 {
 
     pub fn max() -> Self {
         PointU32 { row: u32::MAX, col: u32::MAX }
+    }
+}
+
+impl From<PointU8> for PointU32 {
+    fn from(p: PointU8) -> Self {
+        PointU32 { row: p.row.into(), col: p.col.into() }
+    }
+}
+
+impl From<PointU16> for PointU32 {
+    fn from(p: PointU16) -> Self {
+        PointU32 { row: p.row.into(), col: p.col.into() }
     }
 }
 
@@ -71,7 +83,7 @@ pub fn checked_translated(p: &PointU32, delta: &PointI32) -> Option<PointU32> {
 
 #[cfg(test)]
 mod tests {
-    use crate::matrix::point::point_i32::PointI32;
+    use crate::matrix::point::{point_i32::PointI32, point_u8::PointU8, point_u16::PointU16};
 
     use super::{PointU32, checked_translate, checked_translated, delta, delta_col, delta_row, saturating_translate, saturating_translated};
 
@@ -80,6 +92,18 @@ mod tests {
         assert_eq!(PointU32::of(0, u32::MAX), PointU32 { row: 0, col: u32::MAX });
         assert_eq!(PointU32::min(), PointU32 { row: 0, col: 0 });
         assert_eq!(PointU32::max(), PointU32 { row: u32::MAX, col: u32::MAX });
+    }
+
+    #[test]
+    fn from() {
+        assert_eq!(PointU32::from(PointU8::min()), PointU32 { row: u8::MIN.into(), col: u8::MIN.into() });
+        assert_eq!(PointU32::from(PointU8::max()), PointU32 { row: u8::MAX.into(), col: u8::MAX.into() });
+        assert_eq!(PointU32::from(PointU16::min()), PointU32 { row: u16::MIN.into(), col: u16::MIN.into() });
+        assert_eq!(PointU32::from(PointU16::max()), PointU32 { row: u16::MAX.into(), col: u16::MAX.into() });
+    }
+
+    #[test]
+    fn to_string() {
         assert_eq!(PointU32::of(0, u32::MAX).to_string(), "(0, 4294967295)");
         assert_eq!(PointU32::min().to_string(), "(0, 0)");
         assert_eq!(PointU32::max().to_string(), "(4294967295, 4294967295)");

@@ -1,4 +1,4 @@
-use crate::matrix::point::point_u16::PointU16;
+use crate::matrix::point::{point_i8::PointI8, point_u16::PointU16};
 
 #[derive(Eq, PartialEq, Debug, Clone, Hash)]
 pub struct PointI16 {
@@ -17,6 +17,12 @@ impl PointI16 {
 
     pub fn max() -> Self {
         PointI16 { row: i16::MAX, col: i16::MAX }
+    }
+}
+
+impl From<PointI8> for PointI16 {
+    fn from(p: PointI8) -> Self {
+        PointI16 { row: p.row.into(), col: p.col.into() }
     }
 }
 
@@ -63,7 +69,7 @@ pub fn checked_translated(p: &PointI16, delta: &PointI16) -> Option<PointI16> {
 
 #[cfg(test)]
 mod tests {
-    use crate::matrix::point::point_u16::PointU16;
+    use crate::matrix::point::{point_i8::PointI8, point_u16::PointU16};
 
     use super::{PointI16, checked_translate, checked_translated, delta, delta_col, delta_row, saturating_translate, saturating_translated};
 
@@ -72,6 +78,16 @@ mod tests {
         assert_eq!(PointI16::of(i16::MIN, i16::MAX), PointI16 { row: i16::MIN, col: i16::MAX });
         assert_eq!(PointI16::min(), PointI16 { row: i16::MIN, col: i16::MIN });
         assert_eq!(PointI16::max(), PointI16 { row: i16::MAX, col: i16::MAX });
+    }
+
+    #[test]
+    fn from() {
+        assert_eq!(PointI16::from(PointI8::min()), PointI16 { row: i8::MIN.into(), col: i8::MIN.into() });
+        assert_eq!(PointI16::from(PointI8::max()), PointI16 { row: i8::MAX.into(), col: i8::MAX.into() });
+    }
+
+    #[test]
+    fn to_string() {
         assert_eq!(PointI16::of(i16::MIN, i16::MAX).to_string(), "(-32768, 32767)");
         assert_eq!(PointI16::min().to_string(), "(-32768, -32768)");
         assert_eq!(PointI16::max().to_string(), "(32767, 32767)");

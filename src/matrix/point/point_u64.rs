@@ -1,4 +1,4 @@
-use crate::matrix::point::point_i64::PointI64;
+use crate::matrix::point::{point_i64::PointI64, point_u8::PointU8, point_u16::PointU16, point_u32::PointU32};
 
 #[derive(Eq, PartialEq, Debug, Clone, Hash)]
 pub struct PointU64 {
@@ -17,6 +17,24 @@ impl PointU64 {
 
     pub fn max() -> Self {
         PointU64 { row: u64::MAX, col: u64::MAX }
+    }
+}
+
+impl From<PointU8> for PointU64 {
+    fn from(p: PointU8) -> Self {
+        PointU64 { row: p.row.into(), col: p.col.into() }
+    }
+}
+
+impl From<PointU16> for PointU64 {
+    fn from(p: PointU16) -> Self {
+        PointU64 { row: p.row.into(), col: p.col.into() }
+    }
+}
+
+impl From<PointU32> for PointU64 {
+    fn from(p: PointU32) -> Self {
+        PointU64 { row: p.row.into(), col: p.col.into() }
     }
 }
 
@@ -71,7 +89,7 @@ pub fn checked_translated(p: &PointU64, delta: &PointI64) -> Option<PointU64> {
 
 #[cfg(test)]
 mod tests {
-    use crate::matrix::point::point_i64::PointI64;
+    use crate::matrix::point::{point_i64::PointI64, point_u8::PointU8, point_u16::PointU16, point_u32::PointU32};
 
     use super::{PointU64, checked_translate, checked_translated, delta, delta_col, delta_row, saturating_translate, saturating_translated};
 
@@ -80,6 +98,20 @@ mod tests {
         assert_eq!(PointU64::of(0, u64::MAX), PointU64 { row: 0, col: u64::MAX });
         assert_eq!(PointU64::min(), PointU64 { row: 0, col: 0 });
         assert_eq!(PointU64::max(), PointU64 { row: u64::MAX, col: u64::MAX });
+    }
+
+    #[test]
+    fn from() {
+        assert_eq!(PointU64::from(PointU8::min()), PointU64 { row: u8::MIN.into(), col: u8::MIN.into() });
+        assert_eq!(PointU64::from(PointU8::max()), PointU64 { row: u8::MAX.into(), col: u8::MAX.into() });
+        assert_eq!(PointU64::from(PointU16::min()), PointU64 { row: u16::MIN.into(), col: u16::MIN.into() });
+        assert_eq!(PointU64::from(PointU16::max()), PointU64 { row: u16::MAX.into(), col: u16::MAX.into() });
+        assert_eq!(PointU64::from(PointU32::min()), PointU64 { row: u32::MIN.into(), col: u32::MIN.into() });
+        assert_eq!(PointU64::from(PointU32::max()), PointU64 { row: u32::MAX.into(), col: u32::MAX.into() });
+    }
+
+    #[test]
+    fn to_string() {
         assert_eq!(PointU64::of(0, u64::MAX).to_string(), "(0, 18446744073709551615)");
         assert_eq!(PointU64::min().to_string(), "(0, 0)");
         assert_eq!(PointU64::max().to_string(), "(18446744073709551615, 18446744073709551615)");

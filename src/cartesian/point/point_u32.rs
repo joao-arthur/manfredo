@@ -63,11 +63,17 @@ pub fn saturating_translated(p: &PointU32, delta: &PointI32) -> PointU32 {
     PointU32::of(clamped_x as u32, clamped_y as u32)
 }
 
+pub fn checked_translated(p: &PointU32, delta: &PointI32) -> Option<PointU32> {
+    let x = u32::try_from(i64::from(p.x) + i64::from(delta.x)).ok()?;
+    let y = u32::try_from(i64::from(p.y) + i64::from(delta.y)).ok()?;
+    Some(PointU32 { x, y })
+}
+
 #[cfg(test)]
 mod tests {
     use crate::cartesian::point::point_i32::PointI32;
 
-    use super::{PointU32, checked_translate, delta, delta_x, delta_y, saturating_translate, saturating_translated};
+    use super::{PointU32, checked_translate, checked_translated, delta, delta_x, delta_y, saturating_translate, saturating_translated};
 
     #[test]
     fn point_u32() {
@@ -247,5 +253,29 @@ mod tests {
     fn saturating_translated_limits() {
         assert_eq!(saturating_translated(&PointU32::of(1, 1), &PointI32::min()), PointU32::min());
         assert_eq!(saturating_translated(&PointU32::of(u32::MAX - 1, u32::MAX - 1), &PointI32::max()), PointU32::max());
+    }
+
+    #[test]
+    fn checked_translated_min_bounds() {
+        let p = PointU32::of(2, 5);
+        assert_eq!(checked_translated(&p, &PointI32::of(-2, 0)), Some(PointU32::of(0, 5)));
+        assert_eq!(checked_translated(&p, &PointI32::of(0, -5)), Some(PointU32::of(2, 0)));
+        assert_eq!(checked_translated(&p, &PointI32::of(-2, -5)), Some(PointU32::min()));
+        assert_eq!(checked_translated(&p, &PointI32::of(-10, -10)), None);
+        assert_eq!(checked_translated(&p, &PointI32::of(i32::MIN, 0)), None);
+        assert_eq!(checked_translated(&p, &PointI32::of(0, i32::MIN)), None);
+        assert_eq!(checked_translated(&p, &PointI32::min()), None);
+    }
+
+    #[test]
+    fn checked_translated_max_bounds() {
+        let p = PointU32::of(u32::MAX - 2, u32::MAX - 5);
+        assert_eq!(checked_translated(&p, &PointI32::of(2, 0)), Some(PointU32::of(u32::MAX, u32::MAX - 5)));
+        assert_eq!(checked_translated(&p, &PointI32::of(0, 5)), Some(PointU32::of(u32::MAX - 2, u32::MAX)));
+        assert_eq!(checked_translated(&p, &PointI32::of(2, 5)), Some(PointU32::max()));
+        assert_eq!(checked_translated(&p, &PointI32::of(10, 10)), None);
+        assert_eq!(checked_translated(&p, &PointI32::of(i32::MAX, 0)), None);
+        assert_eq!(checked_translated(&p, &PointI32::of(0, i32::MAX)), None);
+        assert_eq!(checked_translated(&p, &PointI32::max()), None);
     }
 }

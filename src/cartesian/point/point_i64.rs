@@ -55,11 +55,17 @@ pub fn saturating_translated(p: &PointI64, delta: &PointI64) -> PointI64 {
     PointI64::of(p.x.saturating_add(delta.x), p.y.saturating_add(delta.y))
 }
 
+pub fn checked_translated(p: &PointI64, delta: &PointI64) -> Option<PointI64> {
+    let x = p.x.checked_add(delta.x)?;
+    let y = p.y.checked_add(delta.y)?;
+    Some(PointI64 { x, y })
+}
+
 #[cfg(test)]
 mod tests {
     use crate::cartesian::point::point_u64::PointU64;
 
-    use super::{PointI64, checked_translate, delta, delta_x, delta_y, saturating_translate, saturating_translated};
+    use super::{PointI64, checked_translate, checked_translated, delta, delta_x, delta_y, saturating_translate, saturating_translated};
 
     #[test]
     fn point_i64() {
@@ -239,5 +245,29 @@ mod tests {
     fn saturating_translated_limits() {
         assert_eq!(saturating_translated(&PointI64::of(i64::MIN + 1, i64::MIN + 1), &PointI64::min()), PointI64::min());
         assert_eq!(saturating_translated(&PointI64::of(i64::MAX - 1, i64::MAX - 1), &PointI64::max()), PointI64::max());
+    }
+
+    #[test]
+    fn checked_translated_min_bounds() {
+        let p = PointI64::of(i64::MIN + 2, i64::MIN + 5);
+        assert_eq!(checked_translated(&p, &PointI64::of(-2, 0)), Some(PointI64::of(i64::MIN, i64::MIN + 5)));
+        assert_eq!(checked_translated(&p, &PointI64::of(0, -5)), Some(PointI64::of(i64::MIN + 2, i64::MIN)));
+        assert_eq!(checked_translated(&p, &PointI64::of(-2, -5)), Some(PointI64::min()));
+        assert_eq!(checked_translated(&p, &PointI64::of(-10, -10)), None);
+        assert_eq!(checked_translated(&p, &PointI64::of(i64::MIN, 0)), None);
+        assert_eq!(checked_translated(&p, &PointI64::of(0, i64::MIN)), None);
+        assert_eq!(checked_translated(&p, &PointI64::min()), None);
+    }
+
+    #[test]
+    fn checked_translated_max_bounds() {
+        let p = PointI64::of(i64::MAX - 2, i64::MAX - 5);
+        assert_eq!(checked_translated(&p, &PointI64::of(2, 0)), Some(PointI64::of(i64::MAX, i64::MAX - 5)));
+        assert_eq!(checked_translated(&p, &PointI64::of(0, 5)), Some(PointI64::of(i64::MAX - 2, i64::MAX)));
+        assert_eq!(checked_translated(&p, &PointI64::of(2, 5)), Some(PointI64::max()));
+        assert_eq!(checked_translated(&p, &PointI64::of(10, 10)), None);
+        assert_eq!(checked_translated(&p, &PointI64::of(i64::MAX, 0)), None);
+        assert_eq!(checked_translated(&p, &PointI64::of(0, i64::MAX)), None);
+        assert_eq!(checked_translated(&p, &PointI64::max()), None);
     }
 }

@@ -63,9 +63,18 @@ pub fn saturating_translated(p: &PointF64, delta: &PointF64) -> PointF64 {
     PointF64::of(temp_x.clamp(MIN, MAX), temp_y.clamp(MIN, MAX))
 }
 
+pub fn checked_translated(p: &PointF64, delta: &PointF64) -> Option<PointF64> {
+    let x = p.x + delta.x;
+    let y = p.y + delta.y;
+    if x < MIN || x > MAX || y < MIN || y > MAX {
+        return None;
+    }
+    Some(PointF64 { x, y })
+}
+
 #[cfg(test)]
 mod tests {
-    use super::{MAX, MIN, PointF64, checked_translate, delta, delta_x, delta_y, saturating_translate, saturating_translated};
+    use super::{MAX, MIN, PointF64, checked_translate, checked_translated, delta, delta_x, delta_y, saturating_translate, saturating_translated};
 
     #[test]
     fn point_f64() {
@@ -252,5 +261,29 @@ mod tests {
     fn saturating_translated_limits() {
         assert_eq!(saturating_translated(&PointF64::of(MIN + 1.0, MIN + 1.0), &PointF64::min()), PointF64::min());
         assert_eq!(saturating_translated(&PointF64::of(MAX - 1.0, MAX - 1.0), &PointF64::max()), PointF64::max());
+    }
+
+    #[test]
+    fn checked_translated_min_bounds() {
+        let p = PointF64::of(MIN + 2.0, MIN + 5.0);
+        assert_eq!(checked_translated(&p, &PointF64::of(-2.0, 0.0)), Some(PointF64::of(MIN, MIN + 5.0)));
+        assert_eq!(checked_translated(&p, &PointF64::of(0.0, -5.0)), Some(PointF64::of(MIN + 2.0, MIN)));
+        assert_eq!(checked_translated(&p, &PointF64::of(-2.0, -5.0)), Some(PointF64::min()));
+        assert_eq!(checked_translated(&p, &PointF64::of(-10.0, -10.0)), None);
+        assert_eq!(checked_translated(&p, &PointF64::of(MIN, 0.0)), None);
+        assert_eq!(checked_translated(&p, &PointF64::of(0.0, MIN)), None);
+        assert_eq!(checked_translated(&p, &PointF64::min()), None);
+    }
+
+    #[test]
+    fn checked_translated_max_bounds() {
+        let p = PointF64::of(MAX - 2.0, MAX - 5.0);
+        assert_eq!(checked_translated(&p, &PointF64::of(2.0, 0.0)), Some(PointF64::of(MAX, MAX - 5.0)));
+        assert_eq!(checked_translated(&p, &PointF64::of(0.0, 5.0)), Some(PointF64::of(MAX - 2.0, MAX)));
+        assert_eq!(checked_translated(&p, &PointF64::of(2.0, 5.0)), Some(PointF64::max()));
+        assert_eq!(checked_translated(&p, &PointF64::of(10.0, 10.0)), None);
+        assert_eq!(checked_translated(&p, &PointF64::of(MAX, 0.0)), None);
+        assert_eq!(checked_translated(&p, &PointF64::of(0.0, MAX)), None);
+        assert_eq!(checked_translated(&p, &PointF64::max()), None);
     }
 }

@@ -63,11 +63,17 @@ pub fn saturating_translated(p: &PointU8, delta: &PointI8) -> PointU8 {
     PointU8::of(clamped_row as u8, clamped_col as u8)
 }
 
+pub fn checked_translated(p: &PointU8, delta: &PointI8) -> Option<PointU8> {
+    let row = u8::try_from(i16::from(p.row) + i16::from(delta.row)).ok()?;
+    let col = u8::try_from(i16::from(p.col) + i16::from(delta.col)).ok()?;
+    Some(PointU8 { row, col })
+}
+
 #[cfg(test)]
 mod tests {
     use crate::matrix::point::point_i8::PointI8;
 
-    use super::{PointU8, checked_translate, delta, delta_col, delta_row, saturating_translate, saturating_translated};
+    use super::{PointU8, checked_translate, checked_translated, delta, delta_col, delta_row, saturating_translate, saturating_translated};
 
     #[test]
     fn point_u8() {
@@ -247,5 +253,29 @@ mod tests {
     fn saturating_translated_limits() {
         assert_eq!(saturating_translated(&PointU8::of(1, 1), &PointI8::min()), PointU8::min());
         assert_eq!(saturating_translated(&PointU8::of(u8::MAX - 1, u8::MAX - 1), &PointI8::max()), PointU8::max());
+    }
+
+    #[test]
+    fn checked_translated_min_bounds() {
+        let p = PointU8::of(2, 5);
+        assert_eq!(checked_translated(&p, &PointI8::of(-2, 0)), Some(PointU8::of(0, 5)));
+        assert_eq!(checked_translated(&p, &PointI8::of(0, -5)), Some(PointU8::of(2, 0)));
+        assert_eq!(checked_translated(&p, &PointI8::of(-2, -5)), Some(PointU8::min()));
+        assert_eq!(checked_translated(&p, &PointI8::of(-10, -10)), None);
+        assert_eq!(checked_translated(&p, &PointI8::of(i8::MIN, 0)), None);
+        assert_eq!(checked_translated(&p, &PointI8::of(0, i8::MIN)), None);
+        assert_eq!(checked_translated(&p, &PointI8::min()), None);
+    }
+
+    #[test]
+    fn checked_translated_max_bounds() {
+        let p = PointU8::of(u8::MAX - 2, u8::MAX - 5);
+        assert_eq!(checked_translated(&p, &PointI8::of(2, 0)), Some(PointU8::of(u8::MAX, u8::MAX - 5)));
+        assert_eq!(checked_translated(&p, &PointI8::of(0, 5)), Some(PointU8::of(u8::MAX - 2, u8::MAX)));
+        assert_eq!(checked_translated(&p, &PointI8::of(2, 5)), Some(PointU8::max()));
+        assert_eq!(checked_translated(&p, &PointI8::of(10, 10)), None);
+        assert_eq!(checked_translated(&p, &PointI8::of(i8::MAX, 0)), None);
+        assert_eq!(checked_translated(&p, &PointI8::of(0, i8::MAX)), None);
+        assert_eq!(checked_translated(&p, &PointI8::max()), None);
     }
 }

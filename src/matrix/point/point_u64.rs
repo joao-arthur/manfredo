@@ -55,11 +55,19 @@ pub fn checked_translate(p: &mut PointU64, delta: &PointI64) -> Result<(), ()> {
     Ok(())
 }
 
+pub fn saturating_translated(p: &PointU64, delta: &PointI64) -> PointU64 {
+    let temp_row = i128::from(p.row) + i128::from(delta.row);
+    let temp_col = i128::from(p.col) + i128::from(delta.col);
+    let clamped_row = temp_row.clamp(0, i128::from(u64::MAX));
+    let clamped_col = temp_col.clamp(0, i128::from(u64::MAX));
+    PointU64::of(clamped_row as u64, clamped_col as u64)
+}
+
 #[cfg(test)]
 mod tests {
     use crate::matrix::point::point_i64::PointI64;
 
-    use super::{PointU64, checked_translate, delta, delta_col, delta_row, saturating_translate};
+    use super::{PointU64, checked_translate, delta, delta_col, delta_row, saturating_translate, saturating_translated};
 
     #[test]
     fn point_u64() {
@@ -215,5 +223,29 @@ mod tests {
         assert_eq!(checked_translate(&mut r, &PointI64::of(i64::MAX, 0)), Err(()));
         assert_eq!(checked_translate(&mut r, &PointI64::of(0, i64::MAX)), Err(()));
         assert_eq!(r, PointU64::of(u64::MAX - 1, u64::MAX - 1));
+    }
+
+    #[test]
+    fn test_saturating_translated() {
+        assert_eq!(saturating_translated(&PointU64::of(0, 0), &PointI64::of(10, 13)), PointU64::of(10, 13));
+        assert_eq!(saturating_translated(&PointU64::of(10, 10), &PointI64::of(-5, -3)), PointU64::of(5, 7));
+    }
+
+    #[test]
+    fn saturating_translated_to_bounds() {
+        assert_eq!(saturating_translated(&PointU64::of(2, 5), &PointI64::of(-2, -5)), PointU64::min());
+        assert_eq!(saturating_translated(&PointU64::of(u64::MAX - 2, u64::MAX - 5), &PointI64::of(2, 5)), PointU64::max());
+    }
+
+    #[test]
+    fn saturating_translated_beyond_bounds() {
+        assert_eq!(saturating_translated(&PointU64::of(2, 5), &PointI64::of(-10, -10)), PointU64::min());
+        assert_eq!(saturating_translated(&PointU64::of(u64::MAX - 2, u64::MAX - 5), &PointI64::of(10, 10)), PointU64::max());
+    }
+
+    #[test]
+    fn saturating_translated_limits() {
+        assert_eq!(saturating_translated(&PointU64::of(1, 1), &PointI64::min()), PointU64::min());
+        assert_eq!(saturating_translated(&PointU64::of(u64::MAX - 1, u64::MAX - 1), &PointI64::max()), PointU64::max());
     }
 }

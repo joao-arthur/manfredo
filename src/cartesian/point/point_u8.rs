@@ -55,11 +55,19 @@ pub fn checked_translate(p: &mut PointU8, delta: &PointI8) -> Result<(), ()> {
     Ok(())
 }
 
+pub fn saturating_translated(p: &PointU8, delta: &PointI8) -> PointU8 {
+    let temp_x = i16::from(p.x) + i16::from(delta.x);
+    let temp_y = i16::from(p.y) + i16::from(delta.y);
+    let clamped_x = temp_x.clamp(0, i16::from(u8::MAX));
+    let clamped_y = temp_y.clamp(0, i16::from(u8::MAX));
+    PointU8::of(clamped_x as u8, clamped_y as u8)
+}
+
 #[cfg(test)]
 mod tests {
     use crate::cartesian::point::point_i8::PointI8;
 
-    use super::{PointU8, checked_translate, delta, delta_x, delta_y, saturating_translate};
+    use super::{PointU8, checked_translate, delta, delta_x, delta_y, saturating_translate, saturating_translated};
 
     #[test]
     fn point_u8() {
@@ -215,5 +223,29 @@ mod tests {
         assert_eq!(checked_translate(&mut r, &PointI8::of(i8::MAX, 0)), Err(()));
         assert_eq!(checked_translate(&mut r, &PointI8::of(0, i8::MAX)), Err(()));
         assert_eq!(r, PointU8::of(u8::MAX - 1, u8::MAX - 1));
+    }
+
+    #[test]
+    fn test_saturating_translated() {
+        assert_eq!(saturating_translated(&PointU8::of(0, 0), &PointI8::of(10, 13)), PointU8::of(10, 13));
+        assert_eq!(saturating_translated(&PointU8::of(10, 10), &PointI8::of(-5, -3)), PointU8::of(5, 7));
+    }
+
+    #[test]
+    fn saturating_translated_to_bounds() {
+        assert_eq!(saturating_translated(&PointU8::of(2, 5), &PointI8::of(-2, -5)), PointU8::min());
+        assert_eq!(saturating_translated(&PointU8::of(u8::MAX - 2, u8::MAX - 5), &PointI8::of(2, 5)), PointU8::max());
+    }
+
+    #[test]
+    fn saturating_translated_beyond_bounds() {
+        assert_eq!(saturating_translated(&PointU8::of(2, 5), &PointI8::of(-10, -10)), PointU8::min());
+        assert_eq!(saturating_translated(&PointU8::of(u8::MAX - 2, u8::MAX - 5), &PointI8::of(10, 10)), PointU8::max());
+    }
+
+    #[test]
+    fn saturating_translated_limits() {
+        assert_eq!(saturating_translated(&PointU8::of(1, 1), &PointI8::min()), PointU8::min());
+        assert_eq!(saturating_translated(&PointU8::of(u8::MAX - 1, u8::MAX - 1), &PointI8::max()), PointU8::max());
     }
 }

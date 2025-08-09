@@ -51,11 +51,15 @@ pub fn checked_translate(p: &mut PointI8, delta: &PointI8) -> Result<(), ()> {
     Ok(())
 }
 
+pub fn saturating_translated(p: &PointI8, delta: &PointI8) -> PointI8 {
+    PointI8::of(p.x.saturating_add(delta.x), p.y.saturating_add(delta.y))
+}
+
 #[cfg(test)]
 mod tests {
     use crate::cartesian::point::point_u8::PointU8;
 
-    use super::{PointI8, checked_translate, delta, delta_x, delta_y, saturating_translate};
+    use super::{PointI8, checked_translate, delta, delta_x, delta_y, saturating_translate, saturating_translated};
 
     #[test]
     fn point_i8() {
@@ -211,5 +215,29 @@ mod tests {
         assert_eq!(checked_translate(&mut r, &PointI8::of(i8::MAX, 0)), Err(()));
         assert_eq!(checked_translate(&mut r, &PointI8::of(0, i8::MAX)), Err(()));
         assert_eq!(r, PointI8::of(i8::MAX - 1, i8::MAX - 1));
+    }
+
+    #[test]
+    fn test_saturating_translated() {
+        assert_eq!(saturating_translated(&PointI8::of(0, 0), &PointI8::of(10, 15)), PointI8::of(10, 15));
+        assert_eq!(saturating_translated(&PointI8::of(0, 0), &PointI8::of(-15, -25)), PointI8::of(-15, -25));
+    }
+
+    #[test]
+    fn saturating_translated_to_bounds() {
+        assert_eq!(saturating_translated(&PointI8::of(i8::MIN + 2, i8::MIN + 5), &PointI8::of(-2, -5)), PointI8::min());
+        assert_eq!(saturating_translated(&PointI8::of(i8::MAX - 2, i8::MAX - 5), &PointI8::of(2, 5)), PointI8::max());
+    }
+
+    #[test]
+    fn saturating_translated_beyond_bounds() {
+        assert_eq!(saturating_translated(&PointI8::of(i8::MIN + 2, i8::MIN + 5), &PointI8::of(-10, -10)), PointI8::min());
+        assert_eq!(saturating_translated(&PointI8::of(i8::MAX - 2, i8::MAX - 5), &PointI8::of(10, 10)), PointI8::max());
+    }
+
+    #[test]
+    fn saturating_translated_limits() {
+        assert_eq!(saturating_translated(&PointI8::of(i8::MIN + 1, i8::MIN + 1), &PointI8::min()), PointI8::min());
+        assert_eq!(saturating_translated(&PointI8::of(i8::MAX - 1, i8::MAX - 1), &PointI8::max()), PointI8::max());
     }
 }

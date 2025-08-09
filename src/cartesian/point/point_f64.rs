@@ -57,9 +57,15 @@ pub fn checked_translate(p: &mut PointF64, delta: &PointF64) -> Result<(), ()> {
     Ok(())
 }
 
+pub fn saturating_translated(p: &PointF64, delta: &PointF64) -> PointF64 {
+    let temp_x = p.x + delta.x;
+    let temp_y = p.y + delta.y;
+    PointF64::of(temp_x.clamp(MIN, MAX), temp_y.clamp(MIN, MAX))
+}
+
 #[cfg(test)]
 mod tests {
-    use super::{MAX, MIN, PointF64, checked_translate, delta, delta_x, delta_y, saturating_translate};
+    use super::{MAX, MIN, PointF64, checked_translate, delta, delta_x, delta_y, saturating_translate, saturating_translated};
 
     #[test]
     fn point_f64() {
@@ -222,5 +228,29 @@ mod tests {
         assert_eq!(checked_translate(&mut r, &PointF64::of(MAX, 0.0)), Err(()));
         assert_eq!(checked_translate(&mut r, &PointF64::of(0.0, MAX)), Err(()));
         assert_eq!(r, PointF64::of(MAX - 1.0, MAX - 1.0));
+    }
+
+    #[test]
+    fn test_saturating_translated() {
+        assert_eq!(saturating_translated(&PointF64::of(0.0, 0.0), &PointF64::of(10.0, 15.0)), PointF64::of(10.0, 15.0));
+        assert_eq!(saturating_translated(&PointF64::of(0.0, 0.0), &PointF64::of(-15.0, -25.0)), PointF64::of(-15.0, -25.0));
+    }
+
+    #[test]
+    fn saturating_translated_to_bounds() {
+        assert_eq!(saturating_translated(&PointF64::of(MIN + 2.0, MIN + 5.0), &PointF64::of(-2.0, -5.0)), PointF64::min());
+        assert_eq!(saturating_translated(&PointF64::of(MAX - 2.0, MAX - 5.0), &PointF64::of(2.0, 5.0)), PointF64::max());
+    }
+
+    #[test]
+    fn saturating_translated_beyond_bounds() {
+        assert_eq!(saturating_translated(&PointF64::of(MIN + 2.0, MIN + 5.0), &PointF64::of(-10.0, -10.0)), PointF64::min());
+        assert_eq!(saturating_translated(&PointF64::of(MAX - 2.0, MAX - 5.0), &PointF64::of(10.0, 10.0)), PointF64::max());
+    }
+
+    #[test]
+    fn saturating_translated_limits() {
+        assert_eq!(saturating_translated(&PointF64::of(MIN + 1.0, MIN + 1.0), &PointF64::min()), PointF64::min());
+        assert_eq!(saturating_translated(&PointF64::of(MAX - 1.0, MAX - 1.0), &PointF64::max()), PointF64::max());
     }
 }

@@ -51,11 +51,15 @@ pub fn checked_translate(p: &mut PointI16, delta: &PointI16) -> Result<(), ()> {
     Ok(())
 }
 
+pub fn saturating_translated(p: &PointI16, delta: &PointI16) -> PointI16 {
+    PointI16::of(p.x.saturating_add(delta.x), p.y.saturating_add(delta.y))
+}
+
 #[cfg(test)]
 mod tests {
     use crate::cartesian::point::point_u16::PointU16;
 
-    use super::{PointI16, checked_translate, delta, delta_x, delta_y, saturating_translate};
+    use super::{PointI16, checked_translate, delta, delta_x, delta_y, saturating_translate, saturating_translated};
 
     #[test]
     fn point_i16() {
@@ -211,5 +215,29 @@ mod tests {
         assert_eq!(checked_translate(&mut r, &PointI16::of(i16::MAX, 0)), Err(()));
         assert_eq!(checked_translate(&mut r, &PointI16::of(0, i16::MAX)), Err(()));
         assert_eq!(r, PointI16::of(i16::MAX - 1, i16::MAX - 1));
+    }
+
+    #[test]
+    fn test_saturating_translated() {
+        assert_eq!(saturating_translated(&PointI16::of(0, 0), &PointI16::of(10, 15)), PointI16::of(10, 15));
+        assert_eq!(saturating_translated(&PointI16::of(0, 0), &PointI16::of(-15, -25)), PointI16::of(-15, -25));
+    }
+
+    #[test]
+    fn saturating_translated_to_bounds() {
+        assert_eq!(saturating_translated(&PointI16::of(i16::MIN + 2, i16::MIN + 5), &PointI16::of(-2, -5)), PointI16::min());
+        assert_eq!(saturating_translated(&PointI16::of(i16::MAX - 2, i16::MAX - 5), &PointI16::of(2, 5)), PointI16::max());
+    }
+
+    #[test]
+    fn saturating_translated_beyond_bounds() {
+        assert_eq!(saturating_translated(&PointI16::of(i16::MIN + 2, i16::MIN + 5), &PointI16::of(-10, -10)), PointI16::min());
+        assert_eq!(saturating_translated(&PointI16::of(i16::MAX - 2, i16::MAX - 5), &PointI16::of(10, 10)), PointI16::max());
+    }
+
+    #[test]
+    fn saturating_translated_limits() {
+        assert_eq!(saturating_translated(&PointI16::of(i16::MIN + 1, i16::MIN + 1), &PointI16::min()), PointI16::min());
+        assert_eq!(saturating_translated(&PointI16::of(i16::MAX - 1, i16::MAX - 1), &PointI16::max()), PointI16::max());
     }
 }

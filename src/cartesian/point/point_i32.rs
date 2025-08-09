@@ -51,11 +51,15 @@ pub fn checked_translate(p: &mut PointI32, delta: &PointI32) -> Result<(), ()> {
     Ok(())
 }
 
+pub fn saturating_translated(p: &PointI32, delta: &PointI32) -> PointI32 {
+    PointI32::of(p.x.saturating_add(delta.x), p.y.saturating_add(delta.y))
+}
+
 #[cfg(test)]
 mod tests {
     use crate::cartesian::point::point_u32::PointU32;
 
-    use super::{PointI32, checked_translate, delta, delta_x, delta_y, saturating_translate};
+    use super::{PointI32, checked_translate, delta, delta_x, delta_y, saturating_translate, saturating_translated};
 
     #[test]
     fn point_i32() {
@@ -211,5 +215,29 @@ mod tests {
         assert_eq!(checked_translate(&mut r, &PointI32::of(i32::MAX, 0)), Err(()));
         assert_eq!(checked_translate(&mut r, &PointI32::of(0, i32::MAX)), Err(()));
         assert_eq!(r, PointI32::of(i32::MAX - 1, i32::MAX - 1));
+    }
+
+    #[test]
+    fn test_saturating_translated() {
+        assert_eq!(saturating_translated(&PointI32::of(0, 0), &PointI32::of(10, 15)), PointI32::of(10, 15));
+        assert_eq!(saturating_translated(&PointI32::of(0, 0), &PointI32::of(-15, -25)), PointI32::of(-15, -25));
+    }
+
+    #[test]
+    fn saturating_translated_to_bounds() {
+        assert_eq!(saturating_translated(&PointI32::of(i32::MIN + 2, i32::MIN + 5), &PointI32::of(-2, -5)), PointI32::min());
+        assert_eq!(saturating_translated(&PointI32::of(i32::MAX - 2, i32::MAX - 5), &PointI32::of(2, 5)), PointI32::max());
+    }
+
+    #[test]
+    fn saturating_translated_beyond_bounds() {
+        assert_eq!(saturating_translated(&PointI32::of(i32::MIN + 2, i32::MIN + 5), &PointI32::of(-10, -10)), PointI32::min());
+        assert_eq!(saturating_translated(&PointI32::of(i32::MAX - 2, i32::MAX - 5), &PointI32::of(10, 10)), PointI32::max());
+    }
+
+    #[test]
+    fn saturating_translated_limits() {
+        assert_eq!(saturating_translated(&PointI32::of(i32::MIN + 1, i32::MIN + 1), &PointI32::min()), PointI32::min());
+        assert_eq!(saturating_translated(&PointI32::of(i32::MAX - 1, i32::MAX - 1), &PointI32::max()), PointI32::max());
     }
 }

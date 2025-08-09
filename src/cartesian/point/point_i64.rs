@@ -51,11 +51,15 @@ pub fn checked_translate(p: &mut PointI64, delta: &PointI64) -> Result<(), ()> {
     Ok(())
 }
 
+pub fn saturating_translated(p: &PointI64, delta: &PointI64) -> PointI64 {
+    PointI64::of(p.x.saturating_add(delta.x), p.y.saturating_add(delta.y))
+}
+
 #[cfg(test)]
 mod tests {
     use crate::cartesian::point::point_u64::PointU64;
 
-    use super::{PointI64, checked_translate, delta, delta_x, delta_y, saturating_translate};
+    use super::{PointI64, checked_translate, delta, delta_x, delta_y, saturating_translate, saturating_translated};
 
     #[test]
     fn point_i64() {
@@ -211,5 +215,29 @@ mod tests {
         assert_eq!(checked_translate(&mut r, &PointI64::of(i64::MAX, 0)), Err(()));
         assert_eq!(checked_translate(&mut r, &PointI64::of(0, i64::MAX)), Err(()));
         assert_eq!(r, PointI64::of(i64::MAX - 1, i64::MAX - 1));
+    }
+
+    #[test]
+    fn test_saturating_translated() {
+        assert_eq!(saturating_translated(&PointI64::of(0, 0), &PointI64::of(10, 15)), PointI64::of(10, 15));
+        assert_eq!(saturating_translated(&PointI64::of(0, 0), &PointI64::of(-15, -25)), PointI64::of(-15, -25));
+    }
+
+    #[test]
+    fn saturating_translated_to_bounds() {
+        assert_eq!(saturating_translated(&PointI64::of(i64::MIN + 2, i64::MIN + 5), &PointI64::of(-2, -5)), PointI64::min());
+        assert_eq!(saturating_translated(&PointI64::of(i64::MAX - 2, i64::MAX - 5), &PointI64::of(2, 5)), PointI64::max());
+    }
+
+    #[test]
+    fn saturating_translated_beyond_bounds() {
+        assert_eq!(saturating_translated(&PointI64::of(i64::MIN + 2, i64::MIN + 5), &PointI64::of(-10, -10)), PointI64::min());
+        assert_eq!(saturating_translated(&PointI64::of(i64::MAX - 2, i64::MAX - 5), &PointI64::of(10, 10)), PointI64::max());
+    }
+
+    #[test]
+    fn saturating_translated_limits() {
+        assert_eq!(saturating_translated(&PointI64::of(i64::MIN + 1, i64::MIN + 1), &PointI64::min()), PointI64::min());
+        assert_eq!(saturating_translated(&PointI64::of(i64::MAX - 1, i64::MAX - 1), &PointI64::max()), PointI64::max());
     }
 }

@@ -55,11 +55,19 @@ pub fn checked_translate(p: &mut PointU32, delta: &PointI32) -> Result<(), ()> {
     Ok(())
 }
 
+pub fn saturating_translated(p: &PointU32, delta: &PointI32) -> PointU32 {
+    let temp_x = i64::from(p.x) + i64::from(delta.x);
+    let temp_y = i64::from(p.y) + i64::from(delta.y);
+    let clamped_x = temp_x.clamp(0, i64::from(u32::MAX));
+    let clamped_y = temp_y.clamp(0, i64::from(u32::MAX));
+    PointU32::of(clamped_x as u32, clamped_y as u32)
+}
+
 #[cfg(test)]
 mod tests {
     use crate::cartesian::point::point_i32::PointI32;
 
-    use super::{PointU32, checked_translate, delta, delta_x, delta_y, saturating_translate};
+    use super::{PointU32, checked_translate, delta, delta_x, delta_y, saturating_translate, saturating_translated};
 
     #[test]
     fn point_u32() {
@@ -215,5 +223,29 @@ mod tests {
         assert_eq!(checked_translate(&mut r, &PointI32::of(i32::MAX, 0)), Err(()));
         assert_eq!(checked_translate(&mut r, &PointI32::of(0, i32::MAX)), Err(()));
         assert_eq!(r, PointU32::of(u32::MAX - 1, u32::MAX - 1));
+    }
+
+    #[test]
+    fn test_saturating_translated() {
+        assert_eq!(saturating_translated(&PointU32::of(0, 0), &PointI32::of(10, 13)), PointU32::of(10, 13));
+        assert_eq!(saturating_translated(&PointU32::of(10, 10), &PointI32::of(-5, -3)), PointU32::of(5, 7));
+    }
+
+    #[test]
+    fn saturating_translated_to_bounds() {
+        assert_eq!(saturating_translated(&PointU32::of(2, 5), &PointI32::of(-2, -5)), PointU32::min());
+        assert_eq!(saturating_translated(&PointU32::of(u32::MAX - 2, u32::MAX - 5), &PointI32::of(2, 5)), PointU32::max());
+    }
+
+    #[test]
+    fn saturating_translated_beyond_bounds() {
+        assert_eq!(saturating_translated(&PointU32::of(2, 5), &PointI32::of(-10, -10)), PointU32::min());
+        assert_eq!(saturating_translated(&PointU32::of(u32::MAX - 2, u32::MAX - 5), &PointI32::of(10, 10)), PointU32::max());
+    }
+
+    #[test]
+    fn saturating_translated_limits() {
+        assert_eq!(saturating_translated(&PointU32::of(1, 1), &PointI32::min()), PointU32::min());
+        assert_eq!(saturating_translated(&PointU32::of(u32::MAX - 1, u32::MAX - 1), &PointI32::max()), PointU32::max());
     }
 }

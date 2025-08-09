@@ -55,11 +55,19 @@ pub fn checked_translate(p: &mut PointU16, delta: &PointI16) -> Result<(), ()> {
     Ok(())
 }
 
+pub fn saturating_translated(p: &PointU16, delta: &PointI16) -> PointU16 {
+    let temp_x = i32::from(p.x) + i32::from(delta.x);
+    let temp_y = i32::from(p.y) + i32::from(delta.y);
+    let clamped_x = temp_x.clamp(0, i32::from(u16::MAX));
+    let clamped_y = temp_y.clamp(0, i32::from(u16::MAX));
+    PointU16::of(clamped_x as u16, clamped_y as u16)
+}
+
 #[cfg(test)]
 mod tests {
     use crate::cartesian::point::point_i16::PointI16;
 
-    use super::{PointU16, checked_translate, delta, delta_x, delta_y, saturating_translate};
+    use super::{PointU16, checked_translate, delta, delta_x, delta_y, saturating_translate, saturating_translated};
 
     #[test]
     fn point_u16() {
@@ -215,5 +223,29 @@ mod tests {
         assert_eq!(checked_translate(&mut r, &PointI16::of(i16::MAX, 0)), Err(()));
         assert_eq!(checked_translate(&mut r, &PointI16::of(0, i16::MAX)), Err(()));
         assert_eq!(r, PointU16::of(u16::MAX - 1, u16::MAX - 1));
+    }
+
+    #[test]
+    fn test_saturating_translated() {
+        assert_eq!(saturating_translated(&PointU16::of(0, 0), &PointI16::of(10, 13)), PointU16::of(10, 13));
+        assert_eq!(saturating_translated(&PointU16::of(10, 10), &PointI16::of(-5, -3)), PointU16::of(5, 7));
+    }
+
+    #[test]
+    fn saturating_translated_to_bounds() {
+        assert_eq!(saturating_translated(&PointU16::of(2, 5), &PointI16::of(-2, -5)), PointU16::min());
+        assert_eq!(saturating_translated(&PointU16::of(u16::MAX - 2, u16::MAX - 5), &PointI16::of(2, 5)), PointU16::max());
+    }
+
+    #[test]
+    fn saturating_translated_beyond_bounds() {
+        assert_eq!(saturating_translated(&PointU16::of(2, 5), &PointI16::of(-10, -10)), PointU16::min());
+        assert_eq!(saturating_translated(&PointU16::of(u16::MAX - 2, u16::MAX - 5), &PointI16::of(10, 10)), PointU16::max());
+    }
+
+    #[test]
+    fn saturating_translated_limits() {
+        assert_eq!(saturating_translated(&PointU16::of(1, 1), &PointI16::min()), PointU16::min());
+        assert_eq!(saturating_translated(&PointU16::of(u16::MAX - 1, u16::MAX - 1), &PointI16::max()), PointU16::max());
     }
 }

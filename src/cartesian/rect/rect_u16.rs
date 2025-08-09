@@ -542,7 +542,7 @@ mod tests {
         assert!(!contains(&r, &PointU16::of(0, 0)));
         assert!(!contains(&r, &PointU16::of(0, u16::MAX)));
         assert!(!contains(&r, &PointU16::of(u16::MAX, 0)));
-        assert!(!contains(&r, &PointU16::of(u16::MAX, u16::MAX)));
+        assert!(!contains(&r, &PointU16::max()));
         assert!(!contains(&r, &PointU16::of(1, 0)));
         assert!(!contains(&r, &PointU16::of(1, u16::MAX)));
         assert!(!contains(&r, &PointU16::of(u16::MAX - 1, 0)));

@@ -55,10 +55,10 @@ mod tests {
     #[test]
     fn cartesian_in_cam_to_matrix_bounds() {
         let cam = Cam::of(i16::MIN, i16::MIN, i16::MAX, i16::MAX);
-        assert_eq!(cartesian_in_cam_to_matrix(&CartesianPoint::of(i16::MIN, i16::MIN), &cam), MatrixPoint::of(u16::MAX, 0));
-        assert_eq!(cartesian_in_cam_to_matrix(&CartesianPoint::of(i16::MAX, i16::MIN), &cam), MatrixPoint::of(u16::MAX, u16::MAX));
+        assert_eq!(cartesian_in_cam_to_matrix(&CartesianPoint::min(), &cam), MatrixPoint::of(u16::MAX, 0));
+        assert_eq!(cartesian_in_cam_to_matrix(&CartesianPoint::of(i16::MAX, i16::MIN), &cam), MatrixPoint::max());
         assert_eq!(cartesian_in_cam_to_matrix(&CartesianPoint::of(i16::MIN, i16::MAX), &cam), MatrixPoint::of(0, 0));
-        assert_eq!(cartesian_in_cam_to_matrix(&CartesianPoint::of(i16::MAX, i16::MAX), &cam), MatrixPoint::of(0, u16::MAX));
+        assert_eq!(cartesian_in_cam_to_matrix(&CartesianPoint::max(), &cam), MatrixPoint::of(0, u16::MAX));
     }
 
     #[test]

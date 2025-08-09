@@ -56,9 +56,9 @@ mod tests {
     fn matrix_to_cartesian_in_cam_edges() {
         let cam = Cam::of(i32::MIN, i32::MIN, i32::MAX, i32::MAX);
         assert_eq!(matrix_to_cartesian_in_cam(&MatrixPoint::of(0, 0), &cam), CartesianPoint::of(i32::MIN, i32::MAX));
-        assert_eq!(matrix_to_cartesian_in_cam(&MatrixPoint::of(u32::MAX, 0), &cam), CartesianPoint::of(i32::MIN, i32::MIN));
-        assert_eq!(matrix_to_cartesian_in_cam(&MatrixPoint::of(0, u32::MAX), &cam), CartesianPoint::of(i32::MAX, i32::MAX));
-        assert_eq!(matrix_to_cartesian_in_cam(&MatrixPoint::of(u32::MAX, u32::MAX), &cam), CartesianPoint::of(i32::MAX, i32::MIN));
+        assert_eq!(matrix_to_cartesian_in_cam(&MatrixPoint::of(u32::MAX, 0), &cam), CartesianPoint::min());
+        assert_eq!(matrix_to_cartesian_in_cam(&MatrixPoint::of(0, u32::MAX), &cam), CartesianPoint::max());
+        assert_eq!(matrix_to_cartesian_in_cam(&MatrixPoint::max(), &cam), CartesianPoint::of(i32::MAX, i32::MIN));
     }
 
     #[test]

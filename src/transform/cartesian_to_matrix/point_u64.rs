@@ -12,9 +12,9 @@ mod tests {
     #[test]
     fn cartesian_to_matrix_bounds() {
         assert_eq!(cartesian_to_matrix(&CartesianPoint::of(0, 0)), MatrixPoint::of(u64::MAX, 0));
-        assert_eq!(cartesian_to_matrix(&CartesianPoint::of(u64::MAX, 0)), MatrixPoint::of(u64::MAX, u64::MAX));
+        assert_eq!(cartesian_to_matrix(&CartesianPoint::of(u64::MAX, 0)), MatrixPoint::max());
         assert_eq!(cartesian_to_matrix(&CartesianPoint::of(0, u64::MAX)), MatrixPoint::of(0, 0));
-        assert_eq!(cartesian_to_matrix(&CartesianPoint::of(u64::MAX, u64::MAX)), MatrixPoint::of(0, u64::MAX));
+        assert_eq!(cartesian_to_matrix(&CartesianPoint::max()), MatrixPoint::of(0, u64::MAX));
     }
 
     #[test]

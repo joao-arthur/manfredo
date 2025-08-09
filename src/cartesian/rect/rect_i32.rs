@@ -572,10 +572,10 @@ mod tests {
     #[test]
     fn contains_outside_borders() {
         let r = RectI32::of(i32::MIN + 1, i32::MIN + 1, i32::MAX - 1, i32::MAX - 1);
-        assert!(!contains(&r, &PointI32::of(i32::MIN, i32::MIN)));
+        assert!(!contains(&r, &PointI32::min()));
         assert!(!contains(&r, &PointI32::of(i32::MIN, i32::MAX)));
         assert!(!contains(&r, &PointI32::of(i32::MAX, i32::MIN)));
-        assert!(!contains(&r, &PointI32::of(i32::MAX, i32::MAX)));
+        assert!(!contains(&r, &PointI32::max()));
         assert!(!contains(&r, &PointI32::of(i32::MIN + 1, i32::MIN)));
         assert!(!contains(&r, &PointI32::of(i32::MIN + 1, i32::MAX)));
         assert!(!contains(&r, &PointI32::of(i32::MAX - 1, i32::MIN)));

@@ -55,8 +55,8 @@ mod tests {
         let cam = Cam::of(0, 0, u64::MAX, u64::MAX);
         assert_eq!(matrix_in_cam_to_cartesian(&MatrixPoint::of(0, 0), &cam), CartesianPoint::of(0, u64::MAX));
         assert_eq!(matrix_in_cam_to_cartesian(&MatrixPoint::of(u64::MAX, 0), &cam), CartesianPoint::of(0, 0));
-        assert_eq!(matrix_in_cam_to_cartesian(&MatrixPoint::of(0, u64::MAX), &cam), CartesianPoint::of(u64::MAX, u64::MAX));
-        assert_eq!(matrix_in_cam_to_cartesian(&MatrixPoint::of(u64::MAX, u64::MAX), &cam), CartesianPoint::of(u64::MAX, 0));
+        assert_eq!(matrix_in_cam_to_cartesian(&MatrixPoint::of(0, u64::MAX), &cam), CartesianPoint::max());
+        assert_eq!(matrix_in_cam_to_cartesian(&MatrixPoint::max(), &cam), CartesianPoint::of(u64::MAX, 0));
     }
 
     #[test]

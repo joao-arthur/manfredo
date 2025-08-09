@@ -572,10 +572,10 @@ mod tests {
     #[test]
     fn contains_outside_borders() {
         let r = RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MAX - 1, i16::MAX - 1);
-        assert!(!contains(&r, &PointI16::of(i16::MIN, i16::MIN)));
+        assert!(!contains(&r, &PointI16::min()));
         assert!(!contains(&r, &PointI16::of(i16::MIN, i16::MAX)));
         assert!(!contains(&r, &PointI16::of(i16::MAX, i16::MIN)));
-        assert!(!contains(&r, &PointI16::of(i16::MAX, i16::MAX)));
+        assert!(!contains(&r, &PointI16::max()));
         assert!(!contains(&r, &PointI16::of(i16::MIN + 1, i16::MIN)));
         assert!(!contains(&r, &PointI16::of(i16::MIN + 1, i16::MAX)));
         assert!(!contains(&r, &PointI16::of(i16::MAX - 1, i16::MIN)));

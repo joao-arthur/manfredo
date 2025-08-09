@@ -13,10 +13,10 @@ mod tests {
 
     #[test]
     fn cartesian_to_matrix_bounds() {
-        assert_eq!(cartesian_to_matrix(&CartesianPoint::of(i16::MIN, i16::MIN)), MatrixPoint::of(u16::MAX, 0));
-        assert_eq!(cartesian_to_matrix(&CartesianPoint::of(i16::MAX, i16::MIN)), MatrixPoint::of(u16::MAX, u16::MAX));
+        assert_eq!(cartesian_to_matrix(&CartesianPoint::min()), MatrixPoint::of(u16::MAX, 0));
+        assert_eq!(cartesian_to_matrix(&CartesianPoint::of(i16::MAX, i16::MIN)), MatrixPoint::max());
         assert_eq!(cartesian_to_matrix(&CartesianPoint::of(i16::MIN, i16::MAX)), MatrixPoint::of(0, 0));
-        assert_eq!(cartesian_to_matrix(&CartesianPoint::of(i16::MAX, i16::MAX)), MatrixPoint::of(0, u16::MAX));
+        assert_eq!(cartesian_to_matrix(&CartesianPoint::max()), MatrixPoint::of(0, u16::MAX));
     }
 
     #[test]

@@ -543,7 +543,7 @@ mod tests {
         assert!(!contains(&r, &PointU32::of(0, 0)));
         assert!(!contains(&r, &PointU32::of(0, u32::MAX)));
         assert!(!contains(&r, &PointU32::of(u32::MAX, 0)));
-        assert!(!contains(&r, &PointU32::of(u32::MAX, u32::MAX)));
+        assert!(!contains(&r, &PointU32::max()));
         assert!(!contains(&r, &PointU32::of(1, 0)));
         assert!(!contains(&r, &PointU32::of(1, u32::MAX)));
         assert!(!contains(&r, &PointU32::of(u32::MAX - 1, 0)));

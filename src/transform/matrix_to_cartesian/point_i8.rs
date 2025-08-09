@@ -14,9 +14,9 @@ mod tests {
     #[test]
     fn matrix_to_cartesian_edges() {
         assert_eq!(matrix_to_cartesian(&MatrixPoint::of(0, 0)), CartesianPoint::of(i8::MIN, i8::MAX));
-        assert_eq!(matrix_to_cartesian(&MatrixPoint::of(u8::MAX, 0)), CartesianPoint::of(i8::MIN, i8::MIN));
-        assert_eq!(matrix_to_cartesian(&MatrixPoint::of(0, u8::MAX)), CartesianPoint::of(i8::MAX, i8::MAX));
-        assert_eq!(matrix_to_cartesian(&MatrixPoint::of(u8::MAX, u8::MAX)), CartesianPoint::of(i8::MAX, i8::MIN));
+        assert_eq!(matrix_to_cartesian(&MatrixPoint::of(u8::MAX, 0)), CartesianPoint::min());
+        assert_eq!(matrix_to_cartesian(&MatrixPoint::of(0, u8::MAX)), CartesianPoint::max());
+        assert_eq!(matrix_to_cartesian(&MatrixPoint::max()), CartesianPoint::of(i8::MAX, i8::MIN));
     }
 
     #[test]

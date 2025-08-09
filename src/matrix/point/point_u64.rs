@@ -65,7 +65,7 @@ pub fn saturating_translate(p: &mut PointU64, delta: &PointI64) {
     p.col = clamped_col as u64;
 }
 
-pub fn checked_translate(p: &mut PointU64, delta: &PointI64) -> Result<(), ()> {
+pub fn try_checked_translate(p: &mut PointU64, delta: &PointI64) -> Result<(), ()> {
     let row = u64::try_from(i128::from(p.row) + i128::from(delta.row)).map_err(|_| ())?;
     let col = u64::try_from(i128::from(p.col) + i128::from(delta.col)).map_err(|_| ())?;
     p.row = row;
@@ -81,7 +81,7 @@ pub fn saturating_translated(p: &PointU64, delta: &PointI64) -> PointU64 {
     PointU64::of(clamped_row as u64, clamped_col as u64)
 }
 
-pub fn checked_translated(p: &PointU64, delta: &PointI64) -> Option<PointU64> {
+pub fn try_checked_translated(p: &PointU64, delta: &PointI64) -> Option<PointU64> {
     let row = u64::try_from(i128::from(p.row) + i128::from(delta.row)).ok()?;
     let col = u64::try_from(i128::from(p.col) + i128::from(delta.col)).ok()?;
     Some(PointU64 { row, col })
@@ -91,7 +91,7 @@ pub fn checked_translated(p: &PointU64, delta: &PointI64) -> Option<PointU64> {
 mod tests {
     use crate::matrix::point::{point_i64::PointI64, point_u8::PointU8, point_u16::PointU16, point_u32::PointU32};
 
-    use super::{PointU64, checked_translate, checked_translated, delta, delta_col, delta_row, saturating_translate, saturating_translated};
+    use super::{PointU64, try_checked_translate, try_checked_translated, delta, delta_col, delta_row, saturating_translate, saturating_translated};
 
     #[test]
     fn point_u64() {
@@ -209,57 +209,57 @@ mod tests {
     #[test]
     fn test_checked_translate() {
         let mut p = PointU64::of(0, 0);
-        assert_eq!(checked_translate(&mut p, &PointI64::of(10, 10)), Ok(()));
+        assert_eq!(try_checked_translate(&mut p, &PointI64::of(10, 10)), Ok(()));
         assert_eq!(p, PointU64::of(10, 10));
-        assert_eq!(checked_translate(&mut p, &PointI64::of(-5, -5)), Ok(()));
+        assert_eq!(try_checked_translate(&mut p, &PointI64::of(-5, -5)), Ok(()));
         assert_eq!(p, PointU64::of(5, 5));
-        assert_eq!(checked_translate(&mut p, &PointI64::of(2, 2)), Ok(()));
+        assert_eq!(try_checked_translate(&mut p, &PointI64::of(2, 2)), Ok(()));
         assert_eq!(p, PointU64::of(7, 7));
     }
 
     #[test]
     fn checked_translate_min_bounds_err() {
         let mut p = PointU64::of(2, 5);
-        assert_eq!(checked_translate(&mut p, &PointI64::of(-10, -10)), Err(()));
+        assert_eq!(try_checked_translate(&mut p, &PointI64::of(-10, -10)), Err(()));
         assert_eq!(p, PointU64::of(2, 5));
     }
 
     #[test]
     fn checked_translate_max_bounds_err() {
         let mut p = PointU64::of(u64::MAX - 2, u64::MAX - 5);
-        assert_eq!(checked_translate(&mut p, &PointI64::of(10, 10)), Err(()));
+        assert_eq!(try_checked_translate(&mut p, &PointI64::of(10, 10)), Err(()));
         assert_eq!(p, PointU64::of(u64::MAX - 2, u64::MAX - 5));
     }
 
     #[test]
     fn checked_translate_min_bounds_ok() {
         let mut p = PointU64::of(2, 5);
-        assert_eq!(checked_translate(&mut p, &PointI64::of(-2, -5)), Ok(()));
+        assert_eq!(try_checked_translate(&mut p, &PointI64::of(-2, -5)), Ok(()));
         assert_eq!(p, PointU64::of(0, 0));
     }
 
     #[test]
     fn checked_translate_max_bounds_ok() {
         let mut p = PointU64::of(u64::MAX - 2, u64::MAX - 5);
-        assert_eq!(checked_translate(&mut p, &PointI64::of(2, 5)), Ok(()));
+        assert_eq!(try_checked_translate(&mut p, &PointI64::of(2, 5)), Ok(()));
         assert_eq!(p, PointU64::max());
     }
 
     #[test]
     fn checked_translate_min_bounds_min_delta() {
         let mut p = PointU64::of(1, 1);
-        assert_eq!(checked_translate(&mut p, &PointI64::min()), Err(()));
-        assert_eq!(checked_translate(&mut p, &PointI64::of(i64::MIN, 0)), Err(()));
-        assert_eq!(checked_translate(&mut p, &PointI64::of(0, i64::MIN)), Err(()));
+        assert_eq!(try_checked_translate(&mut p, &PointI64::min()), Err(()));
+        assert_eq!(try_checked_translate(&mut p, &PointI64::of(i64::MIN, 0)), Err(()));
+        assert_eq!(try_checked_translate(&mut p, &PointI64::of(0, i64::MIN)), Err(()));
         assert_eq!(p, PointU64::of(1, 1));
     }
 
     #[test]
     fn checked_translate_max_bounds_max_delta() {
         let mut p = PointU64::of(u64::MAX - 1, u64::MAX - 1);
-        assert_eq!(checked_translate(&mut p, &PointI64::max()), Err(()));
-        assert_eq!(checked_translate(&mut p, &PointI64::of(i64::MAX, 0)), Err(()));
-        assert_eq!(checked_translate(&mut p, &PointI64::of(0, i64::MAX)), Err(()));
+        assert_eq!(try_checked_translate(&mut p, &PointI64::max()), Err(()));
+        assert_eq!(try_checked_translate(&mut p, &PointI64::of(i64::MAX, 0)), Err(()));
+        assert_eq!(try_checked_translate(&mut p, &PointI64::of(0, i64::MAX)), Err(()));
         assert_eq!(p, PointU64::of(u64::MAX - 1, u64::MAX - 1));
     }
 
@@ -290,24 +290,24 @@ mod tests {
     #[test]
     fn checked_translated_min_bounds() {
         let p = PointU64::of(2, 5);
-        assert_eq!(checked_translated(&p, &PointI64::of(-2, 0)), Some(PointU64::of(0, 5)));
-        assert_eq!(checked_translated(&p, &PointI64::of(0, -5)), Some(PointU64::of(2, 0)));
-        assert_eq!(checked_translated(&p, &PointI64::of(-2, -5)), Some(PointU64::min()));
-        assert_eq!(checked_translated(&p, &PointI64::of(-10, -10)), None);
-        assert_eq!(checked_translated(&p, &PointI64::of(i64::MIN, 0)), None);
-        assert_eq!(checked_translated(&p, &PointI64::of(0, i64::MIN)), None);
-        assert_eq!(checked_translated(&p, &PointI64::min()), None);
+        assert_eq!(try_checked_translated(&p, &PointI64::of(-2, 0)), Some(PointU64::of(0, 5)));
+        assert_eq!(try_checked_translated(&p, &PointI64::of(0, -5)), Some(PointU64::of(2, 0)));
+        assert_eq!(try_checked_translated(&p, &PointI64::of(-2, -5)), Some(PointU64::min()));
+        assert_eq!(try_checked_translated(&p, &PointI64::of(-10, -10)), None);
+        assert_eq!(try_checked_translated(&p, &PointI64::of(i64::MIN, 0)), None);
+        assert_eq!(try_checked_translated(&p, &PointI64::of(0, i64::MIN)), None);
+        assert_eq!(try_checked_translated(&p, &PointI64::min()), None);
     }
 
     #[test]
     fn checked_translated_max_bounds() {
         let p = PointU64::of(u64::MAX - 2, u64::MAX - 5);
-        assert_eq!(checked_translated(&p, &PointI64::of(2, 0)), Some(PointU64::of(u64::MAX, u64::MAX - 5)));
-        assert_eq!(checked_translated(&p, &PointI64::of(0, 5)), Some(PointU64::of(u64::MAX - 2, u64::MAX)));
-        assert_eq!(checked_translated(&p, &PointI64::of(2, 5)), Some(PointU64::max()));
-        assert_eq!(checked_translated(&p, &PointI64::of(10, 10)), None);
-        assert_eq!(checked_translated(&p, &PointI64::of(i64::MAX, 0)), None);
-        assert_eq!(checked_translated(&p, &PointI64::of(0, i64::MAX)), None);
-        assert_eq!(checked_translated(&p, &PointI64::max()), None);
+        assert_eq!(try_checked_translated(&p, &PointI64::of(2, 0)), Some(PointU64::of(u64::MAX, u64::MAX - 5)));
+        assert_eq!(try_checked_translated(&p, &PointI64::of(0, 5)), Some(PointU64::of(u64::MAX - 2, u64::MAX)));
+        assert_eq!(try_checked_translated(&p, &PointI64::of(2, 5)), Some(PointU64::max()));
+        assert_eq!(try_checked_translated(&p, &PointI64::of(10, 10)), None);
+        assert_eq!(try_checked_translated(&p, &PointI64::of(i64::MAX, 0)), None);
+        assert_eq!(try_checked_translated(&p, &PointI64::of(0, i64::MAX)), None);
+        assert_eq!(try_checked_translated(&p, &PointI64::max()), None);
     }
 }

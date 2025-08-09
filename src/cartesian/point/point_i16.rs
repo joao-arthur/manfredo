@@ -51,7 +51,7 @@ pub fn saturating_translate(p: &mut PointI16, delta: &PointI16) {
     p.y = p.y.saturating_add(delta.y);
 }
 
-pub fn checked_translate(p: &mut PointI16, delta: &PointI16) -> Result<(), ()> {
+pub fn try_checked_translate(p: &mut PointI16, delta: &PointI16) -> Result<(), ()> {
     let x = p.x.checked_add(delta.x).ok_or(())?;
     let y = p.y.checked_add(delta.y).ok_or(())?;
     p.x = x;
@@ -63,7 +63,7 @@ pub fn saturating_translated(p: &PointI16, delta: &PointI16) -> PointI16 {
     PointI16::of(p.x.saturating_add(delta.x), p.y.saturating_add(delta.y))
 }
 
-pub fn checked_translated(p: &PointI16, delta: &PointI16) -> Option<PointI16> {
+pub fn try_checked_translated(p: &PointI16, delta: &PointI16) -> Option<PointI16> {
     let x = p.x.checked_add(delta.x)?;
     let y = p.y.checked_add(delta.y)?;
     Some(PointI16 { x, y })
@@ -73,7 +73,7 @@ pub fn checked_translated(p: &PointI16, delta: &PointI16) -> Option<PointI16> {
 mod tests {
     use crate::cartesian::point::{point_i8::PointI8, point_u16::PointU16};
 
-    use super::{PointI16, checked_translate, checked_translated, delta, delta_x, delta_y, saturating_translate, saturating_translated};
+    use super::{PointI16, try_checked_translate, try_checked_translated, delta, delta_x, delta_y, saturating_translate, saturating_translated};
 
     #[test]
     fn point_i16() {
@@ -187,57 +187,57 @@ mod tests {
     #[test]
     fn test_checked_translate() {
         let mut p = PointI16::of(0, 0);
-        assert_eq!(checked_translate(&mut p, &PointI16::of(10, 15)), Ok(()));
+        assert_eq!(try_checked_translate(&mut p, &PointI16::of(10, 15)), Ok(()));
         assert_eq!(p, PointI16::of(10, 15));
-        assert_eq!(checked_translate(&mut p, &PointI16::of(-15, -25)), Ok(()));
+        assert_eq!(try_checked_translate(&mut p, &PointI16::of(-15, -25)), Ok(()));
         assert_eq!(p, PointI16::of(-5, -10));
-        assert_eq!(checked_translate(&mut p, &PointI16::of(2, 3)), Ok(()));
+        assert_eq!(try_checked_translate(&mut p, &PointI16::of(2, 3)), Ok(()));
         assert_eq!(p, PointI16::of(-3, -7));
     }
 
     #[test]
     fn checked_translate_min_bounds_err() {
         let mut p = PointI16::of(i16::MIN + 2, i16::MIN + 5);
-        assert_eq!(checked_translate(&mut p, &PointI16::of(-10, -10)), Err(()));
+        assert_eq!(try_checked_translate(&mut p, &PointI16::of(-10, -10)), Err(()));
         assert_eq!(p, PointI16::of(i16::MIN + 2, i16::MIN + 5));
     }
 
     #[test]
     fn checked_translate_max_bounds_err() {
         let mut p = PointI16::of(i16::MAX - 2, i16::MAX - 5);
-        assert_eq!(checked_translate(&mut p, &PointI16::of(10, 10)), Err(()));
+        assert_eq!(try_checked_translate(&mut p, &PointI16::of(10, 10)), Err(()));
         assert_eq!(p, PointI16::of(i16::MAX - 2, i16::MAX - 5));
     }
 
     #[test]
     fn checked_translate_min_bounds_ok() {
         let mut p = PointI16::of(i16::MIN + 2, i16::MIN + 5);
-        assert_eq!(checked_translate(&mut p, &PointI16::of(-2, -5)), Ok(()));
+        assert_eq!(try_checked_translate(&mut p, &PointI16::of(-2, -5)), Ok(()));
         assert_eq!(p, PointI16::min());
     }
 
     #[test]
     fn checked_translate_max_bounds_ok() {
         let mut p = PointI16::of(i16::MAX - 2, i16::MAX - 5);
-        assert_eq!(checked_translate(&mut p, &PointI16::of(2, 5)), Ok(()));
+        assert_eq!(try_checked_translate(&mut p, &PointI16::of(2, 5)), Ok(()));
         assert_eq!(p, PointI16::max());
     }
 
     #[test]
     fn checked_translate_min_bounds_min_delta() {
         let mut p = PointI16::of(i16::MIN + 1, i16::MIN + 1);
-        assert_eq!(checked_translate(&mut p, &PointI16::min()), Err(()));
-        assert_eq!(checked_translate(&mut p, &PointI16::of(i16::MIN, 0)), Err(()));
-        assert_eq!(checked_translate(&mut p, &PointI16::of(0, i16::MIN)), Err(()));
+        assert_eq!(try_checked_translate(&mut p, &PointI16::min()), Err(()));
+        assert_eq!(try_checked_translate(&mut p, &PointI16::of(i16::MIN, 0)), Err(()));
+        assert_eq!(try_checked_translate(&mut p, &PointI16::of(0, i16::MIN)), Err(()));
         assert_eq!(p, PointI16::of(i16::MIN + 1, i16::MIN + 1));
     }
 
     #[test]
     fn checked_translate_max_bounds_max_delta() {
         let mut p = PointI16::of(i16::MAX - 1, i16::MAX - 1);
-        assert_eq!(checked_translate(&mut p, &PointI16::max()), Err(()));
-        assert_eq!(checked_translate(&mut p, &PointI16::of(i16::MAX, 0)), Err(()));
-        assert_eq!(checked_translate(&mut p, &PointI16::of(0, i16::MAX)), Err(()));
+        assert_eq!(try_checked_translate(&mut p, &PointI16::max()), Err(()));
+        assert_eq!(try_checked_translate(&mut p, &PointI16::of(i16::MAX, 0)), Err(()));
+        assert_eq!(try_checked_translate(&mut p, &PointI16::of(0, i16::MAX)), Err(()));
         assert_eq!(p, PointI16::of(i16::MAX - 1, i16::MAX - 1));
     }
 
@@ -268,24 +268,24 @@ mod tests {
     #[test]
     fn checked_translated_min_bounds() {
         let p = PointI16::of(i16::MIN + 2, i16::MIN + 5);
-        assert_eq!(checked_translated(&p, &PointI16::of(-2, 0)), Some(PointI16::of(i16::MIN, i16::MIN + 5)));
-        assert_eq!(checked_translated(&p, &PointI16::of(0, -5)), Some(PointI16::of(i16::MIN + 2, i16::MIN)));
-        assert_eq!(checked_translated(&p, &PointI16::of(-2, -5)), Some(PointI16::min()));
-        assert_eq!(checked_translated(&p, &PointI16::of(-10, -10)), None);
-        assert_eq!(checked_translated(&p, &PointI16::of(i16::MIN, 0)), None);
-        assert_eq!(checked_translated(&p, &PointI16::of(0, i16::MIN)), None);
-        assert_eq!(checked_translated(&p, &PointI16::min()), None);
+        assert_eq!(try_checked_translated(&p, &PointI16::of(-2, 0)), Some(PointI16::of(i16::MIN, i16::MIN + 5)));
+        assert_eq!(try_checked_translated(&p, &PointI16::of(0, -5)), Some(PointI16::of(i16::MIN + 2, i16::MIN)));
+        assert_eq!(try_checked_translated(&p, &PointI16::of(-2, -5)), Some(PointI16::min()));
+        assert_eq!(try_checked_translated(&p, &PointI16::of(-10, -10)), None);
+        assert_eq!(try_checked_translated(&p, &PointI16::of(i16::MIN, 0)), None);
+        assert_eq!(try_checked_translated(&p, &PointI16::of(0, i16::MIN)), None);
+        assert_eq!(try_checked_translated(&p, &PointI16::min()), None);
     }
 
     #[test]
     fn checked_translated_max_bounds() {
         let p = PointI16::of(i16::MAX - 2, i16::MAX - 5);
-        assert_eq!(checked_translated(&p, &PointI16::of(2, 0)), Some(PointI16::of(i16::MAX, i16::MAX - 5)));
-        assert_eq!(checked_translated(&p, &PointI16::of(0, 5)), Some(PointI16::of(i16::MAX - 2, i16::MAX)));
-        assert_eq!(checked_translated(&p, &PointI16::of(2, 5)), Some(PointI16::max()));
-        assert_eq!(checked_translated(&p, &PointI16::of(10, 10)), None);
-        assert_eq!(checked_translated(&p, &PointI16::of(i16::MAX, 0)), None);
-        assert_eq!(checked_translated(&p, &PointI16::of(0, i16::MAX)), None);
-        assert_eq!(checked_translated(&p, &PointI16::max()), None);
+        assert_eq!(try_checked_translated(&p, &PointI16::of(2, 0)), Some(PointI16::of(i16::MAX, i16::MAX - 5)));
+        assert_eq!(try_checked_translated(&p, &PointI16::of(0, 5)), Some(PointI16::of(i16::MAX - 2, i16::MAX)));
+        assert_eq!(try_checked_translated(&p, &PointI16::of(2, 5)), Some(PointI16::max()));
+        assert_eq!(try_checked_translated(&p, &PointI16::of(10, 10)), None);
+        assert_eq!(try_checked_translated(&p, &PointI16::of(i16::MAX, 0)), None);
+        assert_eq!(try_checked_translated(&p, &PointI16::of(0, i16::MAX)), None);
+        assert_eq!(try_checked_translated(&p, &PointI16::max()), None);
     }
 }

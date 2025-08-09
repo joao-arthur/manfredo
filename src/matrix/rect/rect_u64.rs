@@ -1,6 +1,9 @@
 use std::ops::RangeInclusive;
 
-use crate::matrix::point::{point_i64::PointI64, point_u64};
+use crate::matrix::{
+    point::{point_i64::PointI64, point_u64},
+    rect::{rect_u8::RectU8, rect_u16::RectU16, rect_u32::RectU32},
+};
 
 #[derive(Eq, PartialEq, Debug, Clone)]
 pub struct RectU64 {
@@ -19,6 +22,24 @@ impl RectU64 {
 
     pub fn iter_col(&self) -> RangeInclusive<u64> {
         self.min.col..=self.max.col
+    }
+}
+
+impl From<RectU8> for RectU64 {
+    fn from(r: RectU8) -> Self {
+        RectU64 { min: point_u64::PointU64::of(r.min.row.into(), r.min.col.into()), max: point_u64::PointU64::of(r.max.row.into(), r.max.col.into()) }
+    }
+}
+
+impl From<RectU16> for RectU64 {
+    fn from(r: RectU16) -> Self {
+        RectU64 { min: point_u64::PointU64::of(r.min.row.into(), r.min.col.into()), max: point_u64::PointU64::of(r.max.row.into(), r.max.col.into()) }
+    }
+}
+
+impl From<RectU32> for RectU64 {
+    fn from(r: RectU32) -> Self {
+        RectU64 { min: point_u64::PointU64::of(r.min.row.into(), r.min.col.into()), max: point_u64::PointU64::of(r.max.row.into(), r.max.col.into()) }
     }
 }
 
@@ -129,7 +150,10 @@ pub fn contains(r: &RectU64, p: &point_u64::PointU64) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use crate::matrix::point::{point_i64::PointI64, point_u64::PointU64};
+    use crate::matrix::{
+        point::{point_i64::PointI64, point_u64::PointU64},
+        rect::{rect_u8::RectU8, rect_u16::RectU16, rect_u32::RectU32},
+    };
 
     use super::{
         RectU64, checked_translate, contains, deflate, delta_col, delta_row, inflate, len_col, len_row, max_delta, max_len, resize,
@@ -142,6 +166,27 @@ mod tests {
             RectU64::of(4096, 8192, 16384, 32768),
             RectU64 { min: PointU64 { row: 4096, col: 8192 }, max: PointU64 { row: 16384, col: 32768 } }
         );
+        assert_eq!(RectU64::of(u64::MAX, 0, 0, u64::MAX).to_string(), "((18446744073709551615, 0), (0, 18446744073709551615))");
+    }
+
+    #[test]
+    fn from() {
+        assert_eq!(
+            RectU64::from(RectU8::of(0, 0, u8::MAX, u8::MAX)),
+            RectU64 { min: PointU64 { row: 0, col: 0 }, max: PointU64 { row: u8::MAX.into(), col: u8::MAX.into() } }
+        );
+        assert_eq!(
+            RectU64::from(RectU16::of(0, 0, u16::MAX, u16::MAX)),
+            RectU64 { min: PointU64 { row: 0, col: 0 }, max: PointU64 { row: u16::MAX.into(), col: u16::MAX.into() } }
+        );
+        assert_eq!(
+            RectU64::from(RectU32::of(0, 0, u32::MAX, u32::MAX)),
+            RectU64 { min: PointU64 { row: 0, col: 0 }, max: PointU64 { row: u32::MAX.into(), col: u32::MAX.into() } }
+        );
+    }
+
+    #[test]
+    fn to_string() {
         assert_eq!(RectU64::of(u64::MAX, 0, 0, u64::MAX).to_string(), "((18446744073709551615, 0), (0, 18446744073709551615))");
     }
 

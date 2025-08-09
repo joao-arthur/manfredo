@@ -1,6 +1,9 @@
 use std::ops::RangeInclusive;
 
-use crate::matrix::point::{point_i32::PointI32, point_u32};
+use crate::matrix::{
+    point::{point_i32::PointI32, point_u32},
+    rect::{rect_u8::RectU8, rect_u16::RectU16},
+};
 
 #[derive(Eq, PartialEq, Debug, Clone)]
 pub struct RectU32 {
@@ -19,6 +22,18 @@ impl RectU32 {
 
     pub fn iter_col(&self) -> RangeInclusive<u32> {
         self.min.col..=self.max.col
+    }
+}
+
+impl From<RectU8> for RectU32 {
+    fn from(r: RectU8) -> Self {
+        RectU32 { min: point_u32::PointU32::of(r.min.row.into(), r.min.col.into()), max: point_u32::PointU32::of(r.max.row.into(), r.max.col.into()) }
+    }
+}
+
+impl From<RectU16> for RectU32 {
+    fn from(r: RectU16) -> Self {
+        RectU32 { min: point_u32::PointU32::of(r.min.row.into(), r.min.col.into()), max: point_u32::PointU32::of(r.max.row.into(), r.max.col.into()) }
     }
 }
 
@@ -129,7 +144,10 @@ pub fn contains(r: &RectU32, p: &point_u32::PointU32) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use crate::matrix::point::{point_i32::PointI32, point_u32::PointU32};
+    use crate::matrix::{
+        point::{point_i32::PointI32, point_u32::PointU32},
+        rect::{rect_u8::RectU8, rect_u16::RectU16},
+    };
 
     use super::{
         RectU32, checked_translate, contains, deflate, delta_col, delta_row, inflate, len_col, len_row, max_delta, max_len, resize,
@@ -139,6 +157,23 @@ mod tests {
     #[test]
     fn rect_u32() {
         assert_eq!(RectU32::of(256, 512, 1024, 2048), RectU32 { min: PointU32 { row: 256, col: 512 }, max: PointU32 { row: 1024, col: 2048 } });
+        assert_eq!(RectU32::of(u32::MAX, 0, 0, u32::MAX).to_string(), "((4294967295, 0), (0, 4294967295))");
+    }
+
+    #[test]
+    fn from() {
+        assert_eq!(
+            RectU32::from(RectU8::of(0, 0, u8::MAX, u8::MAX)),
+            RectU32 { min: PointU32 { row: 0, col: 0 }, max: PointU32 { row: u8::MAX.into(), col: u8::MAX.into() } }
+        );
+        assert_eq!(
+            RectU32::from(RectU16::of(0, 0, u16::MAX, u16::MAX)),
+            RectU32 { min: PointU32 { row: 0, col: 0 }, max: PointU32 { row: u16::MAX.into(), col: u16::MAX.into() } }
+        );
+    }
+
+    #[test]
+    fn to_string() {
         assert_eq!(RectU32::of(u32::MAX, 0, 0, u32::MAX).to_string(), "((4294967295, 0), (0, 4294967295))");
     }
 

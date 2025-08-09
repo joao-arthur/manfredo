@@ -1,6 +1,9 @@
 use std::ops::RangeInclusive;
 
-use crate::cartesian::point::{point_i16::PointI16, point_u16};
+use crate::cartesian::{
+    point::{point_i16::PointI16, point_u16},
+    rect::rect_u8::RectU8,
+};
 
 #[derive(Eq, PartialEq, Debug, Clone)]
 pub struct RectU16 {
@@ -19,6 +22,12 @@ impl RectU16 {
 
     pub fn iter_y(&self) -> RangeInclusive<u16> {
         self.min.y..=self.max.y
+    }
+}
+
+impl From<RectU8> for RectU16 {
+    fn from(r: RectU8) -> Self {
+        RectU16 { min: point_u16::PointU16::of(r.min.x.into(), r.min.y.into()), max: point_u16::PointU16::of(r.max.x.into(), r.max.y.into()) }
     }
 }
 
@@ -129,7 +138,10 @@ pub fn contains(r: &RectU16, p: &point_u16::PointU16) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use crate::cartesian::point::{point_i16::PointI16, point_u16::PointU16};
+    use crate::cartesian::{
+        point::{point_i16::PointI16, point_u16::PointU16},
+        rect::rect_u8::RectU8,
+    };
 
     use super::{
         RectU16, checked_translate, contains, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, resize, saturating_translate,
@@ -138,6 +150,18 @@ mod tests {
     #[test]
     fn rect_u16() {
         assert_eq!(RectU16::of(16, 32, 64, 128), RectU16 { min: PointU16 { x: 16, y: 32 }, max: PointU16 { x: 64, y: 128 } });
+    }
+
+    #[test]
+    fn from() {
+        assert_eq!(
+            RectU16::from(RectU8::of(0, 0, u8::MAX, u8::MAX)),
+            RectU16 { min: PointU16 { x: 0, y: 0 }, max: PointU16 { x: u8::MAX.into(), y: u8::MAX.into() } }
+        );
+    }
+
+    #[test]
+    fn to_string() {
         assert_eq!(RectU16::of(u16::MAX, 0, 0, u16::MAX).to_string(), "((65535, 0), (0, 65535))");
     }
 

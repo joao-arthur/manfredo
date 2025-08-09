@@ -1,6 +1,9 @@
 use std::ops::RangeInclusive;
 
-use crate::cartesian::point::point_i32;
+use crate::cartesian::{
+    point::point_i32,
+    rect::{rect_i8::RectI8, rect_i16::RectI16},
+};
 
 #[derive(Eq, PartialEq, Debug, Clone)]
 pub struct RectI32 {
@@ -19,6 +22,18 @@ impl RectI32 {
 
     pub fn iter_y(&self) -> RangeInclusive<i32> {
         self.min.y..=self.max.y
+    }
+}
+
+impl From<RectI8> for RectI32 {
+    fn from(r: RectI8) -> Self {
+        RectI32 { min: point_i32::PointI32::of(r.min.x.into(), r.min.y.into()), max: point_i32::PointI32::of(r.max.x.into(), r.max.y.into()) }
+    }
+}
+
+impl From<RectI16> for RectI32 {
+    fn from(r: RectI16) -> Self {
+        RectI32 { min: point_i32::PointI32::of(r.min.x.into(), r.min.y.into()), max: point_i32::PointI32::of(r.max.x.into(), r.max.y.into()) }
     }
 }
 
@@ -127,7 +142,10 @@ pub fn contains(r: &RectI32, p: &point_i32::PointI32) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use crate::cartesian::point::point_i32::PointI32;
+    use crate::cartesian::{
+        point::point_i32::PointI32,
+        rect::{rect_i8::RectI8, rect_i16::RectI16},
+    };
 
     use super::{
         RectI32, checked_translate, contains, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, resize, saturating_translate,
@@ -136,6 +154,22 @@ mod tests {
     #[test]
     fn rect_i32() {
         assert_eq!(RectI32::of(i32::MIN, -1, 1, i32::MAX), RectI32 { min: PointI32 { x: i32::MIN, y: -1 }, max: PointI32 { x: 1, y: i32::MAX } });
+    }
+
+    #[test]
+    fn from() {
+        assert_eq!(
+            RectI32::from(RectI8::of(0, 0, i8::MAX, i8::MAX)),
+            RectI32 { min: PointI32 { x: 0, y: 0 }, max: PointI32 { x: i8::MAX.into(), y: i8::MAX.into() } }
+        );
+        assert_eq!(
+            RectI32::from(RectI16::of(0, 0, i16::MAX, i16::MAX)),
+            RectI32 { min: PointI32 { x: 0, y: 0 }, max: PointI32 { x: i16::MAX.into(), y: i16::MAX.into() } }
+        );
+    }
+
+    #[test]
+    fn to_string() {
         assert_eq!(RectI32::of(i32::MIN, -0, 0, i32::MAX).to_string(), "((-2147483648, 0), (0, 2147483647))");
     }
 

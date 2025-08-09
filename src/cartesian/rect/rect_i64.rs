@@ -1,6 +1,9 @@
 use std::ops::RangeInclusive;
 
-use crate::cartesian::point::point_i64;
+use crate::cartesian::{
+    point::point_i64,
+    rect::{rect_i8::RectI8, rect_i16::RectI16, rect_i32::RectI32},
+};
 
 #[derive(Eq, PartialEq, Debug, Clone)]
 pub struct RectI64 {
@@ -19,6 +22,24 @@ impl RectI64 {
 
     pub fn iter_y(&self) -> RangeInclusive<i64> {
         self.min.y..=self.max.y
+    }
+}
+
+impl From<RectI8> for RectI64 {
+    fn from(r: RectI8) -> Self {
+        RectI64 { min: point_i64::PointI64::of(r.min.x.into(), r.min.y.into()), max: point_i64::PointI64::of(r.max.x.into(), r.max.y.into()) }
+    }
+}
+
+impl From<RectI16> for RectI64 {
+    fn from(r: RectI16) -> Self {
+        RectI64 { min: point_i64::PointI64::of(r.min.x.into(), r.min.y.into()), max: point_i64::PointI64::of(r.max.x.into(), r.max.y.into()) }
+    }
+}
+
+impl From<RectI32> for RectI64 {
+    fn from(r: RectI32) -> Self {
+        RectI64 { min: point_i64::PointI64::of(r.min.x.into(), r.min.y.into()), max: point_i64::PointI64::of(r.max.x.into(), r.max.y.into()) }
     }
 }
 
@@ -127,7 +148,10 @@ pub fn contains(r: &RectI64, p: &point_i64::PointI64) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use crate::cartesian::point::point_i64::PointI64;
+    use crate::cartesian::{
+        point::point_i64::PointI64,
+        rect::{rect_i8::RectI8, rect_i16::RectI16, rect_i32::RectI32},
+    };
 
     use super::{
         RectI64, checked_translate, contains, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, resize, saturating_translate,
@@ -136,6 +160,26 @@ mod tests {
     #[test]
     fn rect_i64() {
         assert_eq!(RectI64::of(i64::MIN, -1, 1, i64::MAX), RectI64 { min: PointI64 { x: i64::MIN, y: -1 }, max: PointI64 { x: 1, y: i64::MAX } });
+    }
+
+    #[test]
+    fn from() {
+        assert_eq!(
+            RectI64::from(RectI8::of(0, 0, i8::MAX, i8::MAX)),
+            RectI64 { min: PointI64 { x: 0, y: 0 }, max: PointI64 { x: i8::MAX.into(), y: i8::MAX.into() } }
+        );
+        assert_eq!(
+            RectI64::from(RectI16::of(0, 0, i16::MAX, i16::MAX)),
+            RectI64 { min: PointI64 { x: 0, y: 0 }, max: PointI64 { x: i16::MAX.into(), y: i16::MAX.into() } }
+        );
+        assert_eq!(
+            RectI64::from(RectI32::of(0, 0, i32::MAX, i32::MAX)),
+            RectI64 { min: PointI64 { x: 0, y: 0 }, max: PointI64 { x: i32::MAX.into(), y: i32::MAX.into() } }
+        );
+    }
+
+    #[test]
+    fn to_string() {
         assert_eq!(RectI64::of(i64::MIN, -0, 0, i64::MAX).to_string(), "((-9223372036854775808, 0), (0, 9223372036854775807))");
     }
 

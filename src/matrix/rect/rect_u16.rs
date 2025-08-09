@@ -1,6 +1,9 @@
 use std::ops::RangeInclusive;
 
-use crate::matrix::point::{point_i16::PointI16, point_u16};
+use crate::matrix::{
+    point::{point_i16::PointI16, point_u16},
+    rect::rect_u8::RectU8,
+};
 
 #[derive(Eq, PartialEq, Debug, Clone)]
 pub struct RectU16 {
@@ -19,6 +22,12 @@ impl RectU16 {
 
     pub fn iter_col(&self) -> RangeInclusive<u16> {
         self.min.col..=self.max.col
+    }
+}
+
+impl From<RectU8> for RectU16 {
+    fn from(r: RectU8) -> Self {
+        RectU16 { min: point_u16::PointU16::of(r.min.row.into(), r.min.col.into()), max: point_u16::PointU16::of(r.max.row.into(), r.max.col.into()) }
     }
 }
 
@@ -129,7 +138,10 @@ pub fn contains(r: &RectU16, p: &point_u16::PointU16) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use crate::matrix::point::{point_i16::PointI16, point_u16::PointU16};
+    use crate::matrix::{
+        point::{point_i16::PointI16, point_u16::PointU16},
+        rect::rect_u8::RectU8,
+    };
 
     use super::{
         RectU16, checked_translate, contains, deflate, delta_col, delta_row, inflate, len_col, len_row, max_delta, max_len, resize,
@@ -139,6 +151,18 @@ mod tests {
     #[test]
     fn rect_u16() {
         assert_eq!(RectU16::of(16, 32, 64, 128), RectU16 { min: PointU16 { row: 16, col: 32 }, max: PointU16 { row: 64, col: 128 } });
+    }
+
+    #[test]
+    fn from() {
+        assert_eq!(
+            RectU16::from(RectU8::of(0, 0, u8::MAX, u8::MAX)),
+            RectU16 { min: PointU16 { row: 0, col: 0 }, max: PointU16 { row: u8::MAX.into(), col: u8::MAX.into() } }
+        );
+    }
+
+    #[test]
+    fn to_string() {
         assert_eq!(RectU16::of(u16::MAX, 0, 0, u16::MAX).to_string(), "((65535, 0), (0, 65535))");
     }
 

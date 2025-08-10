@@ -160,8 +160,8 @@ mod tests {
     };
 
     use super::{
-        RectU16, assign_checked_add, contains, deflate, delta_col, delta_row, inflate, len_col, len_row, max_delta, max_len, resize,
-        assign_saturating_add, try_assign_checked_add,
+        RectU16, assign_checked_add, assign_saturating_add, contains, deflate, delta_col, delta_row, inflate, len_col, len_row, max_delta, max_len,
+        resize, try_assign_checked_add,
     };
 
     #[test]

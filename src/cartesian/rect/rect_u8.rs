@@ -160,7 +160,7 @@ mod tests {
     use crate::cartesian::point::{point_i8::PointI8, point_u8::PointU8};
 
     use super::{
-        RectU8, assign_checked_add, contains, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, resize, assign_saturating_add,
+        RectU8, assign_checked_add, assign_saturating_add, contains, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, resize,
         try_assign_checked_add,
     };
 

@@ -156,7 +156,7 @@ pub fn contains(r: &RectF32, p: &point_f32::PointF32) -> bool {
 mod tests {
     use crate::cartesian::point::point_f32::{MAX, MIN, PointF32};
 
-    use super::{RectF32, contains, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, resize, assign_saturating_add};
+    use super::{RectF32, assign_saturating_add, contains, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, resize};
 
     #[test]
     fn rect_f32() {

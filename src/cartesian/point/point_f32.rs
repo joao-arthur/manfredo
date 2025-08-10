@@ -83,8 +83,8 @@ pub fn checked_add(p: &PointF32, delta: &PointF32) -> PointF32 {
 #[cfg(test)]
 mod tests {
     use super::{
-        MAX, MIN, PointF32, assign_checked_add, checked_add, delta, delta_x, delta_y, assign_saturating_add, saturating_add,
-        try_assign_checked_add, try_checked_add,
+        MAX, MIN, PointF32, assign_checked_add, assign_saturating_add, checked_add, delta, delta_x, delta_y, saturating_add, try_assign_checked_add,
+        try_checked_add,
     };
 
     #[test]

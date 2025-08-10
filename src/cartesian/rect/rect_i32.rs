@@ -164,7 +164,7 @@ mod tests {
     };
 
     use super::{
-        RectI32, assign_checked_add, contains, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, resize, assign_saturating_add,
+        RectI32, assign_checked_add, assign_saturating_add, contains, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, resize,
         try_assign_checked_add,
     };
 

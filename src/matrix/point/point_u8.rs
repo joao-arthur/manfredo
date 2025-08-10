@@ -82,8 +82,8 @@ mod tests {
     use crate::matrix::point::point_i8::PointI8;
 
     use super::{
-        PointU8, assign_checked_add, checked_add, delta, delta_col, delta_row, assign_saturating_add, saturating_add,
-        try_assign_checked_add, try_checked_add,
+        PointU8, assign_checked_add, assign_saturating_add, checked_add, delta, delta_col, delta_row, saturating_add, try_assign_checked_add,
+        try_checked_add,
     };
 
     #[test]

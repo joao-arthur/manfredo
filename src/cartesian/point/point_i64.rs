@@ -94,7 +94,7 @@ mod tests {
     use crate::cartesian::point::{point_i8::PointI8, point_i16::PointI16, point_i32::PointI32, point_u64::PointU64};
 
     use super::{
-        PointI64, assign_checked_add, checked_add, delta, delta_x, delta_y, assign_saturating_add, saturating_add, try_assign_checked_add,
+        PointI64, assign_checked_add, assign_saturating_add, checked_add, delta, delta_x, delta_y, saturating_add, try_assign_checked_add,
         try_checked_add,
     };
 

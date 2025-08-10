@@ -94,8 +94,8 @@ mod tests {
     use crate::matrix::point::{point_i32::PointI32, point_u8::PointU8, point_u16::PointU16};
 
     use super::{
-        PointU32, assign_checked_add, checked_add, delta, delta_col, delta_row, assign_saturating_add, saturating_add,
-        try_assign_checked_add, try_checked_add,
+        PointU32, assign_checked_add, assign_saturating_add, checked_add, delta, delta_col, delta_row, saturating_add, try_assign_checked_add,
+        try_checked_add,
     };
 
     #[test]

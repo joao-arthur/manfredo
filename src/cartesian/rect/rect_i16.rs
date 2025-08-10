@@ -127,6 +127,10 @@ pub fn try_checked_translate(r: &mut RectI16, delta: &point_i16::PointI16) -> Re
     Ok(())
 }
 
+pub fn checked_translate(r: &mut RectI16, delta: &point_i16::PointI16) {
+    try_checked_translate(r, delta).unwrap()
+}
+
 pub fn contains(r: &RectI16, p: &point_i16::PointI16) -> bool {
     p.x >= r.min.x && p.x <= r.max.x && p.y >= r.min.y && p.y <= r.max.y
 }
@@ -137,6 +141,7 @@ mod tests {
 
     use super::{
         RectI16, contains, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, resize, saturating_translate, try_checked_translate,
+        checked_translate
     };
 
     #[test]
@@ -576,6 +581,17 @@ mod tests {
         let mut r = RectI16::of(i16::MIN, i16::MIN, i16::MAX - 1, i16::MAX - 1);
         assert_eq!(try_checked_translate(&mut r, &PointI16::of(1, 1)), Ok(()));
         assert_eq!(r, RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MAX, i16::MAX));
+    }
+
+    #[test]
+    fn test_checked_translate() {
+        let mut r = RectI16::of(0, 0, 10, 10);
+        checked_translate(&mut r, &PointI16::of(10, 20));
+        assert_eq!(r, RectI16::of(10, 20, 20, 30));
+        checked_translate(&mut r, &PointI16::of(-20, -15));
+        assert_eq!(r, RectI16::of(-10, 5, 0, 15));
+        checked_translate(&mut r, &PointI16::of(3, -2));
+        assert_eq!(r, RectI16::of(-7, 3, 3, 13));
     }
 
     #[test]

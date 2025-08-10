@@ -142,6 +142,10 @@ pub fn try_checked_translate(r: &mut RectI64, delta: &point_i64::PointI64) -> Re
     Ok(())
 }
 
+pub fn checked_translate(r: &mut RectI64, delta: &point_i64::PointI64) {
+    try_checked_translate(r, delta).unwrap()
+}
+
 pub fn contains(r: &RectI64, p: &point_i64::PointI64) -> bool {
     p.x >= r.min.x && p.x <= r.max.x && p.y >= r.min.y && p.y <= r.max.y
 }
@@ -155,6 +159,7 @@ mod tests {
 
     use super::{
         RectI64, contains, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, resize, saturating_translate, try_checked_translate,
+        checked_translate
     };
 
     #[test]
@@ -602,6 +607,17 @@ mod tests {
         let mut r = RectI64::of(i64::MIN, i64::MIN, i64::MAX - 1, i64::MAX - 1);
         assert_eq!(try_checked_translate(&mut r, &PointI64::of(1, 1)), Ok(()));
         assert_eq!(r, RectI64::of(i64::MIN + 1, i64::MIN + 1, i64::MAX, i64::MAX));
+    }
+
+    #[test]
+    fn test_checked_translate() {
+        let mut r = RectI64::of(0, 0, 10, 10);
+        checked_translate(&mut r, &PointI64::of(10, 20));
+        assert_eq!(r, RectI64::of(10, 20, 20, 30));
+        checked_translate(&mut r, &PointI64::of(-20, -15));
+        assert_eq!(r, RectI64::of(-10, 5, 0, 15));
+        checked_translate(&mut r, &PointI64::of(3, -2));
+        assert_eq!(r, RectI64::of(-7, 3, 3, 13));
     }
 
     #[test]

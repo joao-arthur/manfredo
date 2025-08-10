@@ -1,19 +1,19 @@
 use super::PointI8;
 
 pub fn assign_add(p: &mut PointI8, delta: &PointI8) {
-    p.x = p.x.saturating_add(delta.x);
-    p.y = p.y.saturating_add(delta.y);
+    p.row = p.row.wrapping_add(delta.row);
+    p.col = p.col.wrapping_add(delta.col);
 }
 
 pub fn add(p: &PointI8, delta: &PointI8) -> PointI8 {
-    let x = p.x.saturating_add(delta.x);
-    let y = p.y.saturating_add(delta.y);
-    PointI8 { x, y }
+    let row = p.row.wrapping_add(delta.row);
+    let col = p.col.wrapping_add(delta.col);
+    PointI8 { row, col }
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::cartesian::point::point_i8::PointI8;
+    use crate::matrix::point::point_i8::PointI8;
 
     use super::{add, assign_add};
 
@@ -32,31 +32,31 @@ mod tests {
         assign_add(&mut p_min, &PointI8::of(-2, -5));
         assert_eq!(p_min, PointI8::min());
 
-        let mut p_max = PointI8::of(i8::MAX - 2, i8::MAX - 5);
-        assign_add(&mut p_max, &PointI8::of(2, 5));
-        assert_eq!(p_max, PointI8::max());
+        let mut m_max = PointI8::of(i8::MAX - 2, i8::MAX - 5);
+        assign_add(&mut m_max, &PointI8::of(2, 5));
+        assert_eq!(m_max, PointI8::max());
     }
 
     #[test]
     fn assign_add_beyond_bounds() {
         let mut p_min = PointI8::of(i8::MIN + 2, i8::MIN + 5);
         assign_add(&mut p_min, &PointI8::of(-10, -10));
-        assert_eq!(p_min, PointI8::min());
+        assert_eq!(p_min, PointI8::of(i8::MAX - 7, i8::MAX - 4));
 
-        let mut p_max = PointI8::of(i8::MAX - 2, i8::MAX - 5);
-        assign_add(&mut p_max, &PointI8::of(10, 10));
-        assert_eq!(p_max, PointI8::max());
+        let mut m_max = PointI8::of(i8::MAX - 2, i8::MAX - 5);
+        assign_add(&mut m_max, &PointI8::of(10, 10));
+        assert_eq!(m_max, PointI8::of(i8::MIN + 7, i8::MIN + 4));
     }
 
     #[test]
     fn assign_add_limits() {
         let mut p_min = PointI8::of(i8::MIN + 1, i8::MIN + 1);
         assign_add(&mut p_min, &PointI8::min());
-        assert_eq!(p_min, PointI8::min());
+        assert_eq!(p_min, PointI8::of(1, 1));
 
-        let mut p_max = PointI8::of(i8::MAX - 1, i8::MAX - 1);
-        assign_add(&mut p_max, &PointI8::max());
-        assert_eq!(p_max, PointI8::max());
+        let mut m_max = PointI8::of(i8::MAX - 1, i8::MAX - 1);
+        assign_add(&mut m_max, &PointI8::max());
+        assert_eq!(m_max, PointI8::of(-3, -3));
     }
 
     #[test]
@@ -73,13 +73,13 @@ mod tests {
 
     #[test]
     fn add_beyond_bounds() {
-        assert_eq!(add(&PointI8::of(i8::MIN + 2, i8::MIN + 5), &PointI8::of(-10, -10)), PointI8::min());
-        assert_eq!(add(&PointI8::of(i8::MAX - 2, i8::MAX - 5), &PointI8::of(10, 10)), PointI8::max());
+        assert_eq!(add(&PointI8::of(i8::MIN + 2, i8::MIN + 5), &PointI8::of(-10, -10)), PointI8::of(i8::MAX - 7, i8::MAX - 4));
+        assert_eq!(add(&PointI8::of(i8::MAX - 2, i8::MAX - 5), &PointI8::of(10, 10)), PointI8::of(i8::MIN + 7, i8::MIN + 4));
     }
 
     #[test]
     fn add_limits() {
-        assert_eq!(add(&PointI8::of(i8::MIN + 1, i8::MIN + 1), &PointI8::min()), PointI8::min());
-        assert_eq!(add(&PointI8::of(i8::MAX - 1, i8::MAX - 1), &PointI8::max()), PointI8::max());
+        assert_eq!(add(&PointI8::of(i8::MIN + 1, i8::MIN + 1), &PointI8::min()), PointI8::of(1, 1));
+        assert_eq!(add(&PointI8::of(i8::MAX - 1, i8::MAX - 1), &PointI8::max()), PointI8::of(-3, -3));
     }
 }

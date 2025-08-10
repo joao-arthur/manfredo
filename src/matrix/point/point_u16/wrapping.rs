@@ -1,21 +1,21 @@
-use crate::cartesian::point::point_i16::PointI16;
+use crate::matrix::point::point_i16::PointI16;
 
 use super::PointU16;
 
 pub fn assign_add(p: &mut PointU16, delta: &PointI16) {
-    p.x = p.x.wrapping_add(delta.x as i16 as u16);
-    p.y = p.y.wrapping_add(delta.y as i16 as u16);
+    p.row = p.row.wrapping_add(delta.row as i16 as u16);
+    p.col = p.col.wrapping_add(delta.col as i16 as u16);
 }
 
 pub fn add(p: &PointU16, delta: &PointI16) -> PointU16 {
-    let x = p.x.wrapping_add(delta.x as i16 as u16);
-    let y = p.y.wrapping_add(delta.y as i16 as u16);
-    PointU16 { x, y }
+    let row = p.row.wrapping_add(delta.row as i16 as u16);
+    let col = p.col.wrapping_add(delta.col as i16 as u16);
+    PointU16 { row, col }
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::cartesian::point::point_i16::PointI16;
+    use crate::matrix::point::point_i16::PointI16;
 
     use super::{PointU16, add, assign_add};
 

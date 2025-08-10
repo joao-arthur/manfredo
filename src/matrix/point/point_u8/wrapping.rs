@@ -1,21 +1,21 @@
-use crate::cartesian::point::point_i8::PointI8;
+use crate::matrix::point::point_i8::PointI8;
 
 use super::PointU8;
 
 pub fn assign_add(p: &mut PointU8, delta: &PointI8) {
-    p.x = p.x.wrapping_add(delta.x as i8 as u8);
-    p.y = p.y.wrapping_add(delta.y as i8 as u8);
+    p.row = p.row.wrapping_add(delta.row as i8 as u8);
+    p.col = p.col.wrapping_add(delta.col as i8 as u8);
 }
 
 pub fn add(p: &PointU8, delta: &PointI8) -> PointU8 {
-    let x = p.x.wrapping_add(delta.x as i8 as u8);
-    let y = p.y.wrapping_add(delta.y as i8 as u8);
-    PointU8 { x, y }
+    let row = p.row.wrapping_add(delta.row as i8 as u8);
+    let col = p.col.wrapping_add(delta.col as i8 as u8);
+    PointU8 { row, col }
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::cartesian::point::point_i8::PointI8;
+    use crate::matrix::point::point_i8::PointI8;
 
     use super::{PointU8, add, assign_add};
 

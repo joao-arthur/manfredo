@@ -1,19 +1,19 @@
 use super::PointI8;
 
 pub fn assign_add(p: &mut PointI8, delta: &PointI8) {
-    p.x = p.x.saturating_add(delta.x);
-    p.y = p.y.saturating_add(delta.y);
+    p.row = p.row.saturating_add(delta.row);
+    p.col = p.col.saturating_add(delta.col);
 }
 
 pub fn add(p: &PointI8, delta: &PointI8) -> PointI8 {
-    let x = p.x.saturating_add(delta.x);
-    let y = p.y.saturating_add(delta.y);
-    PointI8 { x, y }
+    let row = p.row.saturating_add(delta.row);
+    let col = p.col.saturating_add(delta.col);
+    PointI8 { row, col }
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::cartesian::point::point_i8::PointI8;
+    use crate::matrix::point::point_i8::PointI8;
 
     use super::{add, assign_add};
 

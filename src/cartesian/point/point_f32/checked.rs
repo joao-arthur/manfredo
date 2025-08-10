@@ -1,4 +1,4 @@
-use super::{PointF32, MAX, MIN};
+use super::{MAX, MIN, PointF32};
 
 pub fn try_assign_add(p: &mut PointF32, delta: &PointF32) -> Option<()> {
     let x = p.x + delta.x;
@@ -30,7 +30,7 @@ pub fn add(p: &PointF32, delta: &PointF32) -> PointF32 {
 
 #[cfg(test)]
 mod tests {
-    use crate::cartesian::point::point_f32::{PointF32, MAX, MIN};
+    use crate::cartesian::point::point_f32::{MAX, MIN, PointF32};
 
     use super::{add, assign_add, try_add, try_assign_add};
 

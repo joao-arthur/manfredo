@@ -1,19 +1,19 @@
 use super::PointI32;
 
 pub fn assign_add(p: &mut PointI32, delta: &PointI32) {
-    p.x = p.x.wrapping_add(delta.x);
-    p.y = p.y.wrapping_add(delta.y);
+    p.row = p.row.wrapping_add(delta.row);
+    p.col = p.col.wrapping_add(delta.col);
 }
 
 pub fn add(p: &PointI32, delta: &PointI32) -> PointI32 {
-    let x = p.x.wrapping_add(delta.x);
-    let y = p.y.wrapping_add(delta.y);
-    PointI32 { x, y }
+    let row = p.row.wrapping_add(delta.row);
+    let col = p.col.wrapping_add(delta.col);
+    PointI32 { row, col }
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::cartesian::point::point_i32::PointI32;
+    use crate::matrix::point::point_i32::PointI32;
 
     use super::{add, assign_add};
 

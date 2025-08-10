@@ -45,7 +45,7 @@ pub fn delta(p1: &PointF32, p2: &PointF32) -> PointF32 {
 
 #[cfg(test)]
 mod tests {
-    use super::{MAX, MIN, PointF32,  delta, delta_x, delta_y};
+    use super::{MAX, MIN, PointF32, delta, delta_x, delta_y};
 
     #[test]
     fn point_f32() {

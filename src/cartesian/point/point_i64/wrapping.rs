@@ -6,7 +6,9 @@ pub fn assign_add(p: &mut PointI64, delta: &PointI64) {
 }
 
 pub fn add(p: &PointI64, delta: &PointI64) -> PointI64 {
-    PointI64::of(p.x.wrapping_add(delta.x), p.y.wrapping_add(delta.y))
+    let x = p.x.wrapping_add(delta.x);
+    let y = p.y.wrapping_add(delta.y);
+    PointI64 { x, y }
 }
 
 #[cfg(test)]

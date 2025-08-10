@@ -1,25 +1,25 @@
-use crate::cartesian::point::point_i8::PointI8;
+use crate::matrix::point::point_i8::PointI8;
 
 use super::PointU8;
 
 pub fn assign_add(p: &mut PointU8, delta: &PointI8) {
-    let temp_x = i16::from(p.x) + i16::from(delta.x);
-    let temp_y = i16::from(p.y) + i16::from(delta.y);
-    p.x = temp_x.clamp(0, i16::from(u8::MAX)) as u8;
-    p.y = temp_y.clamp(0, i16::from(u8::MAX)) as u8;
+    let temp_row = i16::from(p.row) + i16::from(delta.row);
+    let temp_col = i16::from(p.col) + i16::from(delta.col);
+    p.row = temp_row.clamp(0, i16::from(u8::MAX)) as u8;
+    p.col = temp_col.clamp(0, i16::from(u8::MAX)) as u8;
 }
 
 pub fn add(p: &PointU8, delta: &PointI8) -> PointU8 {
-    let temp_x = i16::from(p.x) + i16::from(delta.x);
-    let temp_y = i16::from(p.y) + i16::from(delta.y);
-    let x = temp_x.clamp(0, i16::from(u8::MAX)) as u8;
-    let y = temp_y.clamp(0, i16::from(u8::MAX)) as u8;
-    PointU8 { x, y }
+    let temp_row = i16::from(p.row) + i16::from(delta.row);
+    let temp_col = i16::from(p.col) + i16::from(delta.col);
+    let row = temp_row.clamp(0, i16::from(u8::MAX)) as u8;
+    let col = temp_col.clamp(0, i16::from(u8::MAX)) as u8;
+    PointU8 { row, col }
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::cartesian::point::{point_i8::PointI8, point_u8::PointU8};
+    use crate::matrix::point::{point_i8::PointI8, point_u8::PointU8};
 
     use super::{add, assign_add};
 

@@ -1,19 +1,19 @@
 use super::PointI32;
 
 pub fn assign_add(p: &mut PointI32, delta: &PointI32) {
-    p.x = p.x.wrapping_add(delta.x);
-    p.y = p.y.wrapping_add(delta.y);
+    p.row = p.row.saturating_add(delta.row);
+    p.col = p.col.saturating_add(delta.col);
 }
 
 pub fn add(p: &PointI32, delta: &PointI32) -> PointI32 {
-    let x = p.x.wrapping_add(delta.x);
-    let y = p.y.wrapping_add(delta.y);
-    PointI32 { x, y }
+    let row = p.row.saturating_add(delta.row);
+    let col = p.col.saturating_add(delta.col);
+    PointI32 { row, col }
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::cartesian::point::point_i32::PointI32;
+    use crate::matrix::point::point_i32::PointI32;
 
     use super::{add, assign_add};
 
@@ -32,31 +32,31 @@ mod tests {
         assign_add(&mut p_min, &PointI32::of(-2, -5));
         assert_eq!(p_min, PointI32::min());
 
-        let mut m_max = PointI32::of(i32::MAX - 2, i32::MAX - 5);
-        assign_add(&mut m_max, &PointI32::of(2, 5));
-        assert_eq!(m_max, PointI32::max());
+        let mut p_max = PointI32::of(i32::MAX - 2, i32::MAX - 5);
+        assign_add(&mut p_max, &PointI32::of(2, 5));
+        assert_eq!(p_max, PointI32::max());
     }
 
     #[test]
     fn assign_add_beyond_bounds() {
         let mut p_min = PointI32::of(i32::MIN + 2, i32::MIN + 5);
         assign_add(&mut p_min, &PointI32::of(-10, -10));
-        assert_eq!(p_min, PointI32::of(i32::MAX - 7, i32::MAX - 4));
+        assert_eq!(p_min, PointI32::min());
 
-        let mut m_max = PointI32::of(i32::MAX - 2, i32::MAX - 5);
-        assign_add(&mut m_max, &PointI32::of(10, 10));
-        assert_eq!(m_max, PointI32::of(i32::MIN + 7, i32::MIN + 4));
+        let mut p_max = PointI32::of(i32::MAX - 2, i32::MAX - 5);
+        assign_add(&mut p_max, &PointI32::of(10, 10));
+        assert_eq!(p_max, PointI32::max());
     }
 
     #[test]
     fn assign_add_limits() {
         let mut p_min = PointI32::of(i32::MIN + 1, i32::MIN + 1);
         assign_add(&mut p_min, &PointI32::min());
-        assert_eq!(p_min, PointI32::of(1, 1));
+        assert_eq!(p_min, PointI32::min());
 
-        let mut m_max = PointI32::of(i32::MAX - 1, i32::MAX - 1);
-        assign_add(&mut m_max, &PointI32::max());
-        assert_eq!(m_max, PointI32::of(-3, -3));
+        let mut p_max = PointI32::of(i32::MAX - 1, i32::MAX - 1);
+        assign_add(&mut p_max, &PointI32::max());
+        assert_eq!(p_max, PointI32::max());
     }
 
     #[test]
@@ -73,13 +73,13 @@ mod tests {
 
     #[test]
     fn add_beyond_bounds() {
-        assert_eq!(add(&PointI32::of(i32::MIN + 2, i32::MIN + 5), &PointI32::of(-10, -10)), PointI32::of(i32::MAX - 7, i32::MAX - 4));
-        assert_eq!(add(&PointI32::of(i32::MAX - 2, i32::MAX - 5), &PointI32::of(10, 10)), PointI32::of(i32::MIN + 7, i32::MIN + 4));
+        assert_eq!(add(&PointI32::of(i32::MIN + 2, i32::MIN + 5), &PointI32::of(-10, -10)), PointI32::min());
+        assert_eq!(add(&PointI32::of(i32::MAX - 2, i32::MAX - 5), &PointI32::of(10, 10)), PointI32::max());
     }
 
     #[test]
     fn add_limits() {
-        assert_eq!(add(&PointI32::of(i32::MIN + 1, i32::MIN + 1), &PointI32::min()), PointI32::of(1, 1));
-        assert_eq!(add(&PointI32::of(i32::MAX - 1, i32::MAX - 1), &PointI32::max()), PointI32::of(-3, -3));
+        assert_eq!(add(&PointI32::of(i32::MIN + 1, i32::MIN + 1), &PointI32::min()), PointI32::min());
+        assert_eq!(add(&PointI32::of(i32::MAX - 1, i32::MAX - 1), &PointI32::max()), PointI32::max());
     }
 }

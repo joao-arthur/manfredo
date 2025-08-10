@@ -6,7 +6,9 @@ pub fn assign_add(p: &mut PointI32, delta: &PointI32) {
 }
 
 pub fn add(p: &PointI32, delta: &PointI32) -> PointI32 {
-    PointI32::of(p.x.saturating_add(delta.x), p.y.saturating_add(delta.y))
+    let x = p.x.saturating_add(delta.x);
+    let y = p.y.saturating_add(delta.y);
+    PointI32 { x, y }
 }
 
 #[cfg(test)]

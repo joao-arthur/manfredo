@@ -8,14 +8,14 @@ pub fn try_assign_add(p: &mut PointI32, delta: &PointI32) -> Option<()> {
     Some(())
 }
 
-pub fn assign_add(p: &mut PointI32, delta: &PointI32) {
-    try_assign_add(p, delta).unwrap()
-}
-
 pub fn try_add(p: &PointI32, delta: &PointI32) -> Option<PointI32> {
     let x = p.x.checked_add(delta.x)?;
     let y = p.y.checked_add(delta.y)?;
     Some(PointI32 { x, y })
+}
+
+pub fn assign_add(p: &mut PointI32, delta: &PointI32) {
+    try_assign_add(p, delta).unwrap()
 }
 
 pub fn add(p: &PointI32, delta: &PointI32) -> PointI32 {

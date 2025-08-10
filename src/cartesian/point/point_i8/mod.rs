@@ -1,5 +1,9 @@
 use crate::cartesian::point::point_u8::PointU8;
 
+pub mod checked;
+pub mod saturating;
+pub mod wrapping;
+
 #[derive(Eq, PartialEq, Debug, Clone, Hash)]
 pub struct PointI8 {
     pub x: i8,
@@ -38,45 +42,11 @@ pub fn delta(p1: &PointI8, p2: &PointI8) -> PointU8 {
     PointU8 { x: delta_x(p1, p2), y: delta_y(p1, p2) }
 }
 
-pub fn assign_saturating_add(p: &mut PointI8, delta: &PointI8) {
-    p.x = p.x.saturating_add(delta.x);
-    p.y = p.y.saturating_add(delta.y);
-}
-
-pub fn try_assign_checked_add(p: &mut PointI8, delta: &PointI8) -> Result<(), ()> {
-    let x = p.x.checked_add(delta.x).ok_or(())?;
-    let y = p.y.checked_add(delta.y).ok_or(())?;
-    p.x = x;
-    p.y = y;
-    Ok(())
-}
-
-pub fn assign_checked_add(p: &mut PointI8, delta: &PointI8) {
-    try_assign_checked_add(p, delta).unwrap()
-}
-
-pub fn saturating_add(p: &PointI8, delta: &PointI8) -> PointI8 {
-    PointI8::of(p.x.saturating_add(delta.x), p.y.saturating_add(delta.y))
-}
-
-pub fn try_checked_add(p: &PointI8, delta: &PointI8) -> Option<PointI8> {
-    let x = p.x.checked_add(delta.x)?;
-    let y = p.y.checked_add(delta.y)?;
-    Some(PointI8 { x, y })
-}
-
-pub fn checked_add(p: &PointI8, delta: &PointI8) -> PointI8 {
-    try_checked_add(p, delta).unwrap()
-}
-
 #[cfg(test)]
 mod tests {
     use crate::cartesian::point::point_u8::PointU8;
 
-    use super::{
-        PointI8, assign_checked_add, assign_saturating_add, checked_add, delta, delta_x, delta_y, saturating_add, try_assign_checked_add,
-        try_checked_add,
-    };
+    use super::{PointI8, delta, delta_x, delta_y};
 
     #[test]
     fn point_i8() {
@@ -136,167 +106,5 @@ mod tests {
         assert_eq!(delta(&p, &PointI8::of(i8::MAX, i8::MAX - 2)), PointU8::of(2, 0));
         assert_eq!(delta(&p, &PointI8::of(i8::MAX, i8::MAX - 1)), PointU8::of(2, 1));
         assert_eq!(delta(&p, &PointI8::max()), PointU8::of(2, 2));
-    }
-
-    #[test]
-    fn test_assign_saturating_add() {
-        let mut p = PointI8::of(0, 0);
-        assign_saturating_add(&mut p, &PointI8::of(10, 15));
-        assert_eq!(p, PointI8::of(10, 15));
-        assign_saturating_add(&mut p, &PointI8::of(-15, -25));
-        assert_eq!(p, PointI8::of(-5, -10));
-        assign_saturating_add(&mut p, &PointI8::of(2, 3));
-        assert_eq!(p, PointI8::of(-3, -7));
-    }
-
-    #[test]
-    fn assign_saturating_add_min_bounds() {
-        let mut p = PointI8::of(i8::MIN + 2, i8::MIN + 5);
-        assign_saturating_add(&mut p, &PointI8::of(-10, -10));
-        assert_eq!(p, PointI8::min());
-    }
-
-    #[test]
-    fn assign_saturating_add_max_bounds() {
-        let mut p = PointI8::of(i8::MAX - 2, i8::MAX - 5);
-        assign_saturating_add(&mut p, &PointI8::of(10, 10));
-        assert_eq!(p, PointI8::max());
-    }
-
-    #[test]
-    fn assign_saturating_add_min_bounds_min_delta() {
-        let mut p = PointI8::of(i8::MIN + 1, i8::MIN + 1);
-        assign_saturating_add(&mut p, &PointI8::min());
-        assert_eq!(p, PointI8::min());
-    }
-
-    #[test]
-    fn assign_saturating_add_max_bounds_max_delta() {
-        let mut p = PointI8::of(i8::MAX - 1, i8::MAX - 1);
-        assign_saturating_add(&mut p, &PointI8::max());
-        assert_eq!(p, PointI8::max());
-    }
-
-    #[test]
-    fn test_try_assign_checked_add() {
-        let mut p = PointI8::of(0, 0);
-        assert_eq!(try_assign_checked_add(&mut p, &PointI8::of(10, 15)), Ok(()));
-        assert_eq!(p, PointI8::of(10, 15));
-        assert_eq!(try_assign_checked_add(&mut p, &PointI8::of(-15, -25)), Ok(()));
-        assert_eq!(p, PointI8::of(-5, -10));
-        assert_eq!(try_assign_checked_add(&mut p, &PointI8::of(2, 3)), Ok(()));
-        assert_eq!(p, PointI8::of(-3, -7));
-    }
-
-    #[test]
-    fn try_assign_checked_add_min_bounds_err() {
-        let mut p = PointI8::of(i8::MIN + 2, i8::MIN + 5);
-        assert_eq!(try_assign_checked_add(&mut p, &PointI8::of(-10, -10)), Err(()));
-        assert_eq!(p, PointI8::of(i8::MIN + 2, i8::MIN + 5));
-    }
-
-    #[test]
-    fn try_assign_checked_add_max_bounds_err() {
-        let mut p = PointI8::of(i8::MAX - 2, i8::MAX - 5);
-        assert_eq!(try_assign_checked_add(&mut p, &PointI8::of(10, 10)), Err(()));
-        assert_eq!(p, PointI8::of(i8::MAX - 2, i8::MAX - 5));
-    }
-
-    #[test]
-    fn try_assign_checked_add_min_bounds_ok() {
-        let mut p = PointI8::of(i8::MIN + 2, i8::MIN + 5);
-        assert_eq!(try_assign_checked_add(&mut p, &PointI8::of(-2, -5)), Ok(()));
-        assert_eq!(p, PointI8::min());
-    }
-
-    #[test]
-    fn try_assign_checked_add_max_bounds_ok() {
-        let mut p = PointI8::of(i8::MAX - 2, i8::MAX - 5);
-        assert_eq!(try_assign_checked_add(&mut p, &PointI8::of(2, 5)), Ok(()));
-        assert_eq!(p, PointI8::max());
-    }
-
-    #[test]
-    fn try_assign_checked_add_min_bounds_min_delta() {
-        let mut p = PointI8::of(i8::MIN + 1, i8::MIN + 1);
-        assert_eq!(try_assign_checked_add(&mut p, &PointI8::min()), Err(()));
-        assert_eq!(try_assign_checked_add(&mut p, &PointI8::of(i8::MIN, 0)), Err(()));
-        assert_eq!(try_assign_checked_add(&mut p, &PointI8::of(0, i8::MIN)), Err(()));
-        assert_eq!(p, PointI8::of(i8::MIN + 1, i8::MIN + 1));
-    }
-
-    #[test]
-    fn try_assign_checked_add_max_bounds_max_delta() {
-        let mut p = PointI8::of(i8::MAX - 1, i8::MAX - 1);
-        assert_eq!(try_assign_checked_add(&mut p, &PointI8::max()), Err(()));
-        assert_eq!(try_assign_checked_add(&mut p, &PointI8::of(i8::MAX, 0)), Err(()));
-        assert_eq!(try_assign_checked_add(&mut p, &PointI8::of(0, i8::MAX)), Err(()));
-        assert_eq!(p, PointI8::of(i8::MAX - 1, i8::MAX - 1));
-    }
-
-    #[test]
-    fn test_assign_checked_add() {
-        let mut p = PointI8::of(0, 0);
-        assign_checked_add(&mut p, &PointI8::of(10, 15));
-        assert_eq!(p, PointI8::of(10, 15));
-        assign_checked_add(&mut p, &PointI8::of(-15, -25));
-        assert_eq!(p, PointI8::of(-5, -10));
-        assign_checked_add(&mut p, &PointI8::of(2, 3));
-        assert_eq!(p, PointI8::of(-3, -7));
-    }
-
-    #[test]
-    fn test_saturating_add() {
-        assert_eq!(saturating_add(&PointI8::of(0, 0), &PointI8::of(10, 15)), PointI8::of(10, 15));
-        assert_eq!(saturating_add(&PointI8::of(0, 0), &PointI8::of(-15, -25)), PointI8::of(-15, -25));
-    }
-
-    #[test]
-    fn saturating_add_to_bounds() {
-        assert_eq!(saturating_add(&PointI8::of(i8::MIN + 2, i8::MIN + 5), &PointI8::of(-2, -5)), PointI8::min());
-        assert_eq!(saturating_add(&PointI8::of(i8::MAX - 2, i8::MAX - 5), &PointI8::of(2, 5)), PointI8::max());
-    }
-
-    #[test]
-    fn saturating_add_beyond_bounds() {
-        assert_eq!(saturating_add(&PointI8::of(i8::MIN + 2, i8::MIN + 5), &PointI8::of(-10, -10)), PointI8::min());
-        assert_eq!(saturating_add(&PointI8::of(i8::MAX - 2, i8::MAX - 5), &PointI8::of(10, 10)), PointI8::max());
-    }
-
-    #[test]
-    fn saturating_add_limits() {
-        assert_eq!(saturating_add(&PointI8::of(i8::MIN + 1, i8::MIN + 1), &PointI8::min()), PointI8::min());
-        assert_eq!(saturating_add(&PointI8::of(i8::MAX - 1, i8::MAX - 1), &PointI8::max()), PointI8::max());
-    }
-
-    #[test]
-    fn try_checked_add_min_bounds() {
-        let p = PointI8::of(i8::MIN + 2, i8::MIN + 5);
-        assert_eq!(try_checked_add(&p, &PointI8::of(-2, 0)), Some(PointI8::of(i8::MIN, i8::MIN + 5)));
-        assert_eq!(try_checked_add(&p, &PointI8::of(0, -5)), Some(PointI8::of(i8::MIN + 2, i8::MIN)));
-        assert_eq!(try_checked_add(&p, &PointI8::of(-2, -5)), Some(PointI8::min()));
-        assert_eq!(try_checked_add(&p, &PointI8::of(-10, -10)), None);
-        assert_eq!(try_checked_add(&p, &PointI8::of(i8::MIN, 0)), None);
-        assert_eq!(try_checked_add(&p, &PointI8::of(0, i8::MIN)), None);
-        assert_eq!(try_checked_add(&p, &PointI8::min()), None);
-    }
-
-    #[test]
-    fn try_checked_add_max_bounds() {
-        let p = PointI8::of(i8::MAX - 2, i8::MAX - 5);
-        assert_eq!(try_checked_add(&p, &PointI8::of(2, 0)), Some(PointI8::of(i8::MAX, i8::MAX - 5)));
-        assert_eq!(try_checked_add(&p, &PointI8::of(0, 5)), Some(PointI8::of(i8::MAX - 2, i8::MAX)));
-        assert_eq!(try_checked_add(&p, &PointI8::of(2, 5)), Some(PointI8::max()));
-        assert_eq!(try_checked_add(&p, &PointI8::of(10, 10)), None);
-        assert_eq!(try_checked_add(&p, &PointI8::of(i8::MAX, 0)), None);
-        assert_eq!(try_checked_add(&p, &PointI8::of(0, i8::MAX)), None);
-        assert_eq!(try_checked_add(&p, &PointI8::max()), None);
-    }
-
-    #[test]
-    fn test_checked_add() {
-        assert_eq!(checked_add(&PointI8::of(0, 0), &PointI8::of(10, 15)), PointI8::of(10, 15));
-        assert_eq!(checked_add(&PointI8::of(10, 15), &PointI8::of(-15, -25)), PointI8::of(-5, -10));
-        assert_eq!(checked_add(&PointI8::of(-5, -10), &PointI8::of(2, 3)), PointI8::of(-3, -7));
     }
 }

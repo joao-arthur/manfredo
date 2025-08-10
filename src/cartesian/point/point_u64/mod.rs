@@ -1,8 +1,8 @@
 use super::{point_u8::PointU8, point_u16::PointU16, point_u32::PointU32};
 
 pub mod checked;
-pub mod saturating;
-pub mod wrapping;
+pub mod saturated;
+pub mod wrapped;
 
 #[derive(Eq, PartialEq, Debug, Clone, Hash)]
 pub struct PointU64 {

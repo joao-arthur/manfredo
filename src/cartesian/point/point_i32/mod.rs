@@ -3,8 +3,8 @@ use super::{point_i8::PointI8, point_i16::PointI16};
 use crate::cartesian::point::point_u32::PointU32;
 
 pub mod checked;
-pub mod saturating;
-pub mod wrapping;
+pub mod saturated;
+pub mod wrapped;
 
 #[derive(Eq, PartialEq, Debug, Clone, Hash)]
 pub struct PointI32 {

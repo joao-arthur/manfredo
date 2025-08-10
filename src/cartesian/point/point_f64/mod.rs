@@ -1,8 +1,8 @@
 use super::point_f32::PointF32;
 
 pub mod checked;
-pub mod saturating;
-pub mod wrapping;
+pub mod saturated;
+pub mod wrapped;
 
 pub const MIN: f64 = -9_007_199_254_740_992.0;
 pub const MAX: f64 = 9_007_199_254_740_991.0;

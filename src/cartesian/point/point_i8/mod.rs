@@ -1,8 +1,8 @@
 use crate::cartesian::point::point_u8::PointU8;
 
 pub mod checked;
-pub mod saturating;
-pub mod wrapping;
+pub mod saturated;
+pub mod wrapped;
 
 #[derive(Eq, PartialEq, Debug, Clone, Hash)]
 pub struct PointI8 {

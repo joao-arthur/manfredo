@@ -2,8 +2,8 @@ pub const MIN: f32 = -16_777_216.0;
 pub const MAX: f32 = 16_777_215.0;
 
 pub mod checked;
-pub mod saturating;
-pub mod wrapping;
+pub mod saturated;
+pub mod wrapped;
 
 #[derive(PartialEq, Debug, Clone)]
 pub struct PointF32 {

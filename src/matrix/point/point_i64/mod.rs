@@ -1,8 +1,8 @@
 use crate::matrix::point::{point_i8::PointI8, point_i16::PointI16, point_i32::PointI32, point_u64::PointU64};
 
 pub mod checked;
-pub mod saturating;
-pub mod wrapping;
+pub mod saturated;
+pub mod wrapped;
 
 #[derive(Eq, PartialEq, Debug, Clone, Hash)]
 pub struct PointI64 {

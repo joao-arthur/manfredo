@@ -56,12 +56,12 @@ pub fn delta(p1: &PointI64, p2: &PointI64) -> PointU64 {
     PointU64 { row: delta_row(p1, p2), col: delta_col(p1, p2) }
 }
 
-pub fn saturating_translate(p: &mut PointI64, delta: &PointI64) {
+pub fn assign_saturating_add(p: &mut PointI64, delta: &PointI64) {
     p.row = p.row.saturating_add(delta.row);
     p.col = p.col.saturating_add(delta.col);
 }
 
-pub fn try_checked_translate(p: &mut PointI64, delta: &PointI64) -> Result<(), ()> {
+pub fn try_assign_checked_add(p: &mut PointI64, delta: &PointI64) -> Result<(), ()> {
     let row = p.row.checked_add(delta.row).ok_or(())?;
     let col = p.col.checked_add(delta.col).ok_or(())?;
     p.row = row;
@@ -69,22 +69,22 @@ pub fn try_checked_translate(p: &mut PointI64, delta: &PointI64) -> Result<(), (
     Ok(())
 }
 
-pub fn checked_translate(p: &mut PointI64, delta: &PointI64) {
-    try_checked_translate(p, delta).unwrap()
+pub fn assign_checked_add(p: &mut PointI64, delta: &PointI64) {
+    try_assign_checked_add(p, delta).unwrap()
 }
 
-pub fn saturating_translated(p: &PointI64, delta: &PointI64) -> PointI64 {
+pub fn saturating_add(p: &PointI64, delta: &PointI64) -> PointI64 {
     PointI64::of(p.row.saturating_add(delta.row), p.col.saturating_add(delta.col))
 }
 
-pub fn try_checked_translated(p: &PointI64, delta: &PointI64) -> Option<PointI64> {
+pub fn try_checked_add(p: &PointI64, delta: &PointI64) -> Option<PointI64> {
     let row = p.row.checked_add(delta.row)?;
     let col = p.col.checked_add(delta.col)?;
     Some(PointI64 { row, col })
 }
 
-pub fn checked_translated(p: &PointI64, delta: &PointI64) -> PointI64 {
-    try_checked_translated(p, delta).unwrap()
+pub fn checked_add(p: &PointI64, delta: &PointI64) -> PointI64 {
+    try_checked_add(p, delta).unwrap()
 }
 
 #[cfg(test)]
@@ -92,8 +92,8 @@ mod tests {
     use crate::matrix::point::{point_i8::PointI8, point_i16::PointI16, point_i32::PointI32, point_u64::PointU64};
 
     use super::{
-        PointI64, checked_translate, checked_translated, delta, delta_col, delta_row, saturating_translate, saturating_translated,
-        try_checked_translate, try_checked_translated,
+        PointI64, assign_checked_add, checked_add, delta, delta_col, delta_row, assign_saturating_add, saturating_add,
+        try_assign_checked_add, try_checked_add,
     };
 
     #[test]
@@ -171,164 +171,164 @@ mod tests {
     }
 
     #[test]
-    fn test_saturating_translate() {
+    fn test_assign_saturating_add() {
         let mut p = PointI64::of(0, 0);
-        saturating_translate(&mut p, &PointI64::of(10, 15));
+        assign_saturating_add(&mut p, &PointI64::of(10, 15));
         assert_eq!(p, PointI64::of(10, 15));
-        saturating_translate(&mut p, &PointI64::of(-15, -25));
+        assign_saturating_add(&mut p, &PointI64::of(-15, -25));
         assert_eq!(p, PointI64::of(-5, -10));
-        saturating_translate(&mut p, &PointI64::of(2, 3));
+        assign_saturating_add(&mut p, &PointI64::of(2, 3));
         assert_eq!(p, PointI64::of(-3, -7));
     }
 
     #[test]
-    fn saturating_translate_min_bounds() {
+    fn assign_saturating_add_min_bounds() {
         let mut p = PointI64::of(i64::MIN + 2, i64::MIN + 5);
-        saturating_translate(&mut p, &PointI64::of(-10, -10));
+        assign_saturating_add(&mut p, &PointI64::of(-10, -10));
         assert_eq!(p, PointI64::min());
     }
 
     #[test]
-    fn saturating_translate_max_bounds() {
+    fn assign_saturating_add_max_bounds() {
         let mut p = PointI64::of(i64::MAX - 2, i64::MAX - 5);
-        saturating_translate(&mut p, &PointI64::of(10, 10));
+        assign_saturating_add(&mut p, &PointI64::of(10, 10));
         assert_eq!(p, PointI64::max());
     }
 
     #[test]
-    fn saturating_translate_min_bounds_min_delta() {
+    fn assign_saturating_add_min_bounds_min_delta() {
         let mut p = PointI64::of(i64::MIN + 1, i64::MIN + 1);
-        saturating_translate(&mut p, &PointI64::min());
+        assign_saturating_add(&mut p, &PointI64::min());
         assert_eq!(p, PointI64::min());
     }
 
     #[test]
-    fn saturating_translate_max_bounds_max_delta() {
+    fn assign_saturating_add_max_bounds_max_delta() {
         let mut p = PointI64::of(i64::MAX - 1, i64::MAX - 1);
-        saturating_translate(&mut p, &PointI64::max());
+        assign_saturating_add(&mut p, &PointI64::max());
         assert_eq!(p, PointI64::max());
     }
 
     #[test]
-    fn test_try_checked_translate() {
+    fn test_try_assign_checked_add() {
         let mut p = PointI64::of(0, 0);
-        assert_eq!(try_checked_translate(&mut p, &PointI64::of(10, 15)), Ok(()));
+        assert_eq!(try_assign_checked_add(&mut p, &PointI64::of(10, 15)), Ok(()));
         assert_eq!(p, PointI64::of(10, 15));
-        assert_eq!(try_checked_translate(&mut p, &PointI64::of(-15, -25)), Ok(()));
+        assert_eq!(try_assign_checked_add(&mut p, &PointI64::of(-15, -25)), Ok(()));
         assert_eq!(p, PointI64::of(-5, -10));
-        assert_eq!(try_checked_translate(&mut p, &PointI64::of(2, 3)), Ok(()));
+        assert_eq!(try_assign_checked_add(&mut p, &PointI64::of(2, 3)), Ok(()));
         assert_eq!(p, PointI64::of(-3, -7));
     }
 
     #[test]
-    fn try_checked_translate_min_bounds_err() {
+    fn try_assign_checked_add_min_bounds_err() {
         let mut p = PointI64::of(i64::MIN + 2, i64::MIN + 5);
-        assert_eq!(try_checked_translate(&mut p, &PointI64::of(-10, -10)), Err(()));
+        assert_eq!(try_assign_checked_add(&mut p, &PointI64::of(-10, -10)), Err(()));
         assert_eq!(p, PointI64::of(i64::MIN + 2, i64::MIN + 5));
     }
 
     #[test]
-    fn try_checked_translate_max_bounds_err() {
+    fn try_assign_checked_add_max_bounds_err() {
         let mut p = PointI64::of(i64::MAX - 2, i64::MAX - 5);
-        assert_eq!(try_checked_translate(&mut p, &PointI64::of(10, 10)), Err(()));
+        assert_eq!(try_assign_checked_add(&mut p, &PointI64::of(10, 10)), Err(()));
         assert_eq!(p, PointI64::of(i64::MAX - 2, i64::MAX - 5));
     }
 
     #[test]
-    fn try_checked_translate_min_bounds_ok() {
+    fn try_assign_checked_add_min_bounds_ok() {
         let mut p = PointI64::of(i64::MIN + 2, i64::MIN + 5);
-        assert_eq!(try_checked_translate(&mut p, &PointI64::of(-2, -5)), Ok(()));
+        assert_eq!(try_assign_checked_add(&mut p, &PointI64::of(-2, -5)), Ok(()));
         assert_eq!(p, PointI64::min());
     }
 
     #[test]
-    fn try_checked_translate_max_bounds_ok() {
+    fn try_assign_checked_add_max_bounds_ok() {
         let mut p = PointI64::of(i64::MAX - 2, i64::MAX - 5);
-        assert_eq!(try_checked_translate(&mut p, &PointI64::of(2, 5)), Ok(()));
+        assert_eq!(try_assign_checked_add(&mut p, &PointI64::of(2, 5)), Ok(()));
         assert_eq!(p, PointI64::max());
     }
 
     #[test]
-    fn try_checked_translate_min_bounds_min_delta() {
+    fn try_assign_checked_add_min_bounds_min_delta() {
         let mut p = PointI64::of(i64::MIN + 1, i64::MIN + 1);
-        assert_eq!(try_checked_translate(&mut p, &PointI64::min()), Err(()));
-        assert_eq!(try_checked_translate(&mut p, &PointI64::of(i64::MIN, 0)), Err(()));
-        assert_eq!(try_checked_translate(&mut p, &PointI64::of(0, i64::MIN)), Err(()));
+        assert_eq!(try_assign_checked_add(&mut p, &PointI64::min()), Err(()));
+        assert_eq!(try_assign_checked_add(&mut p, &PointI64::of(i64::MIN, 0)), Err(()));
+        assert_eq!(try_assign_checked_add(&mut p, &PointI64::of(0, i64::MIN)), Err(()));
         assert_eq!(p, PointI64::of(i64::MIN + 1, i64::MIN + 1));
     }
 
     #[test]
-    fn try_checked_translate_max_bounds_max_delta() {
+    fn try_assign_checked_add_max_bounds_max_delta() {
         let mut p = PointI64::of(i64::MAX - 1, i64::MAX - 1);
-        assert_eq!(try_checked_translate(&mut p, &PointI64::max()), Err(()));
-        assert_eq!(try_checked_translate(&mut p, &PointI64::of(i64::MAX, 0)), Err(()));
-        assert_eq!(try_checked_translate(&mut p, &PointI64::of(0, i64::MAX)), Err(()));
+        assert_eq!(try_assign_checked_add(&mut p, &PointI64::max()), Err(()));
+        assert_eq!(try_assign_checked_add(&mut p, &PointI64::of(i64::MAX, 0)), Err(()));
+        assert_eq!(try_assign_checked_add(&mut p, &PointI64::of(0, i64::MAX)), Err(()));
         assert_eq!(p, PointI64::of(i64::MAX - 1, i64::MAX - 1));
     }
 
     #[test]
-    fn test_checked_translate() {
+    fn test_assign_checked_add() {
         let mut p = PointI64::of(0, 0);
-        checked_translate(&mut p, &PointI64::of(10, 15));
+        assign_checked_add(&mut p, &PointI64::of(10, 15));
         assert_eq!(p, PointI64::of(10, 15));
-        checked_translate(&mut p, &PointI64::of(-15, -25));
+        assign_checked_add(&mut p, &PointI64::of(-15, -25));
         assert_eq!(p, PointI64::of(-5, -10));
-        checked_translate(&mut p, &PointI64::of(2, 3));
+        assign_checked_add(&mut p, &PointI64::of(2, 3));
         assert_eq!(p, PointI64::of(-3, -7));
     }
 
     #[test]
-    fn test_saturating_translated() {
-        assert_eq!(saturating_translated(&PointI64::of(0, 0), &PointI64::of(10, 15)), PointI64::of(10, 15));
-        assert_eq!(saturating_translated(&PointI64::of(0, 0), &PointI64::of(-15, -25)), PointI64::of(-15, -25));
+    fn test_saturating_add() {
+        assert_eq!(saturating_add(&PointI64::of(0, 0), &PointI64::of(10, 15)), PointI64::of(10, 15));
+        assert_eq!(saturating_add(&PointI64::of(0, 0), &PointI64::of(-15, -25)), PointI64::of(-15, -25));
     }
 
     #[test]
-    fn saturating_translated_to_bounds() {
-        assert_eq!(saturating_translated(&PointI64::of(i64::MIN + 2, i64::MIN + 5), &PointI64::of(-2, -5)), PointI64::min());
-        assert_eq!(saturating_translated(&PointI64::of(i64::MAX - 2, i64::MAX - 5), &PointI64::of(2, 5)), PointI64::max());
+    fn saturating_add_to_bounds() {
+        assert_eq!(saturating_add(&PointI64::of(i64::MIN + 2, i64::MIN + 5), &PointI64::of(-2, -5)), PointI64::min());
+        assert_eq!(saturating_add(&PointI64::of(i64::MAX - 2, i64::MAX - 5), &PointI64::of(2, 5)), PointI64::max());
     }
 
     #[test]
-    fn saturating_translated_beyond_bounds() {
-        assert_eq!(saturating_translated(&PointI64::of(i64::MIN + 2, i64::MIN + 5), &PointI64::of(-10, -10)), PointI64::min());
-        assert_eq!(saturating_translated(&PointI64::of(i64::MAX - 2, i64::MAX - 5), &PointI64::of(10, 10)), PointI64::max());
+    fn saturating_add_beyond_bounds() {
+        assert_eq!(saturating_add(&PointI64::of(i64::MIN + 2, i64::MIN + 5), &PointI64::of(-10, -10)), PointI64::min());
+        assert_eq!(saturating_add(&PointI64::of(i64::MAX - 2, i64::MAX - 5), &PointI64::of(10, 10)), PointI64::max());
     }
 
     #[test]
-    fn saturating_translated_limits() {
-        assert_eq!(saturating_translated(&PointI64::of(i64::MIN + 1, i64::MIN + 1), &PointI64::min()), PointI64::min());
-        assert_eq!(saturating_translated(&PointI64::of(i64::MAX - 1, i64::MAX - 1), &PointI64::max()), PointI64::max());
+    fn saturating_add_limits() {
+        assert_eq!(saturating_add(&PointI64::of(i64::MIN + 1, i64::MIN + 1), &PointI64::min()), PointI64::min());
+        assert_eq!(saturating_add(&PointI64::of(i64::MAX - 1, i64::MAX - 1), &PointI64::max()), PointI64::max());
     }
 
     #[test]
-    fn try_checked_translated_min_bounds() {
+    fn try_checked_add_min_bounds() {
         let p = PointI64::of(i64::MIN + 2, i64::MIN + 5);
-        assert_eq!(try_checked_translated(&p, &PointI64::of(-2, 0)), Some(PointI64::of(i64::MIN, i64::MIN + 5)));
-        assert_eq!(try_checked_translated(&p, &PointI64::of(0, -5)), Some(PointI64::of(i64::MIN + 2, i64::MIN)));
-        assert_eq!(try_checked_translated(&p, &PointI64::of(-2, -5)), Some(PointI64::min()));
-        assert_eq!(try_checked_translated(&p, &PointI64::of(-10, -10)), None);
-        assert_eq!(try_checked_translated(&p, &PointI64::of(i64::MIN, 0)), None);
-        assert_eq!(try_checked_translated(&p, &PointI64::of(0, i64::MIN)), None);
-        assert_eq!(try_checked_translated(&p, &PointI64::min()), None);
+        assert_eq!(try_checked_add(&p, &PointI64::of(-2, 0)), Some(PointI64::of(i64::MIN, i64::MIN + 5)));
+        assert_eq!(try_checked_add(&p, &PointI64::of(0, -5)), Some(PointI64::of(i64::MIN + 2, i64::MIN)));
+        assert_eq!(try_checked_add(&p, &PointI64::of(-2, -5)), Some(PointI64::min()));
+        assert_eq!(try_checked_add(&p, &PointI64::of(-10, -10)), None);
+        assert_eq!(try_checked_add(&p, &PointI64::of(i64::MIN, 0)), None);
+        assert_eq!(try_checked_add(&p, &PointI64::of(0, i64::MIN)), None);
+        assert_eq!(try_checked_add(&p, &PointI64::min()), None);
     }
 
     #[test]
-    fn try_checked_translated_max_bounds() {
+    fn try_checked_add_max_bounds() {
         let p = PointI64::of(i64::MAX - 2, i64::MAX - 5);
-        assert_eq!(try_checked_translated(&p, &PointI64::of(2, 0)), Some(PointI64::of(i64::MAX, i64::MAX - 5)));
-        assert_eq!(try_checked_translated(&p, &PointI64::of(0, 5)), Some(PointI64::of(i64::MAX - 2, i64::MAX)));
-        assert_eq!(try_checked_translated(&p, &PointI64::of(2, 5)), Some(PointI64::max()));
-        assert_eq!(try_checked_translated(&p, &PointI64::of(10, 10)), None);
-        assert_eq!(try_checked_translated(&p, &PointI64::of(i64::MAX, 0)), None);
-        assert_eq!(try_checked_translated(&p, &PointI64::of(0, i64::MAX)), None);
-        assert_eq!(try_checked_translated(&p, &PointI64::max()), None);
+        assert_eq!(try_checked_add(&p, &PointI64::of(2, 0)), Some(PointI64::of(i64::MAX, i64::MAX - 5)));
+        assert_eq!(try_checked_add(&p, &PointI64::of(0, 5)), Some(PointI64::of(i64::MAX - 2, i64::MAX)));
+        assert_eq!(try_checked_add(&p, &PointI64::of(2, 5)), Some(PointI64::max()));
+        assert_eq!(try_checked_add(&p, &PointI64::of(10, 10)), None);
+        assert_eq!(try_checked_add(&p, &PointI64::of(i64::MAX, 0)), None);
+        assert_eq!(try_checked_add(&p, &PointI64::of(0, i64::MAX)), None);
+        assert_eq!(try_checked_add(&p, &PointI64::max()), None);
     }
 
     #[test]
-    fn test_checked_translated() {
-        assert_eq!(checked_translated(&PointI64::of(0, 0), &PointI64::of(10, 15)), PointI64::of(10, 15));
-        assert_eq!(checked_translated(&PointI64::of(10, 15), &PointI64::of(-15, -25)), PointI64::of(-5, -10));
-        assert_eq!(checked_translated(&PointI64::of(-5, -10), &PointI64::of(2, 3)), PointI64::of(-3, -7));
+    fn test_checked_add() {
+        assert_eq!(checked_add(&PointI64::of(0, 0), &PointI64::of(10, 15)), PointI64::of(10, 15));
+        assert_eq!(checked_add(&PointI64::of(10, 15), &PointI64::of(-15, -25)), PointI64::of(-5, -10));
+        assert_eq!(checked_add(&PointI64::of(-5, -10), &PointI64::of(2, 3)), PointI64::of(-3, -7));
     }
 }

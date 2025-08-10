@@ -39,14 +39,14 @@ pub fn delta(p1: &PointF32, p2: &PointF32) -> PointF32 {
     PointF32 { x: delta_x(p1, p2), y: delta_y(p1, p2) }
 }
 
-pub fn saturating_translate(p: &mut PointF32, delta: &PointF32) {
+pub fn assign_saturating_add(p: &mut PointF32, delta: &PointF32) {
     let temp_x = p.x + delta.x;
     let temp_y = p.y + delta.y;
     p.x = temp_x.clamp(MIN, MAX);
     p.y = temp_y.clamp(MIN, MAX);
 }
 
-pub fn try_checked_translate(p: &mut PointF32, delta: &PointF32) -> Result<(), ()> {
+pub fn try_assign_checked_add(p: &mut PointF32, delta: &PointF32) -> Result<(), ()> {
     let x = p.x + delta.x;
     let y = p.y + delta.y;
     if x < MIN || x > MAX || y < MIN || y > MAX {
@@ -57,17 +57,17 @@ pub fn try_checked_translate(p: &mut PointF32, delta: &PointF32) -> Result<(), (
     Ok(())
 }
 
-pub fn checked_translate(p: &mut PointF32, delta: &PointF32) {
-    try_checked_translate(p, delta).unwrap()
+pub fn assign_checked_add(p: &mut PointF32, delta: &PointF32) {
+    try_assign_checked_add(p, delta).unwrap()
 }
 
-pub fn saturating_translated(p: &PointF32, delta: &PointF32) -> PointF32 {
+pub fn saturating_add(p: &PointF32, delta: &PointF32) -> PointF32 {
     let temp_x = p.x + delta.x;
     let temp_y = p.y + delta.y;
     PointF32::of(temp_x.clamp(MIN, MAX), temp_y.clamp(MIN, MAX))
 }
 
-pub fn try_checked_translated(p: &PointF32, delta: &PointF32) -> Option<PointF32> {
+pub fn try_checked_add(p: &PointF32, delta: &PointF32) -> Option<PointF32> {
     let x = p.x + delta.x;
     let y = p.y + delta.y;
     if x < MIN || x > MAX || y < MIN || y > MAX {
@@ -76,15 +76,15 @@ pub fn try_checked_translated(p: &PointF32, delta: &PointF32) -> Option<PointF32
     Some(PointF32 { x, y })
 }
 
-pub fn checked_translated(p: &PointF32, delta: &PointF32) -> PointF32 {
-    try_checked_translated(p, delta).unwrap()
+pub fn checked_add(p: &PointF32, delta: &PointF32) -> PointF32 {
+    try_checked_add(p, delta).unwrap()
 }
 
 #[cfg(test)]
 mod tests {
     use super::{
-        MAX, MIN, PointF32, checked_translate, checked_translated, delta, delta_x, delta_y, saturating_translate, saturating_translated,
-        try_checked_translate, try_checked_translated,
+        MAX, MIN, PointF32, assign_checked_add, checked_add, delta, delta_x, delta_y, assign_saturating_add, saturating_add,
+        try_assign_checked_add, try_checked_add,
     };
 
     #[test]
@@ -152,164 +152,164 @@ mod tests {
     }
 
     #[test]
-    fn test_saturating_translate() {
+    fn test_assign_saturating_add() {
         let mut p = PointF32::of(0.0, 0.0);
-        saturating_translate(&mut p, &PointF32::of(10.0, 15.0));
+        assign_saturating_add(&mut p, &PointF32::of(10.0, 15.0));
         assert_eq!(p, PointF32::of(10.0, 15.0));
-        saturating_translate(&mut p, &PointF32::of(-15.0, -25.0));
+        assign_saturating_add(&mut p, &PointF32::of(-15.0, -25.0));
         assert_eq!(p, PointF32::of(-5.0, -10.0));
-        saturating_translate(&mut p, &PointF32::of(2.0, 3.0));
+        assign_saturating_add(&mut p, &PointF32::of(2.0, 3.0));
         assert_eq!(p, PointF32::of(-3.0, -7.0));
     }
 
     #[test]
-    fn saturating_translate_min_bounds() {
+    fn assign_saturating_add_min_bounds() {
         let mut p = PointF32::of(MIN + 2.0, MIN + 5.0);
-        saturating_translate(&mut p, &PointF32::of(-10.0, -10.0));
+        assign_saturating_add(&mut p, &PointF32::of(-10.0, -10.0));
         assert_eq!(p, PointF32::of(MIN, MIN));
     }
 
     #[test]
-    fn saturating_translate_max_bounds() {
+    fn assign_saturating_add_max_bounds() {
         let mut p = PointF32::of(MAX - 2.0, MAX - 5.0);
-        saturating_translate(&mut p, &PointF32::of(10.0, 10.0));
+        assign_saturating_add(&mut p, &PointF32::of(10.0, 10.0));
         assert_eq!(p, PointF32::of(MAX, MAX));
     }
 
     #[test]
-    fn saturating_translate_min_bounds_min_delta() {
+    fn assign_saturating_add_min_bounds_min_delta() {
         let mut p = PointF32::of(MIN + 1.0, MIN + 1.0);
-        saturating_translate(&mut p, &PointF32::min());
+        assign_saturating_add(&mut p, &PointF32::min());
         assert_eq!(p, PointF32::of(MIN, MIN));
     }
 
     #[test]
-    fn saturating_translate_max_bounds_max_delta() {
+    fn assign_saturating_add_max_bounds_max_delta() {
         let mut p = PointF32::of(MAX - 1.0, MAX - 1.0);
-        saturating_translate(&mut p, &PointF32::max());
+        assign_saturating_add(&mut p, &PointF32::max());
         assert_eq!(p, PointF32::of(MAX, MAX));
     }
 
     #[test]
-    fn test_try_checked_translate() {
+    fn test_try_assign_checked_add() {
         let mut p = PointF32::of(0.0, 0.0);
-        assert_eq!(try_checked_translate(&mut p, &PointF32::of(10.0, 15.0)), Ok(()));
+        assert_eq!(try_assign_checked_add(&mut p, &PointF32::of(10.0, 15.0)), Ok(()));
         assert_eq!(p, PointF32::of(10.0, 15.0));
-        assert_eq!(try_checked_translate(&mut p, &PointF32::of(-15.0, -25.0)), Ok(()));
+        assert_eq!(try_assign_checked_add(&mut p, &PointF32::of(-15.0, -25.0)), Ok(()));
         assert_eq!(p, PointF32::of(-5.0, -10.0));
-        assert_eq!(try_checked_translate(&mut p, &PointF32::of(2.0, 3.0)), Ok(()));
+        assert_eq!(try_assign_checked_add(&mut p, &PointF32::of(2.0, 3.0)), Ok(()));
         assert_eq!(p, PointF32::of(-3.0, -7.0));
     }
 
     #[test]
-    fn try_checked_translate_min_bounds_err() {
+    fn try_assign_checked_add_min_bounds_err() {
         let mut p = PointF32::of(MIN + 2.0, MIN + 5.0);
-        assert_eq!(try_checked_translate(&mut p, &PointF32::of(-10.0, -10.0)), Err(()));
+        assert_eq!(try_assign_checked_add(&mut p, &PointF32::of(-10.0, -10.0)), Err(()));
         assert_eq!(p, PointF32::of(MIN + 2.0, MIN + 5.0));
     }
 
     #[test]
-    fn try_checked_translate_max_bounds_err() {
+    fn try_assign_checked_add_max_bounds_err() {
         let mut p = PointF32::of(MAX - 2.0, MAX - 5.0);
-        assert_eq!(try_checked_translate(&mut p, &PointF32::of(10.0, 10.0)), Err(()));
+        assert_eq!(try_assign_checked_add(&mut p, &PointF32::of(10.0, 10.0)), Err(()));
         assert_eq!(p, PointF32::of(MAX - 2.0, MAX - 5.0));
     }
 
     #[test]
-    fn try_checked_translate_min_bounds_ok() {
+    fn try_assign_checked_add_min_bounds_ok() {
         let mut p = PointF32::of(MIN + 2.0, MIN + 5.0);
-        assert_eq!(try_checked_translate(&mut p, &PointF32::of(-2.0, -5.0)), Ok(()));
+        assert_eq!(try_assign_checked_add(&mut p, &PointF32::of(-2.0, -5.0)), Ok(()));
         assert_eq!(p, PointF32::of(MIN, MIN));
     }
 
     #[test]
-    fn try_checked_translate_max_bounds_ok() {
+    fn try_assign_checked_add_max_bounds_ok() {
         let mut p = PointF32::of(MAX - 2.0, MAX - 5.0);
-        assert_eq!(try_checked_translate(&mut p, &PointF32::of(2.0, 5.0)), Ok(()));
+        assert_eq!(try_assign_checked_add(&mut p, &PointF32::of(2.0, 5.0)), Ok(()));
         assert_eq!(p, PointF32::of(MAX, MAX));
     }
 
     #[test]
-    fn try_checked_translate_min_bounds_min_delta() {
+    fn try_assign_checked_add_min_bounds_min_delta() {
         let mut p = PointF32::of(MIN + 1.0, MIN + 1.0);
-        assert_eq!(try_checked_translate(&mut p, &PointF32::min()), Err(()));
-        assert_eq!(try_checked_translate(&mut p, &PointF32::of(MIN, 0.0)), Err(()));
-        assert_eq!(try_checked_translate(&mut p, &PointF32::of(0.0, MIN)), Err(()));
+        assert_eq!(try_assign_checked_add(&mut p, &PointF32::min()), Err(()));
+        assert_eq!(try_assign_checked_add(&mut p, &PointF32::of(MIN, 0.0)), Err(()));
+        assert_eq!(try_assign_checked_add(&mut p, &PointF32::of(0.0, MIN)), Err(()));
         assert_eq!(p, PointF32::of(MIN + 1.0, MIN + 1.0));
     }
 
     #[test]
-    fn try_checked_translate_max_bounds_max_delta() {
+    fn try_assign_checked_add_max_bounds_max_delta() {
         let mut p = PointF32::of(MAX - 1.0, MAX - 1.0);
-        assert_eq!(try_checked_translate(&mut p, &PointF32::max()), Err(()));
-        assert_eq!(try_checked_translate(&mut p, &PointF32::of(MAX, 0.0)), Err(()));
-        assert_eq!(try_checked_translate(&mut p, &PointF32::of(0.0, MAX)), Err(()));
+        assert_eq!(try_assign_checked_add(&mut p, &PointF32::max()), Err(()));
+        assert_eq!(try_assign_checked_add(&mut p, &PointF32::of(MAX, 0.0)), Err(()));
+        assert_eq!(try_assign_checked_add(&mut p, &PointF32::of(0.0, MAX)), Err(()));
         assert_eq!(p, PointF32::of(MAX - 1.0, MAX - 1.0));
     }
 
     #[test]
-    fn test_checked_translate() {
+    fn test_assign_checked_add() {
         let mut p = PointF32::of(0.0, 0.0);
-        checked_translate(&mut p, &PointF32::of(10.0, 15.0));
+        assign_checked_add(&mut p, &PointF32::of(10.0, 15.0));
         assert_eq!(p, PointF32::of(10.0, 15.0));
-        checked_translate(&mut p, &PointF32::of(-15.0, -25.0));
+        assign_checked_add(&mut p, &PointF32::of(-15.0, -25.0));
         assert_eq!(p, PointF32::of(-5.0, -10.0));
-        checked_translate(&mut p, &PointF32::of(2.0, 3.0));
+        assign_checked_add(&mut p, &PointF32::of(2.0, 3.0));
         assert_eq!(p, PointF32::of(-3.0, -7.0));
     }
 
     #[test]
-    fn test_saturating_translated() {
-        assert_eq!(saturating_translated(&PointF32::of(0.0, 0.0), &PointF32::of(10.0, 15.0)), PointF32::of(10.0, 15.0));
-        assert_eq!(saturating_translated(&PointF32::of(0.0, 0.0), &PointF32::of(-15.0, -25.0)), PointF32::of(-15.0, -25.0));
+    fn test_saturating_add() {
+        assert_eq!(saturating_add(&PointF32::of(0.0, 0.0), &PointF32::of(10.0, 15.0)), PointF32::of(10.0, 15.0));
+        assert_eq!(saturating_add(&PointF32::of(0.0, 0.0), &PointF32::of(-15.0, -25.0)), PointF32::of(-15.0, -25.0));
     }
 
     #[test]
-    fn saturating_translated_to_bounds() {
-        assert_eq!(saturating_translated(&PointF32::of(MIN + 2.0, MIN + 5.0), &PointF32::of(-2.0, -5.0)), PointF32::min());
-        assert_eq!(saturating_translated(&PointF32::of(MAX - 2.0, MAX - 5.0), &PointF32::of(2.0, 5.0)), PointF32::max());
+    fn saturating_add_to_bounds() {
+        assert_eq!(saturating_add(&PointF32::of(MIN + 2.0, MIN + 5.0), &PointF32::of(-2.0, -5.0)), PointF32::min());
+        assert_eq!(saturating_add(&PointF32::of(MAX - 2.0, MAX - 5.0), &PointF32::of(2.0, 5.0)), PointF32::max());
     }
 
     #[test]
-    fn saturating_translated_beyond_bounds() {
-        assert_eq!(saturating_translated(&PointF32::of(MIN + 2.0, MIN + 5.0), &PointF32::of(-10.0, -10.0)), PointF32::min());
-        assert_eq!(saturating_translated(&PointF32::of(MAX - 2.0, MAX - 5.0), &PointF32::of(10.0, 10.0)), PointF32::max());
+    fn saturating_add_beyond_bounds() {
+        assert_eq!(saturating_add(&PointF32::of(MIN + 2.0, MIN + 5.0), &PointF32::of(-10.0, -10.0)), PointF32::min());
+        assert_eq!(saturating_add(&PointF32::of(MAX - 2.0, MAX - 5.0), &PointF32::of(10.0, 10.0)), PointF32::max());
     }
 
     #[test]
-    fn saturating_translated_limits() {
-        assert_eq!(saturating_translated(&PointF32::of(MIN + 1.0, MIN + 1.0), &PointF32::min()), PointF32::min());
-        assert_eq!(saturating_translated(&PointF32::of(MAX - 1.0, MAX - 1.0), &PointF32::max()), PointF32::max());
+    fn saturating_add_limits() {
+        assert_eq!(saturating_add(&PointF32::of(MIN + 1.0, MIN + 1.0), &PointF32::min()), PointF32::min());
+        assert_eq!(saturating_add(&PointF32::of(MAX - 1.0, MAX - 1.0), &PointF32::max()), PointF32::max());
     }
 
     #[test]
-    fn try_checked_translated_min_bounds() {
+    fn try_checked_add_min_bounds() {
         let p = PointF32::of(MIN + 2.0, MIN + 5.0);
-        assert_eq!(try_checked_translated(&p, &PointF32::of(-2.0, 0.0)), Some(PointF32::of(MIN, MIN + 5.0)));
-        assert_eq!(try_checked_translated(&p, &PointF32::of(0.0, -5.0)), Some(PointF32::of(MIN + 2.0, MIN)));
-        assert_eq!(try_checked_translated(&p, &PointF32::of(-2.0, -5.0)), Some(PointF32::min()));
-        assert_eq!(try_checked_translated(&p, &PointF32::of(-10.0, -10.0)), None);
-        assert_eq!(try_checked_translated(&p, &PointF32::of(MIN, 0.0)), None);
-        assert_eq!(try_checked_translated(&p, &PointF32::of(0.0, MIN)), None);
-        assert_eq!(try_checked_translated(&p, &PointF32::min()), None);
+        assert_eq!(try_checked_add(&p, &PointF32::of(-2.0, 0.0)), Some(PointF32::of(MIN, MIN + 5.0)));
+        assert_eq!(try_checked_add(&p, &PointF32::of(0.0, -5.0)), Some(PointF32::of(MIN + 2.0, MIN)));
+        assert_eq!(try_checked_add(&p, &PointF32::of(-2.0, -5.0)), Some(PointF32::min()));
+        assert_eq!(try_checked_add(&p, &PointF32::of(-10.0, -10.0)), None);
+        assert_eq!(try_checked_add(&p, &PointF32::of(MIN, 0.0)), None);
+        assert_eq!(try_checked_add(&p, &PointF32::of(0.0, MIN)), None);
+        assert_eq!(try_checked_add(&p, &PointF32::min()), None);
     }
 
     #[test]
-    fn try_checked_translated_max_bounds() {
+    fn try_checked_add_max_bounds() {
         let p = PointF32::of(MAX - 2.0, MAX - 5.0);
-        assert_eq!(try_checked_translated(&p, &PointF32::of(2.0, 0.0)), Some(PointF32::of(MAX, MAX - 5.0)));
-        assert_eq!(try_checked_translated(&p, &PointF32::of(0.0, 5.0)), Some(PointF32::of(MAX - 2.0, MAX)));
-        assert_eq!(try_checked_translated(&p, &PointF32::of(2.0, 5.0)), Some(PointF32::max()));
-        assert_eq!(try_checked_translated(&p, &PointF32::of(10.0, 10.0)), None);
-        assert_eq!(try_checked_translated(&p, &PointF32::of(MAX, 0.0)), None);
-        assert_eq!(try_checked_translated(&p, &PointF32::of(0.0, MAX)), None);
-        assert_eq!(try_checked_translated(&p, &PointF32::max()), None);
+        assert_eq!(try_checked_add(&p, &PointF32::of(2.0, 0.0)), Some(PointF32::of(MAX, MAX - 5.0)));
+        assert_eq!(try_checked_add(&p, &PointF32::of(0.0, 5.0)), Some(PointF32::of(MAX - 2.0, MAX)));
+        assert_eq!(try_checked_add(&p, &PointF32::of(2.0, 5.0)), Some(PointF32::max()));
+        assert_eq!(try_checked_add(&p, &PointF32::of(10.0, 10.0)), None);
+        assert_eq!(try_checked_add(&p, &PointF32::of(MAX, 0.0)), None);
+        assert_eq!(try_checked_add(&p, &PointF32::of(0.0, MAX)), None);
+        assert_eq!(try_checked_add(&p, &PointF32::max()), None);
     }
 
     #[test]
-    fn test_checked_translated() {
-        assert_eq!(checked_translated(&PointF32::of(0.0, 0.0), &PointF32::of(10.0, 15.0)), PointF32::of(10.0, 15.0));
-        assert_eq!(checked_translated(&PointF32::of(10.0, 15.0), &PointF32::of(-15.0, -25.0)), PointF32::of(-5.0, -10.0));
-        assert_eq!(checked_translated(&PointF32::of(-5.0, -10.0), &PointF32::of(2.0, 3.0)), PointF32::of(-3.0, -7.0));
+    fn test_checked_add() {
+        assert_eq!(checked_add(&PointF32::of(0.0, 0.0), &PointF32::of(10.0, 15.0)), PointF32::of(10.0, 15.0));
+        assert_eq!(checked_add(&PointF32::of(10.0, 15.0), &PointF32::of(-15.0, -25.0)), PointF32::of(-5.0, -10.0));
+        assert_eq!(checked_add(&PointF32::of(-5.0, -10.0), &PointF32::of(2.0, 3.0)), PointF32::of(-3.0, -7.0));
     }
 }

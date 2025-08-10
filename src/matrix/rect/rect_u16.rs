@@ -105,7 +105,7 @@ pub fn resize(r: &mut RectU16, size: u16) {
     r.max.col = (min_col + i32::from(size) - 1) as u16;
 }
 
-pub fn saturating_translate(r: &mut RectU16, delta: &PointI16) {
+pub fn assign_saturating_add(r: &mut RectU16, delta: &PointI16) {
     let d_row = delta_row(r);
     let d_col = delta_col(r);
     let temp_min_row = i32::from(r.min.row) + i32::from(delta.row);
@@ -120,7 +120,7 @@ pub fn saturating_translate(r: &mut RectU16, delta: &PointI16) {
     r.max.col = min_col + d_col;
 }
 
-pub fn try_checked_translate(r: &mut RectU16, delta: &PointI16) -> Result<(), ()> {
+pub fn try_assign_checked_add(r: &mut RectU16, delta: &PointI16) -> Result<(), ()> {
     let min_row = u16::try_from(i32::from(r.min.row) + i32::from(delta.row)).map_err(|_| ())?;
     let min_col = u16::try_from(i32::from(r.min.col) + i32::from(delta.col)).map_err(|_| ())?;
     let max_row = u16::try_from(i32::from(r.max.row) + i32::from(delta.row)).map_err(|_| ())?;
@@ -132,11 +132,11 @@ pub fn try_checked_translate(r: &mut RectU16, delta: &PointI16) -> Result<(), ()
     Ok(())
 }
 
-pub fn checked_translate(r: &mut RectU16, delta: &PointI16) {
-    try_checked_translate(r, delta).unwrap()
+pub fn assign_checked_add(r: &mut RectU16, delta: &PointI16) {
+    try_assign_checked_add(r, delta).unwrap()
 }
 
-pub fn saturating_translated(r: &RectU16, delta: &PointI16) -> RectU16 {
+pub fn saturating_add(r: &RectU16, delta: &PointI16) -> RectU16 {
     let d_row = delta_row(r);
     let d_col = delta_col(r);
     let temp_min_row = i32::from(r.min.row) + i32::from(delta.row);
@@ -160,8 +160,8 @@ mod tests {
     };
 
     use super::{
-        RectU16, checked_translate, contains, deflate, delta_col, delta_row, inflate, len_col, len_row, max_delta, max_len, resize,
-        saturating_translate, try_checked_translate,
+        RectU16, assign_checked_add, contains, deflate, delta_col, delta_row, inflate, len_col, len_row, max_delta, max_len, resize,
+        assign_saturating_add, try_assign_checked_add,
     };
 
     #[test]
@@ -459,123 +459,123 @@ mod tests {
     }
 
     #[test]
-    fn test_saturating_translate() {
+    fn test_assign_saturating_add() {
         let mut r = RectU16::of(0, 0, 12, 15);
-        saturating_translate(&mut r, &PointI16::of(5, 4));
+        assign_saturating_add(&mut r, &PointI16::of(5, 4));
         assert_eq!(r, RectU16::of(5, 4, 17, 19));
-        saturating_translate(&mut r, &PointI16::of(-4, -2));
+        assign_saturating_add(&mut r, &PointI16::of(-4, -2));
         assert_eq!(r, RectU16::of(1, 2, 13, 17));
-        saturating_translate(&mut r, &PointI16::of(10, 20));
+        assign_saturating_add(&mut r, &PointI16::of(10, 20));
         assert_eq!(r, RectU16::of(11, 22, 23, 37));
     }
 
     #[test]
-    fn saturating_translate_min_bounds() {
+    fn assign_saturating_add_min_bounds() {
         let mut r = RectU16::of(2, 5, 12, 15);
-        saturating_translate(&mut r, &PointI16::of(-10, -10));
+        assign_saturating_add(&mut r, &PointI16::of(-10, -10));
         assert_eq!(r, RectU16::of(0, 0, 10, 10));
     }
 
     #[test]
-    fn saturating_translate_max_bounds() {
+    fn assign_saturating_add_max_bounds() {
         let mut r = RectU16::of(240, 235, u16::MAX - 5, u16::MAX - 10);
-        saturating_translate(&mut r, &PointI16::of(20, 20));
+        assign_saturating_add(&mut r, &PointI16::of(20, 20));
         assert_eq!(r, RectU16::of(245, 245, u16::MAX, u16::MAX));
     }
 
     #[test]
-    fn saturating_translate_min_bounds_big_delta() {
+    fn assign_saturating_add_min_bounds_big_delta() {
         let mut r = RectU16::of(0, 0, 10, 10);
-        saturating_translate(&mut r, &PointI16::min());
+        assign_saturating_add(&mut r, &PointI16::min());
         assert_eq!(r, RectU16::of(0, 0, 10, 10));
     }
 
     #[test]
-    fn saturating_translate_max_bounds_big_delta() {
+    fn assign_saturating_add_max_bounds_big_delta() {
         let mut r = RectU16::of(u16::MAX - 10, u16::MAX - 10, u16::MAX, u16::MAX);
-        saturating_translate(&mut r, &PointI16::max());
+        assign_saturating_add(&mut r, &PointI16::max());
         assert_eq!(r, RectU16::of(u16::MAX - 10, u16::MAX - 10, u16::MAX, u16::MAX));
     }
 
     #[test]
-    fn saturating_translate_min_bounds_big_rect_big_delta() {
+    fn assign_saturating_add_min_bounds_big_rect_big_delta() {
         let mut r = RectU16::of(1, 1, u16::MAX, u16::MAX);
-        saturating_translate(&mut r, &PointI16::min());
+        assign_saturating_add(&mut r, &PointI16::min());
         assert_eq!(r, RectU16::of(0, 0, u16::MAX - 1, u16::MAX - 1));
     }
 
     #[test]
-    fn saturating_translate_max_bounds_big_rect_big_delta() {
+    fn assign_saturating_add_max_bounds_big_rect_big_delta() {
         let mut r = RectU16::of(0, 0, u16::MAX - 1, u16::MAX - 1);
-        saturating_translate(&mut r, &PointI16::max());
+        assign_saturating_add(&mut r, &PointI16::max());
         assert_eq!(r, RectU16::of(1, 1, u16::MAX, u16::MAX));
     }
 
     #[test]
-    fn test_try_checked_translate() {
+    fn test_try_assign_checked_add() {
         let mut r = RectU16::of(0, 0, 12, 15);
-        assert_eq!(try_checked_translate(&mut r, &PointI16::of(5, 4)), Ok(()));
+        assert_eq!(try_assign_checked_add(&mut r, &PointI16::of(5, 4)), Ok(()));
         assert_eq!(r, RectU16::of(5, 4, 17, 19));
-        assert_eq!(try_checked_translate(&mut r, &PointI16::of(-4, -2)), Ok(()));
+        assert_eq!(try_assign_checked_add(&mut r, &PointI16::of(-4, -2)), Ok(()));
         assert_eq!(r, RectU16::of(1, 2, 13, 17));
-        assert_eq!(try_checked_translate(&mut r, &PointI16::of(10, 20)), Ok(()));
+        assert_eq!(try_assign_checked_add(&mut r, &PointI16::of(10, 20)), Ok(()));
         assert_eq!(r, RectU16::of(11, 22, 23, 37));
     }
 
     #[test]
-    fn try_checked_translate_min_bounds() {
+    fn try_assign_checked_add_min_bounds() {
         let mut r = RectU16::of(2, 5, 12, 15);
-        assert_eq!(try_checked_translate(&mut r, &PointI16::of(-10, -10)), Err(()));
+        assert_eq!(try_assign_checked_add(&mut r, &PointI16::of(-10, -10)), Err(()));
         assert_eq!(r, RectU16::of(2, 5, 12, 15));
     }
 
     #[test]
-    fn try_checked_translate_max_bounds() {
+    fn try_assign_checked_add_max_bounds() {
         let mut r = RectU16::of(240, 235, u16::MAX - 5, u16::MAX - 10);
-        assert_eq!(try_checked_translate(&mut r, &PointI16::of(20, 20)), Err(()));
+        assert_eq!(try_assign_checked_add(&mut r, &PointI16::of(20, 20)), Err(()));
         assert_eq!(r, RectU16::of(240, 235, u16::MAX - 5, u16::MAX - 10));
     }
 
     #[test]
-    fn try_checked_translate_min_bounds_big_rect_big_delta() {
+    fn try_assign_checked_add_min_bounds_big_rect_big_delta() {
         let mut r = RectU16::of(1, 1, u16::MAX, u16::MAX);
-        assert_eq!(try_checked_translate(&mut r, &PointI16::min()), Err(()));
-        assert_eq!(try_checked_translate(&mut r, &PointI16::of(i16::MIN, 0)), Err(()));
-        assert_eq!(try_checked_translate(&mut r, &PointI16::of(0, i16::MIN)), Err(()));
+        assert_eq!(try_assign_checked_add(&mut r, &PointI16::min()), Err(()));
+        assert_eq!(try_assign_checked_add(&mut r, &PointI16::of(i16::MIN, 0)), Err(()));
+        assert_eq!(try_assign_checked_add(&mut r, &PointI16::of(0, i16::MIN)), Err(()));
         assert_eq!(r, RectU16::of(1, 1, u16::MAX, u16::MAX));
     }
 
     #[test]
-    fn try_checked_translate_max_bounds_big_rect_big_delta() {
+    fn try_assign_checked_add_max_bounds_big_rect_big_delta() {
         let mut r = RectU16::of(0, 0, u16::MAX - 1, u16::MAX - 1);
-        assert_eq!(try_checked_translate(&mut r, &PointI16::max()), Err(()));
-        assert_eq!(try_checked_translate(&mut r, &PointI16::of(i16::MAX, 0)), Err(()));
-        assert_eq!(try_checked_translate(&mut r, &PointI16::of(0, i16::MAX)), Err(()));
+        assert_eq!(try_assign_checked_add(&mut r, &PointI16::max()), Err(()));
+        assert_eq!(try_assign_checked_add(&mut r, &PointI16::of(i16::MAX, 0)), Err(()));
+        assert_eq!(try_assign_checked_add(&mut r, &PointI16::of(0, i16::MAX)), Err(()));
         assert_eq!(r, RectU16::of(0, 0, u16::MAX - 1, u16::MAX - 1));
     }
 
     #[test]
-    fn try_checked_translate_min_bounds_big_rect_small_delta() {
+    fn try_assign_checked_add_min_bounds_big_rect_small_delta() {
         let mut r = RectU16::of(1, 1, u16::MAX, u16::MAX);
-        assert_eq!(try_checked_translate(&mut r, &PointI16::of(-1, -1)), Ok(()));
+        assert_eq!(try_assign_checked_add(&mut r, &PointI16::of(-1, -1)), Ok(()));
         assert_eq!(r, RectU16::of(0, 0, u16::MAX - 1, u16::MAX - 1));
     }
 
     #[test]
-    fn try_checked_translate_max_bounds_big_rect_small_delta() {
+    fn try_assign_checked_add_max_bounds_big_rect_small_delta() {
         let mut r = RectU16::of(0, 0, u16::MAX - 1, u16::MAX - 1);
-        assert_eq!(try_checked_translate(&mut r, &PointI16::of(1, 1)), Ok(()));
+        assert_eq!(try_assign_checked_add(&mut r, &PointI16::of(1, 1)), Ok(()));
         assert_eq!(r, RectU16::of(1, 1, u16::MAX, u16::MAX));
     }
 
     #[test]
-    fn test_checked_translate() {
+    fn test_assign_checked_add() {
         let mut r = RectU16::of(0, 0, 12, 15);
-        checked_translate(&mut r, &PointI16::of(5, 4));
+        assign_checked_add(&mut r, &PointI16::of(5, 4));
         assert_eq!(r, RectU16::of(5, 4, 17, 19));
-        checked_translate(&mut r, &PointI16::of(-4, -2));
+        assign_checked_add(&mut r, &PointI16::of(-4, -2));
         assert_eq!(r, RectU16::of(1, 2, 13, 17));
-        checked_translate(&mut r, &PointI16::of(10, 20));
+        assign_checked_add(&mut r, &PointI16::of(10, 20));
         assert_eq!(r, RectU16::of(11, 22, 23, 37));
     }
 

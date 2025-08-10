@@ -123,7 +123,7 @@ pub fn resize(r: &mut RectF64, size: f64) {
     r.max.y = min_y + size - 1.0;
 }
 
-pub fn saturating_translate(r: &mut RectF64, delta: &point_f64::PointF64) {
+pub fn assign_saturating_add(r: &mut RectF64, delta: &point_f64::PointF64) {
     let dx = delta_x(r);
     let dy = delta_y(r);
     let temp_min_x = r.min.x + delta.x;
@@ -136,7 +136,7 @@ pub fn saturating_translate(r: &mut RectF64, delta: &point_f64::PointF64) {
     r.max.y = min_y + dy;
 }
 
-pub fn saturating_translated(r: &RectF64, delta: &point_f64::PointF64) -> RectF64 {
+pub fn saturating_add(r: &RectF64, delta: &point_f64::PointF64) -> RectF64 {
     let dx = delta_x(r);
     let dy = delta_y(r);
     let temp_min_x = r.min.x + delta.x;
@@ -156,7 +156,7 @@ pub fn contains(r: &RectF64, p: &point_f64::PointF64) -> bool {
 mod tests {
     use crate::cartesian::point::point_f64::{MAX, MIN, PointF64};
 
-    use super::{RectF64, contains, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, resize, saturating_translate};
+    use super::{RectF64, contains, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, resize, assign_saturating_add};
 
     #[test]
     fn rect_f64() {
@@ -484,55 +484,55 @@ mod tests {
     }
 
     #[test]
-    fn test_saturating_translate() {
+    fn test_assign_saturating_add() {
         let mut r = RectF64::of(0.0, 0.0, 10.0, 10.0);
-        saturating_translate(&mut r, &PointF64::of(10.0, 10.0));
+        assign_saturating_add(&mut r, &PointF64::of(10.0, 10.0));
         assert_eq!(r, RectF64::of(10.0, 10.0, 20.0, 20.0));
-        saturating_translate(&mut r, &PointF64::of(-20.0, -20.0));
+        assign_saturating_add(&mut r, &PointF64::of(-20.0, -20.0));
         assert_eq!(r, RectF64::of(-10.0, -10.0, 0.0, 0.0));
-        saturating_translate(&mut r, &PointF64::of(2.0, 2.0));
+        assign_saturating_add(&mut r, &PointF64::of(2.0, 2.0));
         assert_eq!(r, RectF64::of(-8.0, -8.0, 2.0, 2.0));
     }
 
     #[test]
-    fn saturating_translate_min_bounds() {
+    fn assign_saturating_add_min_bounds() {
         let mut r = RectF64::of(MIN + 5.0, MIN + 10.0, -100.0, -100.0);
-        saturating_translate(&mut r, &PointF64::of(-10.0, -10.0));
+        assign_saturating_add(&mut r, &PointF64::of(-10.0, -10.0));
         assert_eq!(r, RectF64::of(MIN, MIN, -105.0, -110.0));
     }
 
     #[test]
-    fn saturating_translate_max_bounds() {
+    fn assign_saturating_add_max_bounds() {
         let mut r = RectF64::of(100.0, 100.0, MAX - 5.0, MAX - 10.0);
-        saturating_translate(&mut r, &PointF64::of(20.0, 20.0));
+        assign_saturating_add(&mut r, &PointF64::of(20.0, 20.0));
         assert_eq!(r, RectF64::of(105.0, 110.0, MAX, MAX));
     }
 
     #[test]
-    fn saturating_translate_min_bounds_big_delta() {
+    fn assign_saturating_add_min_bounds_big_delta() {
         let mut r = RectF64::of(MIN, MIN, MIN + 10.0, MIN + 10.0);
-        saturating_translate(&mut r, &PointF64::min());
+        assign_saturating_add(&mut r, &PointF64::min());
         assert_eq!(r, RectF64::of(MIN, MIN, MIN + 10.0, MIN + 10.0));
     }
 
     #[test]
-    fn saturating_translate_max_bounds_big_delta() {
+    fn assign_saturating_add_max_bounds_big_delta() {
         let mut r = RectF64::of(MAX - 10.0, MAX - 10.0, MAX, MAX);
-        saturating_translate(&mut r, &PointF64::max());
+        assign_saturating_add(&mut r, &PointF64::max());
         assert_eq!(r, RectF64::of(MAX - 10.0, MAX - 10.0, MAX, MAX));
     }
 
     #[test]
-    fn saturating_translate_min_bounds_big_rect_big_delta() {
+    fn assign_saturating_add_min_bounds_big_rect_big_delta() {
         let mut r = RectF64::of(MIN + 1.0, MIN + 1.0, MAX, MAX);
-        saturating_translate(&mut r, &PointF64::min());
+        assign_saturating_add(&mut r, &PointF64::min());
         assert_eq!(r, RectF64::of(MIN, MIN, MAX - 1.0, MAX - 1.0));
     }
 
     #[test]
-    fn saturating_translate_max_bounds_big_rect_big_delta() {
+    fn assign_saturating_add_max_bounds_big_rect_big_delta() {
         let mut r = RectF64::of(MIN, MIN, MAX - 1.0, MAX - 1.0);
-        saturating_translate(&mut r, &PointF64::max());
+        assign_saturating_add(&mut r, &PointF64::max());
         assert_eq!(r, RectF64::of(MIN + 1.0, MIN + 1.0, MAX, MAX));
     }
 

@@ -142,6 +142,18 @@ pub fn checked_translate(r: &mut RectU32, delta: &PointI32) {
     try_checked_translate(r, delta).unwrap()
 }
 
+pub fn saturating_translated(r: &RectU32, delta: &PointI32) -> RectU32 {
+    let d_row = delta_row(r);
+    let d_col = delta_col(r);
+    let temp_min_row = i64::from(r.min.row) + i64::from(delta.row);
+    let temp_min_col = i64::from(r.min.col) + i64::from(delta.col);
+    let clamped_row = temp_min_row.clamp(0, i64::from(u32::MAX) - i64::from(d_row));
+    let clamped_col = temp_min_col.clamp(0, i64::from(u32::MAX) - i64::from(d_col));
+    let min_row = clamped_row as u32;
+    let min_col = clamped_col as u32;
+    RectU32 { min: point_u32::PointU32 { row: min_row, col: min_col }, max: point_u32::PointU32 { row: min_row + d_row, col: min_col + d_col } }
+}
+
 pub fn contains(r: &RectU32, p: &point_u32::PointU32) -> bool {
     p.row >= r.min.row && p.row <= r.max.row && p.col >= r.min.col && p.col <= r.max.col
 }
@@ -154,8 +166,8 @@ mod tests {
     };
 
     use super::{
-        RectU32, contains, deflate, delta_col, delta_row, inflate, len_col, len_row, max_delta, max_len, resize, saturating_translate,
-        try_checked_translate,checked_translate
+        RectU32, checked_translate, contains, deflate, delta_col, delta_row, inflate, len_col, len_row, max_delta, max_len, resize,
+        saturating_translate, try_checked_translate,
     };
 
     #[test]

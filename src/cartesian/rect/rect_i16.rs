@@ -131,6 +131,18 @@ pub fn checked_translate(r: &mut RectI16, delta: &point_i16::PointI16) {
     try_checked_translate(r, delta).unwrap()
 }
 
+pub fn saturating_translated(r: &RectI16, delta: &point_i16::PointI16) -> RectI16 {
+    let dx = delta_x(r);
+    let dy = delta_y(r);
+    let temp_min_x = i32::from(r.min.x) + i32::from(delta.x);
+    let temp_min_y = i32::from(r.min.y) + i32::from(delta.y);
+    let min_x = temp_min_x.clamp(i32::from(i16::MIN), i32::from(i16::MAX) - i32::from(dx));
+    let min_y = temp_min_y.clamp(i32::from(i16::MIN), i32::from(i16::MAX) - i32::from(dy));
+    let max_x = min_x + i32::from(dx);
+    let max_y = min_y + i32::from(dy);
+    RectI16 { min: point_i16::PointI16 { x: min_x as i16, y: min_y as i16 }, max: point_i16::PointI16 { x: max_x as i16, y: max_y as i16 } }
+}
+
 pub fn contains(r: &RectI16, p: &point_i16::PointI16) -> bool {
     p.x >= r.min.x && p.x <= r.max.x && p.y >= r.min.y && p.y <= r.max.y
 }
@@ -140,8 +152,8 @@ mod tests {
     use crate::cartesian::{point::point_i16::PointI16, rect::rect_i8::RectI8};
 
     use super::{
-        RectI16, contains, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, resize, saturating_translate, try_checked_translate,
-        checked_translate
+        RectI16, checked_translate, contains, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, resize, saturating_translate,
+        try_checked_translate,
     };
 
     #[test]

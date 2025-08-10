@@ -127,6 +127,18 @@ pub fn checked_translate(r: &mut RectU8, delta: &PointI8) {
     try_checked_translate(r, delta).unwrap()
 }
 
+pub fn saturating_translated(r: &RectU8, delta: &PointI8) -> RectU8 {
+    let d_row = delta_row(r);
+    let d_col = delta_col(r);
+    let temp_min_row = i16::from(r.min.row) + i16::from(delta.row);
+    let temp_min_col = i16::from(r.min.col) + i16::from(delta.col);
+    let clamped_row = temp_min_row.clamp(0, i16::from(u8::MAX) - i16::from(d_row));
+    let clamped_col = temp_min_col.clamp(0, i16::from(u8::MAX) - i16::from(d_col));
+    let min_row = clamped_row as u8;
+    let min_col = clamped_col as u8;
+    RectU8 { min: point_u8::PointU8 { row: min_row, col: min_col }, max: point_u8::PointU8 { row: min_row + d_row, col: min_col + d_col } }
+}
+
 pub fn contains(r: &RectU8, p: &point_u8::PointU8) -> bool {
     p.row >= r.min.row && p.row <= r.max.row && p.col >= r.min.col && p.col <= r.max.col
 }
@@ -136,8 +148,8 @@ mod tests {
     use crate::matrix::point::{point_i8::PointI8, point_u8::PointU8};
 
     use super::{
-        RectU8, contains, deflate, delta_col, delta_row, inflate, len_col, len_row, max_delta, max_len, resize, saturating_translate,
-        try_checked_translate,checked_translate
+        RectU8, checked_translate, contains, deflate, delta_col, delta_row, inflate, len_col, len_row, max_delta, max_len, resize,
+        saturating_translate, try_checked_translate,
     };
 
     #[test]

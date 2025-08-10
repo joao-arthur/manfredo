@@ -140,6 +140,18 @@ pub fn checked_translate(r: &mut RectI32, delta: &point_i32::PointI32) {
     try_checked_translate(r, delta).unwrap()
 }
 
+pub fn saturating_translated(r: &RectI32, delta: &point_i32::PointI32) -> RectI32 {
+    let dx = delta_x(r);
+    let dy = delta_y(r);
+    let temp_min_x = i64::from(r.min.x) + i64::from(delta.x);
+    let temp_min_y = i64::from(r.min.y) + i64::from(delta.y);
+    let min_x = temp_min_x.clamp(i64::from(i32::MIN), i64::from(i32::MAX) - i64::from(dx));
+    let min_y = temp_min_y.clamp(i64::from(i32::MIN), i64::from(i32::MAX) - i64::from(dy));
+    let max_x = min_x + i64::from(dx);
+    let max_y = min_y + i64::from(dy);
+    RectI32 { min: point_i32::PointI32 { x: min_x as i32, y: min_y as i32 }, max: point_i32::PointI32 { x: max_x as i32, y: max_y as i32 } }
+}
+
 pub fn contains(r: &RectI32, p: &point_i32::PointI32) -> bool {
     p.x >= r.min.x && p.x <= r.max.x && p.y >= r.min.y && p.y <= r.max.y
 }
@@ -152,8 +164,8 @@ mod tests {
     };
 
     use super::{
-        RectI32, contains, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, resize, saturating_translate, try_checked_translate,
-        checked_translate
+        RectI32, checked_translate, contains, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, resize, saturating_translate,
+        try_checked_translate,
     };
 
     #[test]

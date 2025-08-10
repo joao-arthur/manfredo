@@ -136,6 +136,18 @@ pub fn saturating_translate(r: &mut RectF64, delta: &point_f64::PointF64) {
     r.max.y = min_y + dy;
 }
 
+pub fn saturating_translated(r: &RectF64, delta: &point_f64::PointF64) -> RectF64 {
+    let dx = delta_x(r);
+    let dy = delta_y(r);
+    let temp_min_x = r.min.x + delta.x;
+    let temp_min_y = r.min.y + delta.y;
+    let min_x = temp_min_x.clamp(point_f64::MIN, point_f64::MAX - dx);
+    let min_y = temp_min_y.clamp(point_f64::MIN, point_f64::MAX - dy);
+    let max_x = min_x + dx;
+    let max_y = min_y + dy;
+    RectF64 { min: point_f64::PointF64 { x: min_x, y: min_y }, max: point_f64::PointF64 { x: max_x, y: max_y } }
+}
+
 pub fn contains(r: &RectF64, p: &point_f64::PointF64) -> bool {
     p.x >= r.min.x && p.x <= r.max.x && p.y >= r.min.y && p.y <= r.max.y
 }

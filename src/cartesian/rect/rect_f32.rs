@@ -136,6 +136,18 @@ pub fn saturating_translate(r: &mut RectF32, delta: &point_f32::PointF32) {
     r.max.y = min_y + dy;
 }
 
+pub fn saturating_translated(r: &RectF32, delta: &point_f32::PointF32) -> RectF32 {
+    let dx = delta_x(r);
+    let dy = delta_y(r);
+    let temp_min_x = r.min.x + delta.x;
+    let temp_min_y = r.min.y + delta.y;
+    let min_x = temp_min_x.clamp(point_f32::MIN, point_f32::MAX - dx);
+    let min_y = temp_min_y.clamp(point_f32::MIN, point_f32::MAX - dy);
+    let max_x = min_x + dx;
+    let max_y = min_y + dy;
+    RectF32 { min: point_f32::PointF32 { x: min_x, y: min_y }, max: point_f32::PointF32 { x: max_x, y: max_y } }
+}
+
 pub fn contains(r: &RectF32, p: &point_f32::PointF32) -> bool {
     p.x >= r.min.x && p.x <= r.max.x && p.y >= r.min.y && p.y <= r.max.y
 }

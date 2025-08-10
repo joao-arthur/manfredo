@@ -127,6 +127,30 @@ pub fn checked_translate(r: &mut RectU8, delta: &PointI8) {
     try_checked_translate(r, delta).unwrap()
 }
 
+pub fn saturating_translated(r: &RectU8, delta: &PointI8) -> RectU8 {
+    let dx = delta_x(r);
+    let dy = delta_y(r);
+    let temp_min_x = i16::from(r.min.x) + i16::from(delta.x);
+    let temp_min_y = i16::from(r.min.y) + i16::from(delta.y);
+    let clamped_x = temp_min_x.clamp(0, i16::from(u8::MAX) - i16::from(dx));
+    let clamped_y = temp_min_y.clamp(0, i16::from(u8::MAX) - i16::from(dy));
+    let min_x = clamped_x as u8;
+    let min_y = clamped_y as u8;
+    RectU8 { min: point_u8::PointU8 { x: min_x, y: min_y }, max: point_u8::PointU8 { x: min_x + dx, y: min_y + dy } }
+}
+
+pub fn try_checked_translated(r: &RectU8, delta: &PointI8) -> Option<RectU8> {
+    let min_x = u8::try_from(i16::from(r.min.x) + i16::from(delta.x)).ok()?;
+    let min_y = u8::try_from(i16::from(r.min.y) + i16::from(delta.y)).ok()?;
+    let max_x = u8::try_from(i16::from(r.max.x) + i16::from(delta.x)).ok()?;
+    let max_y = u8::try_from(i16::from(r.max.y) + i16::from(delta.y)).ok()?;
+    Some(RectU8 { min: point_u8::PointU8 { x: min_x, y: min_y }, max: point_u8::PointU8 { x: max_x, y: max_y } })
+}
+
+pub fn checked_translated(r: &RectU8, delta: &PointI8) -> RectU8 {
+    try_checked_translated(r, delta).unwrap()
+}
+
 pub fn contains(r: &RectU8, p: &point_u8::PointU8) -> bool {
     p.x >= r.min.x && p.x <= r.max.x && p.y >= r.min.y && p.y <= r.max.y
 }
@@ -136,8 +160,8 @@ mod tests {
     use crate::cartesian::point::{point_i8::PointI8, point_u8::PointU8};
 
     use super::{
-        RectU8, contains, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, resize, saturating_translate, try_checked_translate,
-        checked_translate,
+        RectU8, checked_translate, contains, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, resize, saturating_translate,
+        try_checked_translate,
     };
 
     #[test]

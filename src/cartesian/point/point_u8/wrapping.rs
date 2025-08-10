@@ -1,5 +1,6 @@
-use super::PointU8;
 use crate::cartesian::point::point_i8::PointI8;
+
+use super::PointU8;
 
 pub fn assign_add(p: &mut PointU8, delta: &PointI8) {
     p.x = p.x.wrapping_add(delta.x as i8 as u8);
@@ -41,7 +42,7 @@ mod tests {
         let mut p_min = PointU8::of(2, 5);
         assign_add(&mut p_min, &PointI8::of(-10, -10));
         assert_eq!(p_min, PointU8::of(u8::MAX - 7, u8::MAX - 4));
- 
+
         let mut m_max = PointU8::of(u8::MAX - 2, u8::MAX - 5);
         assign_add(&mut m_max, &PointI8::of(10, 10));
         assert_eq!(m_max, PointU8::of(7, 4));

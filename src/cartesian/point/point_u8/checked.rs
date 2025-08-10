@@ -1,5 +1,6 @@
-use super::PointU8;
 use crate::cartesian::point::point_i8::PointI8;
+
+use super::PointU8;
 
 pub fn try_assign_add(p: &mut PointU8, delta: &PointI8) -> Option<()> {
     let x = u8::try_from(i16::from(p.x) + i16::from(delta.x)).ok()?;
@@ -78,7 +79,7 @@ mod tests {
         assert_eq!(try_assign_add(&mut p_max, &PointI8::max()), None);
         assert_eq!(p_max, PointU8::of(u8::MAX - 1, u8::MAX - 1));
     }
-    
+
     #[test]
     fn test_try_add() {
         assert_eq!(try_add(&PointU8::of(0, 0), &PointI8::of(10, 13)), Some(PointU8::of(10, 13)));
@@ -97,7 +98,7 @@ mod tests {
         assert_eq!(try_add(&p_min, &PointI8::of(-10, 0)), None);
         assert_eq!(try_add(&p_min, &PointI8::of(0, -10)), None);
         assert_eq!(try_add(&p_min, &PointI8::of(-10, -10)), None);
-    
+
         let m_max = PointU8::of(u8::MAX - 2, u8::MAX - 5);
         assert_eq!(try_add(&m_max, &PointI8::of(10, 0)), None);
         assert_eq!(try_add(&m_max, &PointI8::of(0, 10)), None);

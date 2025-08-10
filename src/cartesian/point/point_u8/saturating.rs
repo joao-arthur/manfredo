@@ -1,5 +1,6 @@
-use super::PointU8;
 use crate::cartesian::point::point_i8::PointI8;
+
+use super::PointU8;
 
 pub fn assign_add(p: &mut PointU8, delta: &PointI8) {
     let temp_x = i16::from(p.x) + i16::from(delta.x);

@@ -1,0 +1,85 @@
+use crate::cartesian::point::point_i16::PointI16;
+
+use super::PointU16;
+
+pub fn assign_add(p: &mut PointU16, delta: &PointI16) {
+    p.x = p.x.wrapping_add(delta.x as i16 as u16);
+    p.y = p.y.wrapping_add(delta.y as i16 as u16);
+}
+
+pub fn add(p: &PointU16, delta: &PointI16) -> PointU16 {
+    PointU16::of(p.x.wrapping_add(delta.x as i16 as u16), p.y.wrapping_add(delta.y as i16 as u16))
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::cartesian::point::point_i16::PointI16;
+
+    use super::{PointU16, add, assign_add};
+
+    #[test]
+    fn test_assign_add() {
+        let mut p = PointU16::of(0, 0);
+        assign_add(&mut p, &PointI16::of(10, 13));
+        assert_eq!(p, PointU16::of(10, 13));
+        assign_add(&mut p, &PointI16::of(-5, -3));
+        assert_eq!(p, PointU16::of(5, 10));
+    }
+
+    #[test]
+    fn assign_add_to_bounds() {
+        let mut p_min = PointU16::of(2, 5);
+        assign_add(&mut p_min, &PointI16::of(-2, -5));
+        assert_eq!(p_min, PointU16::min());
+
+        let mut m_max = PointU16::of(u16::MAX - 2, u16::MAX - 5);
+        assign_add(&mut m_max, &PointI16::of(2, 5));
+        assert_eq!(m_max, PointU16::max());
+    }
+
+    #[test]
+    fn assign_add_beyond_bounds() {
+        let mut p_min = PointU16::of(2, 5);
+        assign_add(&mut p_min, &PointI16::of(-10, -10));
+        assert_eq!(p_min, PointU16::of(u16::MAX - 7, u16::MAX - 4));
+
+        let mut m_max = PointU16::of(u16::MAX - 2, u16::MAX - 5);
+        assign_add(&mut m_max, &PointI16::of(10, 10));
+        assert_eq!(m_max, PointU16::of(7, 4));
+    }
+
+    #[test]
+    fn assign_add_limits() {
+        let mut p_min = PointU16::of(1, 1);
+        assign_add(&mut p_min, &PointI16::min());
+        assert_eq!(p_min, PointU16::of(32769, 32769));
+
+        let mut m_max = PointU16::of(u16::MAX - 1, u16::MAX - 1);
+        assign_add(&mut m_max, &PointI16::max());
+        assert_eq!(m_max, PointU16::of(32765, 32765));
+    }
+
+    #[test]
+    fn test_add() {
+        assert_eq!(add(&PointU16::of(0, 0), &PointI16::of(10, 13)), PointU16::of(10, 13));
+        assert_eq!(add(&PointU16::of(10, 10), &PointI16::of(-5, -3)), PointU16::of(5, 7));
+    }
+
+    #[test]
+    fn add_to_bounds() {
+        assert_eq!(add(&PointU16::of(2, 5), &PointI16::of(-2, -5)), PointU16::min());
+        assert_eq!(add(&PointU16::of(u16::MAX - 2, u16::MAX - 5), &PointI16::of(2, 5)), PointU16::max());
+    }
+
+    #[test]
+    fn add_beyond_bounds() {
+        assert_eq!(add(&PointU16::of(2, 5), &PointI16::of(-10, -10)), PointU16::of(u16::MAX - 7, u16::MAX - 4));
+        assert_eq!(add(&PointU16::of(u16::MAX - 2, u16::MAX - 5), &PointI16::of(10, 10)), PointU16::of(7, 4));
+    }
+
+    #[test]
+    fn add_limits() {
+        assert_eq!(add(&PointU16::of(1, 1), &PointI16::min()), PointU16::of(32769, 32769));
+        assert_eq!(add(&PointU16::of(u16::MAX - 1, u16::MAX - 1), &PointI16::max()), PointU16::of(32765, 32765));
+    }
+}

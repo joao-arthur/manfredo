@@ -44,7 +44,7 @@ mod tests {
     }
 
     #[test]
-    fn assign_add_beyond_bounds() {
+    fn assign_add_out_of_bounds() {
         let mut p_min = PointU8::of(2, 5);
         assign_add(&mut p_min, &PointI8::of(-10, -10));
         assert_eq!(p_min, PointU8::min());
@@ -55,7 +55,7 @@ mod tests {
     }
 
     #[test]
-    fn assign_add_limits() {
+    fn assign_add_limits_out_of_bounds_out_of_bounds() {
         let mut p_min = PointU8::of(1, 1);
         assign_add(&mut p_min, &PointI8::min());
         assert_eq!(p_min, PointU8::min());
@@ -78,13 +78,13 @@ mod tests {
     }
 
     #[test]
-    fn add_beyond_bounds() {
+    fn add_out_of_bounds() {
         assert_eq!(add(&PointU8::of(2, 5), &PointI8::of(-10, -10)), PointU8::min());
         assert_eq!(add(&PointU8::of(u8::MAX - 2, u8::MAX - 5), &PointI8::of(10, 10)), PointU8::max());
     }
 
     #[test]
-    fn add_limits() {
+    fn add_limits_out_of_bounds() {
         assert_eq!(add(&PointU8::of(1, 1), &PointI8::min()), PointU8::min());
         assert_eq!(add(&PointU8::of(u8::MAX - 1, u8::MAX - 1), &PointI8::max()), PointU8::max());
     }

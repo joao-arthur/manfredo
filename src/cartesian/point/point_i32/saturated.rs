@@ -38,7 +38,7 @@ mod tests {
     }
 
     #[test]
-    fn assign_add_beyond_bounds() {
+    fn assign_add_out_of_bounds() {
         let mut p_min = PointI32::of(i32::MIN + 2, i32::MIN + 5);
         assign_add(&mut p_min, &PointI32::of(-10, -10));
         assert_eq!(p_min, PointI32::min());
@@ -49,7 +49,7 @@ mod tests {
     }
 
     #[test]
-    fn assign_add_limits() {
+    fn assign_add_limits_out_of_bounds_out_of_bounds() {
         let mut p_min = PointI32::of(i32::MIN + 1, i32::MIN + 1);
         assign_add(&mut p_min, &PointI32::min());
         assert_eq!(p_min, PointI32::min());
@@ -72,13 +72,13 @@ mod tests {
     }
 
     #[test]
-    fn add_beyond_bounds() {
+    fn add_out_of_bounds() {
         assert_eq!(add(&PointI32::of(i32::MIN + 2, i32::MIN + 5), &PointI32::of(-10, -10)), PointI32::min());
         assert_eq!(add(&PointI32::of(i32::MAX - 2, i32::MAX - 5), &PointI32::of(10, 10)), PointI32::max());
     }
 
     #[test]
-    fn add_limits() {
+    fn add_limits_out_of_bounds() {
         assert_eq!(add(&PointI32::of(i32::MIN + 1, i32::MIN + 1), &PointI32::min()), PointI32::min());
         assert_eq!(add(&PointI32::of(i32::MAX - 1, i32::MAX - 1), &PointI32::max()), PointI32::max());
     }

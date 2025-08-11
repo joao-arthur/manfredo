@@ -40,7 +40,7 @@ mod tests {
     }
 
     #[test]
-    fn assign_add_beyond_bounds() {
+    fn assign_add_out_of_bounds() {
         let mut p_min = PointU16::of(2, 5);
         assign_add(&mut p_min, &PointI16::of(-10, -10));
         assert_eq!(p_min, PointU16::of(u16::MAX - 7, u16::MAX - 4));
@@ -51,7 +51,7 @@ mod tests {
     }
 
     #[test]
-    fn assign_add_limits() {
+    fn assign_add_limits_out_of_bounds_out_of_bounds() {
         let mut p_min = PointU16::of(1, 1);
         assign_add(&mut p_min, &PointI16::min());
         assert_eq!(p_min, PointU16::of(32769, 32769));
@@ -74,13 +74,13 @@ mod tests {
     }
 
     #[test]
-    fn add_beyond_bounds() {
+    fn add_out_of_bounds() {
         assert_eq!(add(&PointU16::of(2, 5), &PointI16::of(-10, -10)), PointU16::of(u16::MAX - 7, u16::MAX - 4));
         assert_eq!(add(&PointU16::of(u16::MAX - 2, u16::MAX - 5), &PointI16::of(10, 10)), PointU16::of(7, 4));
     }
 
     #[test]
-    fn add_limits() {
+    fn add_limits_out_of_bounds() {
         assert_eq!(add(&PointU16::of(1, 1), &PointI16::min()), PointU16::of(32769, 32769));
         assert_eq!(add(&PointU16::of(u16::MAX - 1, u16::MAX - 1), &PointI16::max()), PointU16::of(32765, 32765));
     }

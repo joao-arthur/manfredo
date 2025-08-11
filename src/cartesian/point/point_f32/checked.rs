@@ -55,7 +55,7 @@ mod tests {
     }
 
     #[test]
-    fn try_assign_add_beyond_bounds() {
+    fn try_assign_add_out_of_bounds() {
         let mut p_min = PointF32::of(MIN + 2.0, MIN + 5.0);
         assert_eq!(try_assign_add(&mut p_min, &PointF32::of(-10.0, 0.0)), None);
         assert_eq!(try_assign_add(&mut p_min, &PointF32::of(0.0, -10.0)), None);
@@ -70,7 +70,7 @@ mod tests {
     }
 
     #[test]
-    fn try_assign_add_limits() {
+    fn try_assign_add_limits_out_of_bounds_out_of_bounds() {
         let mut p_min = PointF32::of(MIN + 1.0, MIN + 1.0);
         assert_eq!(try_assign_add(&mut p_min, &PointF32::of(MIN, 0.0)), None);
         assert_eq!(try_assign_add(&mut p_min, &PointF32::of(0.0, MIN)), None);
@@ -97,7 +97,7 @@ mod tests {
     }
 
     #[test]
-    fn try_add_beyond_bounds() {
+    fn try_add_out_of_bounds() {
         let p_min = PointF32::of(MIN + 2.0, MIN + 5.0);
         assert_eq!(try_add(&p_min, &PointF32::of(-10.0, 0.0)), None);
         assert_eq!(try_add(&p_min, &PointF32::of(0.0, -10.0)), None);
@@ -110,7 +110,7 @@ mod tests {
     }
 
     #[test]
-    fn try_add_limits() {
+    fn try_add_limits_out_of_bounds_out_of_bounds() {
         let p_min = PointF32::of(MIN + 1.0, MIN + 1.0);
         assert_eq!(try_add(&p_min, &PointF32::of(MIN, 0.0)), None);
         assert_eq!(try_add(&p_min, &PointF32::of(0.0, MIN)), None);

@@ -80,7 +80,7 @@ mod tests {
     }
 
     #[test]
-    fn assign_add_beyond_bounds() {
+    fn assign_add_out_of_bounds() {
         let mut p_min = PointF64::of(MIN + 2.0, MIN + 5.0);
         assign_add(&mut p_min, &PointF64::of(-10.0, -10.0));
         assert_eq!(p_min, PointF64::of(MAX - 7.0, MAX - 4.0));
@@ -91,7 +91,7 @@ mod tests {
     }
 
     #[test]
-    fn assign_add_limits() {
+    fn assign_add_limits_out_of_bounds_out_of_bounds() {
         let mut p_min = PointF64::of(MIN + 1.0, MIN + 1.0);
         assign_add(&mut p_min, &PointF64::min());
         assert_eq!(p_min, PointF64::of(1.0, 1.0));
@@ -114,13 +114,13 @@ mod tests {
     }
 
     #[test]
-    fn add_beyond_bounds() {
+    fn add_out_of_bounds() {
         assert_eq!(add(&PointF64::of(MIN + 2.0, MIN + 5.0), &PointF64::of(-10.0, -10.0)), PointF64::of(MAX - 7.0, MAX - 4.0));
         assert_eq!(add(&PointF64::of(MAX - 2.0, MAX - 5.0), &PointF64::of(10.0, 10.0)), PointF64::of(MIN + 7.0, MIN + 4.0));
     }
 
     #[test]
-    fn add_limits() {
+    fn add_limits_out_of_bounds() {
         assert_eq!(add(&PointF64::of(MIN + 1.0, MIN + 1.0), &PointF64::min()), PointF64::of(1.0, 1.0));
         assert_eq!(add(&PointF64::of(MAX - 1.0, MAX - 1.0), &PointF64::max()), PointF64::of(-3.0, -3.0));
     }

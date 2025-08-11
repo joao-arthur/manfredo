@@ -49,7 +49,7 @@ mod tests {
     }
 
     #[test]
-    fn try_assign_add_beyond_bounds() {
+    fn try_assign_add_out_of_bounds() {
         let mut p_min = PointI8::of(i8::MIN + 2, i8::MIN + 5);
         assert_eq!(try_assign_add(&mut p_min, &PointI8::of(-10, 0)), None);
         assert_eq!(try_assign_add(&mut p_min, &PointI8::of(0, -10)), None);
@@ -64,7 +64,7 @@ mod tests {
     }
 
     #[test]
-    fn try_assign_add_limits() {
+    fn try_assign_add_limits_out_of_bounds_out_of_bounds() {
         let mut p_min = PointI8::of(i8::MIN + 1, i8::MIN + 1);
         assert_eq!(try_assign_add(&mut p_min, &PointI8::of(i8::MIN, 0)), None);
         assert_eq!(try_assign_add(&mut p_min, &PointI8::of(0, i8::MIN)), None);
@@ -91,7 +91,7 @@ mod tests {
     }
 
     #[test]
-    fn try_add_beyond_bounds() {
+    fn try_add_out_of_bounds() {
         let p_min = PointI8::of(i8::MIN + 2, i8::MIN + 5);
         assert_eq!(try_add(&p_min, &PointI8::of(-10, 0)), None);
         assert_eq!(try_add(&p_min, &PointI8::of(0, -10)), None);
@@ -104,7 +104,7 @@ mod tests {
     }
 
     #[test]
-    fn try_add_limits() {
+    fn try_add_limits_out_of_bounds_out_of_bounds() {
         let p_min = PointI8::of(i8::MIN + 1, i8::MIN + 1);
         assert_eq!(try_add(&p_min, &PointI8::of(i8::MIN, 0)), None);
         assert_eq!(try_add(&p_min, &PointI8::of(0, i8::MIN)), None);

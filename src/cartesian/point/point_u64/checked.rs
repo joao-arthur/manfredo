@@ -51,7 +51,7 @@ mod tests {
     }
 
     #[test]
-    fn try_assign_add_beyond_bounds() {
+    fn try_assign_add_out_of_bounds() {
         let mut p_min = PointU64::of(2, 5);
         assert_eq!(try_assign_add(&mut p_min, &PointI64::of(-10, 0)), None);
         assert_eq!(try_assign_add(&mut p_min, &PointI64::of(0, -10)), None);
@@ -66,7 +66,7 @@ mod tests {
     }
 
     #[test]
-    fn try_assign_add_limits() {
+    fn try_assign_add_limits_out_of_bounds_out_of_bounds() {
         let mut p_min = PointU64::of(1, 1);
         assert_eq!(try_assign_add(&mut p_min, &PointI64::of(i64::MIN, 0)), None);
         assert_eq!(try_assign_add(&mut p_min, &PointI64::of(0, i64::MIN)), None);
@@ -93,7 +93,7 @@ mod tests {
     }
 
     #[test]
-    fn try_add_beyond_bounds() {
+    fn try_add_out_of_bounds() {
         let p_min = PointU64::of(2, 5);
         assert_eq!(try_add(&p_min, &PointI64::of(-10, 0)), None);
         assert_eq!(try_add(&p_min, &PointI64::of(0, -10)), None);
@@ -106,7 +106,7 @@ mod tests {
     }
 
     #[test]
-    fn try_add_limits() {
+    fn try_add_limits_out_of_bounds_out_of_bounds() {
         let p_min = PointU64::of(1, 1);
         assert_eq!(try_add(&p_min, &PointI64::of(i64::MIN, 0)), None);
         assert_eq!(try_add(&p_min, &PointI64::of(0, i64::MIN)), None);

@@ -3,13 +3,13 @@ use crate::matrix::point::point_i16::PointI16;
 use super::PointU16;
 
 pub fn assign_add(p: &mut PointU16, delta: &PointI16) {
-    p.row = p.row.wrapping_add(delta.row as i16 as u16);
-    p.col = p.col.wrapping_add(delta.col as i16 as u16);
+    p.row = p.row.wrapping_add(delta.row as u16);
+    p.col = p.col.wrapping_add(delta.col as u16);
 }
 
 pub fn add(p: &PointU16, delta: &PointI16) -> PointU16 {
-    let row = p.row.wrapping_add(delta.row as i16 as u16);
-    let col = p.col.wrapping_add(delta.col as i16 as u16);
+    let row = p.row.wrapping_add(delta.row as u16);
+    let col = p.col.wrapping_add(delta.col as u16);
     PointU16 { row, col }
 }
 

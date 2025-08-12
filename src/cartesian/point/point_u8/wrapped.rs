@@ -3,13 +3,13 @@ use crate::cartesian::point::point_i8::PointI8;
 use super::PointU8;
 
 pub fn assign_add(p: &mut PointU8, delta: &PointI8) {
-    p.x = p.x.wrapping_add(delta.x as i8 as u8);
-    p.y = p.y.wrapping_add(delta.y as i8 as u8);
+    p.x = p.x.wrapping_add(delta.x as u8);
+    p.y = p.y.wrapping_add(delta.y as u8);
 }
 
 pub fn add(p: &PointU8, delta: &PointI8) -> PointU8 {
-    let x = p.x.wrapping_add(delta.x as i8 as u8);
-    let y = p.y.wrapping_add(delta.y as i8 as u8);
+    let x = p.x.wrapping_add(delta.x as u8);
+    let y = p.y.wrapping_add(delta.y as u8);
     PointU8 { x, y }
 }
 

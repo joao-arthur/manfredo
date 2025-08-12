@@ -3,13 +3,13 @@ use crate::cartesian::point::point_i32::PointI32;
 use super::PointU32;
 
 pub fn assign_add(p: &mut PointU32, delta: &PointI32) {
-    p.x = p.x.wrapping_add(delta.x as i32 as u32);
-    p.y = p.y.wrapping_add(delta.y as i32 as u32);
+    p.x = p.x.wrapping_add(delta.x as u32);
+    p.y = p.y.wrapping_add(delta.y as u32);
 }
 
 pub fn add(p: &PointU32, delta: &PointI32) -> PointU32 {
-    let x = p.x.wrapping_add(delta.x as i32 as u32);
-    let y = p.y.wrapping_add(delta.y as i32 as u32);
+    let x = p.x.wrapping_add(delta.x as u32);
+    let y = p.y.wrapping_add(delta.y as u32);
     PointU32 { x, y }
 }
 

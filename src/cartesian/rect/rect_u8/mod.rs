@@ -1,6 +1,9 @@
 use std::ops::RangeInclusive;
 
-use crate::cartesian::point::{point_i8::PointI8, point_u8};
+pub mod checked;
+pub mod saturated;
+
+use crate::cartesian::point::point_u8;
 
 #[derive(Eq, PartialEq, Debug, Clone)]
 pub struct RectU8 {
@@ -96,73 +99,15 @@ pub fn resize(r: &mut RectU8, size: u8) {
     r.max.y = (min_y + i16::from(size) - 1) as u8;
 }
 
-pub fn assign_saturating_add(r: &mut RectU8, delta: &PointI8) {
-    let dx = delta_x(r);
-    let dy = delta_y(r);
-    let temp_min_x = i16::from(r.min.x) + i16::from(delta.x);
-    let temp_min_y = i16::from(r.min.y) + i16::from(delta.y);
-    let clamped_x = temp_min_x.clamp(0, i16::from(u8::MAX) - i16::from(dx));
-    let clamped_y = temp_min_y.clamp(0, i16::from(u8::MAX) - i16::from(dy));
-    let min_x = clamped_x as u8;
-    let min_y = clamped_y as u8;
-    r.min.x = min_x;
-    r.min.y = min_y;
-    r.max.x = min_x + dx;
-    r.max.y = min_y + dy;
-}
-
-pub fn try_assign_checked_add(r: &mut RectU8, delta: &PointI8) -> Result<(), ()> {
-    let min_x = u8::try_from(i16::from(r.min.x) + i16::from(delta.x)).map_err(|_| ())?;
-    let min_y = u8::try_from(i16::from(r.min.y) + i16::from(delta.y)).map_err(|_| ())?;
-    let max_x = u8::try_from(i16::from(r.max.x) + i16::from(delta.x)).map_err(|_| ())?;
-    let max_y = u8::try_from(i16::from(r.max.y) + i16::from(delta.y)).map_err(|_| ())?;
-    r.min.x = min_x;
-    r.min.y = min_y;
-    r.max.x = max_x;
-    r.max.y = max_y;
-    Ok(())
-}
-
-pub fn assign_checked_add(r: &mut RectU8, delta: &PointI8) {
-    try_assign_checked_add(r, delta).unwrap()
-}
-
-pub fn saturating_add(r: &RectU8, delta: &PointI8) -> RectU8 {
-    let dx = delta_x(r);
-    let dy = delta_y(r);
-    let temp_min_x = i16::from(r.min.x) + i16::from(delta.x);
-    let temp_min_y = i16::from(r.min.y) + i16::from(delta.y);
-    let clamped_x = temp_min_x.clamp(0, i16::from(u8::MAX) - i16::from(dx));
-    let clamped_y = temp_min_y.clamp(0, i16::from(u8::MAX) - i16::from(dy));
-    let min_x = clamped_x as u8;
-    let min_y = clamped_y as u8;
-    RectU8 { min: point_u8::PointU8 { x: min_x, y: min_y }, max: point_u8::PointU8 { x: min_x + dx, y: min_y + dy } }
-}
-
-pub fn try_checked_add(r: &RectU8, delta: &PointI8) -> Option<RectU8> {
-    let min_x = u8::try_from(i16::from(r.min.x) + i16::from(delta.x)).ok()?;
-    let min_y = u8::try_from(i16::from(r.min.y) + i16::from(delta.y)).ok()?;
-    let max_x = u8::try_from(i16::from(r.max.x) + i16::from(delta.x)).ok()?;
-    let max_y = u8::try_from(i16::from(r.max.y) + i16::from(delta.y)).ok()?;
-    Some(RectU8 { min: point_u8::PointU8 { x: min_x, y: min_y }, max: point_u8::PointU8 { x: max_x, y: max_y } })
-}
-
-pub fn checked_add(r: &RectU8, delta: &PointI8) -> RectU8 {
-    try_checked_add(r, delta).unwrap()
-}
-
 pub fn contains(r: &RectU8, p: &point_u8::PointU8) -> bool {
     p.x >= r.min.x && p.x <= r.max.x && p.y >= r.min.y && p.y <= r.max.y
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::cartesian::point::{point_i8::PointI8, point_u8::PointU8};
+    use crate::cartesian::point::point_u8::PointU8;
 
-    use super::{
-        RectU8, assign_checked_add, assign_saturating_add, contains, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, resize,
-        try_assign_checked_add,
-    };
+    use super::{RectU8, contains, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, resize};
 
     #[test]
     fn rect_u8() {
@@ -444,127 +389,6 @@ mod tests {
         let mut r = RectU8::of(u8::MAX - 3, u8::MAX - 3, u8::MAX, u8::MAX);
         resize(&mut r, u8::MAX - 1);
         assert_eq!(r, RectU8::of(2, 2, u8::MAX, u8::MAX));
-    }
-
-    #[test]
-    fn test_assign_saturating_add() {
-        let mut r = RectU8::of(0, 0, 12, 15);
-        assign_saturating_add(&mut r, &PointI8::of(5, 4));
-        assert_eq!(r, RectU8::of(5, 4, 17, 19));
-        assign_saturating_add(&mut r, &PointI8::of(-4, -2));
-        assert_eq!(r, RectU8::of(1, 2, 13, 17));
-        assign_saturating_add(&mut r, &PointI8::of(10, 20));
-        assert_eq!(r, RectU8::of(11, 22, 23, 37));
-    }
-
-    #[test]
-    fn assign_saturating_add_min_bounds() {
-        let mut r = RectU8::of(2, 5, 12, 15);
-        assign_saturating_add(&mut r, &PointI8::of(-10, -10));
-        assert_eq!(r, RectU8::of(0, 0, 10, 10));
-    }
-
-    #[test]
-    fn assign_saturating_add_max_bounds() {
-        let mut r = RectU8::of(240, 235, u8::MAX - 5, u8::MAX - 10);
-        assign_saturating_add(&mut r, &PointI8::of(20, 20));
-        assert_eq!(r, RectU8::of(245, 245, u8::MAX, u8::MAX));
-    }
-
-    #[test]
-    fn assign_saturating_add_min_bounds_big_delta() {
-        let mut r = RectU8::of(0, 0, 10, 10);
-        assign_saturating_add(&mut r, &PointI8::min());
-        assert_eq!(r, RectU8::of(0, 0, 10, 10));
-    }
-
-    #[test]
-    fn assign_saturating_add_max_bounds_big_delta() {
-        let mut r = RectU8::of(u8::MAX - 10, u8::MAX - 10, u8::MAX, u8::MAX);
-        assign_saturating_add(&mut r, &PointI8::max());
-        assert_eq!(r, RectU8::of(u8::MAX - 10, u8::MAX - 10, u8::MAX, u8::MAX));
-    }
-
-    #[test]
-    fn assign_saturating_add_min_bounds_big_rect_big_delta() {
-        let mut r = RectU8::of(1, 1, u8::MAX, u8::MAX);
-        assign_saturating_add(&mut r, &PointI8::min());
-        assert_eq!(r, RectU8::of(0, 0, u8::MAX - 1, u8::MAX - 1));
-    }
-
-    #[test]
-    fn assign_saturating_add_max_bounds_big_rect_big_delta() {
-        let mut r = RectU8::of(0, 0, u8::MAX - 1, u8::MAX - 1);
-        assign_saturating_add(&mut r, &PointI8::max());
-        assert_eq!(r, RectU8::of(1, 1, u8::MAX, u8::MAX));
-    }
-
-    #[test]
-    fn test_try_assign_checked_add() {
-        let mut r = RectU8::of(0, 0, 12, 15);
-        assert_eq!(try_assign_checked_add(&mut r, &PointI8::of(5, 4)), Ok(()));
-        assert_eq!(r, RectU8::of(5, 4, 17, 19));
-        assert_eq!(try_assign_checked_add(&mut r, &PointI8::of(-4, -2)), Ok(()));
-        assert_eq!(r, RectU8::of(1, 2, 13, 17));
-        assert_eq!(try_assign_checked_add(&mut r, &PointI8::of(10, 20)), Ok(()));
-        assert_eq!(r, RectU8::of(11, 22, 23, 37));
-    }
-
-    #[test]
-    fn try_assign_checked_add_min_bounds() {
-        let mut r = RectU8::of(2, 5, 12, 15);
-        assert_eq!(try_assign_checked_add(&mut r, &PointI8::of(-10, -10)), Err(()));
-        assert_eq!(r, RectU8::of(2, 5, 12, 15));
-    }
-
-    #[test]
-    fn try_assign_checked_add_max_bounds() {
-        let mut r = RectU8::of(240, 235, u8::MAX - 5, u8::MAX - 10);
-        assert_eq!(try_assign_checked_add(&mut r, &PointI8::of(20, 20)), Err(()));
-        assert_eq!(r, RectU8::of(240, 235, u8::MAX - 5, u8::MAX - 10));
-    }
-
-    #[test]
-    fn try_assign_checked_add_min_bounds_big_rect_big_delta() {
-        let mut r = RectU8::of(1, 1, u8::MAX, u8::MAX);
-        assert_eq!(try_assign_checked_add(&mut r, &PointI8::min()), Err(()));
-        assert_eq!(try_assign_checked_add(&mut r, &PointI8::of(i8::MIN, 0)), Err(()));
-        assert_eq!(try_assign_checked_add(&mut r, &PointI8::of(0, i8::MIN)), Err(()));
-        assert_eq!(r, RectU8::of(1, 1, u8::MAX, u8::MAX));
-    }
-
-    #[test]
-    fn try_assign_checked_add_max_bounds_big_rect_big_delta() {
-        let mut r = RectU8::of(0, 0, u8::MAX - 1, u8::MAX - 1);
-        assert_eq!(try_assign_checked_add(&mut r, &PointI8::max()), Err(()));
-        assert_eq!(try_assign_checked_add(&mut r, &PointI8::of(i8::MAX, 0)), Err(()));
-        assert_eq!(try_assign_checked_add(&mut r, &PointI8::of(0, i8::MAX)), Err(()));
-        assert_eq!(r, RectU8::of(0, 0, u8::MAX - 1, u8::MAX - 1));
-    }
-
-    #[test]
-    fn try_assign_checked_add_min_bounds_big_rect_small_delta() {
-        let mut r = RectU8::of(1, 1, u8::MAX, u8::MAX);
-        assert_eq!(try_assign_checked_add(&mut r, &PointI8::of(-1, -1)), Ok(()));
-        assert_eq!(r, RectU8::of(0, 0, u8::MAX - 1, u8::MAX - 1));
-    }
-
-    #[test]
-    fn try_assign_checked_add_max_bounds_big_rect_small_delta() {
-        let mut r = RectU8::of(0, 0, u8::MAX - 1, u8::MAX - 1);
-        assert_eq!(try_assign_checked_add(&mut r, &PointI8::of(1, 1)), Ok(()));
-        assert_eq!(r, RectU8::of(1, 1, u8::MAX, u8::MAX));
-    }
-
-    #[test]
-    fn test_assign_checked_add() {
-        let mut r = RectU8::of(0, 0, 12, 15);
-        assign_checked_add(&mut r, &PointI8::of(5, 4));
-        assert_eq!(r, RectU8::of(5, 4, 17, 19));
-        assign_checked_add(&mut r, &PointI8::of(-4, -2));
-        assert_eq!(r, RectU8::of(1, 2, 13, 17));
-        assign_checked_add(&mut r, &PointI8::of(10, 20));
-        assert_eq!(r, RectU8::of(11, 22, 23, 37));
     }
 
     #[test]

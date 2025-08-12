@@ -70,7 +70,7 @@ mod tests {
     }
 
     #[test]
-    fn try_assign_add_limits_out_of_bounds_out_of_bounds() {
+    fn try_assign_add_limits_out_of_bounds() {
         let mut p_min = PointF64::of(MIN + 1.0, MIN + 1.0);
         assert_eq!(try_assign_add(&mut p_min, &PointF64::of(MIN, 0.0)), None);
         assert_eq!(try_assign_add(&mut p_min, &PointF64::of(0.0, MIN)), None);
@@ -110,7 +110,7 @@ mod tests {
     }
 
     #[test]
-    fn try_add_limits_out_of_bounds_out_of_bounds() {
+    fn try_add_limits_out_of_bounds() {
         let p_min = PointF64::of(MIN + 1.0, MIN + 1.0);
         assert_eq!(try_add(&p_min, &PointF64::of(MIN, 0.0)), None);
         assert_eq!(try_add(&p_min, &PointF64::of(0.0, MIN)), None);

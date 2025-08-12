@@ -66,7 +66,7 @@ mod tests {
     }
 
     #[test]
-    fn try_assign_add_limits_out_of_bounds_out_of_bounds() {
+    fn try_assign_add_limits_out_of_bounds() {
         let mut p_min = PointU32::of(1, 1);
         assert_eq!(try_assign_add(&mut p_min, &PointI32::of(i32::MIN, 0)), None);
         assert_eq!(try_assign_add(&mut p_min, &PointI32::of(0, i32::MIN)), None);
@@ -106,7 +106,7 @@ mod tests {
     }
 
     #[test]
-    fn try_add_limits_out_of_bounds_out_of_bounds() {
+    fn try_add_limits_out_of_bounds() {
         let p_min = PointU32::of(1, 1);
         assert_eq!(try_add(&p_min, &PointI32::of(i32::MIN, 0)), None);
         assert_eq!(try_add(&p_min, &PointI32::of(0, i32::MIN)), None);

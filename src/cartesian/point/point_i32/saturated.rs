@@ -49,7 +49,7 @@ mod tests {
     }
 
     #[test]
-    fn assign_add_limits_out_of_bounds_out_of_bounds() {
+    fn assign_add_limits_out_of_bounds() {
         let mut p_min = PointI32::of(i32::MIN + 1, i32::MIN + 1);
         assign_add(&mut p_min, &PointI32::min());
         assert_eq!(p_min, PointI32::min());

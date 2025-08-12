@@ -55,7 +55,7 @@ mod tests {
     }
 
     #[test]
-    fn assign_add_limits_out_of_bounds_out_of_bounds() {
+    fn assign_add_limits_out_of_bounds() {
         let mut p_min = PointU8::of(1, 1);
         assign_add(&mut p_min, &PointI8::min());
         assert_eq!(p_min, PointU8::min());

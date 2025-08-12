@@ -32,10 +32,7 @@ pub fn add(r: &RectU8, delta: &PointI8) -> RectU8 {
 
 #[cfg(test)]
 mod tests {
-    use crate::cartesian::{
-        point::{point_i8::PointI8},
-        rect::rect_u8::RectU8,
-    };
+    use crate::cartesian::{point::point_i8::PointI8, rect::rect_u8::RectU8};
 
     use super::{add, assign_add, try_add, try_assign_add};
 

@@ -2,6 +2,7 @@ use std::ops::RangeInclusive;
 
 pub mod checked;
 pub mod saturated;
+pub mod wrapped;
 
 use crate::cartesian::point::point_u8;
 

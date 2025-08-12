@@ -1,6 +1,6 @@
 use crate::cartesian::point::{point_i8::PointI8, point_u8};
 
-use super::{RectU8, delta_x, delta_y};
+use super::super::{RectU8, delta_x, delta_y};
 
 pub fn assign_add(r: &mut RectU8, delta: &PointI8) {
     let dx = delta_x(r);

@@ -3,7 +3,7 @@ use crate::cartesian::{
     rect::rect_u8::{RectU8, delta_x, delta_y},
 };
 
-pub fn assign_resize_in_bounds(r: &mut RectU8, size: u8) -> Option<()> {
+pub fn try_assign_resize_in_bounds(r: &mut RectU8, size: u8) -> Option<()> {
     if size < 3 {
         return None;
     }
@@ -20,7 +20,7 @@ pub fn assign_resize_in_bounds(r: &mut RectU8, size: u8) -> Option<()> {
     Some(())
 }
 
-pub fn resize_in_bounds(r: &mut RectU8, size: u8) -> Option<RectU8> {
+pub fn try_resize_in_bounds(r: &mut RectU8, size: u8) -> Option<RectU8> {
     if size < 3 {
         return None;
     }
@@ -39,76 +39,109 @@ pub fn resize_in_bounds(r: &mut RectU8, size: u8) -> Option<RectU8> {
 
 #[cfg(test)]
 mod tests {
-    use super::{RectU8, assign_resize_in_bounds, resize_in_bounds};
+    use super::{RectU8, try_assign_resize_in_bounds, try_resize_in_bounds};
 
     #[test]
-    fn assign_resize_in_bounds_odd() {
+    fn try_assign_resize_in_bounds_odd() {
         let mut r = RectU8::of(5, 5, 15, 15);
-        assert_eq!(assign_resize_in_bounds(&mut r, 11), Some(()));
+        assert_eq!(try_assign_resize_in_bounds(&mut r, 11), Some(()));
         assert_eq!(r, RectU8::of(5, 5, 15, 15));
-        assert_eq!(assign_resize_in_bounds(&mut r, 9), Some(()));
+        assert_eq!(try_assign_resize_in_bounds(&mut r, 9), Some(()));
         assert_eq!(r, RectU8::of(6, 6, 14, 14));
-        assert_eq!(assign_resize_in_bounds(&mut r, 7), Some(()));
+        assert_eq!(try_assign_resize_in_bounds(&mut r, 7), Some(()));
         assert_eq!(r, RectU8::of(7, 7, 13, 13));
-        assert_eq!(assign_resize_in_bounds(&mut r, 5), Some(()));
+        assert_eq!(try_assign_resize_in_bounds(&mut r, 5), Some(()));
         assert_eq!(r, RectU8::of(8, 8, 12, 12));
-        assert_eq!(assign_resize_in_bounds(&mut r, 3), Some(()));
+        assert_eq!(try_assign_resize_in_bounds(&mut r, 3), Some(()));
         assert_eq!(r, RectU8::of(9, 9, 11, 11));
-        assert_eq!(assign_resize_in_bounds(&mut r, 1), None);
+        assert_eq!(try_assign_resize_in_bounds(&mut r, 1), None);
         assert_eq!(r, RectU8::of(9, 9, 11, 11));
-        assert_eq!(assign_resize_in_bounds(&mut r, 3), Some(()));
+        assert_eq!(try_assign_resize_in_bounds(&mut r, 3), Some(()));
         assert_eq!(r, RectU8::of(9, 9, 11, 11));
-        assert_eq!(assign_resize_in_bounds(&mut r, 9), Some(()));
+        assert_eq!(try_assign_resize_in_bounds(&mut r, 9), Some(()));
         assert_eq!(r, RectU8::of(6, 6, 14, 14));
     }
 
     #[test]
     fn resize_in_bounds_even() {
         let mut r = RectU8::of(5, 5, 14, 14);
-        assert_eq!(assign_resize_in_bounds(&mut r, 10), Some(()));
+        assert_eq!(try_assign_resize_in_bounds(&mut r, 10), Some(()));
         assert_eq!(r, RectU8::of(5, 5, 14, 14));
-        assert_eq!(assign_resize_in_bounds(&mut r, 8), Some(()));
+        assert_eq!(try_assign_resize_in_bounds(&mut r, 8), Some(()));
         assert_eq!(r, RectU8::of(6, 6, 13, 13));
-        assert_eq!(assign_resize_in_bounds(&mut r, 6), Some(()));
+        assert_eq!(try_assign_resize_in_bounds(&mut r, 6), Some(()));
         assert_eq!(r, RectU8::of(7, 7, 12, 12));
-        assert_eq!(assign_resize_in_bounds(&mut r, 4), Some(()));
+        assert_eq!(try_assign_resize_in_bounds(&mut r, 4), Some(()));
         assert_eq!(r, RectU8::of(8, 8, 11, 11));
-        assert_eq!(assign_resize_in_bounds(&mut r, 2), None);
+        assert_eq!(try_assign_resize_in_bounds(&mut r, 2), None);
         assert_eq!(r, RectU8::of(8, 8, 11, 11));
-        assert_eq!(assign_resize_in_bounds(&mut r, 4), Some(()));
+        assert_eq!(try_assign_resize_in_bounds(&mut r, 4), Some(()));
         assert_eq!(r, RectU8::of(8, 8, 11, 11));
-        assert_eq!(assign_resize_in_bounds(&mut r, 8), Some(()));
+        assert_eq!(try_assign_resize_in_bounds(&mut r, 8), Some(()));
         assert_eq!(r, RectU8::of(6, 6, 13, 13));
     }
 
     #[test]
-    fn assign_resize_in_bounds_small_size() {
+    fn try_assign_resize_in_bounds_small_size() {
         let mut r = RectU8::of(10, 10, 100, 100);
-        assert_eq!(assign_resize_in_bounds(&mut r, 0), None);
-        assert_eq!(assign_resize_in_bounds(&mut r, 1), None);
-        assert_eq!(assign_resize_in_bounds(&mut r, 2), None);
+        assert_eq!(try_assign_resize_in_bounds(&mut r, 0), None);
+        assert_eq!(try_assign_resize_in_bounds(&mut r, 1), None);
+        assert_eq!(try_assign_resize_in_bounds(&mut r, 2), None);
         assert_eq!(r, RectU8::of(10, 10, 100, 100));
     }
     
     #[test]
-    fn assign_resize_in_bounds_odd_small_rect_limits_out_of_bounds() {
+    fn try_assign_resize_in_bounds_odd_small_rect_out_of_bounds() {
         let mut r_min = RectU8::of(0, 0, 2, 2);
-        assert_eq!(assign_resize_in_bounds(&mut r_min, u8::MAX), Some(()));
+        assert_eq!(try_assign_resize_in_bounds(&mut r_min, 11), Some(()));
+        assert_eq!(r_min, RectU8::of(0, 0, 10, 10));
+
+        let mut r_max = RectU8::of(u8::MAX - 2, u8::MAX - 2, u8::MAX, u8::MAX);
+        assert_eq!(try_assign_resize_in_bounds(&mut r_max, 11), Some(()));
+        assert_eq!(r_max, RectU8::of(u8::MAX - 10, u8::MAX - 10, u8::MAX, u8::MAX));
+    }
+
+    #[test]
+    fn try_assign_resize_in_bounds_even_small_rect_out_of_bounds() {
+        let mut r = RectU8::of(0, 0, 3, 3);
+        assert_eq!(try_assign_resize_in_bounds(&mut r, 11), Some(()));
+        assert_eq!(r, RectU8::of(0, 0, 10, 10));
+
+        let mut r = RectU8::of(u8::MAX - 3, u8::MAX - 3, u8::MAX, u8::MAX);
+        assert_eq!(try_assign_resize_in_bounds(&mut r, 11), Some(()));
+        assert_eq!(r, RectU8::of(u8::MAX - 10, u8::MAX - 10, u8::MAX, u8::MAX));
+    }
+
+    #[test]
+    fn try_assign_resize_in_bounds_odd_small_rect_limits_out_of_bounds() {
+        let mut r_min = RectU8::of(0, 0, 2, 2);
+        assert_eq!(try_assign_resize_in_bounds(&mut r_min, u8::MAX), Some(()));
         assert_eq!(r_min, RectU8::of(0, 0, u8::MAX - 1, u8::MAX - 1));
 
         let mut r_max = RectU8::of(u8::MAX - 2, u8::MAX - 2, u8::MAX, u8::MAX);
-        assert_eq!(assign_resize_in_bounds(&mut r_max, u8::MAX), Some(()));
+        assert_eq!(try_assign_resize_in_bounds(&mut r_max, u8::MAX), Some(()));
         assert_eq!(r_max, RectU8::of(1, 1, u8::MAX, u8::MAX));
     }
 
     #[test]
-    fn assign_resize_in_bounds_even_small_rect_limits_out_of_bounds() {
+    fn try_assign_resize_in_bounds_even_small_rect_limits_out_of_bounds() {
         let mut r = RectU8::of(0, 0, 3, 3);
-        assert_eq!(assign_resize_in_bounds(&mut r, u8::MAX - 1), Some(()));
+        assert_eq!(try_assign_resize_in_bounds(&mut r, u8::MAX - 1), Some(()));
         assert_eq!(r, RectU8::of(0, 0, u8::MAX - 2, u8::MAX - 2));
 
         let mut r = RectU8::of(u8::MAX - 3, u8::MAX - 3, u8::MAX, u8::MAX);
-        assert_eq!(assign_resize_in_bounds(&mut r, u8::MAX - 1), Some(()));
+        assert_eq!(try_assign_resize_in_bounds(&mut r, u8::MAX - 1), Some(()));
         assert_eq!(r, RectU8::of(2, 2, u8::MAX, u8::MAX));
+    }
+
+    #[test]
+    fn try_assign_resize_in_bounds_odd_big_rect_limits_out_of_bounds() {
+        let mut r_odd = RectU8::of(0, 0, u8::MAX - 1, u8::MAX - 1);
+        assert_eq!(try_assign_resize_in_bounds(&mut r_odd, u8::MAX), Some(()));
+        assert_eq!(r_odd, RectU8::of(0, 0, u8::MAX - 1, u8::MAX - 1));
+
+        let mut r_even = RectU8::of(0, 0, u8::MAX, u8::MAX);
+        assert_eq!(try_assign_resize_in_bounds(&mut r_even, u8::MAX), Some(()));
+        assert_eq!(r_even, RectU8::of(0, 0, u8::MAX - 1, u8::MAX - 1));
     }
 }

@@ -1,4 +1,4 @@
-use super::{RectU8, delta_x, delta_y};
+use crate::cartesian::rect::rect_u8::{RectU8, delta_x, delta_y};
 
 // pub fn assign_deflate
 // pub fn deflate

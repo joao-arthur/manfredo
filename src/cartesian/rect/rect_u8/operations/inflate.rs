@@ -85,21 +85,21 @@ mod tests {
 
     #[test]
     fn try_assign_inflate_out_of_bounds() {
-        let mut r_min_width = RectU8::of(0, 10, u8::MAX, 100);
-        assert_eq!(try_assign_inflate(&mut r_min_width), None);
-        assert_eq!(r_min_width, RectU8::of(0, 10, u8::MAX, 100));
+        let mut r_min_x = RectU8::of(0, 10, u8::MAX, 100);
+        assert_eq!(try_assign_inflate(&mut r_min_x), None);
+        assert_eq!(r_min_x, RectU8::of(0, 10, u8::MAX, 100));
 
-        let mut r_max_width = RectU8::of(10, 10, u8::MAX, 100);
-        assert_eq!(try_assign_inflate(&mut r_max_width), None);
-        assert_eq!(r_max_width, RectU8::of(10, 10, u8::MAX, 100));
+        let mut r_max_x = RectU8::of(10, 10, u8::MAX, 100);
+        assert_eq!(try_assign_inflate(&mut r_max_x), None);
+        assert_eq!(r_max_x, RectU8::of(10, 10, u8::MAX, 100));
 
-        let mut r_min_height = RectU8::of(10, 0, 100, 100);
-        assert_eq!(try_assign_inflate(&mut r_min_height), None);
-        assert_eq!(r_min_height, RectU8::of(10, 0, 100, 100));
+        let mut r_min_y = RectU8::of(10, 0, 100, 100);
+        assert_eq!(try_assign_inflate(&mut r_min_y), None);
+        assert_eq!(r_min_y, RectU8::of(10, 0, 100, 100));
 
-        let mut r_max_height = RectU8::of(10, 10, 100, u8::MAX);
-        assert_eq!(try_assign_inflate(&mut r_max_height), None);
-        assert_eq!(r_max_height, RectU8::of(10, 10, 100, u8::MAX));
+        let mut r_max_y = RectU8::of(10, 10, 100, u8::MAX);
+        assert_eq!(try_assign_inflate(&mut r_max_y), None);
+        assert_eq!(r_max_y, RectU8::of(10, 10, 100, u8::MAX));
 
         let mut r_min = RectU8::of(0, 0, 10, 10);
         assert_eq!(try_assign_inflate(&mut r_min), None);

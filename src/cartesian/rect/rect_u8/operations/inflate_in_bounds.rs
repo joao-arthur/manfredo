@@ -134,13 +134,13 @@ mod tests {
         assert_eq!(try_assign_inflate_in_bounds(&mut r), None);
         assert_eq!(r, RectU8::of(0, 0, u8::MAX, u8::MAX));
 
-        let mut r_width = RectU8::of(0, 10, u8::MAX, 100);
-        assert_eq!(try_assign_inflate_in_bounds(&mut r_width), None);
-        assert_eq!(r_width, RectU8::of(0, 10, u8::MAX, 100));
+        let mut r_x = RectU8::of(0, 10, u8::MAX, 100);
+        assert_eq!(try_assign_inflate_in_bounds(&mut r_x), None);
+        assert_eq!(r_x, RectU8::of(0, 10, u8::MAX, 100));
 
-        let mut r_height = RectU8::of(10, 0, 100, u8::MAX);
-        assert_eq!(try_assign_inflate_in_bounds(&mut r_height), None);
-        assert_eq!(r_height, RectU8::of(10, 0, 100, u8::MAX));
+        let mut r_y = RectU8::of(10, 0, 100, u8::MAX);
+        assert_eq!(try_assign_inflate_in_bounds(&mut r_y), None);
+        assert_eq!(r_y, RectU8::of(10, 0, 100, u8::MAX));
     }
 
     #[test]

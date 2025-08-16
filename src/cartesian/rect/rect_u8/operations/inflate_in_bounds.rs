@@ -1,7 +1,4 @@
-use crate::cartesian::{
-    point::point_u8,
-    rect::rect_u8::{RectU8, delta_x, delta_y},
-};
+use crate::cartesian::{point::point_u8, rect::rect_u8::RectU8};
 
 pub fn try_assign_inflate_in_bounds(r: &mut RectU8) -> Option<()> {
     let is_min_x = r.min.x == 0;

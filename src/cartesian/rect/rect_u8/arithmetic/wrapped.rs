@@ -1,6 +1,7 @@
-use crate::cartesian::point::{point_i8::PointI8, point_u8};
-
-use super::super::{RectU8, delta_x, delta_y};
+use crate::cartesian::{
+    point::{point_i8::PointI8, point_u8::PointU8},
+    rect::rect_u8::{RectU8, delta_x, delta_y},
+};
 
 pub fn assign_add(r: &mut RectU8, delta: &PointI8) {
     let dx = delta_x(r);
@@ -20,14 +21,14 @@ pub fn add(r: &RectU8, delta: &PointI8) -> RectU8 {
     let min_y = r.min.y.wrapping_add(delta.y as u8);
     let max_x = min_x.wrapping_add(dx);
     let max_y = min_y.wrapping_add(dy);
-    RectU8 { min: point_u8::PointU8 { x: min_x, y: min_y }, max: point_u8::PointU8 { x: max_x, y: max_y } }
+    RectU8 { min: PointU8 { x: min_x, y: min_y }, max: PointU8 { x: max_x, y: max_y } }
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::cartesian::point::point_i8::PointI8;
+    use crate::cartesian::{point::point_i8::PointI8, rect::rect_u8::RectU8};
 
-    use super::{RectU8, add, assign_add};
+    use super::{add, assign_add};
 
     #[test]
     fn test_assign_add() {

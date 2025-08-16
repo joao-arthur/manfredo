@@ -1,6 +1,7 @@
-use crate::cartesian::point::{point_i8::PointI8, point_u8};
-
-use super::super::RectU8;
+use crate::cartesian::{
+    point::{point_i8::PointI8, point_u8::PointU8},
+    rect::rect_u8::RectU8,
+};
 
 pub fn try_assign_add(r: &mut RectU8, delta: &PointI8) -> Option<()> {
     let min_x = u8::try_from(i16::from(r.min.x) + i16::from(delta.x)).ok()?;
@@ -19,7 +20,7 @@ pub fn try_add(r: &RectU8, delta: &PointI8) -> Option<RectU8> {
     let min_y = u8::try_from(i16::from(r.min.y) + i16::from(delta.y)).ok()?;
     let max_x = u8::try_from(i16::from(r.max.x) + i16::from(delta.x)).ok()?;
     let max_y = u8::try_from(i16::from(r.max.y) + i16::from(delta.y)).ok()?;
-    Some(RectU8 { min: point_u8::PointU8 { x: min_x, y: min_y }, max: point_u8::PointU8 { x: max_x, y: max_y } })
+    Some(RectU8 { min: PointU8 { x: min_x, y: min_y }, max: PointU8 { x: max_x, y: max_y } })
 }
 
 pub fn assign_add(r: &mut RectU8, delta: &PointI8) {

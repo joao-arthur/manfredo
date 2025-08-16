@@ -157,8 +157,14 @@ mod tests {
 
     #[test]
     fn try_inflate_in_bounds_max_bounds() {
-        assert_eq!(try_inflate_in_bounds(&RectU32::of(200, 230, u32::MAX - 5, u32::MAX - 3)), Some(RectU32::of(199, 229, u32::MAX - 4, u32::MAX - 2)));
-        assert_eq!(try_inflate_in_bounds(&RectU32::of(199, 229, u32::MAX - 4, u32::MAX - 2)), Some(RectU32::of(198, 228, u32::MAX - 3, u32::MAX - 1)));
+        assert_eq!(
+            try_inflate_in_bounds(&RectU32::of(200, 230, u32::MAX - 5, u32::MAX - 3)),
+            Some(RectU32::of(199, 229, u32::MAX - 4, u32::MAX - 2))
+        );
+        assert_eq!(
+            try_inflate_in_bounds(&RectU32::of(199, 229, u32::MAX - 4, u32::MAX - 2)),
+            Some(RectU32::of(198, 228, u32::MAX - 3, u32::MAX - 1))
+        );
         assert_eq!(try_inflate_in_bounds(&RectU32::of(198, 228, u32::MAX - 3, u32::MAX - 1)), Some(RectU32::of(197, 227, u32::MAX - 2, u32::MAX)));
         assert_eq!(try_inflate_in_bounds(&RectU32::of(197, 227, u32::MAX - 2, u32::MAX)), Some(RectU32::of(196, 225, u32::MAX - 1, u32::MAX)));
         assert_eq!(try_inflate_in_bounds(&RectU32::of(196, 225, u32::MAX - 1, u32::MAX)), Some(RectU32::of(195, 223, u32::MAX, u32::MAX)));

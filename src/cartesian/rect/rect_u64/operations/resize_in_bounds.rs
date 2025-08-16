@@ -218,7 +218,10 @@ mod tests {
     #[test]
     fn try_resize_in_bounds_odd_small_rect_limits_out_of_bounds() {
         assert_eq!(try_resize_in_bounds(&RectU64::of(0, 0, 2, 2), u64::MAX), Some(RectU64::of(0, 0, u64::MAX - 1, u64::MAX - 1)));
-        assert_eq!(try_resize_in_bounds(&RectU64::of(u64::MAX - 2, u64::MAX - 2, u64::MAX, u64::MAX), u64::MAX), Some(RectU64::of(1, 1, u64::MAX, u64::MAX)));
+        assert_eq!(
+            try_resize_in_bounds(&RectU64::of(u64::MAX - 2, u64::MAX - 2, u64::MAX, u64::MAX), u64::MAX),
+            Some(RectU64::of(1, 1, u64::MAX, u64::MAX))
+        );
     }
 
     #[test]
@@ -232,7 +235,10 @@ mod tests {
 
     #[test]
     fn try_resize_in_bounds_big_rect_limits_out_of_bounds() {
-        assert_eq!(try_resize_in_bounds(&RectU64::of(0, 0, u64::MAX - 1, u64::MAX - 1), u64::MAX), Some(RectU64::of(0, 0, u64::MAX - 1, u64::MAX - 1)));
+        assert_eq!(
+            try_resize_in_bounds(&RectU64::of(0, 0, u64::MAX - 1, u64::MAX - 1), u64::MAX),
+            Some(RectU64::of(0, 0, u64::MAX - 1, u64::MAX - 1))
+        );
         assert_eq!(try_resize_in_bounds(&RectU64::of(1, 1, u64::MAX, u64::MAX), u64::MAX), Some(RectU64::of(1, 1, u64::MAX, u64::MAX)));
         assert_eq!(try_resize_in_bounds(&RectU64::of(0, 0, u64::MAX, u64::MAX), u64::MAX), Some(RectU64::of(0, 0, u64::MAX - 1, u64::MAX - 1)));
     }

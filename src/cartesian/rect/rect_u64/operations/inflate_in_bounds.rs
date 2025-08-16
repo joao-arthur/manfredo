@@ -157,8 +157,14 @@ mod tests {
 
     #[test]
     fn try_inflate_in_bounds_max_bounds() {
-        assert_eq!(try_inflate_in_bounds(&RectU64::of(200, 230, u64::MAX - 5, u64::MAX - 3)), Some(RectU64::of(199, 229, u64::MAX - 4, u64::MAX - 2)));
-        assert_eq!(try_inflate_in_bounds(&RectU64::of(199, 229, u64::MAX - 4, u64::MAX - 2)), Some(RectU64::of(198, 228, u64::MAX - 3, u64::MAX - 1)));
+        assert_eq!(
+            try_inflate_in_bounds(&RectU64::of(200, 230, u64::MAX - 5, u64::MAX - 3)),
+            Some(RectU64::of(199, 229, u64::MAX - 4, u64::MAX - 2))
+        );
+        assert_eq!(
+            try_inflate_in_bounds(&RectU64::of(199, 229, u64::MAX - 4, u64::MAX - 2)),
+            Some(RectU64::of(198, 228, u64::MAX - 3, u64::MAX - 1))
+        );
         assert_eq!(try_inflate_in_bounds(&RectU64::of(198, 228, u64::MAX - 3, u64::MAX - 1)), Some(RectU64::of(197, 227, u64::MAX - 2, u64::MAX)));
         assert_eq!(try_inflate_in_bounds(&RectU64::of(197, 227, u64::MAX - 2, u64::MAX)), Some(RectU64::of(196, 225, u64::MAX - 1, u64::MAX)));
         assert_eq!(try_inflate_in_bounds(&RectU64::of(196, 225, u64::MAX - 1, u64::MAX)), Some(RectU64::of(195, 223, u64::MAX, u64::MAX)));

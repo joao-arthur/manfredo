@@ -14,10 +14,6 @@ pub fn try_assign_deflate(r: &mut RectU8) -> Option<()> {
     Some(())
 }
 
-pub fn assign_deflate(r: &mut RectU8) {
-    try_assign_deflate(r).unwrap()
-}
-
 pub fn try_deflate(r: &RectU8) -> Option<RectU8> {
     if delta_x(r) < 3 || delta_y(r) < 3 {
         return None;
@@ -27,6 +23,10 @@ pub fn try_deflate(r: &RectU8) -> Option<RectU8> {
     let max_x = r.max.x - 1;
     let max_y = r.max.y - 1;
     Some(RectU8 { min: PointU8 { x: min_x, y: min_y }, max: PointU8 { x: max_x, y: max_y } })
+}
+
+pub fn assign_deflate(r: &mut RectU8) {
+    try_assign_deflate(r).unwrap()
 }
 
 pub fn deflate(r: &RectU8) -> RectU8 {

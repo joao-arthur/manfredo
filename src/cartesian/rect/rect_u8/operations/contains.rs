@@ -1,17 +1,11 @@
-use crate::cartesian::{rect::rect_u8::RectU8, point::point_u8::PointU8};
+use crate::cartesian::{point::point_u8::PointU8, rect::rect_u8::RectU8};
 
 pub fn contains_point(outer: &RectU8, p: &PointU8) -> bool {
-    p.x >= outer.min.x &&
-    p.x <= outer.max.x &&
-    p.y >= outer.min.y &&
-    p.y <= outer.max.y
+    p.x >= outer.min.x && p.x <= outer.max.x && p.y >= outer.min.y && p.y <= outer.max.y
 }
 
 pub fn contains_rect(outer: &RectU8, r: &RectU8) -> bool {
-    r.min.x >= outer.min.x &&
-    r.max.x <= outer.max.x &&
-    r.min.y >= outer.min.y &&
-    r.max.y <= outer.max.y
+    r.min.x >= outer.min.x && r.max.x <= outer.max.x && r.min.y >= outer.min.y && r.max.y <= outer.max.y
 }
 
 #[cfg(test)]
@@ -53,13 +47,12 @@ mod tests {
         assert!(contains_point(&r, &PointU8::of(u8::MAX - 10, u8::MAX - 10)));
     }
 
-   #[test]
+    #[test]
     fn contains_rect_inside_borders() {
         let r = RectU8::of(1, 1, u8::MAX - 1, u8::MAX - 1);
         assert!(contains_rect(&r, &RectU8::of(1, 1, u8::MAX - 1, u8::MAX - 1)));
         assert!(contains_rect(&r, &RectU8::of(1, 1, u8::MAX - 2, u8::MAX - 2)));
         assert!(contains_rect(&r, &RectU8::of(2, 2, u8::MAX - 1, u8::MAX - 1)));
-
     }
 
     #[test]

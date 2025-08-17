@@ -35,7 +35,7 @@ pub fn add(r: &RectU8, delta: &RectI8) -> RectU8 {
 mod tests {
     use crate::cartesian::rect::{rect_i8::RectI8, rect_u8::RectU8};
 
-    use super::{assign_add, add, try_assign_add, try_add};
+    use super::{add, assign_add, try_add, try_assign_add};
 
     #[test]
     fn test_try_assign_add() {

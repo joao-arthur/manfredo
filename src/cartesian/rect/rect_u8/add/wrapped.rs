@@ -26,7 +26,7 @@ pub fn add(r: &RectU8, delta: &RectI8) -> RectU8 {
 mod tests {
     use crate::cartesian::rect::{rect_i8::RectI8, rect_u8::RectU8};
 
-    use super::{assign_add, add};
+    use super::{add, assign_add};
 
     #[test]
     fn test_assign_add() {
@@ -148,10 +148,7 @@ mod tests {
 
     #[test]
     fn add_big_rect_out_of_bounds() {
-        assert_eq!(
-            add(&RectU8::of(10, 5, u8::MAX, u8::MAX), &RectI8::of(-20, -20, 0, 0)),
-            RectU8::of(u8::MAX - 9, u8::MAX - 14, u8::MAX, u8::MAX)
-        );
+        assert_eq!(add(&RectU8::of(10, 5, u8::MAX, u8::MAX), &RectI8::of(-20, -20, 0, 0)), RectU8::of(u8::MAX - 9, u8::MAX - 14, u8::MAX, u8::MAX));
         assert_eq!(add(&RectU8::of(0, 0, u8::MAX - 5, u8::MAX - 10), &RectI8::of(0, 0, 20, 20)), RectU8::of(0, 0, 14, 9));
     }
 

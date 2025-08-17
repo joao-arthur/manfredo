@@ -1,9 +1,6 @@
 use crate::cartesian::{
     point::point_u8::PointU8,
-    rect::{
-        rect_i8::RectI8,
-        rect_u8::{RectU8, delta_x, delta_y},
-    },
+    rect::{rect_i8::RectI8, rect_u8::RectU8},
 };
 
 pub fn assign_add(r: &mut RectU8, delta: &RectI8) {
@@ -29,7 +26,7 @@ pub fn add(r: &RectU8, delta: &RectI8) -> RectU8 {
 mod tests {
     use crate::cartesian::rect::{rect_i8::RectI8, rect_u8::RectU8};
 
-    use super::{assign_add, add};
+    use super::{add, assign_add};
 
     #[test]
     fn test_assign_add() {

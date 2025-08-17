@@ -1,8 +1,6 @@
-use crate::cartesian::point::point_u8::PointU8;
+use super::point_u8::PointU8;
 
-pub mod checked;
-pub mod saturated;
-pub mod wrapped;
+pub mod add;
 
 #[derive(Eq, PartialEq, Debug, Clone, Hash)]
 pub struct PointI8 {

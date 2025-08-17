@@ -1,6 +1,4 @@
-pub mod checked;
-pub mod saturated;
-pub mod wrapped;
+pub mod add;
 
 #[derive(Eq, PartialEq, Debug, Clone, Hash)]
 pub struct PointU8 {

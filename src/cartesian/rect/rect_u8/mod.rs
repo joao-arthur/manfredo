@@ -1,7 +1,6 @@
 use std::ops::RangeInclusive;
 
-pub mod arithmetic;
-pub mod operations;
+
 
 use crate::cartesian::point::point_u8;
 

@@ -87,22 +87,22 @@ mod tests {
     fn assign_add_small_rect_limits_out_of_bounds() {
         let mut r_min = RectU64::of(1, 1, 10, 10);
         assign_add(&mut r_min, &PointI64::min());
-        assert_eq!(r_min, RectU64::of(9223372036854775809, 9223372036854775809, 9223372036854775818, 9223372036854775818));
+        assert_eq!(r_min, RectU64::of((i64::MAX as u64) + 2, (i64::MAX as u64) + 2, (i64::MAX as u64) + 11, (i64::MAX as u64) + 11));
 
         let mut r_max = RectU64::of(u64::MAX - 10, u64::MAX - 10, u64::MAX - 1, u64::MAX - 1);
         assign_add(&mut r_max, &PointI64::max());
-        assert_eq!(r_max, RectU64::of(9223372036854775796, 9223372036854775796, 9223372036854775805, 9223372036854775805));
+        assert_eq!(r_max, RectU64::of((i64::MAX as u64) - 11, (i64::MAX as u64) - 11, (i64::MAX as u64) - 2, (i64::MAX as u64) - 2));
     }
 
     #[test]
     fn assign_add_big_rect_limits_out_of_bounds() {
         let mut r_min = RectU64::of(1, 1, u64::MAX, u64::MAX);
         assign_add(&mut r_min, &PointI64::min());
-        assert_eq!(r_min, RectU64::of(9223372036854775809, 9223372036854775809, 9223372036854775807, 9223372036854775807));
+        assert_eq!(r_min, RectU64::of((i64::MAX as u64) + 2, (i64::MAX as u64) + 2, i64::MAX as u64, i64::MAX as u64));
 
         let mut r_max = RectU64::of(0, 0, u64::MAX - 1, u64::MAX - 1);
         assign_add(&mut r_max, &PointI64::max());
-        assert_eq!(r_max, RectU64::of(9223372036854775807, 9223372036854775807, 9223372036854775805, 9223372036854775805));
+        assert_eq!(r_max, RectU64::of(i64::MAX as u64, i64::MAX as u64, (i64::MAX as u64) - 2, (i64::MAX as u64) - 2));
     }
 
     #[test]
@@ -148,11 +148,11 @@ mod tests {
     fn add_small_rect_limits_out_of_bounds() {
         assert_eq!(
             add(&RectU64::of(1, 1, 10, 10), &PointI64::min()),
-            RectU64::of(9223372036854775809, 9223372036854775809, 9223372036854775818, 9223372036854775818)
+            RectU64::of((i64::MAX as u64) + 2, (i64::MAX as u64) + 2, (i64::MAX as u64) + 11, (i64::MAX as u64) + 11)
         );
         assert_eq!(
             add(&RectU64::of(u64::MAX - 10, u64::MAX - 10, u64::MAX - 1, u64::MAX - 1), &PointI64::max()),
-            RectU64::of(9223372036854775796, 9223372036854775796, 9223372036854775805, 9223372036854775805)
+            RectU64::of((i64::MAX as u64) - 11, (i64::MAX as u64) - 11, (i64::MAX as u64) - 2, (i64::MAX as u64) - 2)
         );
     }
 
@@ -160,11 +160,11 @@ mod tests {
     fn add_big_rect_limits_out_of_bounds() {
         assert_eq!(
             add(&RectU64::of(1, 1, u64::MAX, u64::MAX), &PointI64::min()),
-            RectU64::of(9223372036854775809, 9223372036854775809, 9223372036854775807, 9223372036854775807)
+            RectU64::of((i64::MAX as u64) + 2, (i64::MAX as u64) + 2, i64::MAX as u64, i64::MAX as u64)
         );
         assert_eq!(
             add(&RectU64::of(0, 0, u64::MAX - 1, u64::MAX - 1), &PointI64::max()),
-            RectU64::of(9223372036854775807, 9223372036854775807, 9223372036854775805, 9223372036854775805)
+            RectU64::of(i64::MAX as u64, i64::MAX as u64, (i64::MAX as u64) - 2, (i64::MAX as u64) - 2)
         );
     }
 }

@@ -6,6 +6,7 @@ pub mod deflate;
 pub mod inflate;
 pub mod resize;
 pub mod translate_point;
+//pub mod translate_rect;
 
 use crate::cartesian::point::point_u8;
 
@@ -16,12 +17,20 @@ pub struct RectU8 {
 }
 
 impl RectU8 {
-    pub fn largest() -> RectU8 {
+    pub fn of(x1: u8, y1: u8, x2: u8, y2: u8) -> Self {
+        RectU8 { min: point_u8::PointU8::of(x1, y1), max: point_u8::PointU8::of(x2, y2) }
+    }
+
+    pub fn largest() -> Self {
         RectU8 { min: point_u8::PointU8::min(), max: point_u8::PointU8::max() }
     }
 
-    pub fn of(x1: u8, y1: u8, x2: u8, y2: u8) -> Self {
-        RectU8 { min: point_u8::PointU8::of(x1, y1), max: point_u8::PointU8::of(x2, y2) }
+    pub fn min() -> Self {
+        RectU8 { min: point_u8::PointU8::min(), max: point_u8::PointU8::min() }
+    }
+
+    pub fn max() -> Self {
+        RectU8 { min: point_u8::PointU8::max(), max: point_u8::PointU8::max() }
     }
 
     pub fn iter_x(&self) -> RangeInclusive<u8> {
@@ -72,6 +81,8 @@ mod tests {
     #[test]
     fn rect_u8() {
         assert_eq!(RectU8::largest(), RectU8 { min: PointU8 { x: 0, y: 0 }, max: PointU8 { x: u8::MAX, y: u8::MAX } });
+        assert_eq!(RectU8::min(), RectU8 { min: PointU8 { x: 0, y: 0 }, max: PointU8 { x: 0, y: 0 } });
+        assert_eq!(RectU8::max(), RectU8 { min: PointU8 { x: u8::MAX, y: u8::MAX }, max: PointU8 { x: u8::MAX, y: u8::MAX } });
         assert_eq!(RectU8::of(0, 2, 4, 8), RectU8 { min: PointU8 { x: 0, y: 2 }, max: PointU8 { x: 4, y: 8 } });
     }
 

@@ -9,12 +9,20 @@ pub struct RectI16 {
 }
 
 impl RectI16 {
-    pub fn largest() -> RectI16 {
+    pub fn of(x1: i16, y1: i16, x2: i16, y2: i16) -> Self {
+        RectI16 { min: point_i16::PointI16::of(x1, y1), max: point_i16::PointI16::of(x2, y2) }
+    }
+
+    pub fn largest() -> Self {
         RectI16 { min: point_i16::PointI16::min(), max: point_i16::PointI16::max() }
     }
 
-    pub fn of(x1: i16, y1: i16, x2: i16, y2: i16) -> Self {
-        RectI16 { min: point_i16::PointI16::of(x1, y1), max: point_i16::PointI16::of(x2, y2) }
+    pub fn min() -> Self {
+        RectI16 { min: point_i16::PointI16::min(), max: point_i16::PointI16::min() }
+    }
+
+    pub fn max() -> Self {
+        RectI16 { min: point_i16::PointI16::max(), max: point_i16::PointI16::max() }
     }
 
     pub fn iter_x(&self) -> RangeInclusive<i16> {
@@ -163,6 +171,8 @@ mod tests {
     #[test]
     fn rect_i16() {
         assert_eq!(RectI16::largest(), RectI16 { min: PointI16 { x: i16::MIN, y: i16::MIN }, max: PointI16 { x: i16::MAX, y: i16::MAX } });
+        assert_eq!(RectI16::min(), RectI16 { min: PointI16 { x: i16::MIN, y: i16::MIN }, max: PointI16 { x: i16::MIN, y: i16::MIN } });
+        assert_eq!(RectI16::max(), RectI16 { min: PointI16 { x: i16::MAX, y: i16::MAX }, max: PointI16 { x: i16::MAX, y: i16::MAX } });
         assert_eq!(RectI16::of(i16::MIN, -1, 1, i16::MAX), RectI16 { min: PointI16 { x: i16::MIN, y: -1 }, max: PointI16 { x: 1, y: i16::MAX } });
     }
 

@@ -11,12 +11,20 @@ pub struct RectI8 {
 }
 
 impl RectI8 {
-    pub fn largest() -> RectI8 {
+    pub fn of(x1: i8, y1: i8, x2: i8, y2: i8) -> Self {
+        RectI8 { min: point_i8::PointI8::of(x1, y1), max: point_i8::PointI8::of(x2, y2) }
+    }
+
+    pub fn largest() -> Self {
         RectI8 { min: point_i8::PointI8::min(), max: point_i8::PointI8::max() }
     }
 
-    pub fn of(x1: i8, y1: i8, x2: i8, y2: i8) -> Self {
-        RectI8 { min: point_i8::PointI8::of(x1, y1), max: point_i8::PointI8::of(x2, y2) }
+    pub fn min() -> Self {
+        RectI8 { min: point_i8::PointI8::min(), max: point_i8::PointI8::min() }
+    }
+
+    pub fn max() -> Self {
+        RectI8 { min: point_i8::PointI8::max(), max: point_i8::PointI8::max() }
     }
 
     pub fn iter_x(&self) -> RangeInclusive<i8> {
@@ -159,6 +167,8 @@ mod tests {
     #[test]
     fn rect_i8() {
         assert_eq!(RectI8::largest(), RectI8 { min: PointI8 { x: i8::MIN, y: i8::MIN }, max: PointI8 { x: i8::MAX, y: i8::MAX } });
+        assert_eq!(RectI8::min(), RectI8 { min: PointI8 { x: i8::MIN, y: i8::MIN }, max: PointI8 { x: i8::MIN, y: i8::MIN } });
+        assert_eq!(RectI8::max(), RectI8 { min: PointI8 { x: i8::MAX, y: i8::MAX }, max: PointI8 { x: i8::MAX, y: i8::MAX } });
         assert_eq!(RectI8::of(i8::MIN, -1, 1, i8::MAX), RectI8 { min: PointI8 { x: i8::MIN, y: -1 }, max: PointI8 { x: 1, y: i8::MAX } });
     }
 

@@ -36,12 +36,20 @@ impl DoubleEndedIterator for RectF32Iterator {
 }
 
 impl RectF32 {
-    pub fn largest() -> RectF32 {
+    pub fn of(x1: f32, y1: f32, x2: f32, y2: f32) -> Self {
+        RectF32 { min: point_f32::PointF32 { x: x1, y: y1 }, max: point_f32::PointF32 { x: x2, y: y2 } }
+    }
+
+    pub fn largest() -> Self {
         RectF32 { min: point_f32::PointF32::min(), max: point_f32::PointF32::max() }
     }
 
-    pub fn of(x1: f32, y1: f32, x2: f32, y2: f32) -> Self {
-        RectF32 { min: point_f32::PointF32 { x: x1, y: y1 }, max: point_f32::PointF32 { x: x2, y: y2 } }
+    pub fn min() -> Self {
+        RectF32 { min: point_f32::PointF32::min(), max: point_f32::PointF32::min() }
+    }
+
+    pub fn max() -> Self {
+        RectF32 { min: point_f32::PointF32::max(), max: point_f32::PointF32::max() }
     }
 
     pub fn iter_x(&self) -> RectF32Iterator {
@@ -165,6 +173,8 @@ mod tests {
     #[test]
     fn rect_f32() {
         assert_eq!(RectF32::largest(), RectF32 { min: PointF32 { x: MIN, y: MIN }, max: PointF32 { x: MAX, y: MAX } });
+        assert_eq!(RectF32::min(), RectF32 { min: PointF32 { x: MIN, y: MIN }, max: PointF32 { x: MIN, y: MIN } });
+        assert_eq!(RectF32::max(), RectF32 { min: PointF32 { x: MAX, y: MAX }, max: PointF32 { x: MAX, y: MAX } });
         assert_eq!(RectF32::of(MIN, -0.0, 0.0, MAX), RectF32 { min: PointF32 { x: MIN, y: -0.0 }, max: PointF32 { x: 0.0, y: MAX } });
     }
 

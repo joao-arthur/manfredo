@@ -19,12 +19,20 @@ pub struct RectU32 {
 }
 
 impl RectU32 {
-    pub fn largest() -> RectU32 {
+    pub fn of(x1: u32, y1: u32, x2: u32, y2: u32) -> Self {
+        RectU32 { min: point_u32::PointU32::of(x1, y1), max: point_u32::PointU32::of(x2, y2) }
+    }
+
+    pub fn largest() -> Self {
         RectU32 { min: point_u32::PointU32::min(), max: point_u32::PointU32::max() }
     }
 
-    pub fn of(x1: u32, y1: u32, x2: u32, y2: u32) -> Self {
-        RectU32 { min: point_u32::PointU32::of(x1, y1), max: point_u32::PointU32::of(x2, y2) }
+    pub fn min() -> Self {
+        RectU32 { min: point_u32::PointU32::min(), max: point_u32::PointU32::min() }
+    }
+
+    pub fn max() -> Self {
+        RectU32 { min: point_u32::PointU32::max(), max: point_u32::PointU32::max() }
     }
 
     pub fn iter_x(&self) -> RangeInclusive<u32> {
@@ -90,6 +98,8 @@ mod tests {
     #[test]
     fn rect_u32() {
         assert_eq!(RectU32::largest(), RectU32 { min: PointU32 { x: 0, y: 0 }, max: PointU32 { x: u32::MAX, y: u32::MAX } });
+        assert_eq!(RectU32::min(), RectU32 { min: PointU32 { x: 0, y: 0 }, max: PointU32 { x: 0, y: 0 } });
+        assert_eq!(RectU32::max(), RectU32 { min: PointU32 { x: u32::MAX, y: u32::MAX }, max: PointU32 { x: u32::MAX, y: u32::MAX } });
         assert_eq!(RectU32::of(256, 512, 1024, 2048), RectU32 { min: PointU32 { x: 256, y: 512 }, max: PointU32 { x: 1024, y: 2048 } });
     }
 

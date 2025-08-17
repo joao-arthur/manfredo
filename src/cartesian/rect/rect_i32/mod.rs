@@ -12,12 +12,20 @@ pub struct RectI32 {
 }
 
 impl RectI32 {
-    pub fn largest() -> RectI32 {
+    pub fn of(x1: i32, y1: i32, x2: i32, y2: i32) -> Self {
+        RectI32 { min: point_i32::PointI32::of(x1, y1), max: point_i32::PointI32::of(x2, y2) }
+    }
+
+    pub fn largest() -> Self {
         RectI32 { min: point_i32::PointI32::min(), max: point_i32::PointI32::max() }
     }
 
-    pub fn of(x1: i32, y1: i32, x2: i32, y2: i32) -> Self {
-        RectI32 { min: point_i32::PointI32::of(x1, y1), max: point_i32::PointI32::of(x2, y2) }
+    pub fn min() -> Self {
+        RectI32 { min: point_i32::PointI32::min(), max: point_i32::PointI32::min() }
+    }
+
+    pub fn max() -> Self {
+        RectI32 { min: point_i32::PointI32::max(), max: point_i32::PointI32::max() }
     }
 
     pub fn iter_x(&self) -> RangeInclusive<i32> {
@@ -175,6 +183,8 @@ mod tests {
     #[test]
     fn rect_i32() {
         assert_eq!(RectI32::largest(), RectI32 { min: PointI32 { x: i32::MIN, y: i32::MIN }, max: PointI32 { x: i32::MAX, y: i32::MAX } });
+        assert_eq!(RectI32::min(), RectI32 { min: PointI32 { x: i32::MIN, y: i32::MIN }, max: PointI32 { x: i32::MIN, y: i32::MIN } });
+        assert_eq!(RectI32::max(), RectI32 { min: PointI32 { x: i32::MAX, y: i32::MAX }, max: PointI32 { x: i32::MAX, y: i32::MAX } });
         assert_eq!(RectI32::of(i32::MIN, -1, 1, i32::MAX), RectI32 { min: PointI32 { x: i32::MIN, y: -1 }, max: PointI32 { x: 1, y: i32::MAX } });
     }
 

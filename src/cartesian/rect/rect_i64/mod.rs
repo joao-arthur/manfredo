@@ -12,12 +12,20 @@ pub struct RectI64 {
 }
 
 impl RectI64 {
-    pub fn largest() -> RectI64 {
+    pub fn of(x1: i64, y1: i64, x2: i64, y2: i64) -> Self {
+        RectI64 { min: point_i64::PointI64::of(x1, y1), max: point_i64::PointI64::of(x2, y2) }
+    }
+
+    pub fn largest() -> Self {
         RectI64 { min: point_i64::PointI64::min(), max: point_i64::PointI64::max() }
     }
 
-    pub fn of(x1: i64, y1: i64, x2: i64, y2: i64) -> Self {
-        RectI64 { min: point_i64::PointI64::of(x1, y1), max: point_i64::PointI64::of(x2, y2) }
+    pub fn min() -> Self {
+        RectI64 { min: point_i64::PointI64::min(), max: point_i64::PointI64::min() }
+    }
+
+    pub fn max() -> Self {
+        RectI64 { min: point_i64::PointI64::max(), max: point_i64::PointI64::max() }
     }
 
     pub fn iter_x(&self) -> RangeInclusive<i64> {
@@ -181,6 +189,8 @@ mod tests {
     #[test]
     fn rect_i64() {
         assert_eq!(RectI64::largest(), RectI64 { min: PointI64 { x: i64::MIN, y: i64::MIN }, max: PointI64 { x: i64::MAX, y: i64::MAX } });
+        assert_eq!(RectI64::min(), RectI64 { min: PointI64 { x: i64::MIN, y: i64::MIN }, max: PointI64 { x: i64::MIN, y: i64::MIN } });
+        assert_eq!(RectI64::max(), RectI64 { min: PointI64 { x: i64::MAX, y: i64::MAX }, max: PointI64 { x: i64::MAX, y: i64::MAX } });
         assert_eq!(RectI64::of(i64::MIN, -1, 1, i64::MAX), RectI64 { min: PointI64 { x: i64::MIN, y: -1 }, max: PointI64 { x: 1, y: i64::MAX } });
     }
 

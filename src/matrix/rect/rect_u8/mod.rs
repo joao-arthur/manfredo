@@ -9,12 +9,20 @@ pub struct RectU8 {
 }
 
 impl RectU8 {
-    pub fn largest() -> RectU8 {
+    pub fn of(row1: u8, col1: u8, row2: u8, col2: u8) -> Self {
+        RectU8 { min: point_u8::PointU8::of(row1, col1), max: point_u8::PointU8::of(row2, col2) }
+    }
+
+    pub fn largest() -> Self {
         RectU8 { min: point_u8::PointU8::min(), max: point_u8::PointU8::max() }
     }
 
-    pub fn of(row1: u8, col1: u8, row2: u8, col2: u8) -> Self {
-        RectU8 { min: point_u8::PointU8::of(row1, col1), max: point_u8::PointU8::of(row2, col2) }
+    pub fn min() -> Self {
+        RectU8 { min: point_u8::PointU8::min(), max: point_u8::PointU8::min() }
+    }
+
+    pub fn max() -> Self {
+        RectU8 { min: point_u8::PointU8::max(), max: point_u8::PointU8::max() }
     }
 
     pub fn iter_row(&self) -> RangeInclusive<u8> {
@@ -159,6 +167,8 @@ mod tests {
     #[test]
     fn rect_u8() {
         assert_eq!(RectU8::largest(), RectU8 { min: PointU8 { row: 0, col: 0 }, max: PointU8 { row: u8::MAX, col: u8::MAX } });
+        assert_eq!(RectU8::min(), RectU8 { min: PointU8 { row: 0, col: 0 }, max: PointU8 { row: 0, col: 0 } });
+        assert_eq!(RectU8::max(), RectU8 { min: PointU8 { row: u8::MAX, col: u8::MAX }, max: PointU8 { row: u8::MAX, col: u8::MAX } });
         assert_eq!(RectU8::of(0, 2, 4, 8), RectU8 { min: PointU8 { row: 0, col: 2 }, max: PointU8 { row: 4, col: 8 } });
     }
 

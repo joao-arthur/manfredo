@@ -36,12 +36,20 @@ impl DoubleEndedIterator for RectF64Iterator {
 }
 
 impl RectF64 {
-    pub fn largest() -> RectF64 {
+    pub fn of(x1: f64, y1: f64, x2: f64, y2: f64) -> Self {
+        RectF64 { min: point_f64::PointF64 { x: x1, y: y1 }, max: point_f64::PointF64 { x: x2, y: y2 } }
+    }
+
+    pub fn largest() -> Self {
         RectF64 { min: point_f64::PointF64::min(), max: point_f64::PointF64::max() }
     }
 
-    pub fn of(x1: f64, y1: f64, x2: f64, y2: f64) -> Self {
-        RectF64 { min: point_f64::PointF64 { x: x1, y: y1 }, max: point_f64::PointF64 { x: x2, y: y2 } }
+    pub fn min() -> Self {
+        RectF64 { min: point_f64::PointF64::min(), max: point_f64::PointF64::min() }
+    }
+
+    pub fn max() -> Self {
+        RectF64 { min: point_f64::PointF64::max(), max: point_f64::PointF64::max() }
     }
 
     pub fn iter_x(&self) -> RectF64Iterator {
@@ -165,6 +173,8 @@ mod tests {
     #[test]
     fn rect_f64() {
         assert_eq!(RectF64::largest(), RectF64 { min: PointF64 { x: MIN, y: MIN }, max: PointF64 { x: MAX, y: MAX } });
+        assert_eq!(RectF64::min(), RectF64 { min: PointF64 { x: MIN, y: MIN }, max: PointF64 { x: MIN, y: MIN } });
+        assert_eq!(RectF64::max(), RectF64 { min: PointF64 { x: MAX, y: MAX }, max: PointF64 { x: MAX, y: MAX } });
         assert_eq!(RectF64::of(MIN, -0.0, 0.0, MAX), RectF64 { min: PointF64 { x: MIN, y: -0.0 }, max: PointF64 { x: 0.0, y: MAX } });
     }
 

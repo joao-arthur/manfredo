@@ -12,12 +12,20 @@ pub struct RectU64 {
 }
 
 impl RectU64 {
-    pub fn largest() -> RectU64 {
+    pub fn of(row1: u64, col1: u64, row2: u64, col2: u64) -> Self {
+        RectU64 { min: point_u64::PointU64::of(row1, col1), max: point_u64::PointU64::of(row2, col2) }
+    }
+
+    pub fn largest() -> Self {
         RectU64 { min: point_u64::PointU64::min(), max: point_u64::PointU64::max() }
     }
 
-    pub fn of(row1: u64, col1: u64, row2: u64, col2: u64) -> Self {
-        RectU64 { min: point_u64::PointU64::of(row1, col1), max: point_u64::PointU64::of(row2, col2) }
+    pub fn min() -> Self {
+        RectU64 { min: point_u64::PointU64::min(), max: point_u64::PointU64::min() }
+    }
+
+    pub fn max() -> Self {
+        RectU64 { min: point_u64::PointU64::max(), max: point_u64::PointU64::max() }
     }
 
     pub fn iter_row(&self) -> RangeInclusive<u64> {
@@ -183,6 +191,8 @@ mod tests {
     #[test]
     fn rect_u64() {
         assert_eq!(RectU64::largest(), RectU64 { min: PointU64 { row: 0, col: 0 }, max: PointU64 { row: u64::MAX, col: u64::MAX } });
+        assert_eq!(RectU64::min(), RectU64 { min: PointU64 { row: 0, col: 0 }, max: PointU64 { row: 0, col: 0 } });
+        assert_eq!(RectU64::max(), RectU64 { min: PointU64 { row: u64::MAX, col: u64::MAX }, max: PointU64 { row: u64::MAX, col: u64::MAX } });
         assert_eq!(
             RectU64::of(4096, 8192, 16384, 32768),
             RectU64 { min: PointU64 { row: 4096, col: 8192 }, max: PointU64 { row: 16384, col: 32768 } }

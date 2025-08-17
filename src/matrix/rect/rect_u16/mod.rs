@@ -12,12 +12,20 @@ pub struct RectU16 {
 }
 
 impl RectU16 {
-    pub fn largest() -> RectU16 {
+    pub fn of(row1: u16, col1: u16, row2: u16, col2: u16) -> Self {
+        RectU16 { min: point_u16::PointU16::of(row1, col1), max: point_u16::PointU16::of(row2, col2) }
+    }
+
+    pub fn largest() -> Self {
         RectU16 { min: point_u16::PointU16::min(), max: point_u16::PointU16::max() }
     }
 
-    pub fn of(row1: u16, col1: u16, row2: u16, col2: u16) -> Self {
-        RectU16 { min: point_u16::PointU16::of(row1, col1), max: point_u16::PointU16::of(row2, col2) }
+    pub fn min() -> Self {
+        RectU16 { min: point_u16::PointU16::min(), max: point_u16::PointU16::min() }
+    }
+
+    pub fn max() -> Self {
+        RectU16 { min: point_u16::PointU16::max(), max: point_u16::PointU16::max() }
     }
 
     pub fn iter_row(&self) -> RangeInclusive<u16> {
@@ -171,6 +179,8 @@ mod tests {
     #[test]
     fn rect_u16() {
         assert_eq!(RectU16::largest(), RectU16 { min: PointU16 { row: 0, col: 0 }, max: PointU16 { row: u16::MAX, col: u16::MAX } });
+        assert_eq!(RectU16::min(), RectU16 { min: PointU16 { row: 0, col: 0 }, max: PointU16 { row: 0, col: 0 } });
+        assert_eq!(RectU16::max(), RectU16 { min: PointU16 { row: u16::MAX, col: u16::MAX }, max: PointU16 { row: u16::MAX, col: u16::MAX } });
         assert_eq!(RectU16::of(16, 32, 64, 128), RectU16 { min: PointU16 { row: 16, col: 32 }, max: PointU16 { row: 64, col: 128 } });
     }
 

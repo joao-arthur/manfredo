@@ -12,6 +12,10 @@ pub struct RectU32 {
 }
 
 impl RectU32 {
+    pub fn largest() -> RectU32 {
+        RectU32 { min: point_u32::PointU32::min(), max: point_u32::PointU32::max() }
+    }
+
     pub fn of(row1: u32, col1: u32, row2: u32, col2: u32) -> Self {
         RectU32 { min: point_u32::PointU32::of(row1, col1), max: point_u32::PointU32::of(row2, col2) }
     }
@@ -172,7 +176,13 @@ mod tests {
 
     #[test]
     fn rect_u32() {
+        assert_eq!(RectU32::largest(), RectU32 { min: PointU32 { row: 0, col: 0 }, max: PointU32 { row: u32::MAX, col: u32::MAX } });
         assert_eq!(RectU32::of(256, 512, 1024, 2048), RectU32 { min: PointU32 { row: 256, col: 512 }, max: PointU32 { row: 1024, col: 2048 } });
+    }
+
+    #[test]
+    fn to_string() {
+        assert_eq!(RectU32::of(256, 512, 1024, 2048).to_string(), "((256, 512), (1024, 2048))");
         assert_eq!(RectU32::of(u32::MAX, 0, 0, u32::MAX).to_string(), "((4294967295, 0), (0, 4294967295))");
     }
 
@@ -186,11 +196,6 @@ mod tests {
             RectU32::from(RectU16::of(0, 0, u16::MAX, u16::MAX)),
             RectU32 { min: PointU32 { row: 0, col: 0 }, max: PointU32 { row: u16::MAX.into(), col: u16::MAX.into() } }
         );
-    }
-
-    #[test]
-    fn to_string() {
-        assert_eq!(RectU32::of(u32::MAX, 0, 0, u32::MAX).to_string(), "((4294967295, 0), (0, 4294967295))");
     }
 
     #[test]

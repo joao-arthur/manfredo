@@ -12,6 +12,10 @@ pub struct RectI64 {
 }
 
 impl RectI64 {
+    pub fn largest() -> RectI64 {
+        RectI64 { min: point_i64::PointI64::min(), max: point_i64::PointI64::max() }
+    }
+
     pub fn of(x1: i64, y1: i64, x2: i64, y2: i64) -> Self {
         RectI64 { min: point_i64::PointI64::of(x1, y1), max: point_i64::PointI64::of(x2, y2) }
     }
@@ -176,7 +180,14 @@ mod tests {
 
     #[test]
     fn rect_i64() {
+        assert_eq!(RectI64::largest(), RectI64 { min: PointI64 { x: i64::MIN, y: i64::MIN }, max: PointI64 { x: i64::MAX, y: i64::MAX } });
         assert_eq!(RectI64::of(i64::MIN, -1, 1, i64::MAX), RectI64 { min: PointI64 { x: i64::MIN, y: -1 }, max: PointI64 { x: 1, y: i64::MAX } });
+    }
+
+    #[test]
+    fn to_string() {
+        assert_eq!(RectI64::largest().to_string(), "((-9223372036854775808, -9223372036854775808), (9223372036854775807, 9223372036854775807))");
+        assert_eq!(RectI64::of(i64::MIN, -0, 0, i64::MAX).to_string(), "((-9223372036854775808, 0), (0, 9223372036854775807))");
     }
 
     #[test]
@@ -193,11 +204,6 @@ mod tests {
             RectI64::from(RectI32::of(0, 0, i32::MAX, i32::MAX)),
             RectI64 { min: PointI64 { x: 0, y: 0 }, max: PointI64 { x: i32::MAX.into(), y: i32::MAX.into() } }
         );
-    }
-
-    #[test]
-    fn to_string() {
-        assert_eq!(RectI64::of(i64::MIN, -0, 0, i64::MAX).to_string(), "((-9223372036854775808, 0), (0, 9223372036854775807))");
     }
 
     #[test]

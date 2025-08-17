@@ -224,10 +224,7 @@ mod tests {
     #[test]
     fn try_resize_even_small_rect_limits_out_of_bounds() {
         assert_eq!(try_resize(&RectU8::of(0, 0, 3, 3), u8::MAX - 1), Some(RectU8::of(0, 0, u8::MAX - 2, u8::MAX - 2)));
-        assert_eq!(
-            try_resize(&RectU8::of(u8::MAX - 3, u8::MAX - 3, u8::MAX, u8::MAX), u8::MAX - 1),
-            Some(RectU8::of(2, 2, u8::MAX, u8::MAX))
-        );
+        assert_eq!(try_resize(&RectU8::of(u8::MAX - 3, u8::MAX - 3, u8::MAX, u8::MAX), u8::MAX - 1), Some(RectU8::of(2, 2, u8::MAX, u8::MAX)));
     }
 
     #[test]

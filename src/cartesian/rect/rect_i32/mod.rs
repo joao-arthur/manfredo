@@ -12,6 +12,10 @@ pub struct RectI32 {
 }
 
 impl RectI32 {
+    pub fn largest() -> RectI32 {
+        RectI32 { min: point_i32::PointI32::min(), max: point_i32::PointI32::max() }
+    }
+
     pub fn of(x1: i32, y1: i32, x2: i32, y2: i32) -> Self {
         RectI32 { min: point_i32::PointI32::of(x1, y1), max: point_i32::PointI32::of(x2, y2) }
     }
@@ -170,7 +174,14 @@ mod tests {
 
     #[test]
     fn rect_i32() {
+        assert_eq!(RectI32::largest(), RectI32 { min: PointI32 { x: i32::MIN, y: i32::MIN }, max: PointI32 { x: i32::MAX, y: i32::MAX } });
         assert_eq!(RectI32::of(i32::MIN, -1, 1, i32::MAX), RectI32 { min: PointI32 { x: i32::MIN, y: -1 }, max: PointI32 { x: 1, y: i32::MAX } });
+    }
+
+    #[test]
+    fn to_string() {
+        assert_eq!(RectI32::largest().to_string(), "((-2147483648, -2147483648), (2147483647, 2147483647))");
+        assert_eq!(RectI32::of(i32::MIN, -0, 0, i32::MAX).to_string(), "((-2147483648, 0), (0, 2147483647))");
     }
 
     #[test]
@@ -183,11 +194,6 @@ mod tests {
             RectI32::from(RectI16::of(0, 0, i16::MAX, i16::MAX)),
             RectI32 { min: PointI32 { x: 0, y: 0 }, max: PointI32 { x: i16::MAX.into(), y: i16::MAX.into() } }
         );
-    }
-
-    #[test]
-    fn to_string() {
-        assert_eq!(RectI32::of(i32::MIN, -0, 0, i32::MAX).to_string(), "((-2147483648, 0), (0, 2147483647))");
     }
 
     #[test]

@@ -16,6 +16,10 @@ pub struct RectU8 {
 }
 
 impl RectU8 {
+    pub fn largest() -> RectU8 {
+        RectU8 { min: point_u8::PointU8::min(), max: point_u8::PointU8::max() }
+    }
+
     pub fn of(x1: u8, y1: u8, x2: u8, y2: u8) -> Self {
         RectU8 { min: point_u8::PointU8::of(x1, y1), max: point_u8::PointU8::of(x2, y2) }
     }
@@ -67,8 +71,14 @@ mod tests {
 
     #[test]
     fn rect_u8() {
+        assert_eq!(RectU8::largest(), RectU8 { min: PointU8 { x: 0, y: 0 }, max: PointU8 { x: u8::MAX, y: u8::MAX } });
         assert_eq!(RectU8::of(0, 2, 4, 8), RectU8 { min: PointU8 { x: 0, y: 2 }, max: PointU8 { x: 4, y: 8 } });
-        assert_eq!(RectU8::of(u8::MAX, 0, 0, u8::MAX).to_string(), "((255, 0), (0, 255))");
+    }
+
+    #[test]
+    fn to_string() {
+        assert_eq!(RectU8::largest().to_string(), "((0, 0), (255, 255))");
+        assert_eq!(RectU8::of(0, 2, 4, 8).to_string(), "((0, 2), (4, 8))");
     }
 
     #[test]

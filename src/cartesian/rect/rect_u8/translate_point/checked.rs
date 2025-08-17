@@ -160,24 +160,32 @@ mod tests {
 
     #[test]
     fn try_translate_small_rect_limits_out_of_bounds() {
-        assert_eq!(try_translate(&RectU8::of(1, 1, 10, 10), &PointI8::min()), None);
-        assert_eq!(try_translate(&RectU8::of(1, 1, 10, 10), &PointI8::of(i8::MIN, 0)), None);
-        assert_eq!(try_translate(&RectU8::of(1, 1, 10, 10), &PointI8::of(0, i8::MIN)), None);
-        assert_eq!(try_translate(&RectU8::of(u8::MAX - 10, u8::MAX - 10, u8::MAX - 1, u8::MAX - 1), &PointI8::max()), None);
-        assert_eq!(try_translate(&RectU8::of(u8::MAX - 10, u8::MAX - 10, u8::MAX - 1, u8::MAX - 1), &PointI8::of(i8::MAX, 0)), None);
-        assert_eq!(try_translate(&RectU8::of(u8::MAX - 10, u8::MAX - 10, u8::MAX - 1, u8::MAX - 1), &PointI8::of(0, i8::MAX)), None);
+        let r_min = RectU8::of(1, 1, 10, 10);
+        assert_eq!(try_translate(&r_min, &PointI8::min()), None);
+        assert_eq!(try_translate(&r_min, &PointI8::of(i8::MIN, 0)), None);
+        assert_eq!(try_translate(&r_min, &PointI8::of(0, i8::MIN)), None);
+
+        let r_max = RectU8::of(u8::MAX - 10, u8::MAX - 10, u8::MAX - 1, u8::MAX - 1);
+        assert_eq!(try_translate(&r_max, &PointI8::max()), None);
+        assert_eq!(try_translate(&r_max, &PointI8::of(i8::MAX, 0)), None);
+        assert_eq!(try_translate(&r_max, &PointI8::of(0, i8::MAX)), None);
     }
 
     #[test]
     fn try_translate_big_rect_limits_out_of_bounds() {
-        assert_eq!(try_translate(&RectU8::largest(), &PointI8::min()), None);
-        assert_eq!(try_translate(&RectU8::largest(), &PointI8::max()), None);
-        assert_eq!(try_translate(&RectU8::of(0, 0, u8::MAX - 1, u8::MAX - 1), &PointI8::max()), None);
-        assert_eq!(try_translate(&RectU8::of(0, 0, u8::MAX - 1, u8::MAX - 1), &PointI8::of(i8::MAX, 0)), None);
-        assert_eq!(try_translate(&RectU8::of(0, 0, u8::MAX - 1, u8::MAX - 1), &PointI8::of(0, i8::MAX)), None);
-        assert_eq!(try_translate(&RectU8::of(1, 1, u8::MAX, u8::MAX), &PointI8::min()), None);
-        assert_eq!(try_translate(&RectU8::of(1, 1, u8::MAX, u8::MAX), &PointI8::of(i8::MIN, 0)), None);
-        assert_eq!(try_translate(&RectU8::of(1, 1, u8::MAX, u8::MAX), &PointI8::of(0, i8::MIN)), None);
+        let r = RectU8::largest();
+        assert_eq!(try_translate(&r, &PointI8::min()), None);
+        assert_eq!(try_translate(&r, &PointI8::max()), None);
+
+        let r_min = RectU8::of(0, 0, u8::MAX - 1, u8::MAX - 1);
+        assert_eq!(try_translate(&r_min, &PointI8::max()), None);
+        assert_eq!(try_translate(&r_min, &PointI8::of(i8::MAX, 0)), None);
+        assert_eq!(try_translate(&r_min, &PointI8::of(0, i8::MAX)), None);
+
+        let r_max = RectU8::of(1, 1, u8::MAX, u8::MAX);
+        assert_eq!(try_translate(&r_max, &PointI8::min()), None);
+        assert_eq!(try_translate(&r_max, &PointI8::of(i8::MIN, 0)), None);
+        assert_eq!(try_translate(&r_max, &PointI8::of(0, i8::MIN)), None);
     }
 
     #[test]

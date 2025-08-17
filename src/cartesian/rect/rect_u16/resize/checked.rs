@@ -293,9 +293,10 @@ mod tests {
 
     #[test]
     fn try_resize_small_size() {
-        assert_eq!(try_resize(&RectU16::of(10, 10, 100, 100), 0), None);
-        assert_eq!(try_resize(&RectU16::of(10, 10, 100, 100), 1), None);
-        assert_eq!(try_resize(&RectU16::of(10, 10, 100, 100), 2), None);
+        let r = RectU16::of(10, 10, 100, 100);
+        assert_eq!(try_resize(&r, 0), None);
+        assert_eq!(try_resize(&r, 1), None);
+        assert_eq!(try_resize(&r, 2), None);
     }
 
     #[test]

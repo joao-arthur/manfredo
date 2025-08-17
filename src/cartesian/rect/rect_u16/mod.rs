@@ -1,7 +1,11 @@
 use std::ops::RangeInclusive;
 
-pub mod arithmetic;
-pub mod operations;
+pub mod contains_point;
+pub mod contains_rect;
+pub mod deflate;
+pub mod inflate;
+pub mod resize;
+pub mod translate;
 
 use crate::cartesian::{point::point_u16, rect::rect_u8::RectU8};
 

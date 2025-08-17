@@ -96,6 +96,14 @@ mod tests {
 
     #[test]
     fn assign_add_big_rect_limits_out_of_bounds() {
+        let mut r1 = RectU16::of(0, 0, u16::MAX, u16::MAX);
+        assign_add(&mut r1, &PointI16::min());
+        assert_eq!(r1, RectU16::of((i16::MAX as u16) + 1, (i16::MAX as u16) + 1, i16::MAX as u16, i16::MAX as u16));
+
+        let mut r2 = RectU16::of(0, 0, u16::MAX, u16::MAX);
+        assign_add(&mut r2, &PointI16::max());
+        assert_eq!(r2, RectU16::of(i16::MAX as u16, i16::MAX as u16, (i16::MAX as u16) - 1, (i16::MAX as u16) - 1));
+
         let mut r_min = RectU16::of(1, 1, u16::MAX, u16::MAX);
         assign_add(&mut r_min, &PointI16::min());
         assert_eq!(r_min, RectU16::of((i16::MAX as u16) + 2, (i16::MAX as u16) + 2, i16::MAX as u16, i16::MAX as u16));
@@ -158,6 +166,14 @@ mod tests {
 
     #[test]
     fn add_big_rect_limits_out_of_bounds() {
+        assert_eq!(
+            add(&RectU16::of(0, 0, u16::MAX, u16::MAX), &PointI16::min()),
+            RectU16::of((i16::MAX as u16) + 1, (i16::MAX as u16) + 1, i16::MAX as u16, i16::MAX as u16)
+        );
+        assert_eq!(
+            add(&RectU16::of(0, 0, u16::MAX, u16::MAX), &PointI16::max()),
+            RectU16::of(i16::MAX as u16, i16::MAX as u16, (i16::MAX as u16) - 1, (i16::MAX as u16) - 1)
+        );
         assert_eq!(
             add(&RectU16::of(1, 1, u16::MAX, u16::MAX), &PointI16::min()),
             RectU16::of((i16::MAX as u16) + 2, (i16::MAX as u16) + 2, i16::MAX as u16, i16::MAX as u16)

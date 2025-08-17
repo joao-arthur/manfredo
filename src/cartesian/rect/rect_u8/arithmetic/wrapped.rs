@@ -96,6 +96,14 @@ mod tests {
 
     #[test]
     fn assign_add_big_rect_limits_out_of_bounds() {
+        let mut r1 = RectU8::of(0, 0, u8::MAX, u8::MAX);
+        assign_add(&mut r1, &PointI8::min());
+        assert_eq!(r1, RectU8::of((i8::MAX as u8) + 1, (i8::MAX as u8) + 1, i8::MAX as u8, i8::MAX as u8));
+
+        let mut r2 = RectU8::of(0, 0, u8::MAX, u8::MAX);
+        assign_add(&mut r2, &PointI8::max());
+        assert_eq!(r2, RectU8::of(i8::MAX as u8, i8::MAX as u8, (i8::MAX as u8) - 1, (i8::MAX as u8) - 1));
+
         let mut r_min = RectU8::of(1, 1, u8::MAX, u8::MAX);
         assign_add(&mut r_min, &PointI8::min());
         assert_eq!(r_min, RectU8::of((i8::MAX as u8) + 2, (i8::MAX as u8) + 2, i8::MAX as u8, i8::MAX as u8));
@@ -158,6 +166,14 @@ mod tests {
 
     #[test]
     fn add_big_rect_limits_out_of_bounds() {
+        assert_eq!(
+            add(&RectU8::of(0, 0, u8::MAX, u8::MAX), &PointI8::min()),
+            RectU8::of((i8::MAX as u8) + 1, (i8::MAX as u8) + 1, i8::MAX as u8, i8::MAX as u8)
+        );
+        assert_eq!(
+            add(&RectU8::of(0, 0, u8::MAX, u8::MAX), &PointI8::max()),
+            RectU8::of(i8::MAX as u8, i8::MAX as u8, (i8::MAX as u8) - 1, (i8::MAX as u8) - 1)
+        );
         assert_eq!(
             add(&RectU8::of(1, 1, u8::MAX, u8::MAX), &PointI8::min()),
             RectU8::of((i8::MAX as u8) + 2, (i8::MAX as u8) + 2, i8::MAX as u8, i8::MAX as u8)

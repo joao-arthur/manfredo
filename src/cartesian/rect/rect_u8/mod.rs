@@ -6,7 +6,7 @@ pub mod deflate;
 pub mod inflate;
 pub mod resize;
 pub mod translate_point;
-pub mod translate_rect;
+pub mod add;
 
 use crate::cartesian::point::point_u8;
 

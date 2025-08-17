@@ -293,7 +293,7 @@ mod tests {
 
     #[test]
     fn try_resize_small_size() {
-        let r= RectU32::of(10, 10, 100, 100);
+        let r = RectU32::of(10, 10, 100, 100);
         assert_eq!(try_resize(&r, 0), None);
         assert_eq!(try_resize(&r, 1), None);
         assert_eq!(try_resize(&r, 2), None);

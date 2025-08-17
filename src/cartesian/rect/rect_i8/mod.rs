@@ -1,6 +1,6 @@
 use std::ops::RangeInclusive;
 
-pub mod arithmetic;
+pub mod translate_point;
 
 use crate::cartesian::point::point_i8;
 

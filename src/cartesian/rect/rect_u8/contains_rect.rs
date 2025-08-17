@@ -27,7 +27,7 @@ mod tests {
         assert!(!contains_rect(&r, &RectU8::of(1, 1, u8::MAX - 1, u8::MAX)));
         assert!(!contains_rect(&r, &RectU8::of(1, 1, u8::MAX, u8::MAX)));
         assert!(!contains_rect(&r, &RectU8::of(0, 0, u8::MAX - 1, u8::MAX - 1)));
-        assert!(!contains_rect(&r, &RectU8::of(0, 0, u8::MAX, u8::MAX)));
+        assert!(!contains_rect(&r, &RectU8::largest()));
     }
 
     #[test]

@@ -104,11 +104,11 @@ mod tests {
 
     #[test]
     fn assign_add_big_rect_limits_out_of_bounds() {
-        let mut r = RectU32::of(0, 0, u32::MAX, u32::MAX);
+        let mut r = RectU32::largest();
         assign_add(&mut r, &PointI32::min());
-        assert_eq!(r, RectU32::of(0, 0, u32::MAX, u32::MAX));
+        assert_eq!(r, RectU32::largest());
         assign_add(&mut r, &PointI32::max());
-        assert_eq!(r, RectU32::of(0, 0, u32::MAX, u32::MAX));
+        assert_eq!(r, RectU32::largest());
 
         let mut r_min = RectU32::of(1, 1, u32::MAX, u32::MAX);
         assign_add(&mut r_min, &PointI32::min());

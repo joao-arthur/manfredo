@@ -64,7 +64,7 @@ mod tests {
         assert!(!contains_rect(&r, &RectU64::of(1, 1, u64::MAX - 1, u64::MAX)));
         assert!(!contains_rect(&r, &RectU64::of(1, 1, u64::MAX, u64::MAX)));
         assert!(!contains_rect(&r, &RectU64::of(0, 0, u64::MAX - 1, u64::MAX - 1)));
-        assert!(!contains_rect(&r, &RectU64::of(0, 0, u64::MAX, u64::MAX)));
+        assert!(!contains_rect(&r, &RectU64::largest()));
     }
 
     #[test]

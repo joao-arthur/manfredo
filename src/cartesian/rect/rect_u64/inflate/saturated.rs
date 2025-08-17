@@ -95,15 +95,15 @@ mod tests {
     fn try_assign_inflate_to_bounds() {
         let mut r_odd = RectU64::of(1, 1, u64::MAX - 1, u64::MAX - 1);
         assert_eq!(try_assign_inflate(&mut r_odd), Some(()));
-        assert_eq!(r_odd, RectU64::of(0, 0, u64::MAX, u64::MAX));
+        assert_eq!(r_odd, RectU64::largest());
 
         let mut r_even_1 = RectU64::of(0, 0, u64::MAX - 1, u64::MAX - 1);
         assert_eq!(try_assign_inflate(&mut r_even_1), Some(()));
-        assert_eq!(r_even_1, RectU64::of(0, 0, u64::MAX, u64::MAX));
+        assert_eq!(r_even_1, RectU64::largest());
 
         let mut r_even_2 = RectU64::of(1, 1, u64::MAX, u64::MAX);
         assert_eq!(try_assign_inflate(&mut r_even_2), Some(()));
-        assert_eq!(r_even_2, RectU64::of(0, 0, u64::MAX, u64::MAX));
+        assert_eq!(r_even_2, RectU64::largest());
     }
 
     #[test]
@@ -130,9 +130,9 @@ mod tests {
 
     #[test]
     fn try_assign_inflate_out_of_bounds() {
-        let mut r = RectU64::of(0, 0, u64::MAX, u64::MAX);
+        let mut r = RectU64::largest();
         assert_eq!(try_assign_inflate(&mut r), None);
-        assert_eq!(r, RectU64::of(0, 0, u64::MAX, u64::MAX));
+        assert_eq!(r, RectU64::largest());
 
         let mut r_x = RectU64::of(0, 10, u64::MAX, 100);
         assert_eq!(try_assign_inflate(&mut r_x), None);
@@ -169,9 +169,9 @@ mod tests {
 
     #[test]
     fn try_inflate_to_bounds() {
-        assert_eq!(try_inflate(&RectU64::of(1, 1, u64::MAX - 1, u64::MAX - 1)), Some(RectU64::of(0, 0, u64::MAX, u64::MAX)));
-        assert_eq!(try_inflate(&RectU64::of(0, 0, u64::MAX - 1, u64::MAX - 1)), Some(RectU64::of(0, 0, u64::MAX, u64::MAX)));
-        assert_eq!(try_inflate(&RectU64::of(1, 1, u64::MAX, u64::MAX)), Some(RectU64::of(0, 0, u64::MAX, u64::MAX)));
+        assert_eq!(try_inflate(&RectU64::of(1, 1, u64::MAX - 1, u64::MAX - 1)), Some(RectU64::largest()));
+        assert_eq!(try_inflate(&RectU64::of(0, 0, u64::MAX - 1, u64::MAX - 1)), Some(RectU64::largest()));
+        assert_eq!(try_inflate(&RectU64::of(1, 1, u64::MAX, u64::MAX)), Some(RectU64::largest()));
     }
 
     #[test]
@@ -188,7 +188,7 @@ mod tests {
 
     #[test]
     fn try_inflate_out_of_bounds() {
-        assert_eq!(try_inflate(&RectU64::of(0, 0, u64::MAX, u64::MAX)), None);
+        assert_eq!(try_inflate(&RectU64::largest()), None);
         assert_eq!(try_inflate(&RectU64::of(0, 10, u64::MAX, 100)), None);
         assert_eq!(try_inflate(&RectU64::of(10, 0, 100, u64::MAX)), None);
     }

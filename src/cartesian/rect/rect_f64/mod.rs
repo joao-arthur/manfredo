@@ -344,14 +344,14 @@ mod tests {
     fn inflate_almost_min_bounds() {
         let mut r = RectF64::of(MIN + 1.0, MIN + 1.0, MAX, MAX);
         inflate(&mut r);
-        assert_eq!(r, RectF64::of(MIN, MIN, MAX, MAX));
+        assert_eq!(r, RectF64::largest());
     }
 
     #[test]
     fn inflate_almost_max_bounds() {
         let mut r = RectF64::of(MIN, MIN, MAX - 1.0, MAX - 1.0);
         inflate(&mut r);
-        assert_eq!(r, RectF64::of(MIN, MIN, MAX, MAX));
+        assert_eq!(r, RectF64::largest());
     }
 
     #[test]

@@ -189,11 +189,11 @@ mod tests {
     #[test]
     fn from() {
         assert_eq!(
-            RectU32::from(RectU8::of(0, 0, u8::MAX, u8::MAX)),
+            RectU32::from(RectU8::largest()),
             RectU32 { min: PointU32 { row: 0, col: 0 }, max: PointU32 { row: u8::MAX.into(), col: u8::MAX.into() } }
         );
         assert_eq!(
-            RectU32::from(RectU16::of(0, 0, u16::MAX, u16::MAX)),
+            RectU32::from(RectU16::largest()),
             RectU32 { min: PointU32 { row: 0, col: 0 }, max: PointU32 { row: u16::MAX.into(), col: u16::MAX.into() } }
         );
     }
@@ -352,14 +352,14 @@ mod tests {
     fn inflate_almost_min_bounds() {
         let mut r = RectU32::of(1, 1, u32::MAX, u32::MAX);
         inflate(&mut r);
-        assert_eq!(r, RectU32::of(0, 0, u32::MAX, u32::MAX));
+        assert_eq!(r, RectU32::largest());
     }
 
     #[test]
     fn inflate_almost_max_bounds() {
         let mut r = RectU32::of(0, 0, u32::MAX - 1, u32::MAX - 1);
         inflate(&mut r);
-        assert_eq!(r, RectU32::of(0, 0, u32::MAX, u32::MAX));
+        assert_eq!(r, RectU32::largest());
     }
 
     #[test]

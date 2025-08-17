@@ -96,11 +96,11 @@ mod tests {
 
     #[test]
     fn assign_add_big_rect_limits_out_of_bounds() {
-        let mut r1 = RectU32::of(0, 0, u32::MAX, u32::MAX);
+        let mut r1 = RectU32::largest();
         assign_add(&mut r1, &PointI32::min());
         assert_eq!(r1, RectU32::of((i32::MAX as u32) + 1, (i32::MAX as u32) + 1, i32::MAX as u32, i32::MAX as u32));
 
-        let mut r2 = RectU32::of(0, 0, u32::MAX, u32::MAX);
+        let mut r2 = RectU32::largest();
         assign_add(&mut r2, &PointI32::max());
         assert_eq!(r2, RectU32::of(i32::MAX as u32, i32::MAX as u32, (i32::MAX as u32) - 1, (i32::MAX as u32) - 1));
 
@@ -167,11 +167,11 @@ mod tests {
     #[test]
     fn add_big_rect_limits_out_of_bounds() {
         assert_eq!(
-            add(&RectU32::of(0, 0, u32::MAX, u32::MAX), &PointI32::min()),
+            add(&RectU32::largest(), &PointI32::min()),
             RectU32::of((i32::MAX as u32) + 1, (i32::MAX as u32) + 1, i32::MAX as u32, i32::MAX as u32)
         );
         assert_eq!(
-            add(&RectU32::of(0, 0, u32::MAX, u32::MAX), &PointI32::max()),
+            add(&RectU32::largest(), &PointI32::max()),
             RectU32::of(i32::MAX as u32, i32::MAX as u32, (i32::MAX as u32) - 1, (i32::MAX as u32) - 1)
         );
         assert_eq!(

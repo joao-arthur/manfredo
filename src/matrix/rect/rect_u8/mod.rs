@@ -322,14 +322,14 @@ mod tests {
     fn inflate_almost_min_bounds() {
         let mut r = RectU8::of(1, 1, u8::MAX, u8::MAX);
         inflate(&mut r);
-        assert_eq!(r, RectU8::of(0, 0, u8::MAX, u8::MAX));
+        assert_eq!(r, RectU8::largest());
     }
 
     #[test]
     fn inflate_almost_max_bounds() {
         let mut r = RectU8::of(0, 0, u8::MAX - 1, u8::MAX - 1);
         inflate(&mut r);
-        assert_eq!(r, RectU8::of(0, 0, u8::MAX, u8::MAX));
+        assert_eq!(r, RectU8::largest());
     }
 
     #[test]

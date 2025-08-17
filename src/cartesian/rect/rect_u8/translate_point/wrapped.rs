@@ -96,11 +96,11 @@ mod tests {
 
     #[test]
     fn assign_translate_big_rect_limits_out_of_bounds() {
-        let mut r1 = RectU8::of(0, 0, u8::MAX, u8::MAX);
+        let mut r1 = RectU8::largest();
         assign_translate(&mut r1, &PointI8::min());
         assert_eq!(r1, RectU8::of((i8::MAX as u8) + 1, (i8::MAX as u8) + 1, i8::MAX as u8, i8::MAX as u8));
 
-        let mut r2 = RectU8::of(0, 0, u8::MAX, u8::MAX);
+        let mut r2 = RectU8::largest();
         assign_translate(&mut r2, &PointI8::max());
         assert_eq!(r2, RectU8::of(i8::MAX as u8, i8::MAX as u8, (i8::MAX as u8) - 1, (i8::MAX as u8) - 1));
 
@@ -167,11 +167,11 @@ mod tests {
     #[test]
     fn translate_big_rect_limits_out_of_bounds() {
         assert_eq!(
-            translate(&RectU8::of(0, 0, u8::MAX, u8::MAX), &PointI8::min()),
+            translate(&RectU8::largest(), &PointI8::min()),
             RectU8::of((i8::MAX as u8) + 1, (i8::MAX as u8) + 1, i8::MAX as u8, i8::MAX as u8)
         );
         assert_eq!(
-            translate(&RectU8::of(0, 0, u8::MAX, u8::MAX), &PointI8::max()),
+            translate(&RectU8::largest(), &PointI8::max()),
             RectU8::of(i8::MAX as u8, i8::MAX as u8, (i8::MAX as u8) - 1, (i8::MAX as u8) - 1)
         );
         assert_eq!(

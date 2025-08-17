@@ -102,11 +102,11 @@ mod tests {
     #[test]
     fn from() {
         assert_eq!(
-            RectU32::from(RectU8::of(0, 0, u8::MAX, u8::MAX)),
+            RectU32::from(RectU8::largest()),
             RectU32 { min: PointU32 { x: 0, y: 0 }, max: PointU32 { x: u8::MAX.into(), y: u8::MAX.into() } }
         );
         assert_eq!(
-            RectU32::from(RectU16::of(0, 0, u16::MAX, u16::MAX)),
+            RectU32::from(RectU16::largest()),
             RectU32 { min: PointU32 { x: 0, y: 0 }, max: PointU32 { x: u16::MAX.into(), y: u16::MAX.into() } }
         );
     }

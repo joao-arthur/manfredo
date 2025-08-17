@@ -58,7 +58,7 @@ mod tests {
     fn try_assign_inflate_to_bounds() {
         let mut r = RectU8::of(1, 1, u8::MAX - 1, u8::MAX - 1);
         assert_eq!(try_assign_inflate(&mut r), Some(()));
-        assert_eq!(r, RectU8::of(0, 0, u8::MAX, u8::MAX));
+        assert_eq!(r, RectU8::largest());
     }
 
     #[test]
@@ -112,9 +112,9 @@ mod tests {
 
     #[test]
     fn try_assign_inflate_limits_out_of_bounds() {
-        let mut r = RectU8::of(0, 0, u8::MAX, u8::MAX);
+        let mut r = RectU8::largest();
         assert_eq!(try_assign_inflate(&mut r), None);
-        assert_eq!(r, RectU8::of(0, 0, u8::MAX, u8::MAX));
+        assert_eq!(r, RectU8::largest());
     }
 
     #[test]
@@ -133,7 +133,7 @@ mod tests {
 
     #[test]
     fn try_inflate_to_bounds() {
-        assert_eq!(try_inflate(&RectU8::of(1, 1, u8::MAX - 1, u8::MAX - 1)), Some(RectU8::of(0, 0, u8::MAX, u8::MAX)));
+        assert_eq!(try_inflate(&RectU8::of(1, 1, u8::MAX - 1, u8::MAX - 1)), Some(RectU8::largest()));
     }
 
     #[test]
@@ -160,7 +160,7 @@ mod tests {
 
     #[test]
     fn try_inflate_limits_out_of_bounds() {
-        assert_eq!(try_inflate(&RectU8::of(0, 0, u8::MAX, u8::MAX)), None);
+        assert_eq!(try_inflate(&RectU8::largest()), None);
     }
 
     #[test]

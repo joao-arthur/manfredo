@@ -96,11 +96,11 @@ mod tests {
 
     #[test]
     fn assign_add_big_rect_limits_out_of_bounds() {
-        let mut r1 = RectU64::of(0, 0, u64::MAX, u64::MAX);
+        let mut r1 = RectU64::largest();
         assign_add(&mut r1, &PointI64::min());
         assert_eq!(r1, RectU64::of((i64::MAX as u64) + 1, (i64::MAX as u64) + 1, i64::MAX as u64, i64::MAX as u64));
 
-        let mut r2 = RectU64::of(0, 0, u64::MAX, u64::MAX);
+        let mut r2 = RectU64::largest();
         assign_add(&mut r2, &PointI64::max());
         assert_eq!(r2, RectU64::of(i64::MAX as u64, i64::MAX as u64, (i64::MAX as u64) - 1, (i64::MAX as u64) - 1));
 
@@ -167,11 +167,11 @@ mod tests {
     #[test]
     fn add_big_rect_limits_out_of_bounds() {
         assert_eq!(
-            add(&RectU64::of(0, 0, u64::MAX, u64::MAX), &PointI64::min()),
+            add(&RectU64::largest(), &PointI64::min()),
             RectU64::of((i64::MAX as u64) + 1, (i64::MAX as u64) + 1, i64::MAX as u64, i64::MAX as u64)
         );
         assert_eq!(
-            add(&RectU64::of(0, 0, u64::MAX, u64::MAX), &PointI64::max()),
+            add(&RectU64::largest(), &PointI64::max()),
             RectU64::of(i64::MAX as u64, i64::MAX as u64, (i64::MAX as u64) - 1, (i64::MAX as u64) - 1)
         );
         assert_eq!(

@@ -159,7 +159,7 @@ mod tests {
         assert_eq!(try_assign_resize(&mut r_odd_1, u64::MAX), Some(()));
         assert_eq!(r_odd_1, RectU64::of(1, 1, u64::MAX, u64::MAX));
 
-        let mut r_even = RectU64::of(0, 0, u64::MAX, u64::MAX);
+        let mut r_even = RectU64::largest();
         assert_eq!(try_assign_resize(&mut r_even, u64::MAX), Some(()));
         assert_eq!(r_even, RectU64::of(0, 0, u64::MAX - 1, u64::MAX - 1));
     }
@@ -234,7 +234,7 @@ mod tests {
     fn try_resize_big_rect_limits_out_of_bounds() {
         assert_eq!(try_resize(&RectU64::of(0, 0, u64::MAX - 1, u64::MAX - 1), u64::MAX), Some(RectU64::of(0, 0, u64::MAX - 1, u64::MAX - 1)));
         assert_eq!(try_resize(&RectU64::of(1, 1, u64::MAX, u64::MAX), u64::MAX), Some(RectU64::of(1, 1, u64::MAX, u64::MAX)));
-        assert_eq!(try_resize(&RectU64::of(0, 0, u64::MAX, u64::MAX), u64::MAX), Some(RectU64::of(0, 0, u64::MAX - 1, u64::MAX - 1)));
+        assert_eq!(try_resize(&RectU64::largest(), u64::MAX), Some(RectU64::of(0, 0, u64::MAX - 1, u64::MAX - 1)));
     }
 
     #[test]

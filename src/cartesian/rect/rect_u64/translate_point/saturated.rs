@@ -104,11 +104,11 @@ mod tests {
 
     #[test]
     fn assign_add_big_rect_limits_out_of_bounds() {
-        let mut r = RectU64::of(0, 0, u64::MAX, u64::MAX);
+        let mut r = RectU64::largest();
         assign_add(&mut r, &PointI64::min());
-        assert_eq!(r, RectU64::of(0, 0, u64::MAX, u64::MAX));
+        assert_eq!(r, RectU64::largest());
         assign_add(&mut r, &PointI64::max());
-        assert_eq!(r, RectU64::of(0, 0, u64::MAX, u64::MAX));
+        assert_eq!(r, RectU64::largest());
 
         let mut r_min = RectU64::of(1, 1, u64::MAX, u64::MAX);
         assign_add(&mut r_min, &PointI64::min());

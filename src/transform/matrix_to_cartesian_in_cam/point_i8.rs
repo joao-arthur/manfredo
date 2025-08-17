@@ -54,7 +54,7 @@ mod tests {
 
     #[test]
     fn matrix_to_cartesian_in_cam_edges() {
-        let cam = Cam::of(i8::MIN, i8::MIN, i8::MAX, i8::MAX);
+        let cam = Cam::largest();
         assert_eq!(matrix_to_cartesian_in_cam(&MatrixPoint::of(0, 0), &cam), CartesianPoint::of(i8::MIN, i8::MAX));
         assert_eq!(matrix_to_cartesian_in_cam(&MatrixPoint::of(u8::MAX, 0), &cam), CartesianPoint::min());
         assert_eq!(matrix_to_cartesian_in_cam(&MatrixPoint::of(0, u8::MAX), &cam), CartesianPoint::max());
@@ -63,7 +63,7 @@ mod tests {
 
     #[test]
     fn matrix_to_cartesian_in_cam_sequence_min() {
-        let cam = Cam::of(i8::MIN, i8::MIN, i8::MAX, i8::MAX);
+        let cam = Cam::largest();
         assert_eq!(matrix_to_cartesian_in_cam(&MatrixPoint::of(1, 1), &cam), CartesianPoint::of(i8::MIN + 1, i8::MAX - 1));
         assert_eq!(matrix_to_cartesian_in_cam(&MatrixPoint::of(2, 2), &cam), CartesianPoint::of(i8::MIN + 2, i8::MAX - 2));
         assert_eq!(matrix_to_cartesian_in_cam(&MatrixPoint::of(3, 3), &cam), CartesianPoint::of(i8::MIN + 3, i8::MAX - 3));
@@ -71,7 +71,7 @@ mod tests {
 
     #[test]
     fn matrix_to_cartesian_in_cam_sequence_max() {
-        let cam = Cam::of(i8::MIN, i8::MIN, i8::MAX, i8::MAX);
+        let cam = Cam::largest();
         assert_eq!(matrix_to_cartesian_in_cam(&MatrixPoint::of(u8::MAX - 1, u8::MAX - 1), &cam), CartesianPoint::of(i8::MAX - 1, i8::MIN + 1));
         assert_eq!(matrix_to_cartesian_in_cam(&MatrixPoint::of(u8::MAX - 2, u8::MAX - 2), &cam), CartesianPoint::of(i8::MAX - 2, i8::MIN + 2));
         assert_eq!(matrix_to_cartesian_in_cam(&MatrixPoint::of(u8::MAX - 3, u8::MAX - 3), &cam), CartesianPoint::of(i8::MAX - 3, i8::MIN + 3));

@@ -98,21 +98,21 @@ mod tests {
 
     #[test]
     fn assign_add_big_rect_limits_out_of_bounds() {
-        let mut r1 = RectI8::of(0, 0, i8::MAX, i8::MAX);
+        let mut r1 = RectI8::largest();
         assign_add(&mut r1, &PointI8::min());
-        assert_eq!(r1, RectI8::of(i8::MIN, i8::MIN, -1, -1));
+        assert_eq!(r1, RectI8::of(0, 0, -1, -1));
 
-        let mut r2 = RectI8::of(0, 0, i8::MAX, i8::MAX);
+        let mut r2 = RectI8::largest();
         assign_add(&mut r2, &PointI8::max());
-        assert_eq!(r2, RectI8::of(i8::MAX, i8::MAX, -2, -2));
+        assert_eq!(r2, RectI8::of(-1, -1, -2, -2));
 
-        let mut r_min = RectI8::of(1, 1, i8::MAX, i8::MAX);
+        let mut r_min = RectI8::of(i8::MIN + 1, i8::MIN + 1, i8::MAX, i8::MAX);
         assign_add(&mut r_min, &PointI8::min());
-        assert_eq!(r_min, RectI8::of(i8::MIN + 1, i8::MIN + 1, -1, -1));
+        assert_eq!(r_min, RectI8::of(1, 1, -1, -1));
 
-        let mut r_max = RectI8::of(0, 0, i8::MAX - 1, i8::MAX - 1);
+        let mut r_max = RectI8::of(i8::MIN, i8::MIN, i8::MAX - 1, i8::MAX - 1);
         assign_add(&mut r_max, &PointI8::max());
-        assert_eq!(r_max, RectI8::of(i8::MAX, i8::MAX, -3, -3));
+        assert_eq!(r_max, RectI8::of(-1, -1, -3, -3));
     }
 
     #[test]
@@ -177,9 +177,9 @@ mod tests {
 
     #[test]
     fn add_big_rect_limits_out_of_bounds() {
-        assert_eq!(add(&RectI8::of(0, 0, i8::MAX, i8::MAX), &PointI8::min()), RectI8::of(i8::MIN, i8::MIN, -1, -1));
-        assert_eq!(add(&RectI8::of(0, 0, i8::MAX, i8::MAX), &PointI8::max()), RectI8::of(i8::MAX, i8::MAX, -2, -2));
-        assert_eq!(add(&RectI8::of(1, 1, i8::MAX, i8::MAX), &PointI8::min()), RectI8::of(i8::MIN + 1, i8::MIN + 1, -1, -1));
-        assert_eq!(add(&RectI8::of(0, 0, i8::MAX - 1, i8::MAX - 1), &PointI8::max()), RectI8::of(i8::MAX, i8::MAX, -3, -3));
+        assert_eq!(add(&RectI8::largest(), &PointI8::min()), RectI8::of(0, 0, -1, -1));
+        assert_eq!(add(&RectI8::largest(), &PointI8::max()), RectI8::of(-1, -1, -2, -2));
+        assert_eq!(add(&RectI8::of(i8::MIN + 1, i8::MIN + 1, i8::MAX, i8::MAX), &PointI8::min()), RectI8::of(1, 1, -1, -1));
+        assert_eq!(add(&RectI8::of(i8::MIN, i8::MIN, i8::MAX - 1, i8::MAX - 1), &PointI8::max()), RectI8::of(-1, -1, -3, -3));
     }
 }

@@ -104,11 +104,11 @@ mod tests {
 
     #[test]
     fn assign_translate_big_rect_limits_out_of_bounds() {
-        let mut r = RectU8::of(0, 0, u8::MAX, u8::MAX);
+        let mut r = RectU8::largest();
         assign_translate(&mut r, &PointI8::min());
-        assert_eq!(r, RectU8::of(0, 0, u8::MAX, u8::MAX));
+        assert_eq!(r, RectU8::largest());
         assign_translate(&mut r, &PointI8::max());
-        assert_eq!(r, RectU8::of(0, 0, u8::MAX, u8::MAX));
+        assert_eq!(r, RectU8::largest());
 
         let mut r_min = RectU8::of(1, 1, u8::MAX, u8::MAX);
         assign_translate(&mut r_min, &PointI8::min());

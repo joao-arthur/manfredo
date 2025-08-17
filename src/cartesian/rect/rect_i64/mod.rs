@@ -193,16 +193,16 @@ mod tests {
     #[test]
     fn from() {
         assert_eq!(
-            RectI64::from(RectI8::of(0, 0, i8::MAX, i8::MAX)),
-            RectI64 { min: PointI64 { x: 0, y: 0 }, max: PointI64 { x: i8::MAX.into(), y: i8::MAX.into() } }
+            RectI64::from(RectI8::largest()),
+            RectI64 { min: PointI64 { x: i8::MIN.into(), y: i8::MIN.into() }, max: PointI64 { x: i8::MAX.into(), y: i8::MAX.into() } }
         );
         assert_eq!(
-            RectI64::from(RectI16::of(0, 0, i16::MAX, i16::MAX)),
-            RectI64 { min: PointI64 { x: 0, y: 0 }, max: PointI64 { x: i16::MAX.into(), y: i16::MAX.into() } }
+            RectI64::from(RectI16::largest()),
+            RectI64 { min: PointI64 { x: i16::MIN.into(), y: i16::MIN.into() }, max: PointI64 { x: i16::MAX.into(), y: i16::MAX.into() } }
         );
         assert_eq!(
-            RectI64::from(RectI32::of(0, 0, i32::MAX, i32::MAX)),
-            RectI64 { min: PointI64 { x: 0, y: 0 }, max: PointI64 { x: i32::MAX.into(), y: i32::MAX.into() } }
+            RectI64::from(RectI32::largest()),
+            RectI64 { min: PointI64 { x: i32::MIN.into(), y: i32::MIN.into() }, max: PointI64 { x: i32::MAX.into(), y: i32::MAX.into() } }
         );
     }
 
@@ -368,14 +368,14 @@ mod tests {
     fn inflate_almost_min_bounds() {
         let mut r = RectI64::of(i64::MIN + 1, i64::MIN + 1, i64::MAX, i64::MAX);
         inflate(&mut r);
-        assert_eq!(r, RectI64::of(i64::MIN, i64::MIN, i64::MAX, i64::MAX));
+        assert_eq!(r, RectI64::largest());
     }
 
     #[test]
     fn inflate_almost_max_bounds() {
         let mut r = RectI64::of(i64::MIN, i64::MIN, i64::MAX - 1, i64::MAX - 1);
         inflate(&mut r);
-        assert_eq!(r, RectI64::of(i64::MIN, i64::MIN, i64::MAX, i64::MAX));
+        assert_eq!(r, RectI64::largest());
     }
 
     #[test]

@@ -1,5 +1,7 @@
 use std::ops::RangeInclusive;
 
+pub mod arithmetic;
+
 use crate::cartesian::point::point_i8;
 
 #[derive(Eq, PartialEq, Debug, Clone)]

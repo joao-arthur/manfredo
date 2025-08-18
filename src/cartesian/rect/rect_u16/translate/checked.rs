@@ -4,10 +4,10 @@ use crate::cartesian::{
 };
 
 pub fn try_assign_add(r: &mut RectU16, delta: &PointI16) -> Option<()> {
-    let min_x = u16::try_from(i32::from(r.min.x) + i32::from(delta.x)).ok()?;
-    let min_y = u16::try_from(i32::from(r.min.y) + i32::from(delta.y)).ok()?;
-    let max_x = u16::try_from(i32::from(r.max.x) + i32::from(delta.x)).ok()?;
-    let max_y = u16::try_from(i32::from(r.max.y) + i32::from(delta.y)).ok()?;
+    let min_x = r.min.x.checked_add_signed(delta.x)?;
+    let min_y = r.min.y.checked_add_signed(delta.y)?;
+    let max_x = r.max.x.checked_add_signed(delta.x)?;
+    let max_y = r.max.y.checked_add_signed(delta.y)?;
     r.min.x = min_x;
     r.min.y = min_y;
     r.max.x = max_x;
@@ -16,10 +16,10 @@ pub fn try_assign_add(r: &mut RectU16, delta: &PointI16) -> Option<()> {
 }
 
 pub fn try_add(r: &RectU16, delta: &PointI16) -> Option<RectU16> {
-    let min_x = u16::try_from(i32::from(r.min.x) + i32::from(delta.x)).ok()?;
-    let min_y = u16::try_from(i32::from(r.min.y) + i32::from(delta.y)).ok()?;
-    let max_x = u16::try_from(i32::from(r.max.x) + i32::from(delta.x)).ok()?;
-    let max_y = u16::try_from(i32::from(r.max.y) + i32::from(delta.y)).ok()?;
+    let min_x = r.min.x.checked_add_signed(delta.x)?;
+    let min_y = r.min.y.checked_add_signed(delta.y)?;
+    let max_x = r.max.x.checked_add_signed(delta.x)?;
+    let max_y = r.max.y.checked_add_signed(delta.y)?;
     Some(RectU16 { min: PointU16 { x: min_x, y: min_y }, max: PointU16 { x: max_x, y: max_y } })
 }
 

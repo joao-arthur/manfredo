@@ -6,8 +6,8 @@ use crate::cartesian::{
 pub fn assign_add(r: &mut RectU64, delta: &PointI64) {
     let dx = delta_x(r);
     let dy = delta_y(r);
-    let min_x = r.min.x.wrapping_add(delta.x as u64);
-    let min_y = r.min.y.wrapping_add(delta.y as u64);
+    let min_x = r.min.x.wrapping_add_signed(delta.x);
+    let min_y = r.min.y.wrapping_add_signed(delta.y);
     r.min.x = min_x;
     r.min.y = min_y;
     r.max.x = min_x.wrapping_add(dx);
@@ -17,8 +17,8 @@ pub fn assign_add(r: &mut RectU64, delta: &PointI64) {
 pub fn add(r: &RectU64, delta: &PointI64) -> RectU64 {
     let dx = delta_x(r);
     let dy = delta_y(r);
-    let min_x = r.min.x.wrapping_add(delta.x as u64);
-    let min_y = r.min.y.wrapping_add(delta.y as u64);
+    let min_x = r.min.x.wrapping_add_signed(delta.x);
+    let min_y = r.min.y.wrapping_add_signed(delta.y);
     let max_x = min_x.wrapping_add(dx);
     let max_y = min_y.wrapping_add(dy);
     RectU64 { min: PointU64 { x: min_x, y: min_y }, max: PointU64 { x: max_x, y: max_y } }

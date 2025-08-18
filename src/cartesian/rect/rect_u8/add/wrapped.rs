@@ -4,10 +4,10 @@ use crate::cartesian::{
 };
 
 pub fn assign_add(r: &mut RectU8, delta: &RectI8) {
-    let min_x = r.min.x.wrapping_add(delta.min.x as u8);
-    let min_y = r.min.y.wrapping_add(delta.min.y as u8);
-    let max_x = r.max.x.wrapping_add(delta.max.x as u8);
-    let max_y = r.max.y.wrapping_add(delta.max.y as u8);
+    let min_x = r.min.x.wrapping_add_signed(delta.min.x);
+    let min_y = r.min.y.wrapping_add_signed(delta.min.y);
+    let max_x = r.max.x.wrapping_add_signed(delta.max.x);
+    let max_y = r.max.y.wrapping_add_signed(delta.max.y);
     r.min.x = min_x;
     r.min.y = min_y;
     r.max.x = max_x;
@@ -15,10 +15,10 @@ pub fn assign_add(r: &mut RectU8, delta: &RectI8) {
 }
 
 pub fn add(r: &RectU8, delta: &RectI8) -> RectU8 {
-    let min_x = r.min.x.wrapping_add(delta.min.x as u8);
-    let min_y = r.min.y.wrapping_add(delta.min.y as u8);
-    let max_x = r.max.x.wrapping_add(delta.max.x as u8);
-    let max_y = r.max.y.wrapping_add(delta.max.y as u8);
+    let min_x = r.min.x.wrapping_add_signed(delta.min.x);
+    let min_y = r.min.y.wrapping_add_signed(delta.min.y);
+    let max_x = r.max.x.wrapping_add_signed(delta.max.x);
+    let max_y = r.max.y.wrapping_add_signed(delta.max.y);
     RectU8 { min: PointU8 { x: min_x, y: min_y }, max: PointU8 { x: max_x, y: max_y } }
 }
 

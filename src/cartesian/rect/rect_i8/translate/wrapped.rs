@@ -8,8 +8,8 @@ pub fn assign_add(r: &mut RectI8, delta: &PointI8) {
     let dy = delta_y(r);
     let min_x = r.min.x.wrapping_add(delta.x);
     let min_y = r.min.y.wrapping_add(delta.y);
-    let max_x = min_x.wrapping_add(dx as i8);
-    let max_y = min_y.wrapping_add(dy as i8);
+    let max_x = min_x.wrapping_add_unsigned(dx);
+    let max_y = min_y.wrapping_add_unsigned(dy);
     r.min.x = min_x;
     r.min.y = min_y;
     r.max.x = max_x;
@@ -21,8 +21,8 @@ pub fn add(r: &RectI8, delta: &PointI8) -> RectI8 {
     let dy = delta_y(r);
     let min_x = r.min.x.wrapping_add(delta.x);
     let min_y = r.min.y.wrapping_add(delta.y);
-    let max_x = min_x.wrapping_add(dx as i8);
-    let max_y = min_y.wrapping_add(dy as i8);
+    let max_x = min_x.wrapping_add_unsigned(dx);
+    let max_y = min_y.wrapping_add_unsigned(dy);
     RectI8 { min: PointI8 { x: min_x, y: min_y }, max: PointI8 { x: max_x, y: max_y } }
 }
 

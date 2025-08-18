@@ -4,10 +4,10 @@ use crate::cartesian::{
 };
 
 pub fn try_assign_translate(r: &mut RectU8, delta: &PointI8) -> Option<()> {
-    let min_x = u8::try_from(i16::from(r.min.x) + i16::from(delta.x)).ok()?;
-    let min_y = u8::try_from(i16::from(r.min.y) + i16::from(delta.y)).ok()?;
-    let max_x = u8::try_from(i16::from(r.max.x) + i16::from(delta.x)).ok()?;
-    let max_y = u8::try_from(i16::from(r.max.y) + i16::from(delta.y)).ok()?;
+    let min_x = r.min.x.checked_add_signed(delta.x)?;
+    let min_y = r.min.y.checked_add_signed(delta.y)?;
+    let max_x = r.max.x.checked_add_signed(delta.x)?;
+    let max_y = r.max.y.checked_add_signed(delta.y)?;
     r.min.x = min_x;
     r.min.y = min_y;
     r.max.x = max_x;
@@ -16,10 +16,10 @@ pub fn try_assign_translate(r: &mut RectU8, delta: &PointI8) -> Option<()> {
 }
 
 pub fn try_translate(r: &RectU8, delta: &PointI8) -> Option<RectU8> {
-    let min_x = u8::try_from(i16::from(r.min.x) + i16::from(delta.x)).ok()?;
-    let min_y = u8::try_from(i16::from(r.min.y) + i16::from(delta.y)).ok()?;
-    let max_x = u8::try_from(i16::from(r.max.x) + i16::from(delta.x)).ok()?;
-    let max_y = u8::try_from(i16::from(r.max.y) + i16::from(delta.y)).ok()?;
+    let min_x = r.min.x.checked_add_signed(delta.x)?;
+    let min_y = r.min.y.checked_add_signed(delta.y)?;
+    let max_x = r.max.x.checked_add_signed(delta.x)?;
+    let max_y = r.max.y.checked_add_signed(delta.y)?;
     Some(RectU8 { min: PointU8 { x: min_x, y: min_y }, max: PointU8 { x: max_x, y: max_y } })
 }
 

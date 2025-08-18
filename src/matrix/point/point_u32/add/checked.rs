@@ -1,16 +1,16 @@
 use crate::matrix::point::{point_i32::PointI32, point_u32::PointU32};
 
 pub fn try_assign_add(p: &mut PointU32, delta: &PointI32) -> Option<()> {
-    let row = u32::try_from(i64::from(p.row) + i64::from(delta.row)).ok()?;
-    let col = u32::try_from(i64::from(p.col) + i64::from(delta.col)).ok()?;
+    let row = p.row.checked_add_signed(delta.row)?;
+    let col = p.col.checked_add_signed(delta.col)?;
     p.row = row;
     p.col = col;
     Some(())
 }
 
 pub fn try_add(p: &PointU32, delta: &PointI32) -> Option<PointU32> {
-    let row = u32::try_from(i64::from(p.row) + i64::from(delta.row)).ok()?;
-    let col = u32::try_from(i64::from(p.col) + i64::from(delta.col)).ok()?;
+    let row = p.row.checked_add_signed(delta.row)?;
+    let col = p.col.checked_add_signed(delta.col)?;
     Some(PointU32 { row, col })
 }
 

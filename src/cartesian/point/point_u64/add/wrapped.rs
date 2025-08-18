@@ -1,13 +1,13 @@
 use crate::cartesian::point::{point_i64::PointI64, point_u64::PointU64};
 
 pub fn assign_add(p: &mut PointU64, delta: &PointI64) {
-    p.x = p.x.wrapping_add(delta.x as u64);
-    p.y = p.y.wrapping_add(delta.y as u64);
+    p.x = p.x.wrapping_add_signed(delta.x);
+    p.y = p.y.wrapping_add_signed(delta.y);
 }
 
 pub fn add(p: &PointU64, delta: &PointI64) -> PointU64 {
-    let x = p.x.wrapping_add(delta.x as u64);
-    let y = p.y.wrapping_add(delta.y as u64);
+    let x = p.x.wrapping_add_signed(delta.x);
+    let y = p.y.wrapping_add_signed(delta.y);
     PointU64 { x, y }
 }
 

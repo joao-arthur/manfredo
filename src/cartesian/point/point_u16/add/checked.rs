@@ -1,16 +1,16 @@
 use crate::cartesian::point::{point_i16::PointI16, point_u16::PointU16};
 
 pub fn try_assign_add(p: &mut PointU16, delta: &PointI16) -> Option<()> {
-    let x = u16::try_from(i32::from(p.x) + i32::from(delta.x)).ok()?;
-    let y = u16::try_from(i32::from(p.y) + i32::from(delta.y)).ok()?;
+    let x = p.x.checked_add_signed(delta.x)?;
+    let y = p.y.checked_add_signed(delta.y)?;
     p.x = x;
     p.y = y;
     Some(())
 }
 
 pub fn try_add(p: &PointU16, delta: &PointI16) -> Option<PointU16> {
-    let x = u16::try_from(i32::from(p.x) + i32::from(delta.x)).ok()?;
-    let y = u16::try_from(i32::from(p.y) + i32::from(delta.y)).ok()?;
+    let x = p.x.checked_add_signed(delta.x)?;
+    let y = p.y.checked_add_signed(delta.y)?;
     Some(PointU16 { x, y })
 }
 

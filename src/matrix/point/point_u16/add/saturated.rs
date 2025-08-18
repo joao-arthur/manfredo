@@ -1,17 +1,13 @@
 use crate::matrix::point::{point_i16::PointI16, point_u16::PointU16};
 
 pub fn assign_add(p: &mut PointU16, delta: &PointI16) {
-    let temp_row = i32::from(p.row) + i32::from(delta.row);
-    let temp_col = i32::from(p.col) + i32::from(delta.col);
-    p.row = temp_row.clamp(0, i32::from(u16::MAX)) as u16;
-    p.col = temp_col.clamp(0, i32::from(u16::MAX)) as u16;
+    p.row = p.row.saturating_add_signed(delta.row);
+    p.col = p.col.saturating_add_signed(delta.col);
 }
 
 pub fn add(p: &PointU16, delta: &PointI16) -> PointU16 {
-    let temp_row = i32::from(p.row) + i32::from(delta.row);
-    let temp_col = i32::from(p.col) + i32::from(delta.col);
-    let row = temp_row.clamp(0, i32::from(u16::MAX)) as u16;
-    let col = temp_col.clamp(0, i32::from(u16::MAX)) as u16;
+    let row = p.row.saturating_add_signed(delta.row);
+    let col = p.col.saturating_add_signed(delta.col);
     PointU16 { row, col }
 }
 

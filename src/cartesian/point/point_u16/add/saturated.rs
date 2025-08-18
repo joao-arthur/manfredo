@@ -1,17 +1,13 @@
 use crate::cartesian::point::{point_i16::PointI16, point_u16::PointU16};
 
 pub fn assign_add(p: &mut PointU16, delta: &PointI16) {
-    let temp_x = i32::from(p.x) + i32::from(delta.x);
-    let temp_y = i32::from(p.y) + i32::from(delta.y);
-    p.x = temp_x.clamp(0, i32::from(u16::MAX)) as u16;
-    p.y = temp_y.clamp(0, i32::from(u16::MAX)) as u16;
+    p.x = p.x.saturating_add_signed(delta.x);
+    p.y = p.y.saturating_add_signed(delta.y);
 }
 
 pub fn add(p: &PointU16, delta: &PointI16) -> PointU16 {
-    let temp_x = i32::from(p.x) + i32::from(delta.x);
-    let temp_y = i32::from(p.y) + i32::from(delta.y);
-    let x = temp_x.clamp(0, i32::from(u16::MAX)) as u16;
-    let y = temp_y.clamp(0, i32::from(u16::MAX)) as u16;
+    let x = p.x.saturating_add_signed(delta.x);
+    let y = p.y.saturating_add_signed(delta.y);
     PointU16 { x, y }
 }
 

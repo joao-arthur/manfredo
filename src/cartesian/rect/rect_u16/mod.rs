@@ -1,5 +1,6 @@
 use std::ops::RangeInclusive;
 
+pub mod add;
 pub mod contains_point;
 pub mod contains_rect;
 pub mod deflate;

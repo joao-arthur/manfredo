@@ -6,7 +6,7 @@ pub fn contains_rect(outer: &RectU16, r: &RectU16) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use crate::cartesian::{rect::rect_u16::RectU16};
+    use crate::cartesian::rect::rect_u16::RectU16;
 
     use super::contains_rect;
 
@@ -22,7 +22,7 @@ mod tests {
     fn contains_rect_borders() {
         let r = RectU16::of(1, 1, u16::MAX - 1, u16::MAX - 1);
         assert!(contains_rect(&r, &RectU16::of(1, 1, u16::MAX - 1, u16::MAX - 1)));
-        
+
         assert!(contains_rect(&r, &RectU16::of(2, 1, u16::MAX - 1, u16::MAX - 1)));
         assert!(contains_rect(&r, &RectU16::of(1, 2, u16::MAX - 1, u16::MAX - 1)));
         assert!(contains_rect(&r, &RectU16::of(1, 1, u16::MAX - 2, u16::MAX - 1)));

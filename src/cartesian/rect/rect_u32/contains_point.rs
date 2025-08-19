@@ -25,11 +25,11 @@ mod tests {
         assert!(!contains_point(&r, &PointU32::min()));
         assert!(!contains_point(&r, &PointU32::of(1, 0)));
         assert!(!contains_point(&r, &PointU32::of(0, 1)));
-        
+
         assert!(!contains_point(&r, &PointU32::of(0, u32::MAX)));
         assert!(!contains_point(&r, &PointU32::of(0, u32::MAX - 1)));
         assert!(!contains_point(&r, &PointU32::of(1, u32::MAX)));
-        
+
         assert!(!contains_point(&r, &PointU32::of(u32::MAX, 0)));
         assert!(!contains_point(&r, &PointU32::of(u32::MAX, 1)));
         assert!(!contains_point(&r, &PointU32::of(u32::MAX - 1, 0)));

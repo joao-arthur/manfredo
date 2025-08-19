@@ -73,23 +73,23 @@ mod tests {
 
     #[test]
     fn try_assign_inflate_max_bounds() {
-        let mut r = RectU32::of(200, 230, u32::MAX - 5, u32::MAX - 3);
+        let mut r = RectU32::of(u32::MAX - 33, u32::MAX - 17, u32::MAX - 5, u32::MAX - 3);
         assert_eq!(try_assign_inflate(&mut r), Some(()));
-        assert_eq!(r, RectU32::of(199, 229, u32::MAX - 4, u32::MAX - 2));
+        assert_eq!(r, RectU32::of(u32::MAX - 34, u32::MAX - 18, u32::MAX - 4, u32::MAX - 2));
         assert_eq!(try_assign_inflate(&mut r), Some(()));
-        assert_eq!(r, RectU32::of(198, 228, u32::MAX - 3, u32::MAX - 1));
+        assert_eq!(r, RectU32::of(u32::MAX - 35, u32::MAX - 19, u32::MAX - 3, u32::MAX - 1));
         assert_eq!(try_assign_inflate(&mut r), Some(()));
-        assert_eq!(r, RectU32::of(197, 227, u32::MAX - 2, u32::MAX));
+        assert_eq!(r, RectU32::of(u32::MAX - 36, u32::MAX - 20, u32::MAX - 2, u32::MAX));
         assert_eq!(try_assign_inflate(&mut r), Some(()));
-        assert_eq!(r, RectU32::of(196, 225, u32::MAX - 1, u32::MAX));
+        assert_eq!(r, RectU32::of(u32::MAX - 37, u32::MAX - 22, u32::MAX - 1, u32::MAX));
         assert_eq!(try_assign_inflate(&mut r), Some(()));
-        assert_eq!(r, RectU32::of(195, 223, u32::MAX, u32::MAX));
+        assert_eq!(r, RectU32::of(u32::MAX - 38, u32::MAX - 24, u32::MAX, u32::MAX));
         assert_eq!(try_assign_inflate(&mut r), Some(()));
-        assert_eq!(r, RectU32::of(193, 221, u32::MAX, u32::MAX));
+        assert_eq!(r, RectU32::of(u32::MAX - 40, u32::MAX - 26, u32::MAX, u32::MAX));
         assert_eq!(try_assign_inflate(&mut r), Some(()));
-        assert_eq!(r, RectU32::of(191, 219, u32::MAX, u32::MAX));
+        assert_eq!(r, RectU32::of(u32::MAX - 42, u32::MAX - 28, u32::MAX, u32::MAX));
         assert_eq!(try_assign_inflate(&mut r), Some(()));
-        assert_eq!(r, RectU32::of(189, 217, u32::MAX, u32::MAX));
+        assert_eq!(r, RectU32::of(u32::MAX - 44, u32::MAX - 30, u32::MAX, u32::MAX));
     }
 
     #[test]
@@ -158,14 +158,38 @@ mod tests {
 
     #[test]
     fn try_inflate_max_bounds() {
-        assert_eq!(try_inflate(&RectU32::of(200, 230, u32::MAX - 5, u32::MAX - 3)), Some(RectU32::of(199, 229, u32::MAX - 4, u32::MAX - 2)));
-        assert_eq!(try_inflate(&RectU32::of(199, 229, u32::MAX - 4, u32::MAX - 2)), Some(RectU32::of(198, 228, u32::MAX - 3, u32::MAX - 1)));
-        assert_eq!(try_inflate(&RectU32::of(198, 228, u32::MAX - 3, u32::MAX - 1)), Some(RectU32::of(197, 227, u32::MAX - 2, u32::MAX)));
-        assert_eq!(try_inflate(&RectU32::of(197, 227, u32::MAX - 2, u32::MAX)), Some(RectU32::of(196, 225, u32::MAX - 1, u32::MAX)));
-        assert_eq!(try_inflate(&RectU32::of(196, 225, u32::MAX - 1, u32::MAX)), Some(RectU32::of(195, 223, u32::MAX, u32::MAX)));
-        assert_eq!(try_inflate(&RectU32::of(195, 223, u32::MAX, u32::MAX)), Some(RectU32::of(193, 221, u32::MAX, u32::MAX)));
-        assert_eq!(try_inflate(&RectU32::of(193, 221, u32::MAX, u32::MAX)), Some(RectU32::of(191, 219, u32::MAX, u32::MAX)));
-        assert_eq!(try_inflate(&RectU32::of(191, 219, u32::MAX, u32::MAX)), Some(RectU32::of(189, 217, u32::MAX, u32::MAX)));
+        assert_eq!(
+            try_inflate(&RectU32::of(u32::MAX - 33, u32::MAX - 17, u32::MAX - 5, u32::MAX - 3)),
+            Some(RectU32::of(u32::MAX - 34, u32::MAX - 18, u32::MAX - 4, u32::MAX - 2))
+        );
+        assert_eq!(
+            try_inflate(&RectU32::of(u32::MAX - 34, u32::MAX - 18, u32::MAX - 4, u32::MAX - 2)),
+            Some(RectU32::of(u32::MAX - 35, u32::MAX - 19, u32::MAX - 3, u32::MAX - 1))
+        );
+        assert_eq!(
+            try_inflate(&RectU32::of(u32::MAX - 35, u32::MAX - 19, u32::MAX - 3, u32::MAX - 1)),
+            Some(RectU32::of(u32::MAX - 36, u32::MAX - 20, u32::MAX - 2, u32::MAX))
+        );
+        assert_eq!(
+            try_inflate(&RectU32::of(u32::MAX - 36, u32::MAX - 20, u32::MAX - 2, u32::MAX)),
+            Some(RectU32::of(u32::MAX - 37, u32::MAX - 22, u32::MAX - 1, u32::MAX))
+        );
+        assert_eq!(
+            try_inflate(&RectU32::of(u32::MAX - 37, u32::MAX - 22, u32::MAX - 1, u32::MAX)),
+            Some(RectU32::of(u32::MAX - 38, u32::MAX - 24, u32::MAX, u32::MAX))
+        );
+        assert_eq!(
+            try_inflate(&RectU32::of(u32::MAX - 38, u32::MAX - 24, u32::MAX, u32::MAX)),
+            Some(RectU32::of(u32::MAX - 40, u32::MAX - 26, u32::MAX, u32::MAX))
+        );
+        assert_eq!(
+            try_inflate(&RectU32::of(u32::MAX - 40, u32::MAX - 26, u32::MAX, u32::MAX)),
+            Some(RectU32::of(u32::MAX - 42, u32::MAX - 28, u32::MAX, u32::MAX))
+        );
+        assert_eq!(
+            try_inflate(&RectU32::of(u32::MAX - 42, u32::MAX - 28, u32::MAX, u32::MAX)),
+            Some(RectU32::of(u32::MAX - 44, u32::MAX - 30, u32::MAX, u32::MAX))
+        );
     }
 
     #[test]
@@ -217,23 +241,23 @@ mod tests {
 
     #[test]
     fn assign_inflate_max_bounds() {
-        let mut r = RectU32::of(200, 230, u32::MAX - 5, u32::MAX - 3);
+        let mut r = RectU32::of(u32::MAX - 33, u32::MAX - 17, u32::MAX - 5, u32::MAX - 3);
         assign_inflate(&mut r);
-        assert_eq!(r, RectU32::of(199, 229, u32::MAX - 4, u32::MAX - 2));
+        assert_eq!(r, RectU32::of(u32::MAX - 34, u32::MAX - 18, u32::MAX - 4, u32::MAX - 2));
         assign_inflate(&mut r);
-        assert_eq!(r, RectU32::of(198, 228, u32::MAX - 3, u32::MAX - 1));
+        assert_eq!(r, RectU32::of(u32::MAX - 35, u32::MAX - 19, u32::MAX - 3, u32::MAX - 1));
         assign_inflate(&mut r);
-        assert_eq!(r, RectU32::of(197, 227, u32::MAX - 2, u32::MAX));
+        assert_eq!(r, RectU32::of(u32::MAX - 36, u32::MAX - 20, u32::MAX - 2, u32::MAX));
         assign_inflate(&mut r);
-        assert_eq!(r, RectU32::of(196, 225, u32::MAX - 1, u32::MAX));
+        assert_eq!(r, RectU32::of(u32::MAX - 37, u32::MAX - 22, u32::MAX - 1, u32::MAX));
         assign_inflate(&mut r);
-        assert_eq!(r, RectU32::of(195, 223, u32::MAX, u32::MAX));
+        assert_eq!(r, RectU32::of(u32::MAX - 38, u32::MAX - 24, u32::MAX, u32::MAX));
         assign_inflate(&mut r);
-        assert_eq!(r, RectU32::of(193, 221, u32::MAX, u32::MAX));
+        assert_eq!(r, RectU32::of(u32::MAX - 40, u32::MAX - 26, u32::MAX, u32::MAX));
         assign_inflate(&mut r);
-        assert_eq!(r, RectU32::of(191, 219, u32::MAX, u32::MAX));
+        assert_eq!(r, RectU32::of(u32::MAX - 42, u32::MAX - 28, u32::MAX, u32::MAX));
         assign_inflate(&mut r);
-        assert_eq!(r, RectU32::of(189, 217, u32::MAX, u32::MAX));
+        assert_eq!(r, RectU32::of(u32::MAX - 44, u32::MAX - 30, u32::MAX, u32::MAX));
     }
 
     #[test]
@@ -250,13 +274,37 @@ mod tests {
 
     #[test]
     fn inflate_max_bounds() {
-        assert_eq!(inflate(&RectU32::of(200, 230, u32::MAX - 5, u32::MAX - 3)), RectU32::of(199, 229, u32::MAX - 4, u32::MAX - 2));
-        assert_eq!(inflate(&RectU32::of(199, 229, u32::MAX - 4, u32::MAX - 2)), RectU32::of(198, 228, u32::MAX - 3, u32::MAX - 1));
-        assert_eq!(inflate(&RectU32::of(198, 228, u32::MAX - 3, u32::MAX - 1)), RectU32::of(197, 227, u32::MAX - 2, u32::MAX));
-        assert_eq!(inflate(&RectU32::of(197, 227, u32::MAX - 2, u32::MAX)), RectU32::of(196, 225, u32::MAX - 1, u32::MAX));
-        assert_eq!(inflate(&RectU32::of(196, 225, u32::MAX - 1, u32::MAX)), RectU32::of(195, 223, u32::MAX, u32::MAX));
-        assert_eq!(inflate(&RectU32::of(195, 223, u32::MAX, u32::MAX)), RectU32::of(193, 221, u32::MAX, u32::MAX));
-        assert_eq!(inflate(&RectU32::of(193, 221, u32::MAX, u32::MAX)), RectU32::of(191, 219, u32::MAX, u32::MAX));
-        assert_eq!(inflate(&RectU32::of(191, 219, u32::MAX, u32::MAX)), RectU32::of(189, 217, u32::MAX, u32::MAX));
+        assert_eq!(
+            inflate(&RectU32::of(u32::MAX - 33, u32::MAX - 17, u32::MAX - 5, u32::MAX - 3)),
+            RectU32::of(u32::MAX - 34, u32::MAX - 18, u32::MAX - 4, u32::MAX - 2)
+        );
+        assert_eq!(
+            inflate(&RectU32::of(u32::MAX - 34, u32::MAX - 18, u32::MAX - 4, u32::MAX - 2)),
+            RectU32::of(u32::MAX - 35, u32::MAX - 19, u32::MAX - 3, u32::MAX - 1)
+        );
+        assert_eq!(
+            inflate(&RectU32::of(u32::MAX - 35, u32::MAX - 19, u32::MAX - 3, u32::MAX - 1)),
+            RectU32::of(u32::MAX - 36, u32::MAX - 20, u32::MAX - 2, u32::MAX)
+        );
+        assert_eq!(
+            inflate(&RectU32::of(u32::MAX - 36, u32::MAX - 20, u32::MAX - 2, u32::MAX)),
+            RectU32::of(u32::MAX - 37, u32::MAX - 22, u32::MAX - 1, u32::MAX)
+        );
+        assert_eq!(
+            inflate(&RectU32::of(u32::MAX - 37, u32::MAX - 22, u32::MAX - 1, u32::MAX)),
+            RectU32::of(u32::MAX - 38, u32::MAX - 24, u32::MAX, u32::MAX)
+        );
+        assert_eq!(
+            inflate(&RectU32::of(u32::MAX - 38, u32::MAX - 24, u32::MAX, u32::MAX)),
+            RectU32::of(u32::MAX - 40, u32::MAX - 26, u32::MAX, u32::MAX)
+        );
+        assert_eq!(
+            inflate(&RectU32::of(u32::MAX - 40, u32::MAX - 26, u32::MAX, u32::MAX)),
+            RectU32::of(u32::MAX - 42, u32::MAX - 28, u32::MAX, u32::MAX)
+        );
+        assert_eq!(
+            inflate(&RectU32::of(u32::MAX - 42, u32::MAX - 28, u32::MAX, u32::MAX)),
+            RectU32::of(u32::MAX - 44, u32::MAX - 30, u32::MAX, u32::MAX)
+        );
     }
 }

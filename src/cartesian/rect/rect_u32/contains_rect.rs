@@ -22,7 +22,7 @@ mod tests {
     fn contains_rect_borders() {
         let r = RectU32::of(1, 1, u32::MAX - 1, u32::MAX - 1);
         assert!(contains_rect(&r, &RectU32::of(1, 1, u32::MAX - 1, u32::MAX - 1)));
-        
+
         assert!(contains_rect(&r, &RectU32::of(2, 1, u32::MAX - 1, u32::MAX - 1)));
         assert!(contains_rect(&r, &RectU32::of(1, 2, u32::MAX - 1, u32::MAX - 1)));
         assert!(contains_rect(&r, &RectU32::of(1, 1, u32::MAX - 2, u32::MAX - 1)));

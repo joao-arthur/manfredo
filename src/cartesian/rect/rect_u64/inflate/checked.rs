@@ -34,24 +34,24 @@ mod tests {
 
     #[test]
     fn try_assign_inflate_min_bounds() {
-        let mut r = RectU64::of(7, 3, 4, 13);
+        let mut r = RectU64::of(7, 3, 9, 13);
         assert_eq!(try_assign_inflate(&mut r), Some(()));
-        assert_eq!(r, RectU64::of(6, 2, 5, 14));
+        assert_eq!(r, RectU64::of(6, 2, 10, 14));
         assert_eq!(try_assign_inflate(&mut r), Some(()));
-        assert_eq!(r, RectU64::of(5, 1, 6, 15));
+        assert_eq!(r, RectU64::of(5, 1, 11, 15));
         assert_eq!(try_assign_inflate(&mut r), Some(()));
-        assert_eq!(r, RectU64::of(4, 0, 7, 16));
+        assert_eq!(r, RectU64::of(4, 0, 12, 16));
     }
 
     #[test]
     fn try_assign_inflate_max_bounds() {
-        let mut r = RectU64::of(200, 230, u64::MAX - 5, u64::MAX - 3);
+        let mut r = RectU64::of(u64::MAX - 33, u64::MAX - 17, u64::MAX - 5, u64::MAX - 3);
         assert_eq!(try_assign_inflate(&mut r), Some(()));
-        assert_eq!(r, RectU64::of(199, 229, u64::MAX - 4, u64::MAX - 2));
+        assert_eq!(r, RectU64::of(u64::MAX - 34, u64::MAX - 18, u64::MAX - 4, u64::MAX - 2));
         assert_eq!(try_assign_inflate(&mut r), Some(()));
-        assert_eq!(r, RectU64::of(198, 228, u64::MAX - 3, u64::MAX - 1));
+        assert_eq!(r, RectU64::of(u64::MAX - 35, u64::MAX - 19, u64::MAX - 3, u64::MAX - 1));
         assert_eq!(try_assign_inflate(&mut r), Some(()));
-        assert_eq!(r, RectU64::of(197, 227, u64::MAX - 2, u64::MAX));
+        assert_eq!(r, RectU64::of(u64::MAX - 36, u64::MAX - 20, u64::MAX - 2, u64::MAX));
     }
 
     #[test]
@@ -63,43 +63,43 @@ mod tests {
 
     #[test]
     fn try_assign_inflate_width_to_bounds() {
-        let mut r_min = RectU64::of(1, 10, 100, 100);
+        let mut r_min = RectU64::of(1, 10, 20, 20);
         assert_eq!(try_assign_inflate(&mut r_min), Some(()));
-        assert_eq!(r_min, RectU64::of(0, 9, 101, 101));
+        assert_eq!(r_min, RectU64::of(0, 9, 21, 21));
 
-        let mut r_max = RectU64::of(10, 10, u64::MAX - 1, 100);
+        let mut r_max = RectU64::of(10, 10, u64::MAX - 1, 20);
         assert_eq!(try_assign_inflate(&mut r_max), Some(()));
-        assert_eq!(r_max, RectU64::of(9, 9, u64::MAX, 101));
+        assert_eq!(r_max, RectU64::of(9, 9, u64::MAX, 21));
     }
 
     #[test]
     fn try_assign_inflate_height_to_bounds() {
-        let mut r_min = RectU64::of(10, 1, 100, 100);
+        let mut r_min = RectU64::of(10, 1, 20, 20);
         assert_eq!(try_assign_inflate(&mut r_min), Some(()));
-        assert_eq!(r_min, RectU64::of(9, 0, 101, 101));
+        assert_eq!(r_min, RectU64::of(9, 0, 21, 21));
 
-        let mut r_max = RectU64::of(10, 10, 100, u64::MAX - 1);
+        let mut r_max = RectU64::of(10, 10, 20, u64::MAX - 1);
         assert_eq!(try_assign_inflate(&mut r_max), Some(()));
-        assert_eq!(r_max, RectU64::of(9, 9, 101, u64::MAX));
+        assert_eq!(r_max, RectU64::of(9, 9, 21, u64::MAX));
     }
 
     #[test]
     fn try_assign_inflate_out_of_bounds() {
-        let mut r_min_x = RectU64::of(0, 10, u64::MAX, 100);
+        let mut r_min_x = RectU64::of(0, 10, u64::MAX, 20);
         assert_eq!(try_assign_inflate(&mut r_min_x), None);
-        assert_eq!(r_min_x, RectU64::of(0, 10, u64::MAX, 100));
+        assert_eq!(r_min_x, RectU64::of(0, 10, u64::MAX, 20));
 
-        let mut r_max_x = RectU64::of(10, 10, u64::MAX, 100);
+        let mut r_max_x = RectU64::of(10, 10, u64::MAX, 20);
         assert_eq!(try_assign_inflate(&mut r_max_x), None);
-        assert_eq!(r_max_x, RectU64::of(10, 10, u64::MAX, 100));
+        assert_eq!(r_max_x, RectU64::of(10, 10, u64::MAX, 20));
 
-        let mut r_min_y = RectU64::of(10, 0, 100, 100);
+        let mut r_min_y = RectU64::of(10, 0, 20, 20);
         assert_eq!(try_assign_inflate(&mut r_min_y), None);
-        assert_eq!(r_min_y, RectU64::of(10, 0, 100, 100));
+        assert_eq!(r_min_y, RectU64::of(10, 0, 20, 20));
 
-        let mut r_max_y = RectU64::of(10, 10, 100, u64::MAX);
+        let mut r_max_y = RectU64::of(10, 10, 20, u64::MAX);
         assert_eq!(try_assign_inflate(&mut r_max_y), None);
-        assert_eq!(r_max_y, RectU64::of(10, 10, 100, u64::MAX));
+        assert_eq!(r_max_y, RectU64::of(10, 10, 20, u64::MAX));
 
         let mut r_min = RectU64::of(0, 0, 10, 10);
         assert_eq!(try_assign_inflate(&mut r_min), None);
@@ -119,16 +119,16 @@ mod tests {
 
     #[test]
     fn try_inflate_min_bounds() {
-        assert_eq!(try_inflate(&RectU64::of(7, 3, 4, 13)), Some(RectU64::of(6, 2, 5, 14)));
-        assert_eq!(try_inflate(&RectU64::of(6, 2, 5, 14)), Some(RectU64::of(5, 1, 6, 15)));
-        assert_eq!(try_inflate(&RectU64::of(5, 1, 6, 15)), Some(RectU64::of(4, 0, 7, 16)));
+        assert_eq!(try_inflate(&RectU64::of(7, 3, 9, 13)), Some(RectU64::of(6, 2, 10, 14)));
+        assert_eq!(try_inflate(&RectU64::of(6, 2, 10, 14)), Some(RectU64::of(5, 1, 11, 15)));
+        assert_eq!(try_inflate(&RectU64::of(5, 1, 11, 15)), Some(RectU64::of(4, 0, 12, 16)));
     }
 
     #[test]
     fn try_inflate_max_bounds() {
-        assert_eq!(try_inflate(&RectU64::of(200, 230, u64::MAX - 5, u64::MAX - 3)), Some(RectU64::of(199, 229, u64::MAX - 4, u64::MAX - 2)));
-        assert_eq!(try_inflate(&RectU64::of(199, 229, u64::MAX - 4, u64::MAX - 2)), Some(RectU64::of(198, 228, u64::MAX - 3, u64::MAX - 1)));
-        assert_eq!(try_inflate(&RectU64::of(198, 228, u64::MAX - 3, u64::MAX - 1)), Some(RectU64::of(197, 227, u64::MAX - 2, u64::MAX)));
+        assert_eq!(try_inflate(&RectU64::of(u64::MAX - 33, u64::MAX - 17, u64::MAX - 5, u64::MAX - 3)), Some(RectU64::of(u64::MAX - 34, u64::MAX - 18, u64::MAX - 4, u64::MAX - 2)));
+        assert_eq!(try_inflate(&RectU64::of(u64::MAX - 34, u64::MAX - 18, u64::MAX - 4, u64::MAX - 2)), Some(RectU64::of(u64::MAX - 35, u64::MAX - 19, u64::MAX - 3, u64::MAX - 1)));
+        assert_eq!(try_inflate(&RectU64::of(u64::MAX - 35, u64::MAX - 19, u64::MAX - 3, u64::MAX - 1)), Some(RectU64::of(u64::MAX - 36, u64::MAX - 20, u64::MAX - 2, u64::MAX)));
     }
 
     #[test]
@@ -138,22 +138,22 @@ mod tests {
 
     #[test]
     fn try_inflate_width_to_bounds() {
-        assert_eq!(try_inflate(&RectU64::of(1, 10, 100, 100)), Some(RectU64::of(0, 9, 101, 101)));
-        assert_eq!(try_inflate(&RectU64::of(10, 10, u64::MAX - 1, 100)), Some(RectU64::of(9, 9, u64::MAX, 101)));
+        assert_eq!(try_inflate(&RectU64::of(1, 10, 20, 20)), Some(RectU64::of(0, 9, 21, 21)));
+        assert_eq!(try_inflate(&RectU64::of(10, 10, u64::MAX - 1, 20)), Some(RectU64::of(9, 9, u64::MAX, 21)));
     }
 
     #[test]
     fn try_inflate_height_to_bounds() {
-        assert_eq!(try_inflate(&RectU64::of(10, 1, 100, 100)), Some(RectU64::of(9, 0, 101, 101)));
-        assert_eq!(try_inflate(&RectU64::of(10, 10, 100, u64::MAX - 1)), Some(RectU64::of(9, 9, 101, u64::MAX)));
+        assert_eq!(try_inflate(&RectU64::of(10, 1, 20, 20)), Some(RectU64::of(9, 0, 21, 21)));
+        assert_eq!(try_inflate(&RectU64::of(10, 10, 20, u64::MAX - 1)), Some(RectU64::of(9, 9, 21, u64::MAX)));
     }
 
     #[test]
     fn try_inflate_out_of_bounds() {
-        assert_eq!(try_inflate(&RectU64::of(0, 10, u64::MAX, 100)), None);
-        assert_eq!(try_inflate(&RectU64::of(10, 10, u64::MAX, 100)), None);
-        assert_eq!(try_inflate(&RectU64::of(10, 0, 100, 100)), None);
-        assert_eq!(try_inflate(&RectU64::of(10, 10, 100, u64::MAX)), None);
+        assert_eq!(try_inflate(&RectU64::of(0, 10, u64::MAX, 20)), None);
+        assert_eq!(try_inflate(&RectU64::of(10, 10, u64::MAX, 20)), None);
+        assert_eq!(try_inflate(&RectU64::of(10, 0, 20, 20)), None);
+        assert_eq!(try_inflate(&RectU64::of(10, 10, 20, u64::MAX)), None);
         assert_eq!(try_inflate(&RectU64::of(0, 0, 10, 10)), None);
         assert_eq!(try_inflate(&RectU64::of(10, 10, u64::MAX, u64::MAX)), None);
     }
@@ -165,37 +165,37 @@ mod tests {
 
     #[test]
     fn assign_inflate_min_bounds() {
-        let mut r = RectU64::of(7, 3, 4, 13);
+        let mut r = RectU64::of(7, 3, 9, 13);
         assign_inflate(&mut r);
-        assert_eq!(r, RectU64::of(6, 2, 5, 14));
+        assert_eq!(r, RectU64::of(6, 2, 10, 14));
         assign_inflate(&mut r);
-        assert_eq!(r, RectU64::of(5, 1, 6, 15));
+        assert_eq!(r, RectU64::of(5, 1, 11, 15));
         assign_inflate(&mut r);
-        assert_eq!(r, RectU64::of(4, 0, 7, 16));
+        assert_eq!(r, RectU64::of(4, 0, 12, 16));
     }
 
     #[test]
     fn assign_inflate_max_bounds() {
-        let mut r = RectU64::of(200, 230, u64::MAX - 5, u64::MAX - 3);
+        let mut r = RectU64::of(u64::MAX - 33, u64::MAX - 17, u64::MAX - 5, u64::MAX - 3);
         assign_inflate(&mut r);
-        assert_eq!(r, RectU64::of(199, 229, u64::MAX - 4, u64::MAX - 2));
+        assert_eq!(r, RectU64::of(u64::MAX - 34, u64::MAX - 18, u64::MAX - 4, u64::MAX - 2));
         assign_inflate(&mut r);
-        assert_eq!(r, RectU64::of(198, 228, u64::MAX - 3, u64::MAX - 1));
+        assert_eq!(r, RectU64::of(u64::MAX - 35, u64::MAX - 19, u64::MAX - 3, u64::MAX - 1));
         assign_inflate(&mut r);
-        assert_eq!(r, RectU64::of(197, 227, u64::MAX - 2, u64::MAX));
+        assert_eq!(r, RectU64::of(u64::MAX - 36, u64::MAX - 20, u64::MAX - 2, u64::MAX));
     }
 
     #[test]
     fn inflate_min_bounds() {
-        assert_eq!(inflate(&RectU64::of(7, 3, 4, 13)), RectU64::of(6, 2, 5, 14));
-        assert_eq!(inflate(&RectU64::of(6, 2, 5, 14)), RectU64::of(5, 1, 6, 15));
-        assert_eq!(inflate(&RectU64::of(5, 1, 6, 15)), RectU64::of(4, 0, 7, 16));
+        assert_eq!(inflate(&RectU64::of(7, 3, 9, 13)), RectU64::of(6, 2, 10, 14));
+        assert_eq!(inflate(&RectU64::of(6, 2, 10, 14)), RectU64::of(5, 1, 11, 15));
+        assert_eq!(inflate(&RectU64::of(5, 1, 11, 15)), RectU64::of(4, 0, 12, 16));
     }
 
     #[test]
     fn inflate_max_bounds() {
-        assert_eq!(inflate(&RectU64::of(200, 230, u64::MAX - 5, u64::MAX - 3)), RectU64::of(199, 229, u64::MAX - 4, u64::MAX - 2));
-        assert_eq!(inflate(&RectU64::of(199, 229, u64::MAX - 4, u64::MAX - 2)), RectU64::of(198, 228, u64::MAX - 3, u64::MAX - 1));
-        assert_eq!(inflate(&RectU64::of(198, 228, u64::MAX - 3, u64::MAX - 1)), RectU64::of(197, 227, u64::MAX - 2, u64::MAX));
+        assert_eq!(inflate(&RectU64::of(u64::MAX - 33, u64::MAX - 17, u64::MAX - 5, u64::MAX - 3)), RectU64::of(u64::MAX - 34, u64::MAX - 18, u64::MAX - 4, u64::MAX - 2));
+        assert_eq!(inflate(&RectU64::of(u64::MAX - 34, u64::MAX - 18, u64::MAX - 4, u64::MAX - 2)), RectU64::of(u64::MAX - 35, u64::MAX - 19, u64::MAX - 3, u64::MAX - 1));
+        assert_eq!(inflate(&RectU64::of(u64::MAX - 35, u64::MAX - 19, u64::MAX - 3, u64::MAX - 1)), RectU64::of(u64::MAX - 36, u64::MAX - 20, u64::MAX - 2, u64::MAX));
     }
 }

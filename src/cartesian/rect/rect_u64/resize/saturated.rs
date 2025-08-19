@@ -83,11 +83,11 @@ mod tests {
 
     #[test]
     fn try_assign_resize_small_size() {
-        let mut r = RectU64::of(10, 10, 100, 100);
+        let mut r = RectU64::of(10, 10, 20, 20);
         assert_eq!(try_assign_resize(&mut r, 0), None);
         assert_eq!(try_assign_resize(&mut r, 1), None);
         assert_eq!(try_assign_resize(&mut r, 2), None);
-        assert_eq!(r, RectU64::of(10, 10, 100, 100));
+        assert_eq!(r, RectU64::of(10, 10, 20, 20));
     }
 
     #[test]
@@ -185,7 +185,7 @@ mod tests {
 
     #[test]
     fn try_resize_small_size() {
-        let r = RectU64::of(10, 10, 100, 100);
+        let r = RectU64::of(10, 10, 20, 20);
         assert_eq!(try_resize(&r, 0), None);
         assert_eq!(try_resize(&r, 1), None);
         assert_eq!(try_resize(&r, 2), None);

@@ -52,23 +52,23 @@ mod tests {
 
     #[test]
     fn try_assign_inflate_min_bounds() {
-        let mut r = RectU16::of(7, 2, 4, 13);
+        let mut r = RectU16::of(7, 2, 17, 13);
         assert_eq!(try_assign_inflate(&mut r), Some(()));
-        assert_eq!(r, RectU16::of(6, 1, 5, 14));
+        assert_eq!(r, RectU16::of(6, 1, 18, 14));
         assert_eq!(try_assign_inflate(&mut r), Some(()));
-        assert_eq!(r, RectU16::of(5, 0, 6, 15));
+        assert_eq!(r, RectU16::of(5, 0, 19, 15));
         assert_eq!(try_assign_inflate(&mut r), Some(()));
-        assert_eq!(r, RectU16::of(4, 0, 7, 17));
+        assert_eq!(r, RectU16::of(4, 0, 20, 17));
         assert_eq!(try_assign_inflate(&mut r), Some(()));
-        assert_eq!(r, RectU16::of(3, 0, 8, 19));
+        assert_eq!(r, RectU16::of(3, 0, 21, 19));
         assert_eq!(try_assign_inflate(&mut r), Some(()));
-        assert_eq!(r, RectU16::of(2, 0, 9, 21));
+        assert_eq!(r, RectU16::of(2, 0, 22, 21));
         assert_eq!(try_assign_inflate(&mut r), Some(()));
-        assert_eq!(r, RectU16::of(1, 0, 10, 23));
+        assert_eq!(r, RectU16::of(1, 0, 23, 23));
         assert_eq!(try_assign_inflate(&mut r), Some(()));
-        assert_eq!(r, RectU16::of(0, 0, 11, 25));
+        assert_eq!(r, RectU16::of(0, 0, 24, 25));
         assert_eq!(try_assign_inflate(&mut r), Some(()));
-        assert_eq!(r, RectU16::of(0, 0, 13, 27));
+        assert_eq!(r, RectU16::of(0, 0, 26, 27));
     }
 
     #[test]
@@ -109,24 +109,24 @@ mod tests {
 
     #[test]
     fn try_assign_inflate_width_to_bounds() {
-        let mut r_min = RectU16::of(1, 10, 100, 100);
+        let mut r_min = RectU16::of(1, 10, 20, 20);
         assert_eq!(try_assign_inflate(&mut r_min), Some(()));
-        assert_eq!(r_min, RectU16::of(0, 9, 101, 101));
+        assert_eq!(r_min, RectU16::of(0, 9, 21, 21));
 
-        let mut r_max = RectU16::of(10, 10, u16::MAX - 1, 100);
+        let mut r_max = RectU16::of(10, 10, u16::MAX - 1, 20);
         assert_eq!(try_assign_inflate(&mut r_max), Some(()));
-        assert_eq!(r_max, RectU16::of(9, 9, u16::MAX, 101));
+        assert_eq!(r_max, RectU16::of(9, 9, u16::MAX, 21));
     }
 
     #[test]
     fn try_assign_inflate_height_to_bounds() {
-        let mut r_min = RectU16::of(10, 1, 100, 100);
+        let mut r_min = RectU16::of(10, 1, 20, 20);
         assert_eq!(try_assign_inflate(&mut r_min), Some(()));
-        assert_eq!(r_min, RectU16::of(9, 0, 101, 101));
+        assert_eq!(r_min, RectU16::of(9, 0, 21, 21));
 
-        let mut r_max = RectU16::of(10, 10, 100, u16::MAX - 1);
+        let mut r_max = RectU16::of(10, 10, 20, u16::MAX - 1);
         assert_eq!(try_assign_inflate(&mut r_max), Some(()));
-        assert_eq!(r_max, RectU16::of(9, 9, 101, u16::MAX));
+        assert_eq!(r_max, RectU16::of(9, 9, 21, u16::MAX));
     }
 
     #[test]
@@ -135,25 +135,25 @@ mod tests {
         assert_eq!(try_assign_inflate(&mut r), None);
         assert_eq!(r, RectU16::largest());
 
-        let mut r_x = RectU16::of(0, 10, u16::MAX, 100);
+        let mut r_x = RectU16::of(0, 10, u16::MAX, 20);
         assert_eq!(try_assign_inflate(&mut r_x), None);
-        assert_eq!(r_x, RectU16::of(0, 10, u16::MAX, 100));
+        assert_eq!(r_x, RectU16::of(0, 10, u16::MAX, 20));
 
-        let mut r_y = RectU16::of(10, 0, 100, u16::MAX);
+        let mut r_y = RectU16::of(10, 0, 20, u16::MAX);
         assert_eq!(try_assign_inflate(&mut r_y), None);
-        assert_eq!(r_y, RectU16::of(10, 0, 100, u16::MAX));
+        assert_eq!(r_y, RectU16::of(10, 0, 20, u16::MAX));
     }
 
     #[test]
     fn try_inflate_min_bounds() {
-        assert_eq!(try_inflate(&RectU16::of(7, 2, 4, 13)), Some(RectU16::of(6, 1, 5, 14)));
-        assert_eq!(try_inflate(&RectU16::of(6, 1, 5, 14)), Some(RectU16::of(5, 0, 6, 15)));
-        assert_eq!(try_inflate(&RectU16::of(5, 0, 6, 15)), Some(RectU16::of(4, 0, 7, 17)));
-        assert_eq!(try_inflate(&RectU16::of(4, 0, 7, 17)), Some(RectU16::of(3, 0, 8, 19)));
-        assert_eq!(try_inflate(&RectU16::of(3, 0, 8, 19)), Some(RectU16::of(2, 0, 9, 21)));
-        assert_eq!(try_inflate(&RectU16::of(2, 0, 9, 21)), Some(RectU16::of(1, 0, 10, 23)));
-        assert_eq!(try_inflate(&RectU16::of(1, 0, 10, 23)), Some(RectU16::of(0, 0, 11, 25)));
-        assert_eq!(try_inflate(&RectU16::of(0, 0, 11, 25)), Some(RectU16::of(0, 0, 13, 27)));
+        assert_eq!(try_inflate(&RectU16::of(7, 2, 17, 13)), Some(RectU16::of(6, 1, 18, 14)));
+        assert_eq!(try_inflate(&RectU16::of(6, 1, 18, 14)), Some(RectU16::of(5, 0, 19, 15)));
+        assert_eq!(try_inflate(&RectU16::of(5, 0, 19, 15)), Some(RectU16::of(4, 0, 20, 17)));
+        assert_eq!(try_inflate(&RectU16::of(4, 0, 20, 17)), Some(RectU16::of(3, 0, 21, 19)));
+        assert_eq!(try_inflate(&RectU16::of(3, 0, 21, 19)), Some(RectU16::of(2, 0, 22, 21)));
+        assert_eq!(try_inflate(&RectU16::of(2, 0, 22, 21)), Some(RectU16::of(1, 0, 23, 23)));
+        assert_eq!(try_inflate(&RectU16::of(1, 0, 23, 23)), Some(RectU16::of(0, 0, 24, 25)));
+        assert_eq!(try_inflate(&RectU16::of(0, 0, 24, 25)), Some(RectU16::of(0, 0, 26, 27)));
     }
 
     #[test]
@@ -177,42 +177,42 @@ mod tests {
 
     #[test]
     fn try_inflate_width_to_bounds() {
-        assert_eq!(try_inflate(&RectU16::of(1, 10, 100, 100)), Some(RectU16::of(0, 9, 101, 101)));
-        assert_eq!(try_inflate(&RectU16::of(10, 10, u16::MAX - 1, 100)), Some(RectU16::of(9, 9, u16::MAX, 101)));
+        assert_eq!(try_inflate(&RectU16::of(1, 10, 20, 20)), Some(RectU16::of(0, 9, 21, 21)));
+        assert_eq!(try_inflate(&RectU16::of(10, 10, u16::MAX - 1, 20)), Some(RectU16::of(9, 9, u16::MAX, 21)));
     }
 
     #[test]
     fn try_inflate_height_to_bounds() {
-        assert_eq!(try_inflate(&RectU16::of(10, 1, 100, 100)), Some(RectU16::of(9, 0, 101, 101)));
-        assert_eq!(try_inflate(&RectU16::of(10, 10, 100, u16::MAX - 1)), Some(RectU16::of(9, 9, 101, u16::MAX)));
+        assert_eq!(try_inflate(&RectU16::of(10, 1, 20, 20)), Some(RectU16::of(9, 0, 21, 21)));
+        assert_eq!(try_inflate(&RectU16::of(10, 10, 20, u16::MAX - 1)), Some(RectU16::of(9, 9, 21, u16::MAX)));
     }
 
     #[test]
     fn try_inflate_out_of_bounds() {
         assert_eq!(try_inflate(&RectU16::largest()), None);
-        assert_eq!(try_inflate(&RectU16::of(0, 10, u16::MAX, 100)), None);
-        assert_eq!(try_inflate(&RectU16::of(10, 0, 100, u16::MAX)), None);
+        assert_eq!(try_inflate(&RectU16::of(0, 10, u16::MAX, 20)), None);
+        assert_eq!(try_inflate(&RectU16::of(10, 0, 20, u16::MAX)), None);
     }
 
     #[test]
     fn assign_inflate_min_bounds() {
-        let mut r = RectU16::of(7, 2, 4, 13);
+        let mut r = RectU16::of(7, 2, 17, 13);
         assign_inflate(&mut r);
-        assert_eq!(r, RectU16::of(6, 1, 5, 14));
+        assert_eq!(r, RectU16::of(6, 1, 18, 14));
         assign_inflate(&mut r);
-        assert_eq!(r, RectU16::of(5, 0, 6, 15));
+        assert_eq!(r, RectU16::of(5, 0, 19, 15));
         assign_inflate(&mut r);
-        assert_eq!(r, RectU16::of(4, 0, 7, 17));
+        assert_eq!(r, RectU16::of(4, 0, 20, 17));
         assign_inflate(&mut r);
-        assert_eq!(r, RectU16::of(3, 0, 8, 19));
+        assert_eq!(r, RectU16::of(3, 0, 21, 19));
         assign_inflate(&mut r);
-        assert_eq!(r, RectU16::of(2, 0, 9, 21));
+        assert_eq!(r, RectU16::of(2, 0, 22, 21));
         assign_inflate(&mut r);
-        assert_eq!(r, RectU16::of(1, 0, 10, 23));
+        assert_eq!(r, RectU16::of(1, 0, 23, 23));
         assign_inflate(&mut r);
-        assert_eq!(r, RectU16::of(0, 0, 11, 25));
+        assert_eq!(r, RectU16::of(0, 0, 24, 25));
         assign_inflate(&mut r);
-        assert_eq!(r, RectU16::of(0, 0, 13, 27));
+        assert_eq!(r, RectU16::of(0, 0, 26, 27));
     }
 
     #[test]
@@ -238,14 +238,14 @@ mod tests {
 
     #[test]
     fn inflate_min_bounds() {
-        assert_eq!(inflate(&RectU16::of(7, 2, 4, 13)), RectU16::of(6, 1, 5, 14));
-        assert_eq!(inflate(&RectU16::of(6, 1, 5, 14)), RectU16::of(5, 0, 6, 15));
-        assert_eq!(inflate(&RectU16::of(5, 0, 6, 15)), RectU16::of(4, 0, 7, 17));
-        assert_eq!(inflate(&RectU16::of(4, 0, 7, 17)), RectU16::of(3, 0, 8, 19));
-        assert_eq!(inflate(&RectU16::of(3, 0, 8, 19)), RectU16::of(2, 0, 9, 21));
-        assert_eq!(inflate(&RectU16::of(2, 0, 9, 21)), RectU16::of(1, 0, 10, 23));
-        assert_eq!(inflate(&RectU16::of(1, 0, 10, 23)), RectU16::of(0, 0, 11, 25));
-        assert_eq!(inflate(&RectU16::of(0, 0, 11, 25)), RectU16::of(0, 0, 13, 27));
+        assert_eq!(inflate(&RectU16::of(7, 2, 17, 13)), RectU16::of(6, 1, 18, 14));
+        assert_eq!(inflate(&RectU16::of(6, 1, 18, 14)), RectU16::of(5, 0, 19, 15));
+        assert_eq!(inflate(&RectU16::of(5, 0, 19, 15)), RectU16::of(4, 0, 20, 17));
+        assert_eq!(inflate(&RectU16::of(4, 0, 20, 17)), RectU16::of(3, 0, 21, 19));
+        assert_eq!(inflate(&RectU16::of(3, 0, 21, 19)), RectU16::of(2, 0, 22, 21));
+        assert_eq!(inflate(&RectU16::of(2, 0, 22, 21)), RectU16::of(1, 0, 23, 23));
+        assert_eq!(inflate(&RectU16::of(1, 0, 23, 23)), RectU16::of(0, 0, 24, 25));
+        assert_eq!(inflate(&RectU16::of(0, 0, 24, 25)), RectU16::of(0, 0, 26, 27));
     }
 
     #[test]

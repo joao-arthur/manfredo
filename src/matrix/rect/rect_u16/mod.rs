@@ -308,23 +308,23 @@ mod tests {
 
     #[test]
     fn inflate_min_bounds() {
-        let mut r = RectU16::of(7, 2, 4, 13);
+        let mut r = RectU16::of(7, 2, 17, 13);
         inflate(&mut r);
-        assert_eq!(r, RectU16::of(6, 1, 5, 14));
+        assert_eq!(r, RectU16::of(6, 1, 18, 14));
         inflate(&mut r);
-        assert_eq!(r, RectU16::of(5, 0, 6, 15));
+        assert_eq!(r, RectU16::of(5, 0, 19, 15));
         inflate(&mut r);
-        assert_eq!(r, RectU16::of(4, 0, 7, 17));
+        assert_eq!(r, RectU16::of(4, 0, 20, 17));
         inflate(&mut r);
-        assert_eq!(r, RectU16::of(3, 0, 8, 19));
+        assert_eq!(r, RectU16::of(3, 0, 21, 19));
         inflate(&mut r);
-        assert_eq!(r, RectU16::of(2, 0, 9, 21));
+        assert_eq!(r, RectU16::of(2, 0, 22, 21));
         inflate(&mut r);
-        assert_eq!(r, RectU16::of(1, 0, 10, 23));
+        assert_eq!(r, RectU16::of(1, 0, 23, 23));
         inflate(&mut r);
-        assert_eq!(r, RectU16::of(0, 0, 11, 25));
+        assert_eq!(r, RectU16::of(0, 0, 24, 25));
         inflate(&mut r);
-        assert_eq!(r, RectU16::of(0, 0, 13, 27));
+        assert_eq!(r, RectU16::of(0, 0, 26, 27));
     }
 
     #[test]

@@ -26,7 +26,7 @@ mod tests {
     #[test]
     fn contains_point_outside_borders() {
         let r = RectU16::of(1, 1, u16::MAX - 1, u16::MAX - 1);
-        assert!(!contains_point(&r, &PointU16::of(0, 0)));
+        assert!(!contains_point(&r, &PointU16::min()));
         assert!(!contains_point(&r, &PointU16::of(0, u16::MAX)));
         assert!(!contains_point(&r, &PointU16::of(u16::MAX, 0)));
         assert!(!contains_point(&r, &PointU16::max()));

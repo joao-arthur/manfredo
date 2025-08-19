@@ -1,5 +1,5 @@
 use crate::cartesian::{
-    point::point_u32,
+    point::point_u32::PointU32,
     rect::rect_u32::{RectU32, delta_x, delta_y},
 };
 
@@ -34,7 +34,7 @@ pub fn try_resize(r: &RectU32, size: u32) -> Option<RectU32> {
     let min_y = clamped_min_y as u32;
     let max_x = (clamped_min_x + i64::from(size) - 1) as u32;
     let max_y = (clamped_min_y + i64::from(size) - 1) as u32;
-    Some(RectU32 { min: point_u32::PointU32 { x: min_x, y: min_y }, max: point_u32::PointU32 { x: max_x, y: max_y } })
+    Some(RectU32 { min: PointU32 { x: min_x, y: min_y }, max: PointU32 { x: max_x, y: max_y } })
 }
 
 pub fn assign_resize(r: &mut RectU32, size: u32) {

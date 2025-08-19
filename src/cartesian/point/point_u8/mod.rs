@@ -77,7 +77,7 @@ mod tests {
     #[test]
     fn delta_min() {
         let p = PointU8::min();
-        assert_eq!(delta(&p, &PointU8::of(0, 0)), PointU8::of(0, 0));
+        assert_eq!(delta(&p, &PointU8::min()), PointU8::min());
         assert_eq!(delta(&p, &PointU8::of(0, 1)), PointU8::of(0, 1));
         assert_eq!(delta(&p, &PointU8::of(0, 2)), PointU8::of(0, 2));
 
@@ -93,7 +93,7 @@ mod tests {
     #[test]
     fn delta_max() {
         let p = PointU8::of(u8::MAX - 2, u8::MAX - 2);
-        assert_eq!(delta(&p, &PointU8::of(u8::MAX - 2, u8::MAX - 2)), PointU8::of(0, 0));
+        assert_eq!(delta(&p, &PointU8::of(u8::MAX - 2, u8::MAX - 2)), PointU8::min());
         assert_eq!(delta(&p, &PointU8::of(u8::MAX - 2, u8::MAX - 1)), PointU8::of(0, 1));
         assert_eq!(delta(&p, &PointU8::of(u8::MAX - 2, u8::MAX)), PointU8::of(0, 2));
 

@@ -1,5 +1,5 @@
 use crate::cartesian::{
-    point::point_u64,
+    point::point_u64::PointU64,
     rect::rect_u64::{RectU64, delta_x, delta_y},
 };
 
@@ -34,7 +34,7 @@ pub fn try_resize(r: &RectU64, size: u64) -> Option<RectU64> {
     let min_y = clamped_min_y as u64;
     let max_x = (clamped_min_x + i128::from(size) - 1) as u64;
     let max_y = (clamped_min_y + i128::from(size) - 1) as u64;
-    Some(RectU64 { min: point_u64::PointU64 { x: min_x, y: min_y }, max: point_u64::PointU64 { x: max_x, y: max_y } })
+    Some(RectU64 { min: PointU64 { x: min_x, y: min_y }, max: PointU64 { x: max_x, y: max_y } })
 }
 
 pub fn assign_resize(r: &mut RectU64, size: u64) {

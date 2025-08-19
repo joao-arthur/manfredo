@@ -30,7 +30,7 @@ mod tests {
 
     #[test]
     fn test_try_assign_add() {
-        let mut p = PointU16::of(0, 0);
+        let mut p = PointU16::min();
         assert_eq!(try_assign_add(&mut p, &PointI16::of(10, 13)), Some(()));
         assert_eq!(p, PointU16::of(10, 13));
         assert_eq!(try_assign_add(&mut p, &PointI16::of(-5, -3)), Some(()));
@@ -80,7 +80,7 @@ mod tests {
 
     #[test]
     fn test_try_add() {
-        assert_eq!(try_add(&PointU16::of(0, 0), &PointI16::of(10, 13)), Some(PointU16::of(10, 13)));
+        assert_eq!(try_add(&PointU16::min(), &PointI16::of(10, 13)), Some(PointU16::of(10, 13)));
         assert_eq!(try_add(&PointU16::of(10, 10), &PointI16::of(-5, -3)), Some(PointU16::of(5, 7)));
     }
 
@@ -118,7 +118,7 @@ mod tests {
 
     #[test]
     fn test_assign_add() {
-        let mut p = PointU16::of(0, 0);
+        let mut p = PointU16::min();
         assign_add(&mut p, &PointI16::of(10, 13));
         assert_eq!(p, PointU16::of(10, 13));
         assign_add(&mut p, &PointI16::of(-5, -3));
@@ -127,7 +127,7 @@ mod tests {
 
     #[test]
     fn test_add() {
-        assert_eq!(add(&PointU16::of(0, 0), &PointI16::of(10, 13)), PointU16::of(10, 13));
+        assert_eq!(add(&PointU16::min(), &PointI16::of(10, 13)), PointU16::of(10, 13));
         assert_eq!(add(&PointU16::of(10, 13), &PointI16::of(-5, -3)), PointU16::of(5, 10));
     }
 }

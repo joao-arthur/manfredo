@@ -136,8 +136,7 @@ mod tests {
 
     #[test]
     fn test_try_add() {
-        let mut r = RectU8::of(0, 0, 12, 15);
-        assert_eq!(try_add(&mut r, &RectI8::of(5, 4, 3, 2)), Some(RectU8::of(5, 4, 15, 17)));
+        assert_eq!(try_add(&RectU8::of(0, 0, 12, 15), &RectI8::of(5, 4, 3, 2)), Some(RectU8::of(5, 4, 15, 17)));
         assert_eq!(try_add(&RectU8::of(5, 4, 15, 17), &RectI8::of(-4, -3, -2, -1)), Some(RectU8::of(1, 1, 13, 16)));
     }
 

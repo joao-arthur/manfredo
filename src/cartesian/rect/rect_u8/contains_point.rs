@@ -22,7 +22,7 @@ mod tests {
     #[test]
     fn contains_point_outside_borders() {
         let r = RectU8::of(1, 1, u8::MAX - 1, u8::MAX - 1);
-        assert!(!contains_point(&r, &PointU8::of(0, 0)));
+        assert!(!contains_point(&r, &PointU8::min()));
         assert!(!contains_point(&r, &PointU8::of(0, u8::MAX)));
         assert!(!contains_point(&r, &PointU8::of(u8::MAX, 0)));
         assert!(!contains_point(&r, &PointU8::max()));

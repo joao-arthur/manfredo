@@ -148,7 +148,10 @@ mod tests {
 
     #[test]
     fn add_big_rect_out_of_bounds() {
-        assert_eq!(add(&RectU16::of(10, 5, u16::MAX, u16::MAX), &RectI16::of(-20, -20, 0, 0)), RectU16::of(u16::MAX - 9, u16::MAX - 14, u16::MAX, u16::MAX));
+        assert_eq!(
+            add(&RectU16::of(10, 5, u16::MAX, u16::MAX), &RectI16::of(-20, -20, 0, 0)),
+            RectU16::of(u16::MAX - 9, u16::MAX - 14, u16::MAX, u16::MAX)
+        );
         assert_eq!(add(&RectU16::of(0, 0, u16::MAX - 5, u16::MAX - 10), &RectI16::of(0, 0, 20, 20)), RectU16::of(0, 0, 14, 9));
     }
 
@@ -166,8 +169,14 @@ mod tests {
 
     #[test]
     fn add_big_rect_limits_out_of_bounds() {
-        assert_eq!(add(&RectU16::largest(), &RectI16::min()), RectU16::of((i16::MAX as u16) + 1, (i16::MAX as u16) + 1, i16::MAX as u16, i16::MAX as u16));
-        assert_eq!(add(&RectU16::largest(), &RectI16::max()), RectU16::of(i16::MAX as u16, i16::MAX as u16, (i16::MAX as u16) - 1, (i16::MAX as u16) - 1));
+        assert_eq!(
+            add(&RectU16::largest(), &RectI16::min()),
+            RectU16::of((i16::MAX as u16) + 1, (i16::MAX as u16) + 1, i16::MAX as u16, i16::MAX as u16)
+        );
+        assert_eq!(
+            add(&RectU16::largest(), &RectI16::max()),
+            RectU16::of(i16::MAX as u16, i16::MAX as u16, (i16::MAX as u16) - 1, (i16::MAX as u16) - 1)
+        );
         assert_eq!(
             add(&RectU16::of(1, 1, u16::MAX, u16::MAX), &RectI16::min()),
             RectU16::of((i16::MAX as u16) + 2, (i16::MAX as u16) + 2, i16::MAX as u16, i16::MAX as u16)

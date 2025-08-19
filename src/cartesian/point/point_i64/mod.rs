@@ -109,7 +109,7 @@ mod tests {
     #[test]
     fn delta_min() {
         let p = PointI64::min();
-        assert_eq!(delta(&p, &PointI64::min()), PointU64::of(0, 0));
+        assert_eq!(delta(&p, &PointI64::min()), PointU64::min());
         assert_eq!(delta(&p, &PointI64::of(i64::MIN, i64::MIN + 1)), PointU64::of(0, 1));
         assert_eq!(delta(&p, &PointI64::of(i64::MIN, i64::MIN + 2)), PointU64::of(0, 2));
 
@@ -125,7 +125,7 @@ mod tests {
     #[test]
     fn delta_max() {
         let p = PointI64::of(i64::MAX - 2, i64::MAX - 2);
-        assert_eq!(delta(&p, &PointI64::of(i64::MAX - 2, i64::MAX - 2)), PointU64::of(0, 0));
+        assert_eq!(delta(&p, &PointI64::of(i64::MAX - 2, i64::MAX - 2)), PointU64::min());
         assert_eq!(delta(&p, &PointI64::of(i64::MAX - 2, i64::MAX - 1)), PointU64::of(0, 1));
         assert_eq!(delta(&p, &PointI64::of(i64::MAX - 2, i64::MAX)), PointU64::of(0, 2));
 

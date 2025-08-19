@@ -19,7 +19,7 @@ mod tests {
 
     #[test]
     fn test_assign_add() {
-        let mut p = PointU8::of(0, 0);
+        let mut p = PointU8::min();
         assign_add(&mut p, &PointI8::of(10, 13));
         assert_eq!(p, PointU8::of(10, 13));
         assign_add(&mut p, &PointI8::of(-5, -3));
@@ -61,7 +61,7 @@ mod tests {
 
     #[test]
     fn test_add() {
-        assert_eq!(add(&PointU8::of(0, 0), &PointI8::of(10, 13)), PointU8::of(10, 13));
+        assert_eq!(add(&PointU8::min(), &PointI8::of(10, 13)), PointU8::of(10, 13));
         assert_eq!(add(&PointU8::of(10, 10), &PointI8::of(-5, -3)), PointU8::of(5, 7));
     }
 

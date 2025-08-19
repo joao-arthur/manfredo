@@ -31,10 +31,11 @@ pub fn try_inflate(r: &RectU16) -> Option<RectU16> {
     let min_y_modifier = 1 - u16::from(is_min_y) + u16::from(is_max_y);
     let max_x_modifier = 1 + u16::from(is_min_x) - u16::from(is_max_x);
     let max_y_modifier = 1 + u16::from(is_min_y) - u16::from(is_max_y);
-    Some(RectU16 {
-        min: PointU16 { x: r.min.x.saturating_sub(min_x_modifier), y: r.min.y.saturating_sub(min_y_modifier) },
-        max: PointU16 { x: r.max.x.saturating_add(max_x_modifier), y: r.max.y.saturating_add(max_y_modifier) },
-    })
+    let min_x = r.min.x.saturating_sub(min_x_modifier);
+    let min_y = r.min.y.saturating_sub(min_y_modifier);
+    let max_x = r.max.x.saturating_add(max_x_modifier);
+    let max_y = r.max.y.saturating_add(max_y_modifier);
+    Some(RectU16 { min: PointU16 { x: min_x, y: min_y }, max: PointU16 { x: max_x, y: max_y } })
 }
 
 pub fn assign_inflate(r: &mut RectU16) {

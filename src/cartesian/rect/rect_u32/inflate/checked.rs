@@ -32,7 +32,7 @@ pub fn inflate(r: &RectU32) -> RectU32 {
 mod tests {
     use crate::cartesian::rect::rect_u32::RectU32;
 
-    use super::{ assign_inflate, inflate, try_assign_inflate, try_inflate};
+    use super::{assign_inflate, inflate, try_assign_inflate, try_inflate};
 
     #[test]
     fn try_assign_inflate_min_bounds() {

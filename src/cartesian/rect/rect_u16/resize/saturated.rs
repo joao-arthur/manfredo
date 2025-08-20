@@ -49,7 +49,7 @@ pub fn resize(r: &RectU16, size: u16) -> RectU16 {
 mod tests {
     use crate::cartesian::rect::rect_u16::RectU16;
 
-    use super::{ assign_resize, resize, try_assign_resize, try_resize};
+    use super::{assign_resize, resize, try_assign_resize, try_resize};
 
     #[test]
     fn try_assign_resize_odd() {

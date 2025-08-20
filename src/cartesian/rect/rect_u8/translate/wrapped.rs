@@ -8,10 +8,12 @@ pub fn assign_translate(r: &mut RectU8, delta: &PointI8) {
     let dy = delta_y(r);
     let min_x = r.min.x.wrapping_add_signed(delta.x);
     let min_y = r.min.y.wrapping_add_signed(delta.y);
+    let max_x = min_x.wrapping_add(dx);
+    let max_y = min_y.wrapping_add(dy);
     r.min.x = min_x;
     r.min.y = min_y;
-    r.max.x = min_x.wrapping_add(dx);
-    r.max.y = min_y.wrapping_add(dy);
+    r.max.x = max_x;
+    r.max.y = max_y;
 }
 
 pub fn translate(r: &RectU8, delta: &PointI8) -> RectU8 {

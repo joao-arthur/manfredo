@@ -36,7 +36,7 @@ pub fn translate(r: &RectU64, delta: &PointI64) -> RectU64 {
 mod tests {
     use crate::cartesian::{point::point_i64::PointI64, rect::rect_u64::RectU64};
 
-    use super::{translate, assign_translate};
+    use super::{assign_translate, translate};
 
     #[test]
     fn test_assign_translate() {

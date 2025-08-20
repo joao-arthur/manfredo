@@ -25,11 +25,11 @@ mod tests {
         assert!(!contains_point(&r, &PointI8::min()));
         assert!(!contains_point(&r, &PointI8::of(i8::MIN + 1, i8::MIN)));
         assert!(!contains_point(&r, &PointI8::of(i8::MIN, i8::MIN + 1)));
-        
+
         assert!(!contains_point(&r, &PointI8::of(i8::MIN, i8::MAX)));
         assert!(!contains_point(&r, &PointI8::of(i8::MIN, i8::MAX - 1)));
         assert!(!contains_point(&r, &PointI8::of(i8::MIN + 1, i8::MAX)));
-        
+
         assert!(!contains_point(&r, &PointI8::of(i8::MAX, i8::MIN)));
         assert!(!contains_point(&r, &PointI8::of(i8::MAX, i8::MIN + 1)));
         assert!(!contains_point(&r, &PointI8::of(i8::MAX - 1, i8::MIN)));

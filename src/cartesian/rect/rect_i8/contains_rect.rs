@@ -22,7 +22,7 @@ mod tests {
     fn contains_rect_borders() {
         let r = RectI8::of(i8::MIN + 1, i8::MIN + 1, i8::MAX - 1, i8::MAX - 1);
         assert!(contains_rect(&r, &RectI8::of(i8::MIN + 1, i8::MIN + 1, i8::MAX - 1, i8::MAX - 1)));
-        
+
         assert!(contains_rect(&r, &RectI8::of(i8::MIN + 2, i8::MIN + 1, i8::MAX - 1, i8::MAX - 1)));
         assert!(contains_rect(&r, &RectI8::of(i8::MIN + 1, i8::MIN + 2, i8::MAX - 1, i8::MAX - 1)));
         assert!(contains_rect(&r, &RectI8::of(i8::MIN + 1, i8::MIN + 1, i8::MAX - 2, i8::MAX - 1)));

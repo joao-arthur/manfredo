@@ -47,7 +47,9 @@ pub fn resize(r: &RectU8, size: u8) -> RectU8 {
 
 #[cfg(test)]
 mod tests {
-    use super::{RectU8, assign_resize, resize, try_assign_resize, try_resize};
+    use crate::cartesian::rect::rect_u8::RectU8;
+
+    use super::{assign_resize, resize, try_assign_resize, try_resize};
 
     #[test]
     fn try_assign_resize_odd() {

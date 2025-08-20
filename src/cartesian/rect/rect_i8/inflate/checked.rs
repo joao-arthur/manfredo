@@ -160,7 +160,7 @@ mod tests {
     fn try_inflate_width_to_bounds() {
         assert_eq!(
             try_inflate(&RectI8::of(i8::MIN + 1, i8::MIN + 10, i8::MIN + 20, i8::MIN + 20)),
-            Some(RectI8::of(i8::MIN + 0, i8::MIN + 9, i8::MIN + 21, i8::MIN + 21))
+            Some(RectI8::of(i8::MIN, i8::MIN + 9, i8::MIN + 21, i8::MIN + 21))
         );
         assert_eq!(
             try_inflate(&RectI8::of(i8::MIN + 10, i8::MIN + 10, i8::MAX - 1, i8::MIN + 20)),
@@ -172,7 +172,7 @@ mod tests {
     fn try_inflate_height_to_bounds() {
         assert_eq!(
             try_inflate(&RectI8::of(i8::MIN + 10, i8::MIN + 1, i8::MIN + 20, i8::MIN + 20)),
-            Some(RectI8::of(i8::MIN + 9, i8::MIN + 0, i8::MIN + 21, i8::MIN + 21))
+            Some(RectI8::of(i8::MIN + 9, i8::MIN, i8::MIN + 21, i8::MIN + 21))
         );
         assert_eq!(
             try_inflate(&RectI8::of(i8::MIN + 10, i8::MIN + 10, i8::MIN + 20, i8::MAX - 1)),

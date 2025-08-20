@@ -1,3 +1,4 @@
+use crate::cartesian::point::point_u8;
 use std::ops::RangeInclusive;
 
 pub mod add;
@@ -7,8 +8,6 @@ pub mod deflate;
 pub mod inflate;
 pub mod resize;
 pub mod translate;
-
-use crate::cartesian::point::point_u8;
 
 #[derive(Eq, PartialEq, Debug, Clone)]
 pub struct RectU8 {

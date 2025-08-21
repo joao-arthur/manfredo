@@ -1,7 +1,7 @@
 use crate::cartesian::{point::point_u8::PointU8, rect::rect_u8::RectU8};
 
-pub fn contains_point(outer: &RectU8, p: &PointU8) -> bool {
-    p.x >= outer.min.x && p.x <= outer.max.x && p.y >= outer.min.y && p.y <= outer.max.y
+pub fn contains_point(r: &RectU8, p: &PointU8) -> bool {
+    p.x >= r.min.x && p.x <= r.max.x && p.y >= r.min.y && p.y <= r.max.y
 }
 
 #[cfg(test)]

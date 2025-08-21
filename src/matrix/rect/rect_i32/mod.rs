@@ -93,14 +93,17 @@ mod tests {
         rect::{rect_i8::RectI8, rect_i16::RectI16},
     };
 
-    use super::{RectI32, delta_row, delta_col, len_row, len_col, max_delta, max_len};
+    use super::{RectI32, delta_col, delta_row, len_col, len_row, max_delta, max_len};
 
     #[test]
     fn rect_i32() {
         assert_eq!(RectI32::largest(), RectI32 { min: PointI32 { row: i32::MIN, col: i32::MIN }, max: PointI32 { row: i32::MAX, col: i32::MAX } });
         assert_eq!(RectI32::min(), RectI32 { min: PointI32 { row: i32::MIN, col: i32::MIN }, max: PointI32 { row: i32::MIN, col: i32::MIN } });
         assert_eq!(RectI32::max(), RectI32 { min: PointI32 { row: i32::MAX, col: i32::MAX }, max: PointI32 { row: i32::MAX, col: i32::MAX } });
-        assert_eq!(RectI32::of(i32::MIN, -1, 1, i32::MAX), RectI32 { min: PointI32 { row: i32::MIN, col: -1 }, max: PointI32 { row: 1, col: i32::MAX } });
+        assert_eq!(
+            RectI32::of(i32::MIN, -1, 1, i32::MAX),
+            RectI32 { min: PointI32 { row: i32::MIN, col: -1 }, max: PointI32 { row: 1, col: i32::MAX } }
+        );
     }
 
     #[test]

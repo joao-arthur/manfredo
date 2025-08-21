@@ -1,6 +1,6 @@
 use crate::matrix::{
     point::point_i64::PointI64,
-    rect::rect_i64::{RectI64, delta_row, delta_col},
+    rect::rect_i64::{RectI64, delta_col, delta_row},
 };
 
 pub fn try_assign_deflate(r: &mut RectI64) -> Option<()> {

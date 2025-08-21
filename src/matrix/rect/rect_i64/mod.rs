@@ -99,14 +99,17 @@ mod tests {
         rect::{rect_i8::RectI8, rect_i16::RectI16, rect_i32::RectI32},
     };
 
-    use super::{RectI64, delta_row, delta_col, len_row, len_col, max_delta, max_len};
+    use super::{RectI64, delta_col, delta_row, len_col, len_row, max_delta, max_len};
 
     #[test]
     fn rect_i64() {
         assert_eq!(RectI64::largest(), RectI64 { min: PointI64 { row: i64::MIN, col: i64::MIN }, max: PointI64 { row: i64::MAX, col: i64::MAX } });
         assert_eq!(RectI64::min(), RectI64 { min: PointI64 { row: i64::MIN, col: i64::MIN }, max: PointI64 { row: i64::MIN, col: i64::MIN } });
         assert_eq!(RectI64::max(), RectI64 { min: PointI64 { row: i64::MAX, col: i64::MAX }, max: PointI64 { row: i64::MAX, col: i64::MAX } });
-        assert_eq!(RectI64::of(i64::MIN, -1, 1, i64::MAX), RectI64 { min: PointI64 { row: i64::MIN, col: -1 }, max: PointI64 { row: 1, col: i64::MAX } });
+        assert_eq!(
+            RectI64::of(i64::MIN, -1, 1, i64::MAX),
+            RectI64 { min: PointI64 { row: i64::MIN, col: -1 }, max: PointI64 { row: 1, col: i64::MAX } }
+        );
     }
 
     #[test]

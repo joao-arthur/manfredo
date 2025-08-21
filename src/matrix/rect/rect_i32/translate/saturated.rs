@@ -1,6 +1,6 @@
 use crate::matrix::{
     point::point_i32::PointI32,
-    rect::rect_i32::{RectI32, delta_row, delta_col},
+    rect::rect_i32::{RectI32, delta_col, delta_row},
 };
 
 pub fn assign_translate(r: &mut RectI32, delta: &PointI32) {

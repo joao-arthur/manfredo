@@ -75,7 +75,7 @@ pub fn max_len(r: &RectI8) -> u8 {
 mod tests {
     use crate::matrix::point::point_i8::PointI8;
 
-    use super::{RectI8, delta_row, delta_col, len_row, len_col, max_delta, max_len};
+    use super::{RectI8, delta_col, delta_row, len_col, len_row, max_delta, max_len};
 
     #[test]
     fn rect_i8() {

@@ -1,7 +1,7 @@
 use crate::matrix::{point::point_i16::PointI16, rect::rect_i16::RectI16};
 
-pub fn contains_point(outer: &RectI16, p: &PointI16) -> bool {
-    p.row >= outer.min.row && p.row <= outer.max.row && p.col >= outer.min.col && p.col <= outer.max.col
+pub fn contains_point(r: &RectI16, p: &PointI16) -> bool {
+    p.row >= r.min.row && p.row <= r.max.row && p.col >= r.min.col && p.col <= r.max.col
 }
 
 #[cfg(test)]

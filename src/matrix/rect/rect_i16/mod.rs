@@ -81,14 +81,17 @@ pub fn max_len(r: &RectI16) -> u16 {
 mod tests {
     use crate::matrix::{point::point_i16::PointI16, rect::rect_i8::RectI8};
 
-    use super::{RectI16, delta_row, delta_col, len_row, len_col, max_delta, max_len};
+    use super::{RectI16, delta_col, delta_row, len_col, len_row, max_delta, max_len};
 
     #[test]
     fn rect_i16() {
         assert_eq!(RectI16::largest(), RectI16 { min: PointI16 { row: i16::MIN, col: i16::MIN }, max: PointI16 { row: i16::MAX, col: i16::MAX } });
         assert_eq!(RectI16::min(), RectI16 { min: PointI16 { row: i16::MIN, col: i16::MIN }, max: PointI16 { row: i16::MIN, col: i16::MIN } });
         assert_eq!(RectI16::max(), RectI16 { min: PointI16 { row: i16::MAX, col: i16::MAX }, max: PointI16 { row: i16::MAX, col: i16::MAX } });
-        assert_eq!(RectI16::of(i16::MIN, -1, 1, i16::MAX), RectI16 { min: PointI16 { row: i16::MIN, col: -1 }, max: PointI16 { row: 1, col: i16::MAX } });
+        assert_eq!(
+            RectI16::of(i16::MIN, -1, 1, i16::MAX),
+            RectI16 { min: PointI16 { row: i16::MIN, col: -1 }, max: PointI16 { row: 1, col: i16::MAX } }
+        );
     }
 
     #[test]

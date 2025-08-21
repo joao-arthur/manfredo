@@ -1,6 +1,6 @@
 use crate::matrix::{
     point::point_i8::PointI8,
-    rect::rect_i8::{RectI8, delta_row, delta_col},
+    rect::rect_i8::{RectI8, delta_col, delta_row},
 };
 
 pub fn try_assign_resize(r: &mut RectI8, size: u8) -> Option<()> {

@@ -4,31 +4,31 @@ use crate::matrix::{
 };
 
 pub fn assign_translate(r: &mut RectU32, delta: &PointI32) {
-    let dx = delta_row(r);
-    let dy = delta_col(r);
+    let d_row = delta_row(r);
+    let d_col = delta_col(r);
     let temp_min_row = i64::from(r.min.row) + i64::from(delta.row);
     let temp_min_col = i64::from(r.min.col) + i64::from(delta.col);
-    let clamped_row = temp_min_row.clamp(0, i64::from(u32::MAX) - i64::from(dx));
-    let clamped_col = temp_min_col.clamp(0, i64::from(u32::MAX) - i64::from(dy));
+    let clamped_row = temp_min_row.clamp(0, i64::from(u32::MAX) - i64::from(d_row));
+    let clamped_col = temp_min_col.clamp(0, i64::from(u32::MAX) - i64::from(d_col));
     let min_row = clamped_row as u32;
     let min_col = clamped_col as u32;
     r.min.row = min_row;
     r.min.col = min_col;
-    r.max.row = min_row + dx;
-    r.max.col = min_col + dy;
+    r.max.row = min_row + d_row;
+    r.max.col = min_col + d_col;
 }
 
 pub fn translate(r: &RectU32, delta: &PointI32) -> RectU32 {
-    let dx = delta_row(r);
-    let dy = delta_col(r);
+    let d_row = delta_row(r);
+    let d_col = delta_col(r);
     let temp_min_row = i64::from(r.min.row) + i64::from(delta.row);
     let temp_min_col = i64::from(r.min.col) + i64::from(delta.col);
-    let clamped_row = temp_min_row.clamp(0, i64::from(u32::MAX) - i64::from(dx));
-    let clamped_col = temp_min_col.clamp(0, i64::from(u32::MAX) - i64::from(dy));
+    let clamped_row = temp_min_row.clamp(0, i64::from(u32::MAX) - i64::from(d_row));
+    let clamped_col = temp_min_col.clamp(0, i64::from(u32::MAX) - i64::from(d_col));
     let min_row = clamped_row as u32;
     let min_col = clamped_col as u32;
-    let max_row = min_row + dx;
-    let max_col = min_col + dy;
+    let max_row = min_row + d_row;
+    let max_col = min_col + d_col;
     RectU32 { min: PointU32 { row: min_row, col: min_col }, max: PointU32 { row: max_row, col: max_col } }
 }
 

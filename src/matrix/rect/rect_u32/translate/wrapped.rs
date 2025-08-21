@@ -4,12 +4,12 @@ use crate::matrix::{
 };
 
 pub fn assign_translate(r: &mut RectU32, delta: &PointI32) {
-    let dx = delta_row(r);
-    let dy = delta_col(r);
+    let d_row = delta_row(r);
+    let d_col = delta_col(r);
     let min_row = r.min.row.wrapping_add_signed(delta.row);
     let min_col = r.min.col.wrapping_add_signed(delta.col);
-    let max_row = min_row.wrapping_add(dx);
-    let max_col = min_col.wrapping_add(dy);
+    let max_row = min_row.wrapping_add(d_row);
+    let max_col = min_col.wrapping_add(d_col);
     r.min.row = min_row;
     r.min.col = min_col;
     r.max.row = max_row;
@@ -17,12 +17,12 @@ pub fn assign_translate(r: &mut RectU32, delta: &PointI32) {
 }
 
 pub fn translate(r: &RectU32, delta: &PointI32) -> RectU32 {
-    let dx = delta_row(r);
-    let dy = delta_col(r);
+    let d_row = delta_row(r);
+    let d_col = delta_col(r);
     let min_row = r.min.row.wrapping_add_signed(delta.row);
     let min_col = r.min.col.wrapping_add_signed(delta.col);
-    let max_row = min_row.wrapping_add(dx);
-    let max_col = min_col.wrapping_add(dy);
+    let max_row = min_row.wrapping_add(d_row);
+    let max_col = min_col.wrapping_add(d_col);
     RectU32 { min: PointU32 { row: min_row, col: min_col }, max: PointU32 { row: max_row, col: max_col } }
 }
 

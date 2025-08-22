@@ -3,7 +3,7 @@ use crate::cartesian::point::point_f32;
 //pub mod add;
 pub mod contains_point;
 pub mod contains_rect;
-//pub mod deflate;
+pub mod deflate;
 //pub mod inflate;
 //pub mod resize;
 //pub mod translate;

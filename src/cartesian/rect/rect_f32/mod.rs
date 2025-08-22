@@ -1,5 +1,13 @@
 use crate::cartesian::point::point_f32;
 
+//pub mod add;
+pub mod contains_point;
+//pub mod contains_rect;
+//pub mod deflate;
+//pub mod inflate;
+//pub mod resize;
+//pub mod translate;
+
 #[derive(PartialEq, Debug, Clone)]
 pub struct RectF32 {
     pub min: point_f32::PointF32,
@@ -91,84 +99,11 @@ pub fn max_len(r: &RectF32) -> f32 {
     len_x(r).max(len_y(r))
 }
 
-pub fn inflate(r: &mut RectF32) {
-    let is_min_x = r.min.x == point_f32::MIN;
-    let is_min_y = r.min.y == point_f32::MIN;
-    let is_max_x = r.max.x == point_f32::MAX;
-    let is_max_y = r.max.y == point_f32::MAX;
-    if (is_min_x && is_max_x) || (is_min_y && is_max_y) {
-        return;
-    }
-    let min_x_modifier = 1.0 - f32::from(is_min_x) + f32::from(is_max_x);
-    let min_y_modifier = 1.0 - f32::from(is_min_y) + f32::from(is_max_y);
-    let max_x_modifier = 1.0 + f32::from(is_min_x) - f32::from(is_max_x);
-    let max_y_modifier = 1.0 + f32::from(is_min_y) - f32::from(is_max_y);
-    r.min.x = (r.min.x - min_x_modifier).max(point_f32::MIN);
-    r.min.y = (r.min.y - min_y_modifier).max(point_f32::MIN);
-    r.max.x = (r.max.x + max_x_modifier).min(point_f32::MAX);
-    r.max.y = (r.max.y + max_y_modifier).min(point_f32::MAX);
-}
-
-pub fn deflate(r: &mut RectF32) {
-    if delta_x(r) < 3.0 || delta_y(r) < 3.0 {
-        return;
-    }
-    r.min.x += 1.0;
-    r.min.y += 1.0;
-    r.max.x -= 1.0;
-    r.max.y -= 1.0;
-}
-
-pub fn resize(r: &mut RectF32, size: f32) {
-    if size < 3.0 {
-        return;
-    }
-    let diff_x = delta_x(r) + 1.0 - size;
-    let diff_y = delta_y(r) + 1.0 - size;
-    let temp_min_x = r.min.x + diff_x / 2.0;
-    let temp_min_y = r.min.y + diff_y / 2.0;
-    let min_x = temp_min_x.clamp(point_f32::MIN, point_f32::MAX - size + 1.0);
-    let min_y = temp_min_y.clamp(point_f32::MIN, point_f32::MAX - size + 1.0);
-    r.min.x = min_x;
-    r.min.y = min_y;
-    r.max.x = min_x + size - 1.0;
-    r.max.y = min_y + size - 1.0;
-}
-
-pub fn assign_saturating_add(r: &mut RectF32, delta: &point_f32::PointF32) {
-    let dx = delta_x(r);
-    let dy = delta_y(r);
-    let temp_min_x = r.min.x + delta.x;
-    let temp_min_y = r.min.y + delta.y;
-    let min_x = temp_min_x.clamp(point_f32::MIN, point_f32::MAX - dx);
-    let min_y = temp_min_y.clamp(point_f32::MIN, point_f32::MAX - dy);
-    r.min.x = min_x;
-    r.min.y = min_y;
-    r.max.x = min_x + dx;
-    r.max.y = min_y + dy;
-}
-
-pub fn saturating_add(r: &RectF32, delta: &point_f32::PointF32) -> RectF32 {
-    let dx = delta_x(r);
-    let dy = delta_y(r);
-    let temp_min_x = r.min.x + delta.x;
-    let temp_min_y = r.min.y + delta.y;
-    let min_x = temp_min_x.clamp(point_f32::MIN, point_f32::MAX - dx);
-    let min_y = temp_min_y.clamp(point_f32::MIN, point_f32::MAX - dy);
-    let max_x = min_x + dx;
-    let max_y = min_y + dy;
-    RectF32 { min: point_f32::PointF32 { x: min_x, y: min_y }, max: point_f32::PointF32 { x: max_x, y: max_y } }
-}
-
-pub fn contains(r: &RectF32, p: &point_f32::PointF32) -> bool {
-    p.x >= r.min.x && p.x <= r.max.x && p.y >= r.min.y && p.y <= r.max.y
-}
-
 #[cfg(test)]
 mod tests {
     use crate::cartesian::point::point_f32::{MAX, MIN, PointF32};
 
-    use super::{RectF32, assign_saturating_add, contains, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, resize};
+    use super::{RectF32, delta_x, delta_y, len_x, len_y, max_delta, max_len};
 
     #[test]
     fn rect_f32() {
@@ -308,303 +243,221 @@ mod tests {
         assert_eq!(max_len(&RectF32::of(0.0, 0.0, MAX - 1.0, MAX - 2.0)), MAX);
     }
 
-    #[test]
-    fn inflate_min_bounds() {
-        let mut r = RectF32::of(MIN + 7.0, MIN + 2.0, 4.0, 13.0);
-        inflate(&mut r);
-        assert_eq!(r, RectF32::of(MIN + 6.0, MIN + 1.0, 5.0, 14.0));
-        inflate(&mut r);
-        assert_eq!(r, RectF32::of(MIN + 5.0, MIN, 6.0, 15.0));
-        inflate(&mut r);
-        assert_eq!(r, RectF32::of(MIN + 4.0, MIN, 7.0, 17.0));
-        inflate(&mut r);
-        assert_eq!(r, RectF32::of(MIN + 3.0, MIN, 8.0, 19.0));
-        inflate(&mut r);
-        assert_eq!(r, RectF32::of(MIN + 2.0, MIN, 9.0, 21.0));
-        inflate(&mut r);
-        assert_eq!(r, RectF32::of(MIN + 1.0, MIN, 10.0, 23.0));
-        inflate(&mut r);
-        assert_eq!(r, RectF32::of(MIN, MIN, 11.0, 25.0));
-        inflate(&mut r);
-        assert_eq!(r, RectF32::of(MIN, MIN, 13.0, 27.0));
-    }
-
-    #[test]
-    fn inflate_max_bounds() {
-        let mut r = RectF32::of(-100.0, 30.0, MAX - 5.0, MAX - 3.0);
-        inflate(&mut r);
-        assert_eq!(r, RectF32::of(-101.0, 29.0, MAX - 4.0, MAX - 2.0));
-        inflate(&mut r);
-        assert_eq!(r, RectF32::of(-102.0, 28.0, MAX - 3.0, MAX - 1.0));
-        inflate(&mut r);
-        assert_eq!(r, RectF32::of(-103.0, 27.0, MAX - 2.0, MAX));
-        inflate(&mut r);
-        assert_eq!(r, RectF32::of(-104.0, 25.0, MAX - 1.0, MAX));
-        inflate(&mut r);
-        assert_eq!(r, RectF32::of(-105.0, 23.0, MAX, MAX));
-        inflate(&mut r);
-        assert_eq!(r, RectF32::of(-107.0, 21.0, MAX, MAX));
-        inflate(&mut r);
-        assert_eq!(r, RectF32::of(-109.0, 19.0, MAX, MAX));
-        inflate(&mut r);
-        assert_eq!(r, RectF32::of(-111.0, 17.0, MAX, MAX));
-    }
-
-    #[test]
-    fn inflate_almost_min_bounds() {
-        let mut r = RectF32::of(MIN + 1.0, MIN + 1.0, MAX, MAX);
-        inflate(&mut r);
-        assert_eq!(r, RectF32::largest());
-    }
-
-    #[test]
-    fn inflate_almost_max_bounds() {
-        let mut r = RectF32::of(MIN, MIN, MAX - 1.0, MAX - 1.0);
-        inflate(&mut r);
-        assert_eq!(r, RectF32::largest());
-    }
-
-    #[test]
-    fn inflate_max_width() {
-        let mut r = RectF32::of(MIN, 10.0, MAX, 50.0);
-        inflate(&mut r);
-        assert_eq!(r, RectF32::of(MIN, 10.0, MAX, 50.0));
-    }
-
-    #[test]
-    fn inflate_max_height() {
-        let mut r = RectF32::of(10.0, MIN, 50.0, MAX);
-        inflate(&mut r);
-        assert_eq!(r, RectF32::of(10.0, MIN, 50.0, MAX));
-    }
-
-    #[test]
-    fn deflate_odd() {
-        let mut r = RectF32::of(-5.0, -5.0, 5.0, 5.0);
-        deflate(&mut r);
-        assert_eq!(r, RectF32::of(-4.0, -4.0, 4.0, 4.0));
-        deflate(&mut r);
-        assert_eq!(r, RectF32::of(-3.0, -3.0, 3.0, 3.0));
-        deflate(&mut r);
-        assert_eq!(r, RectF32::of(-2.0, -2.0, 2.0, 2.0));
-        deflate(&mut r);
-        assert_eq!(r, RectF32::of(-1.0, -1.0, 1.0, 1.0));
-        deflate(&mut r);
-        assert_eq!(r, RectF32::of(-1.0, -1.0, 1.0, 1.0));
-    }
-
-    #[test]
-    fn deflate_even() {
-        let mut r = RectF32::of(-5.0, -5.0, 4.0, 4.0);
-        deflate(&mut r);
-        assert_eq!(r, RectF32::of(-4.0, -4.0, 3.0, 3.0));
-        deflate(&mut r);
-        assert_eq!(r, RectF32::of(-3.0, -3.0, 2.0, 2.0));
-        deflate(&mut r);
-        assert_eq!(r, RectF32::of(-2.0, -2.0, 1.0, 1.0));
-        deflate(&mut r);
-        assert_eq!(r, RectF32::of(-1.0, -1.0, 0.0, 0.0));
-        deflate(&mut r);
-        assert_eq!(r, RectF32::of(-1.0, -1.0, 0.0, 0.0));
-    }
-
-    #[test]
-    fn resize_odd() {
-        let mut r = RectF32::of(-5.0, -5.0, 5.0, 5.0);
-        resize(&mut r, 11.0);
-        assert_eq!(r, RectF32::of(-5.0, -5.0, 5.0, 5.0));
-        resize(&mut r, 9.0);
-        assert_eq!(r, RectF32::of(-4.0, -4.0, 4.0, 4.0));
-        resize(&mut r, 7.0);
-        assert_eq!(r, RectF32::of(-3.0, -3.0, 3.0, 3.0));
-        resize(&mut r, 5.0);
-        assert_eq!(r, RectF32::of(-2.0, -2.0, 2.0, 2.0));
-        resize(&mut r, 3.0);
-        assert_eq!(r, RectF32::of(-1.0, -1.0, 1.0, 1.0));
-        resize(&mut r, 1.0);
-        assert_eq!(r, RectF32::of(-1.0, -1.0, 1.0, 1.0));
-        resize(&mut r, 1.0);
-        assert_eq!(r, RectF32::of(-1.0, -1.0, 1.0, 1.0));
-        resize(&mut r, 3.0);
-        assert_eq!(r, RectF32::of(-1.0, -1.0, 1.0, 1.0));
-        resize(&mut r, 5.0);
-        assert_eq!(r, RectF32::of(-2.0, -2.0, 2.0, 2.0));
-        resize(&mut r, 7.0);
-        assert_eq!(r, RectF32::of(-3.0, -3.0, 3.0, 3.0));
-    }
-
-    #[test]
-    fn resize_even() {
-        let mut r = RectF32::of(-5.0, -5.0, 4.0, 4.0);
-        resize(&mut r, 10.0);
-        assert_eq!(r, RectF32::of(-5.0, -5.0, 4.0, 4.0));
-        resize(&mut r, 8.0);
-        assert_eq!(r, RectF32::of(-4.0, -4.0, 3.0, 3.0));
-        resize(&mut r, 6.0);
-        assert_eq!(r, RectF32::of(-3.0, -3.0, 2.0, 2.0));
-        resize(&mut r, 4.0);
-        assert_eq!(r, RectF32::of(-2.0, -2.0, 1.0, 1.0));
-        resize(&mut r, 2.0);
-        assert_eq!(r, RectF32::of(-2.0, -2.0, 1.0, 1.0));
-        resize(&mut r, 2.0);
-        assert_eq!(r, RectF32::of(-2.0, -2.0, 1.0, 1.0));
-        resize(&mut r, 4.0);
-        assert_eq!(r, RectF32::of(-2.0, -2.0, 1.0, 1.0));
-        resize(&mut r, 6.0);
-        assert_eq!(r, RectF32::of(-3.0, -3.0, 2.0, 2.0));
-    }
-
-    #[test]
-    fn resize_even_2nd_scenario() {
-        let mut r = RectF32::of(-4.0, -4.0, 5.0, 5.0);
-        resize(&mut r, 10.0);
-        assert_eq!(r, RectF32::of(-4.0, -4.0, 5.0, 5.0));
-        resize(&mut r, 8.0);
-        assert_eq!(r, RectF32::of(-3.0, -3.0, 4.0, 4.0));
-        resize(&mut r, 6.0);
-        assert_eq!(r, RectF32::of(-2.0, -2.0, 3.0, 3.0));
-        resize(&mut r, 4.0);
-        assert_eq!(r, RectF32::of(-1.0, -1.0, 2.0, 2.0));
-        resize(&mut r, 2.0);
-        assert_eq!(r, RectF32::of(-1.0, -1.0, 2.0, 2.0));
-        resize(&mut r, 2.0);
-        assert_eq!(r, RectF32::of(-1.0, -1.0, 2.0, 2.0));
-        resize(&mut r, 4.0);
-        assert_eq!(r, RectF32::of(-1.0, -1.0, 2.0, 2.0));
-        resize(&mut r, 6.0);
-        assert_eq!(r, RectF32::of(-2.0, -2.0, 3.0, 3.0));
-    }
-
-    #[test]
-    fn resize_odd_min_bounds_big_delta() {
-        let mut r = RectF32::of(MIN, MIN, MIN + 2.0, MIN + 2.0);
-        resize(&mut r, MAX);
-        assert_eq!(r, RectF32::of(MIN, MIN, -2.0, -2.0));
-    }
-
-    #[test]
-    fn resize_even_min_bounds_big_delta() {
-        let mut r = RectF32::of(MIN, MIN, MIN + 3.0, MIN + 3.0);
-        resize(&mut r, MAX - 1.0);
-        assert_eq!(r, RectF32::of(MIN, MIN, -3.0, -3.0));
-    }
-
-    #[test]
-    fn resize_odd_max_bounds_big_delta() {
-        let mut r = RectF32::of(MAX - 2.0, MAX - 2.0, MAX, MAX);
-        resize(&mut r, MAX);
-        assert_eq!(r, RectF32::of(1.0, 1.0, MAX, MAX));
-    }
-
-    #[test]
-    fn resize_even_max_bounds_big_delta() {
-        let mut r = RectF32::of(MAX - 3.0, MAX - 3.0, MAX, MAX);
-        resize(&mut r, MAX - 1.0);
-        assert_eq!(r, RectF32::of(2.0, 2.0, MAX, MAX));
-    }
-
-    #[test]
-    fn test_assign_saturating_add() {
-        let mut r = RectF32::of(0.0, 0.0, 10.0, 10.0);
-        assign_saturating_add(&mut r, &PointF32::of(10.0, 10.0));
-        assert_eq!(r, RectF32::of(10.0, 10.0, 20.0, 20.0));
-        assign_saturating_add(&mut r, &PointF32::of(-20.0, -20.0));
-        assert_eq!(r, RectF32::of(-10.0, -10.0, 0.0, 0.0));
-        assign_saturating_add(&mut r, &PointF32::of(2.0, 2.0));
-        assert_eq!(r, RectF32::of(-8.0, -8.0, 2.0, 2.0));
-    }
-
-    #[test]
-    fn assign_saturating_add_min_bounds() {
-        let mut r = RectF32::of(MIN + 5.0, MIN + 10.0, -100.0, -100.0);
-        assign_saturating_add(&mut r, &PointF32::of(-10.0, -10.0));
-        assert_eq!(r, RectF32::of(MIN, MIN, -105.0, -110.0));
-    }
-
-    #[test]
-    fn assign_saturating_add_max_bounds() {
-        let mut r = RectF32::of(100.0, 100.0, MAX - 5.0, MAX - 10.0);
-        assign_saturating_add(&mut r, &PointF32::of(20.0, 20.0));
-        assert_eq!(r, RectF32::of(105.0, 110.0, MAX, MAX));
-    }
-
-    #[test]
-    fn assign_saturating_add_min_bounds_big_delta() {
-        let mut r = RectF32::of(MIN, MIN, MIN + 10.0, MIN + 10.0);
-        assign_saturating_add(&mut r, &PointF32::min());
-        assert_eq!(r, RectF32::of(MIN, MIN, MIN + 10.0, MIN + 10.0));
-    }
-
-    #[test]
-    fn assign_saturating_add_max_bounds_big_delta() {
-        let mut r = RectF32::of(MAX - 10.0, MAX - 10.0, MAX, MAX);
-        assign_saturating_add(&mut r, &PointF32::max());
-        assert_eq!(r, RectF32::of(MAX - 10.0, MAX - 10.0, MAX, MAX));
-    }
-
-    #[test]
-    fn assign_saturating_add_min_bounds_big_rect_big_delta() {
-        let mut r = RectF32::of(MIN + 1.0, MIN + 1.0, MAX, MAX);
-        assign_saturating_add(&mut r, &PointF32::min());
-        assert_eq!(r, RectF32::of(MIN, MIN, MAX - 1.0, MAX - 1.0));
-    }
-
-    #[test]
-    fn assign_saturating_add_max_bounds_big_rect_big_delta() {
-        let mut r = RectF32::of(MIN, MIN, MAX - 1.0, MAX - 1.0);
-        assign_saturating_add(&mut r, &PointF32::max());
-        assert_eq!(r, RectF32::of(MIN + 1.0, MIN + 1.0, MAX, MAX));
-    }
-
-    #[test]
-    fn contains_inside_borders() {
-        assert!(contains(&RectF32::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0), &PointF32::of(MIN + 1.0, MIN + 1.0)));
-        assert!(contains(&RectF32::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0), &PointF32::of(MIN + 1.0, -1.0)));
-        assert!(contains(&RectF32::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0), &PointF32::of(-1.0, MIN + 1.0)));
-        assert!(contains(&RectF32::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0), &PointF32::of(-1.0, -1.0)));
-
-        assert!(contains(&RectF32::of(1.0, 1.0, MAX - 1.0, MAX - 1.0), &PointF32::of(1.0, 1.0)));
-        assert!(contains(&RectF32::of(1.0, 1.0, MAX - 1.0, MAX - 1.0), &PointF32::of(1.0, MAX - 1.0)));
-        assert!(contains(&RectF32::of(1.0, 1.0, MAX - 1.0, MAX - 1.0), &PointF32::of(MAX - 1.0, 1.0)));
-        assert!(contains(&RectF32::of(1.0, 1.0, MAX - 1.0, MAX - 1.0), &PointF32::of(MAX - 1.0, MAX - 1.0)));
-    }
-
-    #[test]
-    fn contains_outside_borders() {
-        let r_negative = RectF32::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0);
-        assert!(!contains(&r_negative, &PointF32::of(MIN, MIN)));
-        assert!(!contains(&r_negative, &PointF32::of(MIN, 0.0)));
-        assert!(!contains(&r_negative, &PointF32::of(0.0, MIN)));
-        assert!(!contains(&r_negative, &PointF32::of(0.0, 0.0)));
-        assert!(!contains(&r_negative, &PointF32::of(MIN + 1.0, MIN)));
-        assert!(!contains(&r_negative, &PointF32::of(MIN + 1.0, 0.0)));
-        assert!(!contains(&r_negative, &PointF32::of(-1.0, MIN)));
-        assert!(!contains(&r_negative, &PointF32::of(-1.0, 0.0)));
-        assert!(!contains(&r_negative, &PointF32::of(MIN, MIN + 1.0)));
-        assert!(!contains(&r_negative, &PointF32::of(MIN, -1.0)));
-        assert!(!contains(&r_negative, &PointF32::of(0.0, MIN + 1.0)));
-        assert!(!contains(&r_negative, &PointF32::of(0.0, -1.0)));
-        let r_positive = RectF32::of(1.0, 1.0, MAX - 1.0, MAX - 1.0);
-        assert!(!contains(&r_positive, &PointF32::of(0.0, 0.0)));
-        assert!(!contains(&r_positive, &PointF32::of(0.0, MAX)));
-        assert!(!contains(&r_positive, &PointF32::of(MAX, 0.0)));
-        assert!(!contains(&r_positive, &PointF32::of(MAX, MAX)));
-        assert!(!contains(&r_positive, &PointF32::of(1.0, 0.0)));
-        assert!(!contains(&r_positive, &PointF32::of(1.0, MAX)));
-        assert!(!contains(&r_positive, &PointF32::of(MAX - 1.0, 0.0)));
-        assert!(!contains(&r_positive, &PointF32::of(MAX - 1.0, MAX)));
-        assert!(!contains(&r_positive, &PointF32::of(0.0, 1.0)));
-        assert!(!contains(&r_positive, &PointF32::of(0.0, MAX - 1.0)));
-        assert!(!contains(&r_positive, &PointF32::of(MAX, 1.0)));
-        assert!(!contains(&r_positive, &PointF32::of(MAX, MAX - 1.0)));
-    }
-
-    #[test]
-    fn contains_inside() {
-        assert!(contains(&RectF32::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0), &PointF32::of(MIN + 10.0, MIN + 10.0)));
-        assert!(contains(&RectF32::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0), &PointF32::of(-10.0, -10.0)));
-
-        assert!(contains(&RectF32::of(1.0, 1.0, MAX - 1.0, MAX - 1.0), &PointF32::of(10.0, 10.0)));
-        assert!(contains(&RectF32::of(1.0, 1.0, MAX - 1.0, MAX - 1.0), &PointF32::of(MAX - 10.0, MAX - 10.0)));
-    }
+//    #[test]
+//    fn inflate_min_bounds() {
+//        let mut r = RectF32::of(MIN + 7.0, MIN + 2.0, 4.0, 13.0);
+//        inflate(&mut r);
+//        assert_eq!(r, RectF32::of(MIN + 6.0, MIN + 1.0, 5.0, 14.0));
+//        inflate(&mut r);
+//        assert_eq!(r, RectF32::of(MIN + 5.0, MIN, 6.0, 15.0));
+//        inflate(&mut r);
+//        assert_eq!(r, RectF32::of(MIN + 4.0, MIN, 7.0, 17.0));
+//        inflate(&mut r);
+//        assert_eq!(r, RectF32::of(MIN + 3.0, MIN, 8.0, 19.0));
+//        inflate(&mut r);
+//        assert_eq!(r, RectF32::of(MIN + 2.0, MIN, 9.0, 21.0));
+//        inflate(&mut r);
+//        assert_eq!(r, RectF32::of(MIN + 1.0, MIN, 10.0, 23.0));
+//        inflate(&mut r);
+//        assert_eq!(r, RectF32::of(MIN, MIN, 11.0, 25.0));
+//        inflate(&mut r);
+//        assert_eq!(r, RectF32::of(MIN, MIN, 13.0, 27.0));
+//    }
+//
+//    #[test]
+//    fn inflate_max_bounds() {
+//        let mut r = RectF32::of(-100.0, 30.0, MAX - 5.0, MAX - 3.0);
+//        inflate(&mut r);
+//        assert_eq!(r, RectF32::of(-101.0, 29.0, MAX - 4.0, MAX - 2.0));
+//        inflate(&mut r);
+//        assert_eq!(r, RectF32::of(-102.0, 28.0, MAX - 3.0, MAX - 1.0));
+//        inflate(&mut r);
+//        assert_eq!(r, RectF32::of(-103.0, 27.0, MAX - 2.0, MAX));
+//        inflate(&mut r);
+//        assert_eq!(r, RectF32::of(-104.0, 25.0, MAX - 1.0, MAX));
+//        inflate(&mut r);
+//        assert_eq!(r, RectF32::of(-105.0, 23.0, MAX, MAX));
+//        inflate(&mut r);
+//        assert_eq!(r, RectF32::of(-107.0, 21.0, MAX, MAX));
+//        inflate(&mut r);
+//        assert_eq!(r, RectF32::of(-109.0, 19.0, MAX, MAX));
+//        inflate(&mut r);
+//        assert_eq!(r, RectF32::of(-111.0, 17.0, MAX, MAX));
+//    }
+//
+//    #[test]
+//    fn inflate_almost_min_bounds() {
+//        let mut r = RectF32::of(MIN + 1.0, MIN + 1.0, MAX, MAX);
+//        inflate(&mut r);
+//        assert_eq!(r, RectF32::largest());
+//    }
+//
+//    #[test]
+//    fn inflate_almost_max_bounds() {
+//        let mut r = RectF32::of(MIN, MIN, MAX - 1.0, MAX - 1.0);
+//        inflate(&mut r);
+//        assert_eq!(r, RectF32::largest());
+//    }
+//
+//    #[test]
+//    fn inflate_max_width() {
+//        let mut r = RectF32::of(MIN, 10.0, MAX, 50.0);
+//        inflate(&mut r);
+//        assert_eq!(r, RectF32::of(MIN, 10.0, MAX, 50.0));
+//    }
+//
+//    #[test]
+//    fn inflate_max_height() {
+//        let mut r = RectF32::of(10.0, MIN, 50.0, MAX);
+//        inflate(&mut r);
+//        assert_eq!(r, RectF32::of(10.0, MIN, 50.0, MAX));
+//    }
+//
+//    #[test]
+//    fn resize_odd() {
+//        let mut r = RectF32::of(-5.0, -5.0, 5.0, 5.0);
+//        resize(&mut r, 11.0);
+//        assert_eq!(r, RectF32::of(-5.0, -5.0, 5.0, 5.0));
+//        resize(&mut r, 9.0);
+//        assert_eq!(r, RectF32::of(-4.0, -4.0, 4.0, 4.0));
+//        resize(&mut r, 7.0);
+//        assert_eq!(r, RectF32::of(-3.0, -3.0, 3.0, 3.0));
+//        resize(&mut r, 5.0);
+//        assert_eq!(r, RectF32::of(-2.0, -2.0, 2.0, 2.0));
+//        resize(&mut r, 3.0);
+//        assert_eq!(r, RectF32::of(-1.0, -1.0, 1.0, 1.0));
+//        resize(&mut r, 1.0);
+//        assert_eq!(r, RectF32::of(-1.0, -1.0, 1.0, 1.0));
+//        resize(&mut r, 1.0);
+//        assert_eq!(r, RectF32::of(-1.0, -1.0, 1.0, 1.0));
+//        resize(&mut r, 3.0);
+//        assert_eq!(r, RectF32::of(-1.0, -1.0, 1.0, 1.0));
+//        resize(&mut r, 5.0);
+//        assert_eq!(r, RectF32::of(-2.0, -2.0, 2.0, 2.0));
+//        resize(&mut r, 7.0);
+//        assert_eq!(r, RectF32::of(-3.0, -3.0, 3.0, 3.0));
+//    }
+//
+//    #[test]
+//    fn resize_even() {
+//        let mut r = RectF32::of(-5.0, -5.0, 4.0, 4.0);
+//        resize(&mut r, 10.0);
+//        assert_eq!(r, RectF32::of(-5.0, -5.0, 4.0, 4.0));
+//        resize(&mut r, 8.0);
+//        assert_eq!(r, RectF32::of(-4.0, -4.0, 3.0, 3.0));
+//        resize(&mut r, 6.0);
+//        assert_eq!(r, RectF32::of(-3.0, -3.0, 2.0, 2.0));
+//        resize(&mut r, 4.0);
+//        assert_eq!(r, RectF32::of(-2.0, -2.0, 1.0, 1.0));
+//        resize(&mut r, 2.0);
+//        assert_eq!(r, RectF32::of(-2.0, -2.0, 1.0, 1.0));
+//        resize(&mut r, 2.0);
+//        assert_eq!(r, RectF32::of(-2.0, -2.0, 1.0, 1.0));
+//        resize(&mut r, 4.0);
+//        assert_eq!(r, RectF32::of(-2.0, -2.0, 1.0, 1.0));
+//        resize(&mut r, 6.0);
+//        assert_eq!(r, RectF32::of(-3.0, -3.0, 2.0, 2.0));
+//    }
+//
+//    #[test]
+//    fn resize_even_2nd_scenario() {
+//        let mut r = RectF32::of(-4.0, -4.0, 5.0, 5.0);
+//        resize(&mut r, 10.0);
+//        assert_eq!(r, RectF32::of(-4.0, -4.0, 5.0, 5.0));
+//        resize(&mut r, 8.0);
+//        assert_eq!(r, RectF32::of(-3.0, -3.0, 4.0, 4.0));
+//        resize(&mut r, 6.0);
+//        assert_eq!(r, RectF32::of(-2.0, -2.0, 3.0, 3.0));
+//        resize(&mut r, 4.0);
+//        assert_eq!(r, RectF32::of(-1.0, -1.0, 2.0, 2.0));
+//        resize(&mut r, 2.0);
+//        assert_eq!(r, RectF32::of(-1.0, -1.0, 2.0, 2.0));
+//        resize(&mut r, 2.0);
+//        assert_eq!(r, RectF32::of(-1.0, -1.0, 2.0, 2.0));
+//        resize(&mut r, 4.0);
+//        assert_eq!(r, RectF32::of(-1.0, -1.0, 2.0, 2.0));
+//        resize(&mut r, 6.0);
+//        assert_eq!(r, RectF32::of(-2.0, -2.0, 3.0, 3.0));
+//    }
+//
+//    #[test]
+//    fn resize_odd_min_bounds_big_delta() {
+//        let mut r = RectF32::of(MIN, MIN, MIN + 2.0, MIN + 2.0);
+//        resize(&mut r, MAX);
+//        assert_eq!(r, RectF32::of(MIN, MIN, -2.0, -2.0));
+//    }
+//
+//    #[test]
+//    fn resize_even_min_bounds_big_delta() {
+//        let mut r = RectF32::of(MIN, MIN, MIN + 3.0, MIN + 3.0);
+//        resize(&mut r, MAX - 1.0);
+//        assert_eq!(r, RectF32::of(MIN, MIN, -3.0, -3.0));
+//    }
+//
+//    #[test]
+//    fn resize_odd_max_bounds_big_delta() {
+//        let mut r = RectF32::of(MAX - 2.0, MAX - 2.0, MAX, MAX);
+//        resize(&mut r, MAX);
+//        assert_eq!(r, RectF32::of(1.0, 1.0, MAX, MAX));
+//    }
+//
+//    #[test]
+//    fn resize_even_max_bounds_big_delta() {
+//        let mut r = RectF32::of(MAX - 3.0, MAX - 3.0, MAX, MAX);
+//        resize(&mut r, MAX - 1.0);
+//        assert_eq!(r, RectF32::of(2.0, 2.0, MAX, MAX));
+//    }
+//
+//    #[test]
+//    fn test_assign_saturating_add() {
+//        let mut r = RectF32::of(0.0, 0.0, 10.0, 10.0);
+//        assign_saturating_add(&mut r, &PointF32::of(10.0, 10.0));
+//        assert_eq!(r, RectF32::of(10.0, 10.0, 20.0, 20.0));
+//        assign_saturating_add(&mut r, &PointF32::of(-20.0, -20.0));
+//        assert_eq!(r, RectF32::of(-10.0, -10.0, 0.0, 0.0));
+//        assign_saturating_add(&mut r, &PointF32::of(2.0, 2.0));
+//        assert_eq!(r, RectF32::of(-8.0, -8.0, 2.0, 2.0));
+//    }
+//
+//    #[test]
+//    fn assign_saturating_add_min_bounds() {
+//        let mut r = RectF32::of(MIN + 5.0, MIN + 10.0, -100.0, -100.0);
+//        assign_saturating_add(&mut r, &PointF32::of(-10.0, -10.0));
+//        assert_eq!(r, RectF32::of(MIN, MIN, -105.0, -110.0));
+//    }
+//
+//    #[test]
+//    fn assign_saturating_add_max_bounds() {
+//        let mut r = RectF32::of(100.0, 100.0, MAX - 5.0, MAX - 10.0);
+//        assign_saturating_add(&mut r, &PointF32::of(20.0, 20.0));
+//        assert_eq!(r, RectF32::of(105.0, 110.0, MAX, MAX));
+//    }
+//
+//    #[test]
+//    fn assign_saturating_add_min_bounds_big_delta() {
+//        let mut r = RectF32::of(MIN, MIN, MIN + 10.0, MIN + 10.0);
+//        assign_saturating_add(&mut r, &PointF32::min());
+//        assert_eq!(r, RectF32::of(MIN, MIN, MIN + 10.0, MIN + 10.0));
+//    }
+//
+//    #[test]
+//    fn assign_saturating_add_max_bounds_big_delta() {
+//        let mut r = RectF32::of(MAX - 10.0, MAX - 10.0, MAX, MAX);
+//        assign_saturating_add(&mut r, &PointF32::max());
+//        assert_eq!(r, RectF32::of(MAX - 10.0, MAX - 10.0, MAX, MAX));
+//    }
+//
+//    #[test]
+//    fn assign_saturating_add_min_bounds_big_rect_big_delta() {
+//        let mut r = RectF32::of(MIN + 1.0, MIN + 1.0, MAX, MAX);
+//        assign_saturating_add(&mut r, &PointF32::min());
+//        assert_eq!(r, RectF32::of(MIN, MIN, MAX - 1.0, MAX - 1.0));
+//    }
+//
+//    #[test]
+//    fn assign_saturating_add_max_bounds_big_rect_big_delta() {
+//        let mut r = RectF32::of(MIN, MIN, MAX - 1.0, MAX - 1.0);
+//        assign_saturating_add(&mut r, &PointF32::max());
+//        assert_eq!(r, RectF32::of(MIN + 1.0, MIN + 1.0, MAX, MAX));
+//    }
 }

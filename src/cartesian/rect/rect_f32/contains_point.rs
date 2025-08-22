@@ -1,0 +1,79 @@
+use crate::cartesian::{point::point_f32::PointF32, rect::rect_f32::RectF32};
+
+pub fn contains_point(r: &RectF32, p: &PointF32) -> bool {
+    p.x >= r.min.x && p.x <= r.max.x && p.y >= r.min.y && p.y <= r.max.y
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::cartesian::{point::point_f32::{PointF32, MIN, MAX}, rect::rect_f32::RectF32};
+
+    use super::contains_point;
+
+    #[test]
+    fn contains_point_inside_borders() {
+        let r_negative = RectF32::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0);
+        assert!(contains_point(&r_negative, &PointF32::of(MIN + 1.0, MIN + 1.0)));
+        assert!(contains_point(&r_negative, &PointF32::of(MIN + 1.0, -1.0)));
+        assert!(contains_point(&r_negative, &PointF32::of(-1.0, MIN + 1.0)));
+        assert!(contains_point(&r_negative, &PointF32::of(-1.0, -1.0)));
+
+        let r_positive = RectF32::of(1.0, 1.0, MAX - 1.0, MAX - 1.0);
+        assert!(contains_point(&r_positive, &PointF32::of(1.0, 1.0)));
+        assert!(contains_point(&r_positive, &PointF32::of(1.0, MAX - 1.0)));
+        assert!(contains_point(&r_positive, &PointF32::of(MAX - 1.0, 1.0)));
+        assert!(contains_point(&r_positive, &PointF32::of(MAX - 1.0, MAX - 1.0)));
+    }
+
+    #[test]
+    fn contains_point_outside_borders() {
+        let r_negative = RectF32::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0);
+        assert!(!contains_point(&r_negative, &PointF32::min()));
+        assert!(!contains_point(&r_negative, &PointF32::of(MIN + 1.0, MIN)));
+        assert!(!contains_point(&r_negative, &PointF32::of(MIN, MIN + 1.0)));
+
+        assert!(!contains_point(&r_negative, &PointF32::of(MIN, MAX)));
+        assert!(!contains_point(&r_negative, &PointF32::of(MIN, -1.0)));
+        assert!(!contains_point(&r_negative, &PointF32::of(MIN + 1.0, MAX)));
+
+        assert!(!contains_point(&r_negative, &PointF32::of(MAX, MIN)));
+        assert!(!contains_point(&r_negative, &PointF32::of(MAX, MIN + 1.0)));
+        assert!(!contains_point(&r_negative, &PointF32::of(-1.0, MIN)));
+
+        assert!(!contains_point(&r_negative, &PointF32::max()));
+        assert!(!contains_point(&r_negative, &PointF32::of(-1.0, MAX)));
+        assert!(!contains_point(&r_negative, &PointF32::of(MAX, -1.0)));
+
+        let r_positive = RectF32::of(1.0, 1.0, MAX - 1.0, MAX - 1.0);
+        assert!(!contains_point(&r_positive, &PointF32::min()));
+        assert!(!contains_point(&r_positive, &PointF32::of(1.0, MIN)));
+        assert!(!contains_point(&r_positive, &PointF32::of(MIN, 1.0)));
+
+        assert!(!contains_point(&r_positive, &PointF32::of(MIN, MAX)));
+        assert!(!contains_point(&r_positive, &PointF32::of(MIN, MAX - 1.0)));
+        assert!(!contains_point(&r_positive, &PointF32::of(1.0, MAX)));
+
+        assert!(!contains_point(&r_positive, &PointF32::of(MAX, MIN)));
+        assert!(!contains_point(&r_positive, &PointF32::of(MAX, 1.0)));
+        assert!(!contains_point(&r_positive, &PointF32::of(MAX - 1.0, MIN)));
+
+        assert!(!contains_point(&r_positive, &PointF32::max()));
+        assert!(!contains_point(&r_positive, &PointF32::of(MAX - 1.0, MAX)));
+        assert!(!contains_point(&r_positive, &PointF32::of(MAX, MAX - 1.0)));
+    }
+
+    #[test]
+    fn contains_point_inside() {
+        let r_negative = RectF32::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0);
+        assert!(contains_point(&r_negative, &PointF32::of(MIN + 10.0, MIN + 10.0)));
+        assert!(contains_point(&r_negative, &PointF32::of(-10.0, MIN + 10.0)));
+        assert!(contains_point(&r_negative, &PointF32::of(MIN + 10.0, -10.0)));
+        assert!(contains_point(&r_negative, &PointF32::of(-10.0, -10.0)));
+
+        let r_positive = RectF32::of(1.0, 1.0, MAX - 1.0, MAX - 1.0);
+        assert!(contains_point(&r_positive, &PointF32::of(10.0, 10.0)));
+        assert!(contains_point(&r_positive, &PointF32::of(MAX - 10.0, 10.0)));
+        assert!(contains_point(&r_positive, &PointF32::of(10.0, MAX - 10.0)));
+        assert!(contains_point(&r_positive, &PointF32::of(MAX - 10.0, MAX - 10.0)));
+    }
+}

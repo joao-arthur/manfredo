@@ -5,7 +5,7 @@ pub mod contains_point;
 pub mod contains_rect;
 pub mod deflate;
 pub mod inflate;
-//pub mod resize;
+pub mod resize;
 //pub mod translate;
 
 #[derive(PartialEq, Debug, Clone)]
@@ -243,76 +243,6 @@ mod tests {
         assert_eq!(max_len(&RectF32::of(0.0, 0.0, MAX - 1.0, MAX - 2.0)), MAX);
     }
 
-    //    #[test]
-    //    fn inflate_min_bounds() {
-    //        let mut r = RectF32::of(MIN + 7.0, MIN + 2.0, 4.0, 13.0);
-    //        inflate(&mut r);
-    //        assert_eq!(r, RectF32::of(MIN + 6.0, MIN + 1.0, 5.0, 14.0));
-    //        inflate(&mut r);
-    //        assert_eq!(r, RectF32::of(MIN + 5.0, MIN, 6.0, 15.0));
-    //        inflate(&mut r);
-    //        assert_eq!(r, RectF32::of(MIN + 4.0, MIN, 7.0, 17.0));
-    //        inflate(&mut r);
-    //        assert_eq!(r, RectF32::of(MIN + 3.0, MIN, 8.0, 19.0));
-    //        inflate(&mut r);
-    //        assert_eq!(r, RectF32::of(MIN + 2.0, MIN, 9.0, 21.0));
-    //        inflate(&mut r);
-    //        assert_eq!(r, RectF32::of(MIN + 1.0, MIN, 10.0, 23.0));
-    //        inflate(&mut r);
-    //        assert_eq!(r, RectF32::of(MIN, MIN, 11.0, 25.0));
-    //        inflate(&mut r);
-    //        assert_eq!(r, RectF32::of(MIN, MIN, 13.0, 27.0));
-    //    }
-    //
-    //    #[test]
-    //    fn inflate_max_bounds() {
-    //        let mut r = RectF32::of(-100.0, 30.0, MAX - 5.0, MAX - 3.0);
-    //        inflate(&mut r);
-    //        assert_eq!(r, RectF32::of(-101.0, 29.0, MAX - 4.0, MAX - 2.0));
-    //        inflate(&mut r);
-    //        assert_eq!(r, RectF32::of(-102.0, 28.0, MAX - 3.0, MAX - 1.0));
-    //        inflate(&mut r);
-    //        assert_eq!(r, RectF32::of(-103.0, 27.0, MAX - 2.0, MAX));
-    //        inflate(&mut r);
-    //        assert_eq!(r, RectF32::of(-104.0, 25.0, MAX - 1.0, MAX));
-    //        inflate(&mut r);
-    //        assert_eq!(r, RectF32::of(-105.0, 23.0, MAX, MAX));
-    //        inflate(&mut r);
-    //        assert_eq!(r, RectF32::of(-107.0, 21.0, MAX, MAX));
-    //        inflate(&mut r);
-    //        assert_eq!(r, RectF32::of(-109.0, 19.0, MAX, MAX));
-    //        inflate(&mut r);
-    //        assert_eq!(r, RectF32::of(-111.0, 17.0, MAX, MAX));
-    //    }
-    //
-    //    #[test]
-    //    fn inflate_almost_min_bounds() {
-    //        let mut r = RectF32::of(MIN + 1.0, MIN + 1.0, MAX, MAX);
-    //        inflate(&mut r);
-    //        assert_eq!(r, RectF32::largest());
-    //    }
-    //
-    //    #[test]
-    //    fn inflate_almost_max_bounds() {
-    //        let mut r = RectF32::of(MIN, MIN, MAX - 1.0, MAX - 1.0);
-    //        inflate(&mut r);
-    //        assert_eq!(r, RectF32::largest());
-    //    }
-    //
-    //    #[test]
-    //    fn inflate_max_width() {
-    //        let mut r = RectF32::of(MIN, 10.0, MAX, 50.0);
-    //        inflate(&mut r);
-    //        assert_eq!(r, RectF32::of(MIN, 10.0, MAX, 50.0));
-    //    }
-    //
-    //    #[test]
-    //    fn inflate_max_height() {
-    //        let mut r = RectF32::of(10.0, MIN, 50.0, MAX);
-    //        inflate(&mut r);
-    //        assert_eq!(r, RectF32::of(10.0, MIN, 50.0, MAX));
-    //    }
-    //
     //    #[test]
     //    fn resize_odd() {
     //        let mut r = RectF32::of(-5.0, -5.0, 5.0, 5.0);

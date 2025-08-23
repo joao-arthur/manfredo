@@ -7,14 +7,10 @@ pub fn try_assign_translate(r: &mut RectF32, delta: &PointF32) -> Option<()> {
     if delta.x < MIN - r.min.x || delta.y < MIN - r.min.y || delta.x > MAX - r.max.x || delta.y > MAX - r.max.y {
         return None;
     }
-    let min_x = r.min.x + delta.x;
-    let min_y = r.min.y + delta.y;
-    let max_x = r.max.x + delta.x;
-    let max_y = r.max.y + delta.y;
-    r.min.x = min_x;
-    r.min.y = min_y;
-    r.max.x = max_x;
-    r.max.y = max_y;
+    r.min.x = r.min.x + delta.x;
+    r.min.y = r.min.y + delta.y;
+    r.max.x = r.max.x + delta.x;
+    r.max.y = r.max.y + delta.y;
     Some(())
 }
 
@@ -121,13 +117,13 @@ mod tests {
         assert_eq!(try_assign_translate(&mut r, &PointF32::max()), None);
         assert_eq!(r, RectF32::largest());
 
-        let mut r_min = RectF32::of(MIN, MIN, 0.0, 0.0);
+        let mut r_min = RectF32::largest_min();
         assert_eq!(try_assign_translate(&mut r_min, &PointF32::min()), None);
-        assert_eq!(r_min, RectF32::of(MIN, MIN, 0.0, 0.0));
+        assert_eq!(r_min, RectF32::largest_min());
 
-        let mut r_max = RectF32::of(0.0, 0.0, MAX, MAX);
+        let mut r_max = RectF32::largest_max();
         assert_eq!(try_assign_translate(&mut r_max, &PointF32::max()), None);
-        assert_eq!(r_max, RectF32::of(0.0, 0.0, MAX, MAX));
+        assert_eq!(r_max, RectF32::largest_max());
 
         let mut r_min_2 = RectF32::of(MIN, MIN, MAX - 1.0, MAX - 1.0);
         assert_eq!(try_assign_translate(&mut r_min_2, &PointF32::max()), None);
@@ -198,8 +194,8 @@ mod tests {
     fn try_translate_big_rect_limits_out_of_bounds() {
         assert_eq!(try_translate(&RectF32::largest(), &PointF32::min()), None);
         assert_eq!(try_translate(&RectF32::largest(), &PointF32::max()), None);
-        assert_eq!(try_translate(&RectF32::of(MIN, MIN, 0.0, 0.0), &PointF32::min()), None);
-        assert_eq!(try_translate(&RectF32::of(0.0, 0.0, MAX, MAX), &PointF32::max()), None);
+        assert_eq!(try_translate(&RectF32::largest_min(), &PointF32::min()), None);
+        assert_eq!(try_translate(&RectF32::largest_max(), &PointF32::max()), None);
         assert_eq!(try_translate(&RectF32::of(MIN, MIN, MAX - 1.0, MAX - 1.0), &PointF32::max()), None);
         assert_eq!(try_translate(&RectF32::of(MIN, MIN, MAX - 1.0, MAX - 1.0), &PointF32::of(MAX, 0.0)), None);
         assert_eq!(try_translate(&RectF32::of(MIN, MIN, MAX - 1.0, MAX - 1.0), &PointF32::of(0.0, MAX)), None);

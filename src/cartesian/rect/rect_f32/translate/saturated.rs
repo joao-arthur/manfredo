@@ -105,13 +105,13 @@ mod tests {
 
     #[test]
     fn assign_translate_big_rect_limits_out_of_bounds() {
-        let mut r_min = RectF32::of(MIN, MIN, 0.0, 0.0);
+        let mut r_min = RectF32::largest_min();
         assign_translate(&mut r_min, &PointF32::min());
-        assert_eq!(r_min, RectF32::of(MIN, MIN, 0.0, 0.0));
+        assert_eq!(r_min, RectF32::largest_min());
 
-        let mut r_max = RectF32::of(0.0, 0.0, MAX, MAX);
+        let mut r_max = RectF32::largest_max();
         assign_translate(&mut r_max, &PointF32::max());
-        assert_eq!(r_max, RectF32::of(0.0, 0.0, MAX, MAX));
+        assert_eq!(r_max, RectF32::largest_max());
 
         let mut r_almost_min = RectF32::of(MIN + 1.0, MIN + 1.0, 0.0, 0.0);
         assign_translate(&mut r_almost_min, &PointF32::min());
@@ -178,8 +178,8 @@ mod tests {
 
     #[test]
     fn translate_big_rect_limits_out_of_bounds() {
-        assert_eq!(translate(&RectF32::of(MIN, MIN, 0.0, 0.0), &PointF32::min()), RectF32::of(MIN, MIN, 0.0, 0.0));
-        assert_eq!(translate(&RectF32::of(0.0, 0.0, MAX, MAX), &PointF32::max()), RectF32::of(0.0, 0.0, MAX, MAX));
+        assert_eq!(translate(&RectF32::largest_min(), &PointF32::min()), RectF32::largest_min());
+        assert_eq!(translate(&RectF32::largest_max(), &PointF32::max()), RectF32::largest_max());
         assert_eq!(translate(&RectF32::of(MIN + 1.0, MIN + 1.0, 0.0, 0.0), &PointF32::min()), RectF32::of(MIN, MIN, -1.0, -1.0));
         assert_eq!(translate(&RectF32::of(0.0, 0.0, MAX - 1.0, MAX - 1.0), &PointF32::max()), RectF32::of(1.0, 1.0, MAX, MAX));
     }

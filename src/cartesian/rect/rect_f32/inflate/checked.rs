@@ -80,11 +80,11 @@ mod tests {
 
         let mut r_min = RectF32::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0);
         assert_eq!(try_assign_inflate(&mut r_min), Some(()));
-        assert_eq!(r_min, RectF32::of(MIN, MIN, 0.0, 0.0));
+        assert_eq!(r_min, RectF32::largest_min());
 
         let mut r_max = RectF32::of(1.0, 1.0, MAX - 1.0, MAX - 1.0);
         assert_eq!(try_assign_inflate(&mut r_max), Some(()));
-        assert_eq!(r_max, RectF32::of(0.0, 0.0, MAX, MAX));
+        assert_eq!(r_max, RectF32::largest_max());
     }
 
     #[test]
@@ -178,8 +178,8 @@ mod tests {
     #[test]
     fn try_inflate_to_bounds() {
         assert_eq!(try_inflate(&RectF32::of(MIN + 1.0, MIN + 1.0, MAX - 1.0, MAX - 1.0)), Some(RectF32::largest()));
-        assert_eq!(try_inflate(&RectF32::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0)), Some(RectF32::of(MIN, MIN, 0.0, 0.0)));
-        assert_eq!(try_inflate(&RectF32::of(1.0, 1.0, MAX - 1.0, MAX - 1.0)), Some(RectF32::of(0.0, 0.0, MAX, MAX)));
+        assert_eq!(try_inflate(&RectF32::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0)), Some(RectF32::largest_min()));
+        assert_eq!(try_inflate(&RectF32::of(1.0, 1.0, MAX - 1.0, MAX - 1.0)), Some(RectF32::largest_max()));
     }
 
     #[test]
@@ -219,8 +219,8 @@ mod tests {
     #[test]
     fn try_inflate_limits_out_of_bounds() {
         assert_eq!(try_inflate(&RectF32::largest()), None);
-        assert_eq!(try_inflate(&RectF32::of(MIN, MIN, 0.0, 0.0)), None);
-        assert_eq!(try_inflate(&RectF32::of(0.0, 0.0, MAX, MAX)), None);
+        assert_eq!(try_inflate(&RectF32::largest_min()), None);
+        assert_eq!(try_inflate(&RectF32::largest_max()), None);
     }
 
     #[test]

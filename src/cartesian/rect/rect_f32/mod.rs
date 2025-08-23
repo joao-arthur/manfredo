@@ -1,6 +1,6 @@
 use crate::cartesian::point::point_f32;
 
-//pub mod add;
+pub mod add;
 pub mod contains_point;
 pub mod contains_rect;
 pub mod deflate;
@@ -50,6 +50,14 @@ impl RectF32 {
 
     pub fn largest() -> Self {
         RectF32 { min: point_f32::PointF32::min(), max: point_f32::PointF32::max() }
+    }
+
+    pub fn largest_min() -> Self {
+        RectF32 { min: point_f32::PointF32::min(), max: point_f32::PointF32::of(0.0, 0.0) }
+    }
+
+    pub fn largest_max() -> Self {
+        RectF32 { min: point_f32::PointF32::of(0.0, 0.0), max: point_f32::PointF32::max() }
     }
 
     pub fn min() -> Self {
@@ -108,6 +116,8 @@ mod tests {
     #[test]
     fn rect_f32() {
         assert_eq!(RectF32::largest(), RectF32 { min: PointF32 { x: MIN, y: MIN }, max: PointF32 { x: MAX, y: MAX } });
+        assert_eq!(RectF32::largest_min(), RectF32 { min: PointF32 { x: MIN, y: MIN }, max: PointF32 { x: 0.0, y: 0.0 } });
+        assert_eq!(RectF32::largest_max(), RectF32 { min: PointF32 { x: 0.0, y: 0.0 }, max: PointF32 { x: MAX, y: MAX } });
         assert_eq!(RectF32::min(), RectF32 { min: PointF32 { x: MIN, y: MIN }, max: PointF32 { x: MIN, y: MIN } });
         assert_eq!(RectF32::max(), RectF32 { min: PointF32 { x: MAX, y: MAX }, max: PointF32 { x: MAX, y: MAX } });
         assert_eq!(RectF32::of(MIN, -0.0, 0.0, MAX), RectF32 { min: PointF32 { x: MIN, y: -0.0 }, max: PointF32 { x: 0.0, y: MAX } });
@@ -116,6 +126,8 @@ mod tests {
     #[test]
     fn to_string() {
         assert_eq!(RectF32::largest().to_string(), "((-16777216, -16777216), (16777215, 16777215))");
+        assert_eq!(RectF32::largest_min().to_string(), "((-16777216, -16777216), (0, 0))");
+        assert_eq!(RectF32::largest_max().to_string(), "((0, 0), (16777215, 16777215))");
         assert_eq!(RectF32::of(MIN, -0.0, 0.0, MAX).to_string(), "((-16777216, -0), (0, 16777215))");
     }
 

@@ -4,11 +4,7 @@ use crate::cartesian::{
 };
 
 pub fn try_assign_inflate(r: &mut RectF32) -> Option<()> {
-    let is_min_x = r.min.x == MIN;
-    let is_min_y = r.min.y == MIN;
-    let is_max_x = r.max.x == MAX;
-    let is_max_y = r.max.y == MAX;
-    if is_min_x || is_max_x || is_min_y || is_max_y {
+    if r.min.x == MIN || r.min.y == MIN || r.max.x == MAX || r.max.y == MAX {
         return None;
     }
     r.min.x -= 1.0;
@@ -19,11 +15,7 @@ pub fn try_assign_inflate(r: &mut RectF32) -> Option<()> {
 }
 
 pub fn try_inflate(r: &RectF32) -> Option<RectF32> {
-    let is_min_x = r.min.x == MIN;
-    let is_min_y = r.min.y == MIN;
-    let is_max_x = r.max.x == MAX;
-    let is_max_y = r.max.y == MAX;
-    if is_min_x || is_max_x || is_min_y || is_max_y {
+    if r.min.x == MIN || r.min.y == MIN || r.max.x == MAX || r.max.y == MAX {
         return None;
     }
     let min_x = r.min.x - 1.0;
@@ -214,6 +206,13 @@ mod tests {
         assert_eq!(try_inflate(&RectF32::of(MIN + 10.0, MIN + 10.0, MIN + 20.0, MAX)), None);
         assert_eq!(try_inflate(&RectF32::of(MIN, MIN, MIN + 10.0, MIN + 10.0)), None);
         assert_eq!(try_inflate(&RectF32::of(MIN + 10.0, MIN + 10.0, MAX, MAX)), None);
+    
+
+
+
+
+
+
     }
 
     #[test]

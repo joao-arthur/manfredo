@@ -6,7 +6,7 @@ pub mod contains_rect;
 pub mod deflate;
 pub mod inflate;
 pub mod resize;
-//pub mod translate;
+pub mod translate;
 
 #[derive(PartialEq, Debug, Clone)]
 pub struct RectF32 {

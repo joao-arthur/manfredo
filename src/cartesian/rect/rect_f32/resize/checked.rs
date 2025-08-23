@@ -277,15 +277,15 @@ mod tests {
     fn try_assign_resize_big_rect_limits_out_of_bounds() {
         let mut r_min = RectF32::of(MIN, MIN, -1.0, -1.0);
         assert_eq!(try_assign_resize(&mut r_min, MAX), Some(()));
-        assert_eq!(r_min, RectF32::of(MIN, MIN, - 2.0, - 2.0));
+        assert_eq!(r_min, RectF32::of(MIN, MIN, -2.0, -2.0));
 
-        let mut r_max = RectF32::of( 1.0,  1.0, MAX, MAX);
+        let mut r_max = RectF32::of(1.0, 1.0, MAX, MAX);
         assert_eq!(try_assign_resize(&mut r_max, MAX), Some(()));
-        assert_eq!(r_max, RectF32::of( 1.0,  1.0, MAX, MAX));
+        assert_eq!(r_max, RectF32::of(1.0, 1.0, MAX, MAX));
 
         let mut r_even = RectF32::largest();
         assert_eq!(try_assign_resize(&mut r_even, MAX), Some(()));
-        assert_eq!(r_even, RectF32::of(MIN / 2.0, MIN / 2.0, (MAX - 3.0) /2.0, (MAX - 3.0) / 2.0));
+        assert_eq!(r_even, RectF32::of(MIN / 2.0, MIN / 2.0, (MAX - 3.0) / 2.0, (MAX - 3.0) / 2.0));
     }
 
     #[test]
@@ -391,9 +391,9 @@ mod tests {
 
     #[test]
     fn try_resize_big_rect_limits_out_of_bounds() {
-        assert_eq!(try_resize(&RectF32::of(MIN, MIN, -1.0, -1.0), MAX), Some(RectF32::of(MIN, MIN, - 2.0, - 2.0)));
-        assert_eq!(try_resize(&RectF32::of(1.0,  1.0, MAX, MAX), MAX), Some(RectF32::of( 1.0,  1.0, MAX, MAX)));
-        assert_eq!(try_resize(&RectF32::largest(), MAX), Some(RectF32::of(MIN / 2.0, MIN / 2.0, (MAX - 3.0) /2.0, (MAX - 3.0) / 2.0)));
+        assert_eq!(try_resize(&RectF32::of(MIN, MIN, -1.0, -1.0), MAX), Some(RectF32::of(MIN, MIN, -2.0, -2.0)));
+        assert_eq!(try_resize(&RectF32::of(1.0, 1.0, MAX, MAX), MAX), Some(RectF32::of(1.0, 1.0, MAX, MAX)));
+        assert_eq!(try_resize(&RectF32::largest(), MAX), Some(RectF32::of(MIN / 2.0, MIN / 2.0, (MAX - 3.0) / 2.0, (MAX - 3.0) / 2.0)));
     }
 
     #[test]

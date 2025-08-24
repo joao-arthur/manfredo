@@ -1,18 +1,18 @@
-use super::try_add::try_add;
+use super::try_add::try_checked_add;
 use crate::matrix::rect::rect_i16::RectI16;
 
-pub fn add(r: &RectI16, delta: &RectI16) -> RectI16 {
-    try_add(r, delta).unwrap()
+pub fn checked_add(r: &RectI16, delta: &RectI16) -> RectI16 {
+    try_checked_add(r, delta).unwrap()
 }
 
 #[cfg(test)]
 mod tests {
-    use super::add;
+    use super::checked_add;
     use crate::matrix::rect::rect_i16::RectI16;
 
     #[test]
-    fn test_add() {
-        assert_eq!(add(&RectI16::of(-7, 9, -12, 15), &RectI16::of(5, 4, 3, 2)), RectI16::of(-2, 13, -9, 17));
-        assert_eq!(add(&RectI16::of(5, 4, 15, 17), &RectI16::of(-14, -13, -12, -11)), RectI16::of(-9, -9, 3, 6));
+    fn test_checked_add() {
+        assert_eq!(checked_add(&RectI16::of(-7, 9, -12, 15), &RectI16::of(5, 4, 3, 2)), RectI16::of(-2, 13, -9, 17));
+        assert_eq!(checked_add(&RectI16::of(5, 4, 15, 17), &RectI16::of(-14, -13, -12, -11)), RectI16::of(-9, -9, 3, 6));
     }
 }

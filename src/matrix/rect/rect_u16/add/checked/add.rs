@@ -1,0 +1,18 @@
+use super::try_add::try_add;
+use crate::matrix::rect::{rect_i16::RectI16, rect_u16::RectU16};
+
+pub fn add(r: &RectU16, delta: &RectI16) -> RectU16 {
+    try_add(r, delta).unwrap()
+}
+
+#[cfg(test)]
+mod tests {
+    use super::add;
+    use crate::matrix::rect::{rect_i16::RectI16, rect_u16::RectU16};
+
+    #[test]
+    fn test_add() {
+        assert_eq!(add(&RectU16::of(0, 0, 12, 15), &RectI16::of(5, 4, 3, 2)), RectU16::of(5, 4, 15, 17));
+        assert_eq!(add(&RectU16::of(5, 4, 15, 20), &RectI16::of(-4, -3, -2, -1)), RectU16::of(1, 1, 13, 19));
+    }
+}

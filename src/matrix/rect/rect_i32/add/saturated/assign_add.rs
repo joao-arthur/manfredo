@@ -1,4 +1,4 @@
-use crate::matrix::{point::point_i32::PointI32, rect::rect_i32::RectI32};
+use crate::matrix::rect::rect_i32::RectI32;
 
 pub fn assign_add(r: &mut RectI32, delta: &RectI32) {
     let min_row = r.min.row.saturating_add(delta.min.row);

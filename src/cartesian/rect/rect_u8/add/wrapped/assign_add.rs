@@ -1,7 +1,4 @@
-use crate::cartesian::{
-    point::point_u8::PointU8,
-    rect::{rect_i8::RectI8, rect_u8::RectU8},
-};
+use crate::cartesian::rect::{rect_i8::RectI8, rect_u8::RectU8};
 
 pub fn assign_add(r: &mut RectU8, delta: &RectI8) {
     let min_x = r.min.x.wrapping_add_signed(delta.min.x);

@@ -7,10 +7,10 @@ pub fn try_assign_translate(r: &mut RectF32, delta: &PointF32) -> Option<()> {
     if delta.x < MIN - r.min.x || delta.y < MIN - r.min.y || delta.x > MAX - r.max.x || delta.y > MAX - r.max.y {
         return None;
     }
-    r.min.x = r.min.x + delta.x;
-    r.min.y = r.min.y + delta.y;
-    r.max.x = r.max.x + delta.x;
-    r.max.y = r.max.y + delta.y;
+    r.min.x += delta.x;
+    r.min.y += delta.y;
+    r.max.x += delta.x;
+    r.max.y += delta.y;
     Some(())
 }
 

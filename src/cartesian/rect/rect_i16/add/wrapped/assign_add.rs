@@ -1,4 +1,4 @@
-use crate::cartesian::{point::point_i16::PointI16, rect::rect_i16::RectI16};
+use crate::cartesian::rect::rect_i16::RectI16;
 
 pub fn assign_add(r: &mut RectI16, delta: &RectI16) {
     let min_x = r.min.x.wrapping_add(delta.min.x);
@@ -102,5 +102,4 @@ mod tests {
         assign_add(&mut r_max, &RectI16::max());
         assert_eq!(r_max, RectI16::of(-1, -1, -3, -3));
     }
-
 }

@@ -1,4 +1,4 @@
-use crate::cartesian::{point::point_i64::PointI64, rect::rect_i64::RectI64};
+use crate::cartesian::rect::rect_i64::RectI64;
 
 pub fn assign_add(r: &mut RectI64, delta: &RectI64) {
     let min_x = r.min.x.saturating_add(delta.min.x);

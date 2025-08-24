@@ -1,7 +1,4 @@
-use crate::cartesian::{
-    point::point_u64::PointU64,
-    rect::{rect_i64::RectI64, rect_u64::RectU64},
-};
+use crate::cartesian::rect::{rect_i64::RectI64, rect_u64::RectU64};
 
 pub fn assign_add(r: &mut RectU64, delta: &RectI64) {
     let min_x = r.min.x.wrapping_add_signed(delta.min.x);
@@ -105,5 +102,4 @@ mod tests {
         assign_add(&mut r_max, &RectI64::max());
         assert_eq!(r_max, RectU64::of(i64::MAX as u64, i64::MAX as u64, (i64::MAX as u64) - 2, (i64::MAX as u64) - 2));
     }
-
 }

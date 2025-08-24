@@ -1,4 +1,4 @@
-use crate::matrix::{point::point_i64::PointI64, rect::rect_i64::RectI64};
+use crate::matrix::rect::rect_i64::RectI64;
 
 pub fn assign_add(r: &mut RectI64, delta: &RectI64) {
     let min_row = r.min.row.wrapping_add(delta.min.row);

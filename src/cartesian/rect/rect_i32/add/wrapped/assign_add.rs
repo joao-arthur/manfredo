@@ -1,4 +1,4 @@
-use crate::cartesian::{point::point_i32::PointI32, rect::rect_i32::RectI32};
+use crate::cartesian::rect::rect_i32::RectI32;
 
 pub fn assign_add(r: &mut RectI32, delta: &RectI32) {
     let min_x = r.min.x.wrapping_add(delta.min.x);
@@ -102,5 +102,4 @@ mod tests {
         assign_add(&mut r_max, &RectI32::max());
         assert_eq!(r_max, RectI32::of(-1, -1, -3, -3));
     }
-
 }

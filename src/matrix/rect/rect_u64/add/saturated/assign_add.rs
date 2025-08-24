@@ -1,7 +1,4 @@
-use crate::matrix::{
-    point::point_u64::PointU64,
-    rect::{rect_i64::RectI64, rect_u64::RectU64},
-};
+use crate::matrix::rect::{rect_i64::RectI64, rect_u64::RectU64};
 
 pub fn assign_add(r: &mut RectU64, delta: &RectI64) {
     let min_row = r.min.row.saturating_add_signed(delta.min.row);

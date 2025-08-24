@@ -7,10 +7,10 @@ pub fn try_assign_add(r: &mut RectF32, delta: &RectF32) -> Option<()> {
     if delta.min.x < MIN - r.min.x || delta.min.y < MIN - r.min.y || delta.max.x > MAX - r.max.x || delta.max.y > MAX - r.max.y {
         return None;
     }
-    r.min.x = r.min.x + delta.min.x;
-    r.min.y = r.min.y + delta.min.y;
-    r.max.x = r.max.x + delta.max.x;
-    r.max.y = r.max.y + delta.max.y;
+    r.min.x += delta.min.x;
+    r.min.y += delta.min.y;
+    r.max.x += delta.max.x;
+    r.max.y += delta.max.y;
     Some(())
 }
 

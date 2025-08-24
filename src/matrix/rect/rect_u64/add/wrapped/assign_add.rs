@@ -113,5 +113,4 @@ mod tests {
         assign_add(&mut r_max, &RectI64::max());
         assert_eq!(r_max, RectU64::of(i64::MAX as u64, i64::MAX as u64, (i64::MAX as u64) - 2, (i64::MAX as u64) - 2));
     }
-
 }

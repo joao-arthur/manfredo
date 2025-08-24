@@ -1,5 +1,5 @@
 use crate::cartesian::{
-    point::point_f32::{MAX, MIN, PointF32},
+    point::point_f32::{MAX, MIN},
     rect::rect_f32::RectF32,
 };
 

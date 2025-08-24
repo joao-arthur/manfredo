@@ -1,7 +1,4 @@
-use crate::matrix::{
-    point::point_u32::PointU32,
-    rect::{rect_i32::RectI32, rect_u32::RectU32},
-};
+use crate::matrix::rect::{rect_i32::RectI32, rect_u32::RectU32};
 
 pub fn assign_add(r: &mut RectU32, delta: &RectI32) {
     let min_row = r.min.row.wrapping_add_signed(delta.min.row);
@@ -105,5 +102,4 @@ mod tests {
         assign_add(&mut r_max, &RectI32::max());
         assert_eq!(r_max, RectU32::of(i32::MAX as u32, i32::MAX as u32, (i32::MAX as u32) - 2, (i32::MAX as u32) - 2));
     }
-
 }

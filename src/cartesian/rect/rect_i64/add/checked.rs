@@ -70,6 +70,13 @@ mod tests {
     }
 
     #[test]
+    fn try_assign_add_out_of_bounds() {
+        let mut r_min = RectI64::largest();
+        assert_eq!(try_assign_add(&mut r_min, &RectI64::of(-1, -1, 1, 1)), None);
+        assert_eq!(r_min, RectI64::largest());
+    }
+
+    #[test]
     fn try_assign_add_small_rect_out_of_bounds() {
         let mut r_min = RectI64::of(i64::MIN + 10, i64::MIN + 5, i64::MIN + 20, i64::MIN + 30);
         assert_eq!(try_assign_add(&mut r_min, &RectI64::of(-20, -20, 0, 0)), None);

@@ -73,6 +73,13 @@ mod tests {
     }
 
     #[test]
+    fn try_assign_add_out_of_bounds() {
+        let mut r_min = RectU8::largest();
+        assert_eq!(try_assign_add(&mut r_min, &RectI8::of(-1, -1, 1, 1)), None);
+        assert_eq!(r_min, RectU8::largest());
+    }
+
+    #[test]
     fn try_assign_add_small_rect_out_of_bounds() {
         let mut r_min = RectU8::of(10, 5, 20, 30);
         assert_eq!(try_assign_add(&mut r_min, &RectI8::of(-20, -20, 0, 0)), None);

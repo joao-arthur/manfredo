@@ -70,6 +70,24 @@ mod tests {
     }
 
     #[test]
+    fn try_assign_add_out_of_bounds() {
+        let mut r = RectI8::largest();
+        assert_eq!(try_assign_add(&mut r, &RectI8::of(-1, 0, 0, 0)), None);
+        assert_eq!(try_assign_add(&mut r, &RectI8::of(0, -1, 0, 0)), None);
+        assert_eq!(try_assign_add(&mut r, &RectI8::of(0, 0, 1, 0)), None);
+        assert_eq!(try_assign_add(&mut r, &RectI8::of(0, 0, 0, 1)), None);
+        assert_eq!(r, RectI8::largest());
+
+        let mut r_min = RectI8::largest();
+        assert_eq!(try_assign_add(&mut r_min, &RectI8::of(-1, -1, 1, 1)), None);
+        assert_eq!(r_min, RectI8::largest());
+
+        let mut r_max = RectI8::largest();
+        assert_eq!(try_assign_add(&mut r_max, &RectI8::of(-1, -1, 1, 1)), None);
+        assert_eq!(r_max, RectI8::largest());
+    }
+
+    #[test]
     fn try_assign_add_small_rect_out_of_bounds() {
         let mut r_min = RectI8::of(i8::MIN + 10, i8::MIN + 5, i8::MIN + 20, i8::MIN + 30);
         assert_eq!(try_assign_add(&mut r_min, &RectI8::of(-20, -20, 0, 0)), None);
@@ -157,24 +175,42 @@ mod tests {
     }
 
     #[test]
+    fn try_add_out_of_bounds() {
+        let r = RectI8::largest();
+        assert_eq!(try_add(&r, &RectI8::of(-1, 0, 0, 0)), None);
+        assert_eq!(try_add(&r, &RectI8::of(0, -1, 0, 0)), None);
+        assert_eq!(try_add(&r, &RectI8::of(0, 0, 1, 0)), None);
+        assert_eq!(try_add(&r, &RectI8::of(0, 0, 0, 1)), None);
+        assert_eq!(r, RectI8::largest());
+
+        let r_min = RectI8::largest();
+        assert_eq!(try_add(&r_min, &RectI8::of(-1, -1, 1, 1)), None);
+        assert_eq!(r_min, RectI8::largest());
+
+        let r_max = RectI8::largest();
+        assert_eq!(try_add(&r_max, &RectI8::of(-1, -1, 1, 1)), None);
+        assert_eq!(r_max, RectI8::largest());
+    }
+
+    #[test]
     fn try_add_small_rect_out_of_bounds() {
-        let mut r_min = RectI8::of(i8::MIN + 10, i8::MIN + 5, i8::MIN + 20, i8::MIN + 30);
-        assert_eq!(try_add(&mut r_min, &RectI8::of(-20, -20, 0, 0)), None);
+        let r_min = RectI8::of(i8::MIN + 10, i8::MIN + 5, i8::MIN + 20, i8::MIN + 30);
+        assert_eq!(try_add(&r_min, &RectI8::of(-20, -20, 0, 0)), None);
         assert_eq!(r_min, RectI8::of(i8::MIN + 10, i8::MIN + 5, i8::MIN + 20, i8::MIN + 30));
 
-        let mut r_max = RectI8::of(i8::MAX - 20, i8::MAX - 30, i8::MAX - 5, i8::MAX - 10);
-        assert_eq!(try_add(&mut r_max, &RectI8::of(0, 0, 20, 20)), None);
+        let r_max = RectI8::of(i8::MAX - 20, i8::MAX - 30, i8::MAX - 5, i8::MAX - 10);
+        assert_eq!(try_add(&r_max, &RectI8::of(0, 0, 20, 20)), None);
         assert_eq!(r_max, RectI8::of(i8::MAX - 20, i8::MAX - 30, i8::MAX - 5, i8::MAX - 10));
     }
 
     #[test]
     fn try_add_big_rect_out_of_bounds() {
-        let mut r_min = RectI8::of(i8::MIN + 10, i8::MIN + 5, i8::MAX, i8::MAX);
-        assert_eq!(try_add(&mut r_min, &RectI8::of(-20, -20, 0, 0)), None);
+        let r_min = RectI8::of(i8::MIN + 10, i8::MIN + 5, i8::MAX, i8::MAX);
+        assert_eq!(try_add(&r_min, &RectI8::of(-20, -20, 0, 0)), None);
         assert_eq!(r_min, RectI8::of(i8::MIN + 10, i8::MIN + 5, i8::MAX, i8::MAX));
 
-        let mut r_max = RectI8::of(i8::MIN, i8::MIN, i8::MAX - 5, i8::MAX - 10);
-        assert_eq!(try_add(&mut r_max, &RectI8::of(0, 0, 20, 20)), None);
+        let r_max = RectI8::of(i8::MIN, i8::MIN, i8::MAX - 5, i8::MAX - 10);
+        assert_eq!(try_add(&r_max, &RectI8::of(0, 0, 20, 20)), None);
         assert_eq!(r_max, RectI8::of(i8::MIN, i8::MIN, i8::MAX - 5, i8::MAX - 10));
     }
 

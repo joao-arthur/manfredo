@@ -78,6 +78,24 @@ mod tests {
     }
 
     #[test]
+    fn try_assign_add_out_of_bounds() {
+        let mut r = RectF32::largest();
+        assert_eq!(try_assign_add(&mut r, &RectF32::of(-1.0, 0.0, 0.0, 0.0)), None);
+        assert_eq!(try_assign_add(&mut r, &RectF32::of(0.0, -1.0, 0.0, 0.0)), None);
+        assert_eq!(try_assign_add(&mut r, &RectF32::of(0.0, 0.0, 1.0, 0.0)), None);
+        assert_eq!(try_assign_add(&mut r, &RectF32::of(0.0, 0.0, 0.0, 1.0)), None);
+        assert_eq!(r, RectF32::largest());
+
+        let mut r_min = RectF32::largest_min();
+        assert_eq!(try_assign_add(&mut r_min, &RectF32::of(-1.0, -1.0, 1.0, 1.0)), None);
+        assert_eq!(r_min, RectF32::largest_min());
+    
+        let mut r_max = RectF32::largest_max();
+        assert_eq!(try_assign_add(&mut r_max, &RectF32::of(-1.0, -1.0, 1.0, 1.0)), None);
+        assert_eq!(r_max, RectF32::largest_max());
+    }
+
+    #[test]
     fn try_assign_add_small_rect_out_of_bounds() {
         let mut r_min = RectF32::of(MIN + 10.0, MIN + 5.0, MIN + 20.0, MIN + 30.0);
         assert_eq!(try_assign_add(&mut r_min, &RectF32::of(-20.0, -20.0, 0.0, 0.0)), None);
@@ -167,6 +185,12 @@ mod tests {
         assert_eq!(try_add(&r, &RectF32::of(0.0, -1.0, 0.0, 0.0)), None);
         assert_eq!(try_add(&r, &RectF32::of(0.0, 0.0, 1.0, 0.0)), None);
         assert_eq!(try_add(&r, &RectF32::of(0.0, 0.0, 0.0, 1.0)), None);
+
+        let r_min = RectF32::largest_min();
+        assert_eq!(try_add(&r_min, &RectF32::of(-1.0, -1.0, 1.0, 1.0)), None);
+    
+        let r_max = RectF32::largest_max();
+        assert_eq!(try_add(&r_max, &RectF32::of(-1.0, -1.0, 1.0, 1.0)), None);
     }
 
     #[test]

@@ -48,9 +48,8 @@ pub fn inflate(r: &RectU64) -> RectU64 {
 
 #[cfg(test)]
 mod tests {
-    use crate::cartesian::rect::rect_u64::RectU64;
-
     use super::{assign_inflate, inflate, try_assign_inflate, try_inflate};
+    use crate::cartesian::rect::rect_u64::RectU64;
 
     #[test]
     fn try_assign_inflate_min_bounds() {

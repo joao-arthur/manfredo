@@ -30,9 +30,8 @@ pub fn translate(r: &RectI8, delta: &PointI8) -> RectI8 {
 
 #[cfg(test)]
 mod tests {
-    use crate::matrix::{point::point_i8::PointI8, rect::rect_i8::RectI8};
-
     use super::{assign_translate, translate, try_assign_translate, try_translate};
+    use crate::matrix::{point::point_i8::PointI8, rect::rect_i8::RectI8};
 
     #[test]
     fn test_try_assign_translate() {

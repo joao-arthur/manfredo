@@ -35,9 +35,8 @@ pub fn deflate(r: &RectU16) -> RectU16 {
 
 #[cfg(test)]
 mod tests {
-    use crate::matrix::rect::rect_u16::RectU16;
-
     use super::{assign_deflate, deflate, try_assign_deflate, try_deflate};
+    use crate::matrix::rect::rect_u16::RectU16;
 
     #[test]
     fn try_assign_deflate_odd() {

@@ -35,12 +35,11 @@ pub fn translate(r: &RectF32, delta: &PointF32) -> RectF32 {
 
 #[cfg(test)]
 mod tests {
+    use super::{assign_translate, translate, try_assign_translate, try_translate};
     use crate::cartesian::{
         point::point_f32::{MAX, MIN, PointF32},
         rect::rect_f32::RectF32,
     };
-
-    use super::{assign_translate, translate, try_assign_translate, try_translate};
 
     #[test]
     fn test_try_assign_translate() {

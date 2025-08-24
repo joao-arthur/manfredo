@@ -6,12 +6,11 @@ pub fn contains_rect(outer: &RectF32, r: &RectF32) -> bool {
 
 #[cfg(test)]
 mod tests {
+    use super::contains_rect;
     use crate::cartesian::{
         point::point_f32::{MAX, MIN},
         rect::rect_f32::RectF32,
     };
-
-    use super::contains_rect;
 
     #[test]
     fn contains_rect_inside() {

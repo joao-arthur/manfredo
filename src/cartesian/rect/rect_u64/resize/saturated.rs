@@ -47,9 +47,8 @@ pub fn resize(r: &RectU64, size: u64) -> RectU64 {
 
 #[cfg(test)]
 mod tests {
-    use crate::cartesian::rect::rect_u64::RectU64;
-
     use super::{assign_resize, resize, try_assign_resize, try_resize};
+    use crate::cartesian::rect::rect_u64::RectU64;
 
     #[test]
     fn try_assign_resize_odd() {

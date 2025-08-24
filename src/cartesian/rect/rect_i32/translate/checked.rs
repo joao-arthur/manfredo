@@ -30,9 +30,8 @@ pub fn translate(r: &RectI32, delta: &PointI32) -> RectI32 {
 
 #[cfg(test)]
 mod tests {
-    use crate::cartesian::{point::point_i32::PointI32, rect::rect_i32::RectI32};
-
     use super::{assign_translate, translate, try_assign_translate, try_translate};
+    use crate::cartesian::{point::point_i32::PointI32, rect::rect_i32::RectI32};
 
     #[test]
     fn test_try_assign_translate() {

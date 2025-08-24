@@ -6,12 +6,11 @@ pub fn contains_point(r: &RectF32, p: &PointF32) -> bool {
 
 #[cfg(test)]
 mod tests {
+    use super::contains_point;
     use crate::cartesian::{
         point::point_f32::{MAX, MIN, PointF32},
         rect::rect_f32::RectF32,
     };
-
-    use super::contains_point;
 
     #[test]
     fn contains_point_inside_borders() {

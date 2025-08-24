@@ -47,12 +47,11 @@ pub fn resize(r: &RectF32, size: f32) -> RectF32 {
 
 #[cfg(test)]
 mod tests {
+    use super::{assign_resize, resize, try_assign_resize, try_resize};
     use crate::cartesian::{
         point::point_f32::{MAX, MIN},
         rect::rect_f32::RectF32,
     };
-
-    use super::{assign_resize, resize, try_assign_resize, try_resize};
 
     #[test]
     fn try_assign_resize_odd() {

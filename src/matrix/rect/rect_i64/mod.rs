@@ -94,12 +94,11 @@ pub fn max_len(r: &RectI64) -> u64 {
 
 #[cfg(test)]
 mod tests {
+    use super::{RectI64, delta_col, delta_row, len_col, len_row, max_delta, max_len};
     use crate::matrix::{
         point::point_i64::PointI64,
         rect::{rect_i8::RectI8, rect_i16::RectI16, rect_i32::RectI32},
     };
-
-    use super::{RectI64, delta_col, delta_row, len_col, len_row, max_delta, max_len};
 
     #[test]
     fn rect_i64() {

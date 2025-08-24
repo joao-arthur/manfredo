@@ -73,9 +73,8 @@ pub fn max_len(r: &RectU8) -> u8 {
 
 #[cfg(test)]
 mod tests {
-    use crate::cartesian::point::point_u8::PointU8;
-
     use super::{RectU8, delta_x, delta_y, len_x, len_y, max_delta, max_len};
+    use crate::cartesian::point::point_u8::PointU8;
 
     #[test]
     fn rect_u8() {

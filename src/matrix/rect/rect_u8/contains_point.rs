@@ -6,9 +6,8 @@ pub fn contains_point(r: &RectU8, p: &PointU8) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use crate::matrix::{point::point_u8::PointU8, rect::rect_u8::RectU8};
-
     use super::contains_point;
+    use crate::matrix::{point::point_u8::PointU8, rect::rect_u8::RectU8};
 
     #[test]
     fn contains_point_inside_borders() {

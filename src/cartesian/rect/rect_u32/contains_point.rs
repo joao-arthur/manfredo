@@ -6,9 +6,8 @@ pub fn contains_point(r: &RectU32, p: &PointU32) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use crate::cartesian::{point::point_u32::PointU32, rect::rect_u32::RectU32};
-
     use super::contains_point;
+    use crate::cartesian::{point::point_u32::PointU32, rect::rect_u32::RectU32};
 
     #[test]
     fn contains_point_inside_borders() {

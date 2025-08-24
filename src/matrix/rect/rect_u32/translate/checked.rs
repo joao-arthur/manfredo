@@ -33,9 +33,8 @@ pub fn translate(r: &RectU32, delta: &PointI32) -> RectU32 {
 
 #[cfg(test)]
 mod tests {
-    use crate::matrix::{point::point_i32::PointI32, rect::rect_u32::RectU32};
-
     use super::{assign_translate, translate, try_assign_translate, try_translate};
+    use crate::matrix::{point::point_i32::PointI32, rect::rect_u32::RectU32};
 
     #[test]
     fn test_try_assign_translate() {

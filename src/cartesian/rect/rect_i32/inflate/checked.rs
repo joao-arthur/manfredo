@@ -30,9 +30,8 @@ pub fn inflate(r: &RectI32) -> RectI32 {
 
 #[cfg(test)]
 mod tests {
-    use crate::cartesian::rect::rect_i32::RectI32;
-
     use super::{assign_inflate, inflate, try_assign_inflate, try_inflate};
+    use crate::cartesian::rect::rect_i32::RectI32;
 
     #[test]
     fn try_assign_inflate_min_bounds() {

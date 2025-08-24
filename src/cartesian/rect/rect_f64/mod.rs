@@ -166,9 +166,8 @@ pub fn contains(r: &RectF64, p: &point_f64::PointF64) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use crate::cartesian::point::point_f64::{MAX, MIN, PointF64};
-
     use super::{RectF64, assign_saturating_add, contains, deflate, delta_x, delta_y, inflate, len_x, len_y, max_delta, max_len, resize};
+    use crate::cartesian::point::point_f64::{MAX, MIN, PointF64};
 
     #[test]
     fn rect_f64() {

@@ -6,9 +6,8 @@ pub fn contains_rect(outer: &RectU16, r: &RectU16) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use crate::cartesian::rect::rect_u16::RectU16;
-
     use super::contains_rect;
+    use crate::cartesian::rect::rect_u16::RectU16;
 
     #[test]
     fn contains_rect_inside() {

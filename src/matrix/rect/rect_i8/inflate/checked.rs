@@ -30,9 +30,8 @@ pub fn inflate(r: &RectI8) -> RectI8 {
 
 #[cfg(test)]
 mod tests {
-    use crate::matrix::rect::rect_i8::RectI8;
-
     use super::{assign_inflate, inflate, try_assign_inflate, try_inflate};
+    use crate::matrix::rect::rect_i8::RectI8;
 
     #[test]
     fn try_assign_inflate_min_bounds() {

@@ -51,12 +51,11 @@ pub fn inflate(r: &RectF32) -> RectF32 {
 
 #[cfg(test)]
 mod tests {
+    use super::{assign_inflate, inflate, try_assign_inflate, try_inflate};
     use crate::cartesian::{
         point::point_f32::{MAX, MIN},
         rect::rect_f32::RectF32,
     };
-
-    use super::{assign_inflate, inflate, try_assign_inflate, try_inflate};
 
     #[test]
     fn try_assign_inflate_min_bounds() {

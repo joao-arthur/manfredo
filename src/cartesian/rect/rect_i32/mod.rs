@@ -88,12 +88,11 @@ pub fn max_len(r: &RectI32) -> u32 {
 
 #[cfg(test)]
 mod tests {
+    use super::{RectI32, delta_x, delta_y, len_x, len_y, max_delta, max_len};
     use crate::cartesian::{
         point::point_i32::PointI32,
         rect::{rect_i8::RectI8, rect_i16::RectI16},
     };
-
-    use super::{RectI32, delta_x, delta_y, len_x, len_y, max_delta, max_len};
 
     #[test]
     fn rect_i32() {

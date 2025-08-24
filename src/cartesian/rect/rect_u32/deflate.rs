@@ -35,9 +35,8 @@ pub fn deflate(r: &RectU32) -> RectU32 {
 
 #[cfg(test)]
 mod tests {
-    use crate::cartesian::rect::rect_u32::RectU32;
-
     use super::{assign_deflate, deflate, try_assign_deflate, try_deflate};
+    use crate::cartesian::rect::rect_u32::RectU32;
 
     #[test]
     fn try_assign_deflate_odd() {

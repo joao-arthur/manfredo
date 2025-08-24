@@ -35,9 +35,8 @@ pub fn deflate(r: &RectI64) -> RectI64 {
 
 #[cfg(test)]
 mod tests {
-    use crate::matrix::rect::rect_i64::RectI64;
-
     use super::{assign_deflate, deflate, try_assign_deflate, try_deflate};
+    use crate::matrix::rect::rect_i64::RectI64;
 
     #[test]
     fn try_assign_deflate_odd() {

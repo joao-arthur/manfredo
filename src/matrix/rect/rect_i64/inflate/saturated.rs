@@ -48,9 +48,8 @@ pub fn inflate(r: &RectI64) -> RectI64 {
 
 #[cfg(test)]
 mod tests {
-    use crate::matrix::rect::rect_i64::RectI64;
-
     use super::{assign_inflate, inflate, try_assign_inflate, try_inflate};
+    use crate::matrix::rect::rect_i64::RectI64;
 
     #[test]
     fn try_assign_inflate_min_bounds() {

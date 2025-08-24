@@ -47,9 +47,8 @@ pub fn resize(r: &RectI16, size: u16) -> RectI16 {
 
 #[cfg(test)]
 mod tests {
-    use crate::matrix::rect::rect_i16::RectI16;
-
     use super::{assign_resize, resize, try_assign_resize, try_resize};
+    use crate::matrix::rect::rect_i16::RectI16;
 
     #[test]
     fn try_assign_resize_odd() {

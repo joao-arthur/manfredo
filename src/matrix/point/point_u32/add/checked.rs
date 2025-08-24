@@ -24,9 +24,8 @@ pub fn add(p: &PointU32, delta: &PointI32) -> PointU32 {
 
 #[cfg(test)]
 mod tests {
-    use crate::matrix::point::{point_i32::PointI32, point_u32::PointU32};
-
     use super::{add, assign_add, try_add, try_assign_add};
+    use crate::matrix::point::{point_i32::PointI32, point_u32::PointU32};
 
     #[test]
     fn test_try_assign_add() {

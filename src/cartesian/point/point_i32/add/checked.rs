@@ -24,9 +24,8 @@ pub fn add(p: &PointI32, delta: &PointI32) -> PointI32 {
 
 #[cfg(test)]
 mod tests {
-    use crate::cartesian::point::point_i32::PointI32;
-
     use super::{add, assign_add, try_add, try_assign_add};
+    use crate::cartesian::point::point_i32::PointI32;
 
     #[test]
     fn test_try_assign_add() {

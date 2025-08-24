@@ -51,9 +51,8 @@ pub fn delta(p1: &PointF64, p2: &PointF64) -> PointF64 {
 
 #[cfg(test)]
 mod tests {
-    use crate::cartesian::point::point_f32::PointF32;
-
     use super::{MAX, MIN, PointF64, delta, delta_x, delta_y};
+    use crate::cartesian::point::point_f32::PointF32;
 
     #[test]
     fn point_f64() {

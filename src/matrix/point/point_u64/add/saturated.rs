@@ -13,9 +13,8 @@ pub fn add(p: &PointU64, delta: &PointI64) -> PointU64 {
 
 #[cfg(test)]
 mod tests {
-    use crate::matrix::point::{point_i64::PointI64, point_u64::PointU64};
-
     use super::{add, assign_add};
+    use crate::matrix::point::{point_i64::PointI64, point_u64::PointU64};
 
     #[test]
     fn test_assign_add() {

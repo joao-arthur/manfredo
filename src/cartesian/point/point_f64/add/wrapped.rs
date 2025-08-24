@@ -55,9 +55,8 @@ pub fn add(p: &PointF64, delta: &PointF64) -> PointF64 {
 
 #[cfg(test)]
 mod tests {
-    use crate::cartesian::point::point_f64::{MAX, MIN, PointF64};
-
     use super::{add, assign_add};
+    use crate::cartesian::point::point_f64::{MAX, MIN, PointF64};
 
     #[test]
     fn test_assign_add() {

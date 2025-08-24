@@ -13,9 +13,8 @@ pub fn add(p: &PointU16, delta: &PointI16) -> PointU16 {
 
 #[cfg(test)]
 mod tests {
-    use crate::matrix::point::{point_i16::PointI16, point_u16::PointU16};
-
     use super::{add, assign_add};
+    use crate::matrix::point::{point_i16::PointI16, point_u16::PointU16};
 
     #[test]
     fn test_assign_add() {

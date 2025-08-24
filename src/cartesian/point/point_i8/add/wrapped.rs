@@ -13,9 +13,8 @@ pub fn add(p: &PointI8, delta: &PointI8) -> PointI8 {
 
 #[cfg(test)]
 mod tests {
-    use crate::cartesian::point::point_i8::PointI8;
-
     use super::{add, assign_add};
+    use crate::cartesian::point::point_i8::PointI8;
 
     #[test]
     fn test_assign_add() {

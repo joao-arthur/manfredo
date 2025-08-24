@@ -15,9 +15,8 @@ pub fn add(p: &PointF32, delta: &PointF32) -> PointF32 {
 
 #[cfg(test)]
 mod tests {
-    use crate::cartesian::point::point_f32::{MAX, MIN, PointF32};
-
     use super::{add, assign_add};
+    use crate::cartesian::point::point_f32::{MAX, MIN, PointF32};
 
     #[test]
     fn test_assign_add() {

@@ -27,7 +27,7 @@ mod tests {
     }
 
     #[test]
-    fn try_assign_add_big_rect_to_bounds() {
+    fn try_assign_add_to_bounds() {
         let mut r = RectI16::of(i16::MIN + 2, i16::MIN + 5, i16::MAX - 2, i16::MAX - 5);
         assert_eq!(try_assign_add(&mut r, &RectI16::of(-2, -5, 2, 5)), Some(()));
         assert_eq!(r, RectI16::largest());

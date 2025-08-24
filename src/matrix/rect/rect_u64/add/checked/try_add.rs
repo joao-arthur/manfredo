@@ -23,7 +23,7 @@ mod tests {
     }
 
     #[test]
-    fn try_add_big_rect_to_bounds() {
+    fn try_add_to_bounds() {
         assert_eq!(try_add(&RectU64::of(2, 5, u64::MAX - 2, u64::MAX - 5), &RectI64::of(-2, -5, 2, 5)), Some(RectU64::largest()));
         assert_eq!(try_add(&RectU64::of(2, 5, u64::MAX, u64::MAX), &RectI64::of(-2, -5, 0, 0)), Some(RectU64::largest()));
         assert_eq!(try_add(&RectU64::of(0, 0, u64::MAX - 2, u64::MAX - 5), &RectI64::of(0, 0, 2, 5)), Some(RectU64::largest()));

@@ -43,7 +43,7 @@ mod tests {
     }
 
     #[test]
-    fn try_assign_add_big_rect_to_bounds() {
+    fn try_assign_add_to_bounds() {
         let mut min_r = RectF32::of(MIN + 2.0, MIN + 5.0, MAX - 2.0, MAX - 5.0);
         assert_eq!(try_assign_add(&mut min_r, &RectF32::of(-2.0, -5.0, 2.0, 5.0)), Some(()));
         assert_eq!(min_r, RectF32::largest());

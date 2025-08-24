@@ -20,90 +20,63 @@ mod tests {
         assign_add(&mut r, &RectI16::of(-4, -3, -2, -1));
         assert_eq!(r, RectU16::of(1, 1, 13, 11));
     }
-
     #[test]
-    fn assign_add_small_rect_to_bounds() {
-        let mut min_r = RectU16::of(2, 5, 12, 15);
-        assign_add(&mut min_r, &RectI16::of(-2, -5, 9, 7));
-        assert_eq!(min_r, RectU16::of(0, 0, 21, 22));
-
-        let mut max_r = RectU16::of(u16::MAX - 12, u16::MAX - 15, u16::MAX - 2, u16::MAX - 5);
-        assign_add(&mut max_r, &RectI16::of(-9, -7, 2, 5));
-        assert_eq!(max_r, RectU16::of(u16::MAX - 21, u16::MAX - 22, u16::MAX, u16::MAX));
-    }
-
-    #[test]
-    fn assign_add_big_rect_to_bounds() {
+    fn assign_add_to_bounds() {
         let mut r = RectU16::of(2, 5, u16::MAX - 2, u16::MAX - 5);
         assign_add(&mut r, &RectI16::of(-2, -5, 2, 5));
         assert_eq!(r, RectU16::largest());
 
-        let mut min_r = RectU16::of(2, 5, u16::MAX, u16::MAX);
-        assign_add(&mut min_r, &RectI16::of(-2, -5, 0, 0));
-        assert_eq!(min_r, RectU16::largest());
-
-        let mut max_r = RectU16::of(0, 0, u16::MAX - 2, u16::MAX - 5);
-        assign_add(&mut max_r, &RectI16::of(0, 0, 2, 5));
-        assert_eq!(max_r, RectU16::largest());
-    }
-
-    #[test]
-    fn assign_add_small_rect_out_of_bounds() {
-        let mut r_min = RectU16::of(10, 5, 20, 30);
-        assign_add(&mut r_min, &RectI16::of(-20, -20, 0, 0));
-        assert_eq!(r_min, RectU16::of(0, 0, 20, 30));
-
-        let mut r_max = RectU16::of(u16::MAX - 20, u16::MAX - 30, u16::MAX - 5, u16::MAX - 10);
-        assign_add(&mut r_max, &RectI16::of(0, 0, 20, 20));
-        assert_eq!(r_max, RectU16::of(u16::MAX - 20, u16::MAX - 30, u16::MAX, u16::MAX));
-    }
-
-    #[test]
-    fn assign_add_big_rect_out_of_bounds() {
-        let mut r_min = RectU16::of(10, 5, u16::MAX, u16::MAX);
-        assign_add(&mut r_min, &RectI16::of(-20, -20, 0, 0));
+        let mut r_min = RectU16::of(2, 5, u16::MAX, u16::MAX);
+        assign_add(&mut r_min, &RectI16::of(-2, -5, 0, 0));
         assert_eq!(r_min, RectU16::largest());
 
-        let mut r_max = RectU16::of(0, 0, u16::MAX - 5, u16::MAX - 10);
-        assign_add(&mut r_max, &RectI16::of(0, 0, 20, 20));
+        let mut r_max = RectU16::of(0, 0, u16::MAX - 2, u16::MAX - 5);
+        assign_add(&mut r_max, &RectI16::of(0, 0, 2, 5));
         assert_eq!(r_max, RectU16::largest());
     }
 
     #[test]
-    fn assign_add_small_rect_limits_out_of_bounds() {
-        let mut r_min = RectU16::of(1, 1, 10, 10);
-        assign_add(&mut r_min, &RectI16::min());
-        assert_eq!(r_min, RectU16::min());
-
-        let mut r_max = RectU16::of(u16::MAX - 10, u16::MAX - 10, u16::MAX - 1, u16::MAX - 1);
-        assign_add(&mut r_max, &RectI16::max());
-        assert_eq!(r_max, RectU16::max());
+    fn assign_add_edge_out_of_bounds() {
+        let mut r = RectU16::largest();
+        assign_add(&mut r, &RectI16::of(-1, 0, 0, 0));
+        assert_eq!(r, RectU16::largest());
+        assign_add(&mut r, &RectI16::of(0, -1, 0, 0));
+        assert_eq!(r, RectU16::largest());
+        assign_add(&mut r, &RectI16::of(0, 0, 1, 0));
+        assert_eq!(r, RectU16::largest());
+        assign_add(&mut r, &RectI16::of(0, 0, 0, 1));
+        assert_eq!(r, RectU16::largest());
     }
 
     #[test]
-    fn assign_add_big_rect_limits_out_of_bounds() {
+    fn assign_add_out_of_bounds() {
+        let mut r1 = RectU16::of(10, 10, u16::MAX - 10, u16::MAX - 10);
+        assign_add(&mut r1, &RectI16::of(-20, 0, 0, 0));
+        assert_eq!(r1, RectU16::of(0, 10, u16::MAX - 10, u16::MAX - 10));
+      
+        let mut r2 = RectU16::of(10, 10, u16::MAX - 10, u16::MAX - 10);
+        assign_add(&mut r2, &RectI16::of(0, -20, 0, 0));
+        assert_eq!(r2, RectU16::of(10, 0, u16::MAX - 10, u16::MAX - 10));
+       
+        let mut r3 = RectU16::of(10, 10, u16::MAX - 10, u16::MAX - 10);
+        assign_add(&mut r3, &RectI16::of(0, 0, 20, 0));
+        assert_eq!(r3, RectU16::of(10, 10, u16::MAX, u16::MAX - 10));
+       
+        let mut r4 = RectU16::of(10, 10, u16::MAX - 10, u16::MAX - 10);
+        assign_add(&mut r4, &RectI16::of(0, 0, 0, 20));
+        assert_eq!(r4, RectU16::of(10, 10, u16::MAX - 10, u16::MAX));
+    }
+
+    #[test]
+    fn assign_add_limits_out_of_bounds() {
         let mut r = RectU16::largest();
-        assign_add(&mut r, &RectI16::largest());
+        assign_add(&mut r, &RectI16::of(i16::MIN, 0, 0, 0));
         assert_eq!(r, RectU16::largest());
-
-        let mut r_large = RectU16::of(1, 1, u16::MAX - 1, u16::MAX - 1);
-        assign_add(&mut r_large, &RectI16::largest());
-        assert_eq!(r_large, RectU16::largest());
-
-        let mut r_min_x = RectU16::of(1, 1, u16::MAX - 1, u16::MAX - 1);
-        assign_add(&mut r_min_x, &RectI16::of(i16::MIN, 0, 0, 0));
-        assert_eq!(r_min_x, RectU16::of(0, 1, u16::MAX - 1, u16::MAX - 1));
-
-        let mut r_min_y = RectU16::of(1, 1, u16::MAX - 1, u16::MAX - 1);
-        assign_add(&mut r_min_y, &RectI16::of(0, i16::MIN, 0, 0));
-        assert_eq!(r_min_y, RectU16::of(1, 0, u16::MAX - 1, u16::MAX - 1));
-
-        let mut r_max_x = RectU16::of(1, 1, u16::MAX - 1, u16::MAX - 1);
-        assign_add(&mut r_max_x, &RectI16::of(0, 0, i16::MAX, 0));
-        assert_eq!(r_max_x, RectU16::of(1, 1, u16::MAX, u16::MAX - 1));
-
-        let mut r_max_y = RectU16::of(1, 1, u16::MAX - 1, u16::MAX - 1);
-        assign_add(&mut r_max_y, &RectI16::of(0, 0, 0, i16::MAX));
-        assert_eq!(r_max_y, RectU16::of(1, 1, u16::MAX - 1, u16::MAX));
+        assign_add(&mut r, &RectI16::of(0, i16::MIN, 0, 0));
+        assert_eq!(r, RectU16::largest());
+        assign_add(&mut r, &RectI16::of(0, 0, i16::MAX, 0));
+        assert_eq!(r, RectU16::largest());
+        assign_add(&mut r, &RectI16::of(0, 0, 0, i16::MAX));
+        assert_eq!(r, RectU16::largest());
     }
 }

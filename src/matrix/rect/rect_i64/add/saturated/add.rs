@@ -20,57 +20,36 @@ mod tests {
     }
 
     #[test]
-    fn add_small_rect_to_bounds() {
-        assert_eq!(
-            add(&RectI64::of(i64::MIN + 2, i64::MIN + 5, i64::MIN + 12, i64::MIN + 15), &RectI64::of(-2, -5, 9, 7)),
-            RectI64::of(i64::MIN, i64::MIN, i64::MIN + 21, i64::MIN + 22)
-        );
-        assert_eq!(
-            add(&RectI64::of(i64::MAX - 12, i64::MAX - 15, i64::MAX - 2, i64::MAX - 5), &RectI64::of(-9, -7, 2, 5)),
-            RectI64::of(i64::MAX - 21, i64::MAX - 22, i64::MAX, i64::MAX)
-        );
-    }
-
-    #[test]
-    fn add_big_rect_to_bounds() {
+    fn add_to_bounds() {
         assert_eq!(add(&RectI64::of(i64::MIN + 2, i64::MIN + 5, i64::MAX - 2, i64::MAX - 5), &RectI64::of(-2, -5, 2, 5)), RectI64::largest());
         assert_eq!(add(&RectI64::of(i64::MIN + 2, i64::MIN + 5, i64::MAX, i64::MAX), &RectI64::of(-2, -5, 0, 0)), RectI64::largest());
         assert_eq!(add(&RectI64::of(i64::MIN, i64::MIN, i64::MAX - 2, i64::MAX - 5), &RectI64::of(0, 0, 2, 5)), RectI64::largest());
     }
 
     #[test]
-    fn add_small_rect_out_of_bounds() {
-        assert_eq!(
-            add(&RectI64::of(i64::MIN + 10, i64::MIN + 5, i64::MIN + 20, i64::MIN + 30), &RectI64::of(-20, -20, 0, 0)),
-            RectI64::of(i64::MIN, i64::MIN, i64::MIN + 20, i64::MIN + 30)
-        );
-        assert_eq!(
-            add(&RectI64::of(i64::MAX - 20, i64::MAX - 30, i64::MAX - 5, i64::MAX - 10), &RectI64::of(0, 0, 20, 20)),
-            RectI64::of(i64::MAX - 20, i64::MAX - 30, i64::MAX, i64::MAX)
-        );
+    fn add_edge_out_of_bounds() {
+        let r = RectI64::largest();
+        assert_eq!(add(&r, &RectI64::of(-1, 0, 0, 0)), RectI64::largest());
+        assert_eq!(add(&r, &RectI64::of(0, -1, 0, 0)), RectI64::largest());
+        assert_eq!(add(&r, &RectI64::of(0, 0, 1, 0)), RectI64::largest());
+        assert_eq!(add(&r, &RectI64::of(0, 0, 0, 1)), RectI64::largest());
     }
 
     #[test]
-    fn add_big_rect_out_of_bounds() {
-        assert_eq!(add(&RectI64::of(i64::MIN + 10, i64::MIN + 5, i64::MAX, i64::MAX), &RectI64::of(-20, -20, 0, 0)), RectI64::largest());
-        assert_eq!(add(&RectI64::of(i64::MIN, i64::MIN, i64::MAX - 5, i64::MAX - 10), &RectI64::of(0, 0, 20, 20)), RectI64::largest());
+    fn add_out_of_bounds() {
+        let r = RectI64::of(i64::MIN + 10, i64::MIN + 10, i64::MAX - 10, i64::MAX - 10);
+        assert_eq!(add(&r, &RectI64::of(-20, 0, 0, 0)), RectI64::of(i64::MIN, i64::MIN + 10, i64::MAX - 10, i64::MAX - 10));
+        assert_eq!(add(&r, &RectI64::of(0, -20, 0, 0)), RectI64::of(i64::MIN + 10, i64::MIN, i64::MAX - 10, i64::MAX - 10));
+        assert_eq!(add(&r, &RectI64::of(0, 0, 20, 0)), RectI64::of(i64::MIN + 10, i64::MIN + 10, i64::MAX, i64::MAX - 10));
+        assert_eq!(add(&r, &RectI64::of(0, 0, 0, 20)), RectI64::of(i64::MIN + 10, i64::MIN + 10, i64::MAX - 10, i64::MAX));
     }
 
     #[test]
-    fn add_small_rect_limits_out_of_bounds() {
-        assert_eq!(add(&RectI64::of(i64::MIN + 1, i64::MIN + 1, i64::MIN + 10, i64::MIN + 10), &RectI64::min()), RectI64::min());
-        assert_eq!(add(&RectI64::of(i64::MAX - 10, i64::MAX - 10, i64::MAX - 1, i64::MAX - 1), &RectI64::max()), RectI64::max());
-    }
-
-    #[test]
-    fn add_big_rect_limits_out_of_bounds() {
-        assert_eq!(add(&RectI64::largest(), &RectI64::largest()), RectI64::largest());
-
-        let r_large = RectI64::of(i64::MIN + 1, i64::MIN + 1, i64::MAX - 1, i64::MAX - 1);
-        assert_eq!(add(&r_large, &RectI64::largest()), RectI64::largest());
-        assert_eq!(add(&r_large, &RectI64::of(i64::MIN, 0, 0, 0)), RectI64::of(i64::MIN, i64::MIN + 1, i64::MAX - 1, i64::MAX - 1));
-        assert_eq!(add(&r_large, &RectI64::of(0, i64::MIN, 0, 0)), RectI64::of(i64::MIN + 1, i64::MIN, i64::MAX - 1, i64::MAX - 1));
-        assert_eq!(add(&r_large, &RectI64::of(0, 0, i64::MAX, 0)), RectI64::of(i64::MIN + 1, i64::MIN + 1, i64::MAX, i64::MAX - 1));
-        assert_eq!(add(&r_large, &RectI64::of(0, 0, 0, i64::MAX)), RectI64::of(i64::MIN + 1, i64::MIN + 1, i64::MAX - 1, i64::MAX));
+    fn add_limits_out_of_bounds() {
+        let r = RectI64::largest();
+        assert_eq!(add(&r, &RectI64::of(i64::MIN, 0, 0, 0)), RectI64::largest());
+        assert_eq!(add(&r, &RectI64::of(0, i64::MIN, 0, 0)), RectI64::largest());
+        assert_eq!(add(&r, &RectI64::of(0, 0, i64::MAX, 0)), RectI64::largest());
+        assert_eq!(add(&r, &RectI64::of(0, 0, 0, i64::MAX)), RectI64::largest());
     }
 }

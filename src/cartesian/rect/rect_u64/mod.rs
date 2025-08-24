@@ -1,3 +1,7 @@
+use crate::cartesian::{
+    point::point_u64,
+    rect::{rect_u8::RectU8, rect_u16::RectU16, rect_u32::RectU32},
+};
 use std::ops::RangeInclusive;
 
 pub mod add;
@@ -7,11 +11,6 @@ pub mod deflate;
 pub mod inflate;
 pub mod resize;
 pub mod translate;
-
-use crate::cartesian::{
-    point::point_u64,
-    rect::{rect_u8::RectU8, rect_u16::RectU16, rect_u32::RectU32},
-};
 
 #[derive(Eq, PartialEq, Debug, Clone)]
 pub struct RectU64 {

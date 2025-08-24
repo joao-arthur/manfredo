@@ -1,14 +1,10 @@
 use crate::matrix::rect::rect_i32::RectI32;
 
 pub fn assign_add(r: &mut RectI32, delta: &RectI32) {
-    let min_row = r.min.row.saturating_add(delta.min.row);
-    let min_col = r.min.col.saturating_add(delta.min.col);
-    let max_row = r.max.row.saturating_add(delta.max.row);
-    let max_col = r.max.col.saturating_add(delta.max.col);
-    r.min.row = min_row;
-    r.min.col = min_col;
-    r.max.row = max_row;
-    r.max.col = max_col;
+    r.min.row = r.min.row.saturating_add(delta.min.row);
+    r.min.col = r.min.col.saturating_add(delta.min.col);
+    r.max.row = r.max.row.saturating_add(delta.max.row);
+    r.max.col = r.max.col.saturating_add(delta.max.col);
 }
 
 #[cfg(test)]

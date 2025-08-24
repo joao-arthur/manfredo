@@ -1,14 +1,10 @@
 use crate::cartesian::rect::rect_i32::RectI32;
 
 pub fn assign_add(r: &mut RectI32, delta: &RectI32) {
-    let min_x = r.min.x.wrapping_add(delta.min.x);
-    let min_y = r.min.y.wrapping_add(delta.min.y);
-    let max_x = r.max.x.wrapping_add(delta.max.x);
-    let max_y = r.max.y.wrapping_add(delta.max.y);
-    r.min.x = min_x;
-    r.min.y = min_y;
-    r.max.x = max_x;
-    r.max.y = max_y;
+    r.min.x = r.min.x.wrapping_add(delta.min.x);
+    r.min.y = r.min.y.wrapping_add(delta.min.y);
+    r.max.x = r.max.x.wrapping_add(delta.max.x);
+    r.max.y = r.max.y.wrapping_add(delta.max.y);
 }
 
 #[cfg(test)]
@@ -38,9 +34,9 @@ mod tests {
 
     #[test]
     fn assign_add_big_rect_to_bounds() {
-        let mut min_r = RectI32::of(i32::MIN + 2, i32::MIN + 5, i32::MAX - 2, i32::MAX - 5);
-        assign_add(&mut min_r, &RectI32::of(-2, -5, 2, 5));
-        assert_eq!(min_r, RectI32::largest());
+        let mut r = RectI32::of(i32::MIN + 2, i32::MIN + 5, i32::MAX - 2, i32::MAX - 5);
+        assign_add(&mut r, &RectI32::of(-2, -5, 2, 5));
+        assert_eq!(r, RectI32::largest());
 
         let mut min_r = RectI32::of(i32::MIN + 2, i32::MIN + 5, i32::MAX, i32::MAX);
         assign_add(&mut min_r, &RectI32::of(-2, -5, 0, 0));

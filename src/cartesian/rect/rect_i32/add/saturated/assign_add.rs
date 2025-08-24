@@ -1,14 +1,10 @@
 use crate::cartesian::rect::rect_i32::RectI32;
 
 pub fn assign_add(r: &mut RectI32, delta: &RectI32) {
-    let min_x = r.min.x.saturating_add(delta.min.x);
-    let min_y = r.min.y.saturating_add(delta.min.y);
-    let max_x = r.max.x.saturating_add(delta.max.x);
-    let max_y = r.max.y.saturating_add(delta.max.y);
-    r.min.x = min_x;
-    r.min.y = min_y;
-    r.max.x = max_x;
-    r.max.y = max_y;
+    r.min.x = r.min.x.saturating_add(delta.min.x);
+    r.min.y = r.min.y.saturating_add(delta.min.y);
+    r.max.x = r.max.x.saturating_add(delta.max.x);
+    r.max.y = r.max.y.saturating_add(delta.max.y);
 }
 
 #[cfg(test)]

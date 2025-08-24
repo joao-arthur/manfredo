@@ -12,10 +12,10 @@ mod tests {
 
     #[test]
     fn test_assign_add() {
-        let mut r = RectU16::of(0, 0, 12, 12);
+        let mut r = RectU16::of(0, 0, 12, 10);
         assign_add(&mut r, &RectI16::of(5, 4, 3, 2));
-        assert_eq!(r, RectU16::of(5, 4, 15, 14));
+        assert_eq!(r, RectU16::of(5, 4, 15, 12));
         assign_add(&mut r, &RectI16::of(-4, -3, -2, -1));
-        assert_eq!(r, RectU16::of(1, 1, 13, 13));
+        assert_eq!(r, RectU16::of(1, 1, 13, 11));
     }
 }

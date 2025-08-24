@@ -1,14 +1,10 @@
 use crate::cartesian::rect::rect_i8::RectI8;
 
 pub fn assign_add(r: &mut RectI8, delta: &RectI8) {
-    let min_x = r.min.x.wrapping_add(delta.min.x);
-    let min_y = r.min.y.wrapping_add(delta.min.y);
-    let max_x = r.max.x.wrapping_add(delta.max.x);
-    let max_y = r.max.y.wrapping_add(delta.max.y);
-    r.min.x = min_x;
-    r.min.y = min_y;
-    r.max.x = max_x;
-    r.max.y = max_y;
+    r.min.x = r.min.x.wrapping_add(delta.min.x);
+    r.min.y = r.min.y.wrapping_add(delta.min.y);
+    r.max.x = r.max.x.wrapping_add(delta.max.x);
+    r.max.y = r.max.y.wrapping_add(delta.max.y);
 }
 
 #[cfg(test)]
@@ -38,9 +34,9 @@ mod tests {
 
     #[test]
     fn assign_add_big_rect_to_bounds() {
-        let mut min_r = RectI8::of(i8::MIN + 2, i8::MIN + 5, i8::MAX - 2, i8::MAX - 5);
-        assign_add(&mut min_r, &RectI8::of(-2, -5, 2, 5));
-        assert_eq!(min_r, RectI8::largest());
+        let mut r = RectI8::of(i8::MIN + 2, i8::MIN + 5, i8::MAX - 2, i8::MAX - 5);
+        assign_add(&mut r, &RectI8::of(-2, -5, 2, 5));
+        assert_eq!(r, RectI8::largest());
 
         let mut min_r = RectI8::of(i8::MIN + 2, i8::MIN + 5, i8::MAX, i8::MAX);
         assign_add(&mut min_r, &RectI8::of(-2, -5, 0, 0));

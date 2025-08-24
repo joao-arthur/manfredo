@@ -1,14 +1,10 @@
 use crate::cartesian::rect::{rect_i64::RectI64, rect_u64::RectU64};
 
 pub fn assign_add(r: &mut RectU64, delta: &RectI64) {
-    let min_x = r.min.x.saturating_add_signed(delta.min.x);
-    let min_y = r.min.y.saturating_add_signed(delta.min.y);
-    let max_x = r.max.x.saturating_add_signed(delta.max.x);
-    let max_y = r.max.y.saturating_add_signed(delta.max.y);
-    r.min.x = min_x;
-    r.min.y = min_y;
-    r.max.x = max_x;
-    r.max.y = max_y;
+    r.min.x = r.min.x.saturating_add_signed(delta.min.x);
+    r.min.y = r.min.y.saturating_add_signed(delta.min.y);
+    r.max.x = r.max.x.saturating_add_signed(delta.max.x);
+    r.max.y = r.max.y.saturating_add_signed(delta.max.y);
 }
 
 #[cfg(test)]
@@ -18,11 +14,11 @@ mod tests {
 
     #[test]
     fn test_assign_add() {
-        let mut r = RectU64::of(0, 0, 12, 15);
+        let mut r = RectU64::of(0, 0, 12, 10);
         assign_add(&mut r, &RectI64::of(5, 4, 3, 2));
-        assert_eq!(r, RectU64::of(5, 4, 15, 17));
+        assert_eq!(r, RectU64::of(5, 4, 15, 12));
         assign_add(&mut r, &RectI64::of(-4, -3, -2, -1));
-        assert_eq!(r, RectU64::of(1, 1, 13, 16));
+        assert_eq!(r, RectU64::of(1, 1, 13, 11));
     }
 
     #[test]

@@ -80,9 +80,9 @@ mod tests {
 
     #[test]
     fn assign_add_big_rect_to_bounds() {
-        let mut min_r = RectF32::of(MIN + 2.0, MIN + 5.0, MAX - 2.0, MAX - 5.0);
-        assign_add(&mut min_r, &RectF32::of(-2.0, -5.0, 2.0, 5.0));
-        assert_eq!(min_r, RectF32::largest());
+        let mut r = RectF32::of(MIN + 2.0, MIN + 5.0, MAX - 2.0, MAX - 5.0);
+        assign_add(&mut r, &RectF32::of(-2.0, -5.0, 2.0, 5.0));
+        assert_eq!(r, RectF32::largest());
 
         let mut min_r = RectF32::of(MIN + 2.0, MIN + 5.0, MAX, MAX);
         assign_add(&mut min_r, &RectF32::of(-2.0, -5.0, 0.0, 0.0));

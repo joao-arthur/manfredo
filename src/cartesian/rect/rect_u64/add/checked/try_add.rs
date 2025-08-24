@@ -19,7 +19,7 @@ mod tests {
     #[test]
     fn test_try_add() {
         assert_eq!(try_add(&RectU64::of(0, 0, 12, 15), &RectI64::of(5, 4, 3, 2)), Some(RectU64::of(5, 4, 15, 17)));
-        assert_eq!(try_add(&RectU64::of(5, 4, 15, 17), &RectI64::of(-4, -3, -2, -1)), Some(RectU64::of(1, 1, 13, 16)));
+        assert_eq!(try_add(&RectU64::of(5, 4, 15, 20), &RectI64::of(-4, -3, -2, -1)), Some(RectU64::of(1, 1, 13, 19)));
     }
 
     #[test]

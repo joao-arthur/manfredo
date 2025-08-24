@@ -1,14 +1,10 @@
 use crate::matrix::rect::rect_i32::RectI32;
 
 pub fn assign_add(r: &mut RectI32, delta: &RectI32) {
-    let min_row = r.min.row.wrapping_add(delta.min.row);
-    let min_col = r.min.col.wrapping_add(delta.min.col);
-    let max_row = r.max.row.wrapping_add(delta.max.row);
-    let max_col = r.max.col.wrapping_add(delta.max.col);
-    r.min.row = min_row;
-    r.min.col = min_col;
-    r.max.row = max_row;
-    r.max.col = max_col;
+    r.min.row = r.min.row.wrapping_add(delta.min.row);
+    r.min.col = r.min.col.wrapping_add(delta.min.col);
+    r.max.row = r.max.row.wrapping_add(delta.max.row);
+    r.max.col = r.max.col.wrapping_add(delta.max.col);
 }
 
 #[cfg(test)]
@@ -38,9 +34,9 @@ mod tests {
 
     #[test]
     fn assign_add_big_rect_to_bounds() {
-        let mut min_r = RectI32::of(i32::MIN + 2, i32::MIN + 5, i32::MAX - 2, i32::MAX - 5);
-        assign_add(&mut min_r, &RectI32::of(-2, -5, 2, 5));
-        assert_eq!(min_r, RectI32::largest());
+        let mut r = RectI32::of(i32::MIN + 2, i32::MIN + 5, i32::MAX - 2, i32::MAX - 5);
+        assign_add(&mut r, &RectI32::of(-2, -5, 2, 5));
+        assert_eq!(r, RectI32::largest());
 
         let mut min_r = RectI32::of(i32::MIN + 2, i32::MIN + 5, i32::MAX, i32::MAX);
         assign_add(&mut min_r, &RectI32::of(-2, -5, 0, 0));

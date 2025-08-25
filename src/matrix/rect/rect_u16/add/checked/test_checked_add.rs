@@ -1,4 +1,3 @@
-
 use super::checked_add;
 use crate::matrix::rect::{rect_i16::RectI16, rect_u16::RectU16};
 

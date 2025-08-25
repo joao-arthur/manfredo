@@ -1,5 +1,5 @@
-mod add;
-mod assign_add;
+#[cfg(test)]
+mod test_wrapping_add_assign;
 
-pub use add::wrapping_add;
-pub use assign_add::wrapping_add_assign;
+#[cfg(test)]
+mod test_wrapping_add;

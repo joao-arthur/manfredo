@@ -1,4 +1,3 @@
-
 use super::checked_add_assign;
 use crate::matrix::rect::rect_i8::RectI8;
 

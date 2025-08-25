@@ -1,4 +1,3 @@
-
 use super::checked_add;
 use crate::cartesian::rect::rect_f32::RectF32;
 

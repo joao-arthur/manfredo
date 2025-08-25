@@ -1,4 +1,3 @@
-
 use super::try_checked_add;
 use crate::cartesian::rect::{rect_i64::RectI64, rect_u64::RectU64};
 

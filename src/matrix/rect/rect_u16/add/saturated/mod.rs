@@ -1,5 +1,5 @@
-mod add;
-mod assign_add;
+#[cfg(test)]
+mod test_saturating_add_assign;
 
-pub use add::saturating_add;
-pub use assign_add::saturating_add_assign;
+#[cfg(test)]
+mod test_saturating_add;

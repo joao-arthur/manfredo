@@ -1,4 +1,3 @@
-
 use super::try_checked_add_assign;
 use crate::matrix::rect::{rect_i32::RectI32, rect_u32::RectU32};
 

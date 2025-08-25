@@ -1,4 +1,3 @@
-
 use super::try_checked_add_assign;
 use crate::cartesian::{
     point::point_f32::{MAX, MIN},

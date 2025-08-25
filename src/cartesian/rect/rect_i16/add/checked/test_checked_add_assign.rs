@@ -1,4 +1,3 @@
-
 use super::checked_add_assign;
 use crate::cartesian::rect::rect_i16::RectI16;
 

@@ -1,53 +1,6 @@
-use crate::matrix::{
-    point::point_i32::PointI32,
-    rect::rect_i32::{RectI32, delta_col, delta_row},
-};
-
-pub fn try_checked_resize_assign(r: &mut RectI32, size: u32) -> Option<()> {
-    if size < 3 {
-        return None;
-    }
-    let diff_row = i64::from(delta_row(r)) + 1 - i64::from(size);
-    let diff_col = i64::from(delta_col(r)) + 1 - i64::from(size);
-    let temp_min_row = i64::from(r.min.row) + diff_row / 2;
-    let temp_min_col = i64::from(r.min.col) + diff_col / 2;
-    let min_row = i32::try_from(temp_min_row).ok()?;
-    let min_col = i32::try_from(temp_min_col).ok()?;
-    let max_row = min_row.checked_add_unsigned(size - 1)?;
-    let max_col = min_col.checked_add_unsigned(size - 1)?;
-    r.min.row = min_row;
-    r.min.col = min_col;
-    r.max.row = max_row;
-    r.max.col = max_col;
-    Some(())
-}
-
-pub fn try_checked_resize(r: &RectI32, size: u32) -> Option<RectI32> {
-    if size < 3 {
-        return None;
-    }
-    let diff_row = i64::from(delta_row(r)) + 1 - i64::from(size);
-    let diff_col = i64::from(delta_col(r)) + 1 - i64::from(size);
-    let temp_min_row = i64::from(r.min.row) + diff_row / 2;
-    let temp_min_col = i64::from(r.min.col) + diff_col / 2;
-    let min_row = i32::try_from(temp_min_row).ok()?;
-    let min_col = i32::try_from(temp_min_col).ok()?;
-    let max_row = min_row.checked_add_unsigned(size - 1)?;
-    let max_col = min_col.checked_add_unsigned(size - 1)?;
-    Some(RectI32 { min: PointI32 { row: min_row, col: min_col }, max: PointI32 { row: max_row, col: max_col } })
-}
-
-pub fn checked_resize_assign(r: &mut RectI32, size: u32) {
-    try_checked_resize_assign(r, size).unwrap()
-}
-
-pub fn checked_resize(r: &RectI32, size: u32) -> RectI32 {
-    try_checked_resize(r, size).unwrap()
-}
-
 #[cfg(test)]
 mod tests {
-    use super::{checked_resize, checked_resize_assign, try_checked_resize, try_checked_resize_assign};
+    use super::super::{checked_resize, checked_resize_assign, try_checked_resize, try_checked_resize_assign};
     use crate::matrix::rect::rect_i32::RectI32;
 
     #[test]

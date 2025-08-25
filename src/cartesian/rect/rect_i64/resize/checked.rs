@@ -1,53 +1,6 @@
-use crate::cartesian::{
-    point::point_i64::PointI64,
-    rect::rect_i64::{RectI64, delta_x, delta_y},
-};
-
-pub fn try_checked_resize_assign(r: &mut RectI64, size: u64) -> Option<()> {
-    if size < 3 {
-        return None;
-    }
-    let diff_x = i128::from(delta_x(r)) + 1 - i128::from(size);
-    let diff_y = i128::from(delta_y(r)) + 1 - i128::from(size);
-    let temp_min_x = i128::from(r.min.x) + diff_x / 2;
-    let temp_min_y = i128::from(r.min.y) + diff_y / 2;
-    let min_x = i64::try_from(temp_min_x).ok()?;
-    let min_y = i64::try_from(temp_min_y).ok()?;
-    let max_x = min_x.checked_add_unsigned(size - 1)?;
-    let max_y = min_y.checked_add_unsigned(size - 1)?;
-    r.min.x = min_x;
-    r.min.y = min_y;
-    r.max.x = max_x;
-    r.max.y = max_y;
-    Some(())
-}
-
-pub fn try_checked_resize(r: &RectI64, size: u64) -> Option<RectI64> {
-    if size < 3 {
-        return None;
-    }
-    let diff_x = i128::from(delta_x(r)) + 1 - i128::from(size);
-    let diff_y = i128::from(delta_y(r)) + 1 - i128::from(size);
-    let temp_min_x = i128::from(r.min.x) + diff_x / 2;
-    let temp_min_y = i128::from(r.min.y) + diff_y / 2;
-    let min_x = i64::try_from(temp_min_x).ok()?;
-    let min_y = i64::try_from(temp_min_y).ok()?;
-    let max_x = min_x.checked_add_unsigned(size - 1)?;
-    let max_y = min_y.checked_add_unsigned(size - 1)?;
-    Some(RectI64 { min: PointI64 { x: min_x, y: min_y }, max: PointI64 { x: max_x, y: max_y } })
-}
-
-pub fn checked_resize_assign(r: &mut RectI64, size: u64) {
-    try_checked_resize_assign(r, size).unwrap()
-}
-
-pub fn checked_resize(r: &RectI64, size: u64) -> RectI64 {
-    try_checked_resize(r, size).unwrap()
-}
-
 #[cfg(test)]
 mod tests {
-    use super::{checked_resize, checked_resize_assign, try_checked_resize, try_checked_resize_assign};
+    use super::super::{checked_resize, checked_resize_assign, try_checked_resize, try_checked_resize_assign};
     use crate::cartesian::rect::rect_i64::RectI64;
 
     #[test]

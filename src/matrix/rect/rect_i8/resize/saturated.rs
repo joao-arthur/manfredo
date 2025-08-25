@@ -1,53 +1,6 @@
-use crate::matrix::{
-    point::point_i8::PointI8,
-    rect::rect_i8::{RectI8, delta_col, delta_row},
-};
-
-pub fn try_saturating_resize_assign(r: &mut RectI8, size: u8) -> Option<()> {
-    if size < 3 {
-        return None;
-    }
-    let diff_row = i16::from(delta_row(r)) + 1 - i16::from(size);
-    let diff_col = i16::from(delta_col(r)) + 1 - i16::from(size);
-    let temp_min_row = i16::from(r.min.row) + diff_row / 2;
-    let temp_min_col = i16::from(r.min.col) + diff_col / 2;
-    let min_row = temp_min_row.clamp(i16::from(i8::MIN), i16::from(i8::MAX) - i16::from(size) + 1);
-    let min_col = temp_min_col.clamp(i16::from(i8::MIN), i16::from(i8::MAX) - i16::from(size) + 1);
-    r.min.row = min_row as i8;
-    r.min.col = min_col as i8;
-    r.max.row = (min_row + i16::from(size) - 1) as i8;
-    r.max.col = (min_col + i16::from(size) - 1) as i8;
-    Some(())
-}
-
-pub fn try_saturating_resize(r: &RectI8, size: u8) -> Option<RectI8> {
-    if size < 3 {
-        return None;
-    }
-    let diff_row = i16::from(delta_row(r)) + 1 - i16::from(size);
-    let diff_col = i16::from(delta_col(r)) + 1 - i16::from(size);
-    let temp_min_row = i16::from(r.min.row) + diff_row / 2;
-    let temp_min_col = i16::from(r.min.col) + diff_col / 2;
-    let clamped_min_row = temp_min_row.clamp(i16::from(i8::MIN), i16::from(i8::MAX) - i16::from(size) + 1);
-    let clamped_min_col = temp_min_col.clamp(i16::from(i8::MIN), i16::from(i8::MAX) - i16::from(size) + 1);
-    let min_row = clamped_min_row as i8;
-    let min_col = clamped_min_col as i8;
-    let max_row = (clamped_min_row + i16::from(size) - 1) as i8;
-    let max_col = (clamped_min_col + i16::from(size) - 1) as i8;
-    Some(RectI8 { min: PointI8 { row: min_row, col: min_col }, max: PointI8 { row: max_row, col: max_col } })
-}
-
-pub fn saturating_resize_assign(r: &mut RectI8, size: u8) {
-    try_saturating_resize_assign(r, size).unwrap()
-}
-
-pub fn saturating_resize(r: &RectI8, size: u8) -> RectI8 {
-    try_saturating_resize(r, size).unwrap()
-}
-
 #[cfg(test)]
 mod tests {
-    use super::{saturating_resize, saturating_resize_assign, try_saturating_resize, try_saturating_resize_assign};
+    use super::super::{saturating_resize, saturating_resize_assign, try_saturating_resize, try_saturating_resize_assign};
     use crate::matrix::rect::rect_i8::RectI8;
 
     #[test]

@@ -74,5 +74,26 @@ pub fn saturating_inflate(r: &RectU64) -> RectU64 {
     try_saturating_inflate(r).unwrap()
 }
 
-pub mod checked;
-pub mod saturated;
+#[cfg(test)]
+mod test_try_checked_inflate_assign;
+
+#[cfg(test)]
+mod test_try_checked_inflate;
+
+#[cfg(test)]
+mod test_checked_inflate_assign;
+
+#[cfg(test)]
+mod test_checked_inflate;
+
+#[cfg(test)]
+mod test_try_saturating_inflate_assign;
+
+#[cfg(test)]
+mod test_try_saturating_inflate;
+
+#[cfg(test)]
+mod test_saturating_inflate_assign;
+
+#[cfg(test)]
+mod test_saturating_inflate;

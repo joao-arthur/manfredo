@@ -52,24 +52,14 @@ fn try_checked_add_out_of_bounds() {
 
 #[test]
 fn try_checked_add_small_rect_out_of_bounds() {
-    let mut r_min = RectF32::of(MIN + 10.0, MIN + 5.0, MIN + 20.0, MIN + 30.0);
-    assert_eq!(try_checked_add(&mut r_min, &RectF32::of(-20.0, -20.0, 0.0, 0.0)), None);
-    assert_eq!(r_min, RectF32::of(MIN + 10.0, MIN + 5.0, MIN + 20.0, MIN + 30.0));
-
-    let mut r_max = RectF32::of(MAX - 20.0, MAX - 30.0, MAX - 5.0, MAX - 10.0);
-    assert_eq!(try_checked_add(&mut r_max, &RectF32::of(0.0, 0.0, 20.0, 20.0)), None);
-    assert_eq!(r_max, RectF32::of(MAX - 20.0, MAX - 30.0, MAX - 5.0, MAX - 10.0));
+    assert_eq!(try_checked_add(&RectF32::of(MIN + 10.0, MIN + 5.0, MIN + 20.0, MIN + 30.0), &RectF32::of(-20.0, -20.0, 0.0, 0.0)), None);
+    assert_eq!(try_checked_add(&RectF32::of(MAX - 20.0, MAX - 30.0, MAX - 5.0, MAX - 10.0), &RectF32::of(0.0, 0.0, 20.0, 20.0)), None);
 }
 
 #[test]
 fn try_checked_add_big_rect_out_of_bounds() {
-    let mut r_min = RectF32::of(MIN + 10.0, MIN + 5.0, MAX, MAX);
-    assert_eq!(try_checked_add(&mut r_min, &RectF32::of(-20.0, -20.0, 0.0, 0.0)), None);
-    assert_eq!(r_min, RectF32::of(MIN + 10.0, MIN + 5.0, MAX, MAX));
-
-    let mut r_max = RectF32::of(MIN, MIN, MAX - 5.0, MAX - 10.0);
-    assert_eq!(try_checked_add(&mut r_max, &RectF32::of(0.0, 0.0, 20.0, 20.0)), None);
-    assert_eq!(r_max, RectF32::of(MIN, MIN, MAX - 5.0, MAX - 10.0));
+    assert_eq!(try_checked_add(&RectF32::of(MIN + 10.0, MIN + 5.0, MAX, MAX), &RectF32::of(-20.0, -20.0, 0.0, 0.0)), None);
+    assert_eq!(try_checked_add(&RectF32::of(MIN, MIN, MAX - 5.0, MAX - 10.0), &RectF32::of(0.0, 0.0, 20.0, 20.0)), None);
 }
 
 #[test]

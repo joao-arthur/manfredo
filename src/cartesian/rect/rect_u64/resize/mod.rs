@@ -87,5 +87,26 @@ pub fn saturating_resize(r: &RectU64, size: u64) -> RectU64 {
     try_saturating_resize(r, size).unwrap()
 }
 
-pub mod checked;
-pub mod saturated;
+#[cfg(test)]
+mod test_try_checked_resize_assign;
+
+#[cfg(test)]
+mod test_try_checked_resize;
+
+#[cfg(test)]
+mod test_checked_resize_assign;
+
+#[cfg(test)]
+mod test_checked_resize;
+
+#[cfg(test)]
+mod test_try_saturating_resize_assign;
+
+#[cfg(test)]
+mod test_try_saturating_resize;
+
+#[cfg(test)]
+mod test_saturating_resize_assign;
+
+#[cfg(test)]
+mod test_saturating_resize;

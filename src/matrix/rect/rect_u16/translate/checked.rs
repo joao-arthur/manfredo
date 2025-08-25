@@ -1,39 +1,6 @@
-use crate::matrix::{
-    point::{point_i16::PointI16, point_u16::PointU16},
-    rect::rect_u16::RectU16,
-};
-
-pub fn try_checked_translate_assign(r: &mut RectU16, delta: &PointI16) -> Option<()> {
-    let min_row = r.min.row.checked_add_signed(delta.row)?;
-    let min_col = r.min.col.checked_add_signed(delta.col)?;
-    let max_row = r.max.row.checked_add_signed(delta.row)?;
-    let max_col = r.max.col.checked_add_signed(delta.col)?;
-    r.min.row = min_row;
-    r.min.col = min_col;
-    r.max.row = max_row;
-    r.max.col = max_col;
-    Some(())
-}
-
-pub fn try_checked_translate(r: &RectU16, delta: &PointI16) -> Option<RectU16> {
-    let min_row = r.min.row.checked_add_signed(delta.row)?;
-    let min_col = r.min.col.checked_add_signed(delta.col)?;
-    let max_row = r.max.row.checked_add_signed(delta.row)?;
-    let max_col = r.max.col.checked_add_signed(delta.col)?;
-    Some(RectU16 { min: PointU16 { row: min_row, col: min_col }, max: PointU16 { row: max_row, col: max_col } })
-}
-
-pub fn checked_translate_assign(r: &mut RectU16, delta: &PointI16) {
-    try_checked_translate_assign(r, delta).unwrap()
-}
-
-pub fn checked_translate(r: &RectU16, delta: &PointI16) -> RectU16 {
-    try_checked_translate(r, delta).unwrap()
-}
-
 #[cfg(test)]
 mod tests {
-    use super::{checked_translate, checked_translate_assign, try_checked_translate, try_checked_translate_assign};
+    use super::super::{checked_translate, checked_translate_assign, try_checked_translate, try_checked_translate_assign};
     use crate::matrix::{point::point_i16::PointI16, rect::rect_u16::RectU16};
 
     #[test]

@@ -1,36 +1,6 @@
-use crate::matrix::{
-    point::point_i16::PointI16,
-    rect::rect_i16::{RectI16, delta_col, delta_row},
-};
-
-pub fn saturating_translate_assign(r: &mut RectI16, delta: &PointI16) {
-    let d_row = delta_row(r);
-    let d_col = delta_col(r);
-    let temp_min_row = i32::from(r.min.row) + i32::from(delta.row);
-    let temp_min_col = i32::from(r.min.col) + i32::from(delta.col);
-    let min_row = temp_min_row.clamp(i32::from(i16::MIN), i32::from(i16::MAX) - i32::from(d_row));
-    let min_col = temp_min_col.clamp(i32::from(i16::MIN), i32::from(i16::MAX) - i32::from(d_col));
-    r.min.row = min_row as i16;
-    r.min.col = min_col as i16;
-    r.max.row = (min_row + i32::from(d_row)) as i16;
-    r.max.col = (min_col + i32::from(d_col)) as i16;
-}
-
-pub fn saturating_translate(r: &RectI16, delta: &PointI16) -> RectI16 {
-    let d_row = delta_row(r);
-    let d_col = delta_col(r);
-    let temp_min_row = i32::from(r.min.row) + i32::from(delta.row);
-    let temp_min_col = i32::from(r.min.col) + i32::from(delta.col);
-    let min_row = temp_min_row.clamp(i32::from(i16::MIN), i32::from(i16::MAX) - i32::from(d_row));
-    let min_col = temp_min_col.clamp(i32::from(i16::MIN), i32::from(i16::MAX) - i32::from(d_col));
-    let max_row = min_row + i32::from(d_row);
-    let max_col = min_col + i32::from(d_col);
-    RectI16 { min: PointI16 { row: min_row as i16, col: min_col as i16 }, max: PointI16 { row: max_row as i16, col: max_col as i16 } }
-}
-
 #[cfg(test)]
 mod tests {
-    use super::{saturating_translate, saturating_translate_assign};
+    use super::super::{saturating_translate, saturating_translate_assign};
     use crate::matrix::{point::point_i16::PointI16, rect::rect_i16::RectI16};
 
     #[test]

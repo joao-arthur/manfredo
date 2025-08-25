@@ -1,36 +1,6 @@
-use crate::cartesian::{
-    point::point_i32::PointI32,
-    rect::rect_i32::{RectI32, delta_x, delta_y},
-};
-
-pub fn saturating_translate_assign(r: &mut RectI32, delta: &PointI32) {
-    let dx = delta_x(r);
-    let dy = delta_y(r);
-    let temp_min_x = i64::from(r.min.x) + i64::from(delta.x);
-    let temp_min_y = i64::from(r.min.y) + i64::from(delta.y);
-    let min_x = temp_min_x.clamp(i64::from(i32::MIN), i64::from(i32::MAX) - i64::from(dx));
-    let min_y = temp_min_y.clamp(i64::from(i32::MIN), i64::from(i32::MAX) - i64::from(dy));
-    r.min.x = min_x as i32;
-    r.min.y = min_y as i32;
-    r.max.x = (min_x + i64::from(dx)) as i32;
-    r.max.y = (min_y + i64::from(dy)) as i32;
-}
-
-pub fn saturating_translate(r: &RectI32, delta: &PointI32) -> RectI32 {
-    let dx = delta_x(r);
-    let dy = delta_y(r);
-    let temp_min_x = i64::from(r.min.x) + i64::from(delta.x);
-    let temp_min_y = i64::from(r.min.y) + i64::from(delta.y);
-    let min_x = temp_min_x.clamp(i64::from(i32::MIN), i64::from(i32::MAX) - i64::from(dx));
-    let min_y = temp_min_y.clamp(i64::from(i32::MIN), i64::from(i32::MAX) - i64::from(dy));
-    let max_x = min_x + i64::from(dx);
-    let max_y = min_y + i64::from(dy);
-    RectI32 { min: PointI32 { x: min_x as i32, y: min_y as i32 }, max: PointI32 { x: max_x as i32, y: max_y as i32 } }
-}
-
 #[cfg(test)]
 mod tests {
-    use super::{saturating_translate, saturating_translate_assign};
+    use super::super::{saturating_translate, saturating_translate_assign};
     use crate::cartesian::{point::point_i32::PointI32, rect::rect_i32::RectI32};
 
     #[test]

@@ -1,38 +1,6 @@
-use crate::cartesian::{
-    point::point_f32::{MAX, MIN, PointF32},
-    rect::rect_f32::{RectF32, delta_x, delta_y},
-};
-
-pub fn saturating_translate_assign(r: &mut RectF32, delta: &PointF32) {
-    let dx = delta_x(r);
-    let dy = delta_y(r);
-    let temp_min_x = r.min.x + delta.x;
-    let temp_min_y = r.min.y + delta.y;
-    let min_x = temp_min_x.clamp(MIN, MAX - dx);
-    let min_y = temp_min_y.clamp(MIN, MAX - dy);
-    let max_x = min_x + dx;
-    let max_y = min_y + dy;
-    r.min.x = min_x;
-    r.min.y = min_y;
-    r.max.x = max_x;
-    r.max.y = max_y;
-}
-
-pub fn saturating_translate(r: &RectF32, delta: &PointF32) -> RectF32 {
-    let dx = delta_x(r);
-    let dy = delta_y(r);
-    let temp_min_x = r.min.x + delta.x;
-    let temp_min_y = r.min.y + delta.y;
-    let min_x = temp_min_x.clamp(MIN, MAX - dx);
-    let min_y = temp_min_y.clamp(MIN, MAX - dy);
-    let max_x = min_x + dx;
-    let max_y = min_y + dy;
-    RectF32 { min: PointF32 { x: min_x, y: min_y }, max: PointF32 { x: max_x, y: max_y } }
-}
-
 #[cfg(test)]
 mod tests {
-    use super::{saturating_translate, saturating_translate_assign};
+    use super::super::{saturating_translate, saturating_translate_assign};
     use crate::cartesian::{
         point::point_f32::{MAX, MIN, PointF32},
         rect::rect_f32::RectF32,

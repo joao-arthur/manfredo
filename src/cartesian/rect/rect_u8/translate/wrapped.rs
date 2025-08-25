@@ -1,34 +1,6 @@
-use crate::cartesian::{
-    point::{point_i8::PointI8, point_u8::PointU8},
-    rect::rect_u8::{RectU8, delta_x, delta_y},
-};
-
-pub fn wrapping_translate_assign(r: &mut RectU8, delta: &PointI8) {
-    let dx = delta_x(r);
-    let dy = delta_y(r);
-    let min_x = r.min.x.wrapping_add_signed(delta.x);
-    let min_y = r.min.y.wrapping_add_signed(delta.y);
-    let max_x = min_x.wrapping_add(dx);
-    let max_y = min_y.wrapping_add(dy);
-    r.min.x = min_x;
-    r.min.y = min_y;
-    r.max.x = max_x;
-    r.max.y = max_y;
-}
-
-pub fn wrapping_translate(r: &RectU8, delta: &PointI8) -> RectU8 {
-    let dx = delta_x(r);
-    let dy = delta_y(r);
-    let min_x = r.min.x.wrapping_add_signed(delta.x);
-    let min_y = r.min.y.wrapping_add_signed(delta.y);
-    let max_x = min_x.wrapping_add(dx);
-    let max_y = min_y.wrapping_add(dy);
-    RectU8 { min: PointU8 { x: min_x, y: min_y }, max: PointU8 { x: max_x, y: max_y } }
-}
-
 #[cfg(test)]
 mod tests {
-    use super::{wrapping_translate, wrapping_translate_assign};
+    use super::super::{wrapping_translate, wrapping_translate_assign};
     use crate::cartesian::{point::point_i8::PointI8, rect::rect_u8::RectU8};
 
     #[test]

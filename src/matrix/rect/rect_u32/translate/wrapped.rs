@@ -1,34 +1,6 @@
-use crate::matrix::{
-    point::{point_i32::PointI32, point_u32::PointU32},
-    rect::rect_u32::{RectU32, delta_col, delta_row},
-};
-
-pub fn wrapping_translate_assign(r: &mut RectU32, delta: &PointI32) {
-    let d_row = delta_row(r);
-    let d_col = delta_col(r);
-    let min_row = r.min.row.wrapping_add_signed(delta.row);
-    let min_col = r.min.col.wrapping_add_signed(delta.col);
-    let max_row = min_row.wrapping_add(d_row);
-    let max_col = min_col.wrapping_add(d_col);
-    r.min.row = min_row;
-    r.min.col = min_col;
-    r.max.row = max_row;
-    r.max.col = max_col;
-}
-
-pub fn wrapping_translate(r: &RectU32, delta: &PointI32) -> RectU32 {
-    let d_row = delta_row(r);
-    let d_col = delta_col(r);
-    let min_row = r.min.row.wrapping_add_signed(delta.row);
-    let min_col = r.min.col.wrapping_add_signed(delta.col);
-    let max_row = min_row.wrapping_add(d_row);
-    let max_col = min_col.wrapping_add(d_col);
-    RectU32 { min: PointU32 { row: min_row, col: min_col }, max: PointU32 { row: max_row, col: max_col } }
-}
-
 #[cfg(test)]
 mod tests {
-    use super::{wrapping_translate, wrapping_translate_assign};
+    use super::super::{wrapping_translate, wrapping_translate_assign};
     use crate::matrix::{point::point_i32::PointI32, rect::rect_u32::RectU32};
 
     #[test]

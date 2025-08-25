@@ -1,39 +1,6 @@
-use crate::cartesian::{
-    point::{point_i32::PointI32, point_u32::PointU32},
-    rect::rect_u32::RectU32,
-};
-
-pub fn try_checked_translate_assign(r: &mut RectU32, delta: &PointI32) -> Option<()> {
-    let min_x = r.min.x.checked_add_signed(delta.x)?;
-    let min_y = r.min.y.checked_add_signed(delta.y)?;
-    let max_x = r.max.x.checked_add_signed(delta.x)?;
-    let max_y = r.max.y.checked_add_signed(delta.y)?;
-    r.min.x = min_x;
-    r.min.y = min_y;
-    r.max.x = max_x;
-    r.max.y = max_y;
-    Some(())
-}
-
-pub fn try_checked_translate(r: &RectU32, delta: &PointI32) -> Option<RectU32> {
-    let min_x = r.min.x.checked_add_signed(delta.x)?;
-    let min_y = r.min.y.checked_add_signed(delta.y)?;
-    let max_x = r.max.x.checked_add_signed(delta.x)?;
-    let max_y = r.max.y.checked_add_signed(delta.y)?;
-    Some(RectU32 { min: PointU32 { x: min_x, y: min_y }, max: PointU32 { x: max_x, y: max_y } })
-}
-
-pub fn checked_translate_assign(r: &mut RectU32, delta: &PointI32) {
-    try_checked_translate_assign(r, delta).unwrap()
-}
-
-pub fn checked_translate(r: &RectU32, delta: &PointI32) -> RectU32 {
-    try_checked_translate(r, delta).unwrap()
-}
-
 #[cfg(test)]
 mod tests {
-    use super::{checked_translate, checked_translate_assign, try_checked_translate, try_checked_translate_assign};
+    use super::super::{checked_translate, checked_translate_assign, try_checked_translate, try_checked_translate_assign};
     use crate::cartesian::{point::point_i32::PointI32, rect::rect_u32::RectU32};
 
     #[test]

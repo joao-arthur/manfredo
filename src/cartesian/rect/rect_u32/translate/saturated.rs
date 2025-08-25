@@ -1,40 +1,6 @@
-use crate::cartesian::{
-    point::{point_i32::PointI32, point_u32::PointU32},
-    rect::rect_u32::{RectU32, delta_x, delta_y},
-};
-
-pub fn saturating_translate_assign(r: &mut RectU32, delta: &PointI32) {
-    let dx = delta_x(r);
-    let dy = delta_y(r);
-    let temp_min_x = i64::from(r.min.x) + i64::from(delta.x);
-    let temp_min_y = i64::from(r.min.y) + i64::from(delta.y);
-    let clamped_x = temp_min_x.clamp(0, i64::from(u32::MAX) - i64::from(dx));
-    let clamped_y = temp_min_y.clamp(0, i64::from(u32::MAX) - i64::from(dy));
-    let min_x = clamped_x as u32;
-    let min_y = clamped_y as u32;
-    r.min.x = min_x;
-    r.min.y = min_y;
-    r.max.x = min_x + dx;
-    r.max.y = min_y + dy;
-}
-
-pub fn saturating_translate(r: &RectU32, delta: &PointI32) -> RectU32 {
-    let dx = delta_x(r);
-    let dy = delta_y(r);
-    let temp_min_x = i64::from(r.min.x) + i64::from(delta.x);
-    let temp_min_y = i64::from(r.min.y) + i64::from(delta.y);
-    let clamped_x = temp_min_x.clamp(0, i64::from(u32::MAX) - i64::from(dx));
-    let clamped_y = temp_min_y.clamp(0, i64::from(u32::MAX) - i64::from(dy));
-    let min_x = clamped_x as u32;
-    let min_y = clamped_y as u32;
-    let max_x = min_x + dx;
-    let max_y = min_y + dy;
-    RectU32 { min: PointU32 { x: min_x, y: min_y }, max: PointU32 { x: max_x, y: max_y } }
-}
-
 #[cfg(test)]
 mod tests {
-    use super::{saturating_translate, saturating_translate_assign};
+    use super::super::{saturating_translate, saturating_translate_assign};
     use crate::cartesian::{point::point_i32::PointI32, rect::rect_u32::RectU32};
 
     #[test]

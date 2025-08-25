@@ -1,34 +1,6 @@
-use crate::matrix::{
-    point::{point_i8::PointI8, point_u8::PointU8},
-    rect::rect_u8::{RectU8, delta_col, delta_row},
-};
-
-pub fn wrapping_translate_assign(r: &mut RectU8, delta: &PointI8) {
-    let d_row = delta_row(r);
-    let d_col = delta_col(r);
-    let min_row = r.min.row.wrapping_add_signed(delta.row);
-    let min_col = r.min.col.wrapping_add_signed(delta.col);
-    let max_row = min_row.wrapping_add(d_row);
-    let max_col = min_col.wrapping_add(d_col);
-    r.min.row = min_row;
-    r.min.col = min_col;
-    r.max.row = max_row;
-    r.max.col = max_col;
-}
-
-pub fn wrapping_translate(r: &RectU8, delta: &PointI8) -> RectU8 {
-    let d_row = delta_row(r);
-    let d_col = delta_col(r);
-    let min_row = r.min.row.wrapping_add_signed(delta.row);
-    let min_col = r.min.col.wrapping_add_signed(delta.col);
-    let max_row = min_row.wrapping_add(d_row);
-    let max_col = min_col.wrapping_add(d_col);
-    RectU8 { min: PointU8 { row: min_row, col: min_col }, max: PointU8 { row: max_row, col: max_col } }
-}
-
 #[cfg(test)]
 mod tests {
-    use super::{wrapping_translate, wrapping_translate_assign};
+    use super::super::{wrapping_translate, wrapping_translate_assign};
     use crate::matrix::{point::point_i8::PointI8, rect::rect_u8::RectU8};
 
     #[test]

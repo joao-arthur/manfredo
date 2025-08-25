@@ -32,7 +32,7 @@ pub fn saturating_translate(r: &RectF32, delta: &PointF32) -> RectF32 {
 
 #[cfg(test)]
 mod tests {
-    use super::{saturating_translate_assign, saturating_translate};
+    use super::{saturating_translate, saturating_translate_assign};
     use crate::cartesian::{
         point::point_f32::{MAX, MIN, PointF32},
         rect::rect_f32::RectF32,
@@ -159,7 +159,10 @@ mod tests {
 
     #[test]
     fn saturating_translate_big_rect_out_of_bounds() {
-        assert_eq!(saturating_translate(&RectF32::of(MIN + 10.0, MIN + 5.0, 0.0, 0.0), &PointF32::of(-20.0, -20.0)), RectF32::of(MIN, MIN, -10.0, -5.0));
+        assert_eq!(
+            saturating_translate(&RectF32::of(MIN + 10.0, MIN + 5.0, 0.0, 0.0), &PointF32::of(-20.0, -20.0)),
+            RectF32::of(MIN, MIN, -10.0, -5.0)
+        );
         assert_eq!(saturating_translate(&RectF32::of(0.0, 0.0, MAX - 5.0, MAX - 10.0), &PointF32::of(20.0, 20.0)), RectF32::of(5.0, 10.0, MAX, MAX));
     }
 

@@ -28,7 +28,7 @@ pub fn wrapping_translate(r: &RectU16, delta: &PointI16) -> RectU16 {
 
 #[cfg(test)]
 mod tests {
-    use super::{wrapping_translate_assign, wrapping_translate};
+    use super::{wrapping_translate, wrapping_translate_assign};
     use crate::cartesian::{point::point_i16::PointI16, rect::rect_u16::RectU16};
 
     #[test]

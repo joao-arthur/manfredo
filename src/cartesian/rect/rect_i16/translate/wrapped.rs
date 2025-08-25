@@ -28,7 +28,7 @@ pub fn wrapping_translate(r: &RectI16, delta: &PointI16) -> RectI16 {
 
 #[cfg(test)]
 mod tests {
-    use super::{wrapping_translate_assign, wrapping_translate};
+    use super::{wrapping_translate, wrapping_translate_assign};
     use crate::cartesian::{point::point_i16::PointI16, rect::rect_i16::RectI16};
 
     #[test]
@@ -170,7 +170,10 @@ mod tests {
 
     #[test]
     fn wrapping_translate_small_rect_limits_out_of_bounds() {
-        assert_eq!(wrapping_translate(&RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MIN + 10, i16::MIN + 10), &PointI16::min()), RectI16::of(1, 1, 10, 10));
+        assert_eq!(
+            wrapping_translate(&RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MIN + 10, i16::MIN + 10), &PointI16::min()),
+            RectI16::of(1, 1, 10, 10)
+        );
         assert_eq!(
             wrapping_translate(&RectI16::of(i16::MAX - 10, i16::MAX - 10, i16::MAX - 1, i16::MAX - 1), &PointI16::max()),
             RectI16::of(-12, -12, -3, -3)

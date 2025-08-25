@@ -48,7 +48,7 @@ pub fn saturating_inflate(r: &RectU32) -> RectU32 {
 
 #[cfg(test)]
 mod tests {
-    use super::{saturating_inflate_assign, saturating_inflate, try_saturating_inflate_assign, try_saturating_inflate};
+    use super::{saturating_inflate, saturating_inflate_assign, try_saturating_inflate, try_saturating_inflate_assign};
     use crate::cartesian::rect::rect_u32::RectU32;
 
     #[test]

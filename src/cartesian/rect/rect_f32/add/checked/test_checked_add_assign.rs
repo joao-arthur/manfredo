@@ -1,21 +1,12 @@
-use super::try_assign_add::try_checked_add_assign;
+
+use super::checked_add_assign;
 use crate::cartesian::rect::rect_f32::RectF32;
 
-pub fn checked_add_assign(r: &mut RectF32, delta: &RectF32) {
-    try_checked_add_assign(r, delta).unwrap()
-}
-
-#[cfg(test)]
-mod tests {
-    use super::checked_add_assign;
-    use crate::cartesian::rect::rect_f32::RectF32;
-
-    #[test]
-    fn test_checked_add_assign() {
-        let mut r = RectF32::of(0.0, 0.0, 12.0, 15.0);
-        checked_add_assign(&mut r, &RectF32::of(5.0, 4.0, 3.0, 2.0));
-        assert_eq!(r, RectF32::of(5.0, 4.0, 15.0, 17.0));
-        checked_add_assign(&mut r, &RectF32::of(-14.0, -13.0, -12.0, -11.0));
-        assert_eq!(r, RectF32::of(-9.0, -9.0, 3.0, 6.0));
-    }
+#[test]
+fn test_checked_add_assign() {
+    let mut r = RectF32::of(0.0, 0.0, 12.0, 15.0);
+    checked_add_assign(&mut r, &RectF32::of(5.0, 4.0, 3.0, 2.0));
+    assert_eq!(r, RectF32::of(5.0, 4.0, 15.0, 17.0));
+    checked_add_assign(&mut r, &RectF32::of(-14.0, -13.0, -12.0, -11.0));
+    assert_eq!(r, RectF32::of(-9.0, -9.0, 3.0, 6.0));
 }

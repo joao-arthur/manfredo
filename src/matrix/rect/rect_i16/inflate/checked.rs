@@ -30,7 +30,7 @@ pub fn checked_inflate(r: &RectI16) -> RectI16 {
 
 #[cfg(test)]
 mod tests {
-    use super::{checked_inflate_assign, checked_inflate, try_checked_inflate_assign, try_checked_inflate};
+    use super::{checked_inflate, checked_inflate_assign, try_checked_inflate, try_checked_inflate_assign};
     use crate::matrix::rect::rect_i16::RectI16;
 
     #[test]

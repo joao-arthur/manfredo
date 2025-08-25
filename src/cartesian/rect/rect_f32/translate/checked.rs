@@ -35,7 +35,7 @@ pub fn checked_translate(r: &RectF32, delta: &PointF32) -> RectF32 {
 
 #[cfg(test)]
 mod tests {
-    use super::{checked_translate_assign, checked_translate, try_checked_translate_assign, try_checked_translate};
+    use super::{checked_translate, checked_translate_assign, try_checked_translate, try_checked_translate_assign};
     use crate::cartesian::{
         point::point_f32::{MAX, MIN, PointF32},
         rect::rect_f32::RectF32,
@@ -140,7 +140,10 @@ mod tests {
     #[test]
     fn test_try_checked_translate() {
         assert_eq!(try_checked_translate(&RectF32::of(0.0, 0.0, 10.0, 10.0), &PointF32::of(10.0, 20.0)), Some(RectF32::of(10.0, 20.0, 20.0, 30.0)));
-        assert_eq!(try_checked_translate(&RectF32::of(10.0, 20.0, 20.0, 30.0), &PointF32::of(-20.0, -15.0)), Some(RectF32::of(-10.0, 5.0, 0.0, 15.0)));
+        assert_eq!(
+            try_checked_translate(&RectF32::of(10.0, 20.0, 20.0, 30.0), &PointF32::of(-20.0, -15.0)),
+            Some(RectF32::of(-10.0, 5.0, 0.0, 15.0))
+        );
     }
 
     #[test]

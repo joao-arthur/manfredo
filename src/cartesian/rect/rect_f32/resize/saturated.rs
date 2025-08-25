@@ -47,7 +47,7 @@ pub fn saturating_resize(r: &RectF32, size: f32) -> RectF32 {
 
 #[cfg(test)]
 mod tests {
-    use super::{saturating_resize_assign, saturating_resize, try_saturating_resize_assign, try_saturating_resize};
+    use super::{saturating_resize, saturating_resize_assign, try_saturating_resize, try_saturating_resize_assign};
     use crate::cartesian::{
         point::point_f32::{MAX, MIN},
         rect::rect_f32::RectF32,

@@ -47,7 +47,7 @@ pub fn checked_resize(r: &RectU16, size: u16) -> RectU16 {
 
 #[cfg(test)]
 mod tests {
-    use super::{checked_resize_assign, checked_resize, try_checked_resize_assign, try_checked_resize};
+    use super::{checked_resize, checked_resize_assign, try_checked_resize, try_checked_resize_assign};
     use crate::cartesian::rect::rect_u16::RectU16;
 
     #[test]

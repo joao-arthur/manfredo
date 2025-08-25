@@ -47,7 +47,7 @@ pub fn saturating_resize(r: &RectU8, size: u8) -> RectU8 {
 
 #[cfg(test)]
 mod tests {
-    use super::{saturating_resize_assign, saturating_resize, try_saturating_resize_assign, try_saturating_resize};
+    use super::{saturating_resize, saturating_resize_assign, try_saturating_resize, try_saturating_resize_assign};
     use crate::cartesian::rect::rect_u8::RectU8;
 
     #[test]
@@ -226,7 +226,10 @@ mod tests {
     #[test]
     fn try_saturating_resize_even_small_rect_limits_out_of_bounds() {
         assert_eq!(try_saturating_resize(&RectU8::of(0, 0, 3, 3), u8::MAX - 1), Some(RectU8::of(0, 0, u8::MAX - 2, u8::MAX - 2)));
-        assert_eq!(try_saturating_resize(&RectU8::of(u8::MAX - 3, u8::MAX - 3, u8::MAX, u8::MAX), u8::MAX - 1), Some(RectU8::of(2, 2, u8::MAX, u8::MAX)));
+        assert_eq!(
+            try_saturating_resize(&RectU8::of(u8::MAX - 3, u8::MAX - 3, u8::MAX, u8::MAX), u8::MAX - 1),
+            Some(RectU8::of(2, 2, u8::MAX, u8::MAX))
+        );
     }
 
     #[test]

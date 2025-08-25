@@ -34,7 +34,7 @@ pub fn saturating_translate(r: &RectU64, delta: &PointI64) -> RectU64 {
 
 #[cfg(test)]
 mod tests {
-    use super::{saturating_translate_assign, saturating_translate};
+    use super::{saturating_translate, saturating_translate_assign};
     use crate::cartesian::{point::point_i64::PointI64, rect::rect_u64::RectU64};
 
     #[test]
@@ -135,7 +135,10 @@ mod tests {
 
     #[test]
     fn saturating_translate_big_rect_to_bounds() {
-        assert_eq!(saturating_translate(&RectU64::of(2, 5, u64::MAX, u64::MAX), &PointI64::of(-2, -5)), RectU64::of(0, 0, u64::MAX - 2, u64::MAX - 5));
+        assert_eq!(
+            saturating_translate(&RectU64::of(2, 5, u64::MAX, u64::MAX), &PointI64::of(-2, -5)),
+            RectU64::of(0, 0, u64::MAX - 2, u64::MAX - 5)
+        );
         assert_eq!(saturating_translate(&RectU64::of(0, 0, u64::MAX - 2, u64::MAX - 5), &PointI64::of(2, 5)), RectU64::of(2, 5, u64::MAX, u64::MAX));
     }
 
@@ -150,8 +153,14 @@ mod tests {
 
     #[test]
     fn saturating_translate_big_rect_out_of_bounds() {
-        assert_eq!(saturating_translate(&RectU64::of(10, 5, u64::MAX, u64::MAX), &PointI64::of(-20, -20)), RectU64::of(0, 0, u64::MAX - 10, u64::MAX - 5));
-        assert_eq!(saturating_translate(&RectU64::of(0, 0, u64::MAX - 5, u64::MAX - 10), &PointI64::of(20, 20)), RectU64::of(5, 10, u64::MAX, u64::MAX));
+        assert_eq!(
+            saturating_translate(&RectU64::of(10, 5, u64::MAX, u64::MAX), &PointI64::of(-20, -20)),
+            RectU64::of(0, 0, u64::MAX - 10, u64::MAX - 5)
+        );
+        assert_eq!(
+            saturating_translate(&RectU64::of(0, 0, u64::MAX - 5, u64::MAX - 10), &PointI64::of(20, 20)),
+            RectU64::of(5, 10, u64::MAX, u64::MAX)
+        );
     }
 
     #[test]

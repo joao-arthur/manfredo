@@ -30,7 +30,7 @@ pub fn saturating_translate(r: &RectI8, delta: &PointI8) -> RectI8 {
 
 #[cfg(test)]
 mod tests {
-    use super::{saturating_translate_assign, saturating_translate};
+    use super::{saturating_translate, saturating_translate_assign};
     use crate::matrix::{point::point_i8::PointI8, rect::rect_i8::RectI8};
 
     #[test]

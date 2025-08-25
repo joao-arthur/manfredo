@@ -33,7 +33,7 @@ pub fn checked_translate(r: &RectU32, delta: &PointI32) -> RectU32 {
 
 #[cfg(test)]
 mod tests {
-    use super::{checked_translate_assign, checked_translate, try_checked_translate_assign, try_checked_translate};
+    use super::{checked_translate, checked_translate_assign, try_checked_translate, try_checked_translate_assign};
     use crate::cartesian::{point::point_i32::PointI32, rect::rect_u32::RectU32};
 
     #[test]
@@ -141,8 +141,14 @@ mod tests {
 
     #[test]
     fn try_checked_translate_big_rect_to_bounds() {
-        assert_eq!(try_checked_translate(&RectU32::of(2, 5, u32::MAX, u32::MAX), &PointI32::of(-2, -5)), Some(RectU32::of(0, 0, u32::MAX - 2, u32::MAX - 5)));
-        assert_eq!(try_checked_translate(&RectU32::of(0, 0, u32::MAX - 2, u32::MAX - 5), &PointI32::of(2, 5)), Some(RectU32::of(2, 5, u32::MAX, u32::MAX)));
+        assert_eq!(
+            try_checked_translate(&RectU32::of(2, 5, u32::MAX, u32::MAX), &PointI32::of(-2, -5)),
+            Some(RectU32::of(0, 0, u32::MAX - 2, u32::MAX - 5))
+        );
+        assert_eq!(
+            try_checked_translate(&RectU32::of(0, 0, u32::MAX - 2, u32::MAX - 5), &PointI32::of(2, 5)),
+            Some(RectU32::of(2, 5, u32::MAX, u32::MAX))
+        );
     }
 
     #[test]

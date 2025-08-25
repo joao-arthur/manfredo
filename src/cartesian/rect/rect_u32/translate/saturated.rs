@@ -34,7 +34,7 @@ pub fn saturating_translate(r: &RectU32, delta: &PointI32) -> RectU32 {
 
 #[cfg(test)]
 mod tests {
-    use super::{saturating_translate_assign, saturating_translate};
+    use super::{saturating_translate, saturating_translate_assign};
     use crate::cartesian::{point::point_i32::PointI32, rect::rect_u32::RectU32};
 
     #[test]
@@ -135,7 +135,10 @@ mod tests {
 
     #[test]
     fn saturating_translate_big_rect_to_bounds() {
-        assert_eq!(saturating_translate(&RectU32::of(2, 5, u32::MAX, u32::MAX), &PointI32::of(-2, -5)), RectU32::of(0, 0, u32::MAX - 2, u32::MAX - 5));
+        assert_eq!(
+            saturating_translate(&RectU32::of(2, 5, u32::MAX, u32::MAX), &PointI32::of(-2, -5)),
+            RectU32::of(0, 0, u32::MAX - 2, u32::MAX - 5)
+        );
         assert_eq!(saturating_translate(&RectU32::of(0, 0, u32::MAX - 2, u32::MAX - 5), &PointI32::of(2, 5)), RectU32::of(2, 5, u32::MAX, u32::MAX));
     }
 
@@ -150,8 +153,14 @@ mod tests {
 
     #[test]
     fn saturating_translate_big_rect_out_of_bounds() {
-        assert_eq!(saturating_translate(&RectU32::of(10, 5, u32::MAX, u32::MAX), &PointI32::of(-20, -20)), RectU32::of(0, 0, u32::MAX - 10, u32::MAX - 5));
-        assert_eq!(saturating_translate(&RectU32::of(0, 0, u32::MAX - 5, u32::MAX - 10), &PointI32::of(20, 20)), RectU32::of(5, 10, u32::MAX, u32::MAX));
+        assert_eq!(
+            saturating_translate(&RectU32::of(10, 5, u32::MAX, u32::MAX), &PointI32::of(-20, -20)),
+            RectU32::of(0, 0, u32::MAX - 10, u32::MAX - 5)
+        );
+        assert_eq!(
+            saturating_translate(&RectU32::of(0, 0, u32::MAX - 5, u32::MAX - 10), &PointI32::of(20, 20)),
+            RectU32::of(5, 10, u32::MAX, u32::MAX)
+        );
     }
 
     #[test]

@@ -28,7 +28,7 @@ pub fn wrapping_translate(r: &RectI8, delta: &PointI8) -> RectI8 {
 
 #[cfg(test)]
 mod tests {
-    use super::{wrapping_translate_assign, wrapping_translate};
+    use super::{wrapping_translate, wrapping_translate_assign};
     use crate::matrix::{point::point_i8::PointI8, rect::rect_i8::RectI8};
 
     #[test]
@@ -171,7 +171,10 @@ mod tests {
     #[test]
     fn wrapping_translate_small_rect_limits_out_of_bounds() {
         assert_eq!(wrapping_translate(&RectI8::of(i8::MIN + 1, i8::MIN + 1, i8::MIN + 10, i8::MIN + 10), &PointI8::min()), RectI8::of(1, 1, 10, 10));
-        assert_eq!(wrapping_translate(&RectI8::of(i8::MAX - 10, i8::MAX - 10, i8::MAX - 1, i8::MAX - 1), &PointI8::max()), RectI8::of(-12, -12, -3, -3));
+        assert_eq!(
+            wrapping_translate(&RectI8::of(i8::MAX - 10, i8::MAX - 10, i8::MAX - 1, i8::MAX - 1), &PointI8::max()),
+            RectI8::of(-12, -12, -3, -3)
+        );
     }
 
     #[test]

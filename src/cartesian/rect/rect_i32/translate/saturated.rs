@@ -30,7 +30,7 @@ pub fn saturating_translate(r: &RectI32, delta: &PointI32) -> RectI32 {
 
 #[cfg(test)]
 mod tests {
-    use super::{saturating_translate_assign, saturating_translate};
+    use super::{saturating_translate, saturating_translate_assign};
     use crate::cartesian::{point::point_i32::PointI32, rect::rect_i32::RectI32};
 
     #[test]

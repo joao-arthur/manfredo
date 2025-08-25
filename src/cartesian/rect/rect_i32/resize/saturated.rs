@@ -47,7 +47,7 @@ pub fn saturating_resize(r: &RectI32, size: u32) -> RectI32 {
 
 #[cfg(test)]
 mod tests {
-    use super::{saturating_resize_assign, saturating_resize, try_saturating_resize_assign, try_saturating_resize};
+    use super::{saturating_resize, saturating_resize_assign, try_saturating_resize, try_saturating_resize_assign};
     use crate::cartesian::rect::rect_i32::RectI32;
 
     #[test]

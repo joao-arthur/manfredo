@@ -1,18 +1,9 @@
-use super::try_add::try_checked_add;
+
+use super::checked_add;
 use crate::cartesian::rect::rect_f32::RectF32;
 
-pub fn checked_add(r: &RectF32, delta: &RectF32) -> RectF32 {
-    try_checked_add(r, delta).unwrap()
-}
-
-#[cfg(test)]
-mod tests {
-    use super::checked_add;
-    use crate::cartesian::rect::rect_f32::RectF32;
-
-    #[test]
-    fn test_checked_add() {
-        assert_eq!(checked_add(&RectF32::of(-7.0, 9.0, -12.0, 15.0), &RectF32::of(5.0, 4.0, 3.0, 2.0)), RectF32::of(-2.0, 13.0, -9.0, 17.0));
-        assert_eq!(checked_add(&RectF32::of(5.0, 4.0, 15.0, 20.0), &RectF32::of(-14.0, -13.0, -12.0, -11.0)), RectF32::of(-9.0, -9.0, 3.0, 9.0));
-    }
+#[test]
+fn test_checked_add() {
+    assert_eq!(checked_add(&RectF32::of(-7.0, 9.0, -12.0, 15.0), &RectF32::of(5.0, 4.0, 3.0, 2.0)), RectF32::of(-2.0, 13.0, -9.0, 17.0));
+    assert_eq!(checked_add(&RectF32::of(5.0, 4.0, 15.0, 20.0), &RectF32::of(-14.0, -13.0, -12.0, -11.0)), RectF32::of(-9.0, -9.0, 3.0, 9.0));
 }

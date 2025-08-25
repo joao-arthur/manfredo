@@ -33,7 +33,7 @@ pub fn checked_translate(r: &RectU64, delta: &PointI64) -> RectU64 {
 
 #[cfg(test)]
 mod tests {
-    use super::{checked_translate_assign, checked_translate, try_checked_translate_assign, try_checked_translate};
+    use super::{checked_translate, checked_translate_assign, try_checked_translate, try_checked_translate_assign};
     use crate::matrix::{point::point_i64::PointI64, rect::rect_u64::RectU64};
 
     #[test]
@@ -141,8 +141,14 @@ mod tests {
 
     #[test]
     fn try_checked_translate_big_rect_to_bounds() {
-        assert_eq!(try_checked_translate(&RectU64::of(2, 5, u64::MAX, u64::MAX), &PointI64::of(-2, -5)), Some(RectU64::of(0, 0, u64::MAX - 2, u64::MAX - 5)));
-        assert_eq!(try_checked_translate(&RectU64::of(0, 0, u64::MAX - 2, u64::MAX - 5), &PointI64::of(2, 5)), Some(RectU64::of(2, 5, u64::MAX, u64::MAX)));
+        assert_eq!(
+            try_checked_translate(&RectU64::of(2, 5, u64::MAX, u64::MAX), &PointI64::of(-2, -5)),
+            Some(RectU64::of(0, 0, u64::MAX - 2, u64::MAX - 5))
+        );
+        assert_eq!(
+            try_checked_translate(&RectU64::of(0, 0, u64::MAX - 2, u64::MAX - 5), &PointI64::of(2, 5)),
+            Some(RectU64::of(2, 5, u64::MAX, u64::MAX))
+        );
     }
 
     #[test]

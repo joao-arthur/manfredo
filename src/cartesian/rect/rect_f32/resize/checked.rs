@@ -55,7 +55,7 @@ pub fn checked_resize(r: &RectF32, size: f32) -> RectF32 {
 
 #[cfg(test)]
 mod tests {
-    use super::{checked_resize_assign, checked_resize, try_checked_resize_assign, try_checked_resize};
+    use super::{checked_resize, checked_resize_assign, try_checked_resize, try_checked_resize_assign};
     use crate::cartesian::{
         point::point_f32::{MAX, MIN},
         rect::rect_f32::RectF32,
@@ -338,14 +338,26 @@ mod tests {
 
     #[test]
     fn try_checked_resize_odd_small_rect_to_bounds() {
-        assert_eq!(try_checked_resize(&RectF32::of(MIN + 2.0, MIN + 2.0, MIN + 4.0, MIN + 4.0), 7.0), Some(RectF32::of(MIN, MIN, MIN + 6.0, MIN + 6.0)));
-        assert_eq!(try_checked_resize(&RectF32::of(MAX - 4.0, MAX - 4.0, MAX - 2.0, MAX - 2.0), 7.0), Some(RectF32::of(MAX - 6.0, MAX - 6.0, MAX, MAX)));
+        assert_eq!(
+            try_checked_resize(&RectF32::of(MIN + 2.0, MIN + 2.0, MIN + 4.0, MIN + 4.0), 7.0),
+            Some(RectF32::of(MIN, MIN, MIN + 6.0, MIN + 6.0))
+        );
+        assert_eq!(
+            try_checked_resize(&RectF32::of(MAX - 4.0, MAX - 4.0, MAX - 2.0, MAX - 2.0), 7.0),
+            Some(RectF32::of(MAX - 6.0, MAX - 6.0, MAX, MAX))
+        );
     }
 
     #[test]
     fn try_checked_resize_even_small_rect_to_bounds() {
-        assert_eq!(try_checked_resize(&RectF32::of(MIN + 2.0, MIN + 2.0, MIN + 5.0, MIN + 5.0), 8.0), Some(RectF32::of(MIN, MIN, MIN + 7.0, MIN + 7.0)));
-        assert_eq!(try_checked_resize(&RectF32::of(MAX - 5.0, MAX - 5.0, MAX - 2.0, MAX - 2.0), 8.0), Some(RectF32::of(MAX - 7.0, MAX - 7.0, MAX, MAX)));
+        assert_eq!(
+            try_checked_resize(&RectF32::of(MIN + 2.0, MIN + 2.0, MIN + 5.0, MIN + 5.0), 8.0),
+            Some(RectF32::of(MIN, MIN, MIN + 7.0, MIN + 7.0))
+        );
+        assert_eq!(
+            try_checked_resize(&RectF32::of(MAX - 5.0, MAX - 5.0, MAX - 2.0, MAX - 2.0), 8.0),
+            Some(RectF32::of(MAX - 7.0, MAX - 7.0, MAX, MAX))
+        );
     }
 
     #[test]

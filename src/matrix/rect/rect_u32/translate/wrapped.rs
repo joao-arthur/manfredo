@@ -28,7 +28,7 @@ pub fn wrapping_translate(r: &RectU32, delta: &PointI32) -> RectU32 {
 
 #[cfg(test)]
 mod tests {
-    use super::{wrapping_translate_assign, wrapping_translate};
+    use super::{wrapping_translate, wrapping_translate_assign};
     use crate::matrix::{point::point_i32::PointI32, rect::rect_u32::RectU32};
 
     #[test]

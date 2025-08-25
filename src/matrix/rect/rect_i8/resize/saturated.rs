@@ -47,7 +47,7 @@ pub fn saturating_resize(r: &RectI8, size: u8) -> RectI8 {
 
 #[cfg(test)]
 mod tests {
-    use super::{saturating_resize_assign, saturating_resize, try_saturating_resize_assign, try_saturating_resize};
+    use super::{saturating_resize, saturating_resize_assign, try_saturating_resize, try_saturating_resize_assign};
     use crate::matrix::rect::rect_i8::RectI8;
 
     #[test]

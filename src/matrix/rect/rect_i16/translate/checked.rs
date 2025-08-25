@@ -30,7 +30,7 @@ pub fn checked_translate(r: &RectI16, delta: &PointI16) -> RectI16 {
 
 #[cfg(test)]
 mod tests {
-    use super::{checked_translate_assign, checked_translate, try_checked_translate_assign, try_checked_translate};
+    use super::{checked_translate, checked_translate_assign, try_checked_translate, try_checked_translate_assign};
     use crate::matrix::{point::point_i16::PointI16, rect::rect_i16::RectI16};
 
     #[test]

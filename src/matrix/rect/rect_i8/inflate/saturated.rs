@@ -48,7 +48,7 @@ pub fn saturating_inflate(r: &RectI8) -> RectI8 {
 
 #[cfg(test)]
 mod tests {
-    use super::{saturating_inflate_assign, saturating_inflate, try_saturating_inflate_assign, try_saturating_inflate};
+    use super::{saturating_inflate, saturating_inflate_assign, try_saturating_inflate, try_saturating_inflate_assign};
     use crate::matrix::rect::rect_i8::RectI8;
 
     #[test]
@@ -323,8 +323,14 @@ mod tests {
             saturating_inflate(&RectI8::of(i8::MIN + 2, i8::MIN, i8::MIN + 22, i8::MIN + 21)),
             RectI8::of(i8::MIN + 1, i8::MIN, i8::MIN + 23, i8::MIN + 23)
         );
-        assert_eq!(saturating_inflate(&RectI8::of(i8::MIN + 1, i8::MIN, i8::MIN + 23, i8::MIN + 23)), RectI8::of(i8::MIN, i8::MIN, i8::MIN + 24, i8::MIN + 25));
-        assert_eq!(saturating_inflate(&RectI8::of(i8::MIN, i8::MIN, i8::MIN + 24, i8::MIN + 25)), RectI8::of(i8::MIN, i8::MIN, i8::MIN + 26, i8::MIN + 27));
+        assert_eq!(
+            saturating_inflate(&RectI8::of(i8::MIN + 1, i8::MIN, i8::MIN + 23, i8::MIN + 23)),
+            RectI8::of(i8::MIN, i8::MIN, i8::MIN + 24, i8::MIN + 25)
+        );
+        assert_eq!(
+            saturating_inflate(&RectI8::of(i8::MIN, i8::MIN, i8::MIN + 24, i8::MIN + 25)),
+            RectI8::of(i8::MIN, i8::MIN, i8::MIN + 26, i8::MIN + 27)
+        );
     }
 
     #[test]
@@ -345,9 +351,21 @@ mod tests {
             saturating_inflate(&RectI8::of(i8::MAX - 36, i8::MAX - 20, i8::MAX - 2, i8::MAX)),
             RectI8::of(i8::MAX - 37, i8::MAX - 22, i8::MAX - 1, i8::MAX)
         );
-        assert_eq!(saturating_inflate(&RectI8::of(i8::MAX - 37, i8::MAX - 22, i8::MAX - 1, i8::MAX)), RectI8::of(i8::MAX - 38, i8::MAX - 24, i8::MAX, i8::MAX));
-        assert_eq!(saturating_inflate(&RectI8::of(i8::MAX - 38, i8::MAX - 24, i8::MAX, i8::MAX)), RectI8::of(i8::MAX - 40, i8::MAX - 26, i8::MAX, i8::MAX));
-        assert_eq!(saturating_inflate(&RectI8::of(i8::MAX - 40, i8::MAX - 26, i8::MAX, i8::MAX)), RectI8::of(i8::MAX - 42, i8::MAX - 28, i8::MAX, i8::MAX));
-        assert_eq!(saturating_inflate(&RectI8::of(i8::MAX - 42, i8::MAX - 28, i8::MAX, i8::MAX)), RectI8::of(i8::MAX - 44, i8::MAX - 30, i8::MAX, i8::MAX));
+        assert_eq!(
+            saturating_inflate(&RectI8::of(i8::MAX - 37, i8::MAX - 22, i8::MAX - 1, i8::MAX)),
+            RectI8::of(i8::MAX - 38, i8::MAX - 24, i8::MAX, i8::MAX)
+        );
+        assert_eq!(
+            saturating_inflate(&RectI8::of(i8::MAX - 38, i8::MAX - 24, i8::MAX, i8::MAX)),
+            RectI8::of(i8::MAX - 40, i8::MAX - 26, i8::MAX, i8::MAX)
+        );
+        assert_eq!(
+            saturating_inflate(&RectI8::of(i8::MAX - 40, i8::MAX - 26, i8::MAX, i8::MAX)),
+            RectI8::of(i8::MAX - 42, i8::MAX - 28, i8::MAX, i8::MAX)
+        );
+        assert_eq!(
+            saturating_inflate(&RectI8::of(i8::MAX - 42, i8::MAX - 28, i8::MAX, i8::MAX)),
+            RectI8::of(i8::MAX - 44, i8::MAX - 30, i8::MAX, i8::MAX)
+        );
     }
 }

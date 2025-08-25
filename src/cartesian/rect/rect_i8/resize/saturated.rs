@@ -1,4 +1,7 @@
-use crate::cartesian::{point::point_i8::PointI8,rect::rect_i8::{RectI8, delta_x, delta_y},};
+use crate::cartesian::{
+    point::point_i8::PointI8,
+    rect::rect_i8::{RectI8, delta_x, delta_y},
+};
 
 pub fn try_saturating_resize_assign(r: &mut RectI8, size: u8) -> Option<()> {
     if size < 3 {
@@ -44,7 +47,7 @@ pub fn saturating_resize(r: &RectI8, size: u8) -> RectI8 {
 
 #[cfg(test)]
 mod tests {
-    use super::{saturating_resize_assign, saturating_resize, try_saturating_resize_assign, try_saturating_resize};
+    use super::{saturating_resize, saturating_resize_assign, try_saturating_resize, try_saturating_resize_assign};
     use crate::cartesian::rect::rect_i8::RectI8;
 
     #[test]

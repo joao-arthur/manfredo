@@ -48,7 +48,7 @@ pub fn saturating_inflate(r: &RectU8) -> RectU8 {
 
 #[cfg(test)]
 mod tests {
-    use super::{saturating_inflate_assign, saturating_inflate, try_saturating_inflate_assign, try_saturating_inflate};
+    use super::{saturating_inflate, saturating_inflate_assign, try_saturating_inflate, try_saturating_inflate_assign};
     use crate::matrix::rect::rect_u8::RectU8;
 
     #[test]
@@ -291,9 +291,21 @@ mod tests {
             saturating_inflate(&RectU8::of(u8::MAX - 36, u8::MAX - 20, u8::MAX - 2, u8::MAX)),
             RectU8::of(u8::MAX - 37, u8::MAX - 22, u8::MAX - 1, u8::MAX)
         );
-        assert_eq!(saturating_inflate(&RectU8::of(u8::MAX - 37, u8::MAX - 22, u8::MAX - 1, u8::MAX)), RectU8::of(u8::MAX - 38, u8::MAX - 24, u8::MAX, u8::MAX));
-        assert_eq!(saturating_inflate(&RectU8::of(u8::MAX - 38, u8::MAX - 24, u8::MAX, u8::MAX)), RectU8::of(u8::MAX - 40, u8::MAX - 26, u8::MAX, u8::MAX));
-        assert_eq!(saturating_inflate(&RectU8::of(u8::MAX - 40, u8::MAX - 26, u8::MAX, u8::MAX)), RectU8::of(u8::MAX - 42, u8::MAX - 28, u8::MAX, u8::MAX));
-        assert_eq!(saturating_inflate(&RectU8::of(u8::MAX - 42, u8::MAX - 28, u8::MAX, u8::MAX)), RectU8::of(u8::MAX - 44, u8::MAX - 30, u8::MAX, u8::MAX));
+        assert_eq!(
+            saturating_inflate(&RectU8::of(u8::MAX - 37, u8::MAX - 22, u8::MAX - 1, u8::MAX)),
+            RectU8::of(u8::MAX - 38, u8::MAX - 24, u8::MAX, u8::MAX)
+        );
+        assert_eq!(
+            saturating_inflate(&RectU8::of(u8::MAX - 38, u8::MAX - 24, u8::MAX, u8::MAX)),
+            RectU8::of(u8::MAX - 40, u8::MAX - 26, u8::MAX, u8::MAX)
+        );
+        assert_eq!(
+            saturating_inflate(&RectU8::of(u8::MAX - 40, u8::MAX - 26, u8::MAX, u8::MAX)),
+            RectU8::of(u8::MAX - 42, u8::MAX - 28, u8::MAX, u8::MAX)
+        );
+        assert_eq!(
+            saturating_inflate(&RectU8::of(u8::MAX - 42, u8::MAX - 28, u8::MAX, u8::MAX)),
+            RectU8::of(u8::MAX - 44, u8::MAX - 30, u8::MAX, u8::MAX)
+        );
     }
 }

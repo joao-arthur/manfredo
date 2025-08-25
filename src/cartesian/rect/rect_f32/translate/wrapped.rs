@@ -106,7 +106,7 @@ pub fn wrapping_translate(r: &RectF32, delta: &PointF32) -> RectF32 {
 
 #[cfg(test)]
 mod tests {
-    use super::{wrapping_translate_assign, wrapping_translate};
+    use super::{wrapping_translate, wrapping_translate_assign};
     use crate::cartesian::{
         point::point_f32::{MAX, MIN, PointF32},
         rect::rect_f32::RectF32,
@@ -215,8 +215,14 @@ mod tests {
 
     #[test]
     fn wrapping_translate_big_rect_to_bounds() {
-        assert_eq!(wrapping_translate(&RectF32::of(MIN + 2.0, MIN + 5.0, MAX, MAX), &PointF32::of(-2.0, -5.0)), RectF32::of(MIN, MIN, MAX - 2.0, MAX - 5.0));
-        assert_eq!(wrapping_translate(&RectF32::of(MIN, MIN, MAX - 2.0, MAX - 5.0), &PointF32::of(2.0, 5.0)), RectF32::of(MIN + 2.0, MIN + 5.0, MAX, MAX));
+        assert_eq!(
+            wrapping_translate(&RectF32::of(MIN + 2.0, MIN + 5.0, MAX, MAX), &PointF32::of(-2.0, -5.0)),
+            RectF32::of(MIN, MIN, MAX - 2.0, MAX - 5.0)
+        );
+        assert_eq!(
+            wrapping_translate(&RectF32::of(MIN, MIN, MAX - 2.0, MAX - 5.0), &PointF32::of(2.0, 5.0)),
+            RectF32::of(MIN + 2.0, MIN + 5.0, MAX, MAX)
+        );
     }
 
     #[test]
@@ -245,8 +251,14 @@ mod tests {
 
     #[test]
     fn wrapping_translate_small_rect_limits_out_of_bounds() {
-        assert_eq!(wrapping_translate(&RectF32::of(MIN + 1.0, MIN + 1.0, MIN + 10.0, MIN + 10.0), &PointF32::min()), RectF32::of(1.0, 1.0, 10.0, 10.0));
-        assert_eq!(wrapping_translate(&RectF32::of(MAX - 10.0, MAX - 10.0, MAX - 1.0, MAX - 1.0), &PointF32::max()), RectF32::of(-12.0, -12.0, -3.0, -3.0));
+        assert_eq!(
+            wrapping_translate(&RectF32::of(MIN + 1.0, MIN + 1.0, MIN + 10.0, MIN + 10.0), &PointF32::min()),
+            RectF32::of(1.0, 1.0, 10.0, 10.0)
+        );
+        assert_eq!(
+            wrapping_translate(&RectF32::of(MAX - 10.0, MAX - 10.0, MAX - 1.0, MAX - 1.0), &PointF32::max()),
+            RectF32::of(-12.0, -12.0, -3.0, -3.0)
+        );
     }
 
     #[test]

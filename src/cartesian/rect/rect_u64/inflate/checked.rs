@@ -30,7 +30,7 @@ pub fn checked_inflate(r: &RectU64) -> RectU64 {
 
 #[cfg(test)]
 mod tests {
-    use super::{checked_inflate_assign, checked_inflate, try_checked_inflate_assign, try_checked_inflate};
+    use super::{checked_inflate, checked_inflate_assign, try_checked_inflate, try_checked_inflate_assign};
     use crate::cartesian::rect::rect_u64::RectU64;
 
     #[test]

@@ -1,3 +1,33 @@
+use crate::matrix::{point::point_i16::PointI16, rect::rect_i16::RectI16};
+
+pub fn try_checked_add_assign(r: &mut RectI16, delta: &RectI16) -> Option<()> {
+    let min_row = r.min.row.checked_add(delta.min.row)?;
+    let min_col = r.min.col.checked_add(delta.min.col)?;
+    let max_row = r.max.row.checked_add(delta.max.row)?;
+    let max_col = r.max.col.checked_add(delta.max.col)?;
+    r.min.row = min_row;
+    r.min.col = min_col;
+    r.max.row = max_row;
+    r.max.col = max_col;
+    Some(())
+}
+
+pub fn try_checked_add(r: &RectI16, delta: &RectI16) -> Option<RectI16> {
+    let min_row = r.min.row.checked_add(delta.min.row)?;
+    let min_col = r.min.col.checked_add(delta.min.col)?;
+    let max_row = r.max.row.checked_add(delta.max.row)?;
+    let max_col = r.max.col.checked_add(delta.max.col)?;
+    Some(RectI16 { min: PointI16 { row: min_row, col: min_col }, max: PointI16 { row: max_row, col: max_col } })
+}
+
+pub fn checked_add_assign(r: &mut RectI16, delta: &RectI16) {
+    try_checked_add_assign(r, delta).unwrap()
+}
+
+pub fn checked_add(r: &RectI16, delta: &RectI16) -> RectI16 {
+    try_checked_add(r, delta).unwrap()
+}
+
 #[cfg(test)]
 mod test_checked_add_assign;
 

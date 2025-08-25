@@ -28,7 +28,7 @@ pub fn wrapping_translate(r: &RectI32, delta: &PointI32) -> RectI32 {
 
 #[cfg(test)]
 mod tests {
-    use super::{wrapping_translate_assign, wrapping_translate};
+    use super::{wrapping_translate, wrapping_translate_assign};
     use crate::cartesian::{point::point_i32::PointI32, rect::rect_i32::RectI32};
 
     #[test]
@@ -170,7 +170,10 @@ mod tests {
 
     #[test]
     fn wrapping_translate_small_rect_limits_out_of_bounds() {
-        assert_eq!(wrapping_translate(&RectI32::of(i32::MIN + 1, i32::MIN + 1, i32::MIN + 10, i32::MIN + 10), &PointI32::min()), RectI32::of(1, 1, 10, 10));
+        assert_eq!(
+            wrapping_translate(&RectI32::of(i32::MIN + 1, i32::MIN + 1, i32::MIN + 10, i32::MIN + 10), &PointI32::min()),
+            RectI32::of(1, 1, 10, 10)
+        );
         assert_eq!(
             wrapping_translate(&RectI32::of(i32::MAX - 10, i32::MAX - 10, i32::MAX - 1, i32::MAX - 1), &PointI32::max()),
             RectI32::of(-12, -12, -3, -3)

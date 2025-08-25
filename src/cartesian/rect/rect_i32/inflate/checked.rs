@@ -30,7 +30,7 @@ pub fn checked_inflate(r: &RectI32) -> RectI32 {
 
 #[cfg(test)]
 mod tests {
-    use super::{checked_inflate_assign, checked_inflate, try_checked_inflate_assign, try_checked_inflate};
+    use super::{checked_inflate, checked_inflate_assign, try_checked_inflate, try_checked_inflate_assign};
     use crate::cartesian::rect::rect_i32::RectI32;
 
     #[test]

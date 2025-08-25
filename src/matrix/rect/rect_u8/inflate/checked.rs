@@ -30,7 +30,7 @@ pub fn checked_inflate(r: &RectU8) -> RectU8 {
 
 #[cfg(test)]
 mod tests {
-    use super::{checked_inflate_assign, checked_inflate, try_checked_inflate_assign, try_checked_inflate};
+    use super::{checked_inflate, checked_inflate_assign, try_checked_inflate, try_checked_inflate_assign};
     use crate::matrix::rect::rect_u8::RectU8;
 
     #[test]

@@ -47,7 +47,7 @@ pub fn checked_resize(r: &RectI32, size: u32) -> RectI32 {
 
 #[cfg(test)]
 mod tests {
-    use super::{checked_resize_assign, checked_resize, try_checked_resize_assign, try_checked_resize};
+    use super::{checked_resize, checked_resize_assign, try_checked_resize, try_checked_resize_assign};
     use crate::matrix::rect::rect_i32::RectI32;
 
     #[test]

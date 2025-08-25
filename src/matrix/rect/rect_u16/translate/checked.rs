@@ -33,7 +33,7 @@ pub fn checked_translate(r: &RectU16, delta: &PointI16) -> RectU16 {
 
 #[cfg(test)]
 mod tests {
-    use super::{checked_translate_assign, checked_translate, try_checked_translate_assign, try_checked_translate};
+    use super::{checked_translate, checked_translate_assign, try_checked_translate, try_checked_translate_assign};
     use crate::matrix::{point::point_i16::PointI16, rect::rect_u16::RectU16};
 
     #[test]
@@ -141,8 +141,14 @@ mod tests {
 
     #[test]
     fn try_checked_translate_big_rect_to_bounds() {
-        assert_eq!(try_checked_translate(&RectU16::of(2, 5, u16::MAX, u16::MAX), &PointI16::of(-2, -5)), Some(RectU16::of(0, 0, u16::MAX - 2, u16::MAX - 5)));
-        assert_eq!(try_checked_translate(&RectU16::of(0, 0, u16::MAX - 2, u16::MAX - 5), &PointI16::of(2, 5)), Some(RectU16::of(2, 5, u16::MAX, u16::MAX)));
+        assert_eq!(
+            try_checked_translate(&RectU16::of(2, 5, u16::MAX, u16::MAX), &PointI16::of(-2, -5)),
+            Some(RectU16::of(0, 0, u16::MAX - 2, u16::MAX - 5))
+        );
+        assert_eq!(
+            try_checked_translate(&RectU16::of(0, 0, u16::MAX - 2, u16::MAX - 5), &PointI16::of(2, 5)),
+            Some(RectU16::of(2, 5, u16::MAX, u16::MAX))
+        );
     }
 
     #[test]

@@ -30,7 +30,7 @@ pub fn checked_translate(r: &RectI64, delta: &PointI64) -> RectI64 {
 
 #[cfg(test)]
 mod tests {
-    use super::{checked_translate_assign, checked_translate, try_checked_translate_assign, try_checked_translate};
+    use super::{checked_translate, checked_translate_assign, try_checked_translate, try_checked_translate_assign};
     use crate::cartesian::{point::point_i64::PointI64, rect::rect_i64::RectI64};
 
     #[test]

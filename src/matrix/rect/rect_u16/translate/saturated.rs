@@ -34,7 +34,7 @@ pub fn saturating_translate(r: &RectU16, delta: &PointI16) -> RectU16 {
 
 #[cfg(test)]
 mod tests {
-    use super::{saturating_translate_assign, saturating_translate};
+    use super::{saturating_translate, saturating_translate_assign};
     use crate::matrix::{point::point_i16::PointI16, rect::rect_u16::RectU16};
 
     #[test]
@@ -135,7 +135,10 @@ mod tests {
 
     #[test]
     fn saturating_translate_big_rect_to_bounds() {
-        assert_eq!(saturating_translate(&RectU16::of(2, 5, u16::MAX, u16::MAX), &PointI16::of(-2, -5)), RectU16::of(0, 0, u16::MAX - 2, u16::MAX - 5));
+        assert_eq!(
+            saturating_translate(&RectU16::of(2, 5, u16::MAX, u16::MAX), &PointI16::of(-2, -5)),
+            RectU16::of(0, 0, u16::MAX - 2, u16::MAX - 5)
+        );
         assert_eq!(saturating_translate(&RectU16::of(0, 0, u16::MAX - 2, u16::MAX - 5), &PointI16::of(2, 5)), RectU16::of(2, 5, u16::MAX, u16::MAX));
     }
 
@@ -150,8 +153,14 @@ mod tests {
 
     #[test]
     fn saturating_translate_big_rect_out_of_bounds() {
-        assert_eq!(saturating_translate(&RectU16::of(10, 5, u16::MAX, u16::MAX), &PointI16::of(-20, -20)), RectU16::of(0, 0, u16::MAX - 10, u16::MAX - 5));
-        assert_eq!(saturating_translate(&RectU16::of(0, 0, u16::MAX - 5, u16::MAX - 10), &PointI16::of(20, 20)), RectU16::of(5, 10, u16::MAX, u16::MAX));
+        assert_eq!(
+            saturating_translate(&RectU16::of(10, 5, u16::MAX, u16::MAX), &PointI16::of(-20, -20)),
+            RectU16::of(0, 0, u16::MAX - 10, u16::MAX - 5)
+        );
+        assert_eq!(
+            saturating_translate(&RectU16::of(0, 0, u16::MAX - 5, u16::MAX - 10), &PointI16::of(20, 20)),
+            RectU16::of(5, 10, u16::MAX, u16::MAX)
+        );
     }
 
     #[test]

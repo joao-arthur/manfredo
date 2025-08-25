@@ -1,36 +1,6 @@
-use crate::matrix::{point::point_i64::PointI64, rect::rect_i64::RectI64};
-
-pub fn try_checked_inflate_assign(r: &mut RectI64) -> Option<()> {
-    let min_row = r.min.row.checked_sub(1)?;
-    let min_col = r.min.col.checked_sub(1)?;
-    let max_row = r.max.row.checked_add(1)?;
-    let max_col = r.max.col.checked_add(1)?;
-    r.min.row = min_row;
-    r.min.col = min_col;
-    r.max.row = max_row;
-    r.max.col = max_col;
-    Some(())
-}
-
-pub fn try_checked_inflate(r: &RectI64) -> Option<RectI64> {
-    let min_row = r.min.row.checked_sub(1)?;
-    let min_col = r.min.col.checked_sub(1)?;
-    let max_row = r.max.row.checked_add(1)?;
-    let max_col = r.max.col.checked_add(1)?;
-    Some(RectI64 { min: PointI64 { row: min_row, col: min_col }, max: PointI64 { row: max_row, col: max_col } })
-}
-
-pub fn checked_inflate_assign(r: &mut RectI64) {
-    try_checked_inflate_assign(r).unwrap()
-}
-
-pub fn checked_inflate(r: &RectI64) -> RectI64 {
-    try_checked_inflate(r).unwrap()
-}
-
 #[cfg(test)]
 mod tests {
-    use super::{checked_inflate, checked_inflate_assign, try_checked_inflate, try_checked_inflate_assign};
+    use super::super::{checked_inflate, checked_inflate_assign, try_checked_inflate, try_checked_inflate_assign};
     use crate::matrix::rect::rect_i64::RectI64;
 
     #[test]

@@ -1,54 +1,6 @@
-use crate::cartesian::{point::point_i16::PointI16, rect::rect_i16::RectI16};
-
-pub fn try_saturating_inflate_assign(r: &mut RectI16) -> Option<()> {
-    let is_min_x = r.min.x == i16::MIN;
-    let is_min_y = r.min.y == i16::MIN;
-    let is_max_x = r.max.x == i16::MAX;
-    let is_max_y = r.max.y == i16::MAX;
-    if (is_min_x && is_max_x) || (is_min_y && is_max_y) {
-        return None;
-    }
-    let min_x_modifier = 1 - i16::from(is_min_x) + i16::from(is_max_x);
-    let min_y_modifier = 1 - i16::from(is_min_y) + i16::from(is_max_y);
-    let max_x_modifier = 1 + i16::from(is_min_x) - i16::from(is_max_x);
-    let max_y_modifier = 1 + i16::from(is_min_y) - i16::from(is_max_y);
-    r.min.x = r.min.x.saturating_sub(min_x_modifier);
-    r.min.y = r.min.y.saturating_sub(min_y_modifier);
-    r.max.x = r.max.x.saturating_add(max_x_modifier);
-    r.max.y = r.max.y.saturating_add(max_y_modifier);
-    Some(())
-}
-
-pub fn try_saturating_inflate(r: &RectI16) -> Option<RectI16> {
-    let is_min_x = r.min.x == i16::MIN;
-    let is_min_y = r.min.y == i16::MIN;
-    let is_max_x = r.max.x == i16::MAX;
-    let is_max_y = r.max.y == i16::MAX;
-    if (is_min_x && is_max_x) || (is_min_y && is_max_y) {
-        return None;
-    }
-    let min_x_modifier = 1 - i16::from(is_min_x) + i16::from(is_max_x);
-    let min_y_modifier = 1 - i16::from(is_min_y) + i16::from(is_max_y);
-    let max_x_modifier = 1 + i16::from(is_min_x) - i16::from(is_max_x);
-    let max_y_modifier = 1 + i16::from(is_min_y) - i16::from(is_max_y);
-    let min_x = r.min.x.saturating_sub(min_x_modifier);
-    let min_y = r.min.y.saturating_sub(min_y_modifier);
-    let max_x = r.max.x.saturating_add(max_x_modifier);
-    let max_y = r.max.y.saturating_add(max_y_modifier);
-    Some(RectI16 { min: PointI16 { x: min_x, y: min_y }, max: PointI16 { x: max_x, y: max_y } })
-}
-
-pub fn saturating_inflate_assign(r: &mut RectI16) {
-    try_saturating_inflate_assign(r).unwrap()
-}
-
-pub fn saturating_inflate(r: &RectI16) -> RectI16 {
-    try_saturating_inflate(r).unwrap()
-}
-
 #[cfg(test)]
 mod tests {
-    use super::{saturating_inflate, saturating_inflate_assign, try_saturating_inflate, try_saturating_inflate_assign};
+    use super::super::{saturating_inflate, saturating_inflate_assign, try_saturating_inflate, try_saturating_inflate_assign};
     use crate::cartesian::rect::rect_i16::RectI16;
 
     #[test]

@@ -1,41 +1,6 @@
-use crate::cartesian::{
-    point::point_f32::{MAX, MIN, PointF32},
-    rect::rect_f32::RectF32,
-};
-
-pub fn try_checked_inflate_assign(r: &mut RectF32) -> Option<()> {
-    if r.min.x == MIN || r.min.y == MIN || r.max.x == MAX || r.max.y == MAX {
-        return None;
-    }
-    r.min.x -= 1.0;
-    r.min.y -= 1.0;
-    r.max.x += 1.0;
-    r.max.y += 1.0;
-    Some(())
-}
-
-pub fn try_checked_inflate(r: &RectF32) -> Option<RectF32> {
-    if r.min.x == MIN || r.min.y == MIN || r.max.x == MAX || r.max.y == MAX {
-        return None;
-    }
-    let min_x = r.min.x - 1.0;
-    let min_y = r.min.y - 1.0;
-    let max_x = r.max.x + 1.0;
-    let max_y = r.max.y + 1.0;
-    Some(RectF32 { min: PointF32 { x: min_x, y: min_y }, max: PointF32 { x: max_x, y: max_y } })
-}
-
-pub fn checked_inflate_assign(r: &mut RectF32) {
-    try_checked_inflate_assign(r).unwrap()
-}
-
-pub fn checked_inflate(r: &RectF32) -> RectF32 {
-    try_checked_inflate(r).unwrap()
-}
-
 #[cfg(test)]
 mod tests {
-    use super::{checked_inflate, checked_inflate_assign, try_checked_inflate, try_checked_inflate_assign};
+    use super::super::{checked_inflate, checked_inflate_assign, try_checked_inflate, try_checked_inflate_assign};
     use crate::cartesian::{
         point::point_f32::{MAX, MIN},
         rect::rect_f32::RectF32,

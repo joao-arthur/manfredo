@@ -1,36 +1,6 @@
-use crate::cartesian::{point::point_u16::PointU16, rect::rect_u16::RectU16};
-
-pub fn try_checked_inflate_assign(r: &mut RectU16) -> Option<()> {
-    let min_x = r.min.x.checked_sub(1)?;
-    let min_y = r.min.y.checked_sub(1)?;
-    let max_x = r.max.x.checked_add(1)?;
-    let max_y = r.max.y.checked_add(1)?;
-    r.min.x = min_x;
-    r.min.y = min_y;
-    r.max.x = max_x;
-    r.max.y = max_y;
-    Some(())
-}
-
-pub fn try_checked_inflate(r: &RectU16) -> Option<RectU16> {
-    let min_x = r.min.x.checked_sub(1)?;
-    let min_y = r.min.y.checked_sub(1)?;
-    let max_x = r.max.x.checked_add(1)?;
-    let max_y = r.max.y.checked_add(1)?;
-    Some(RectU16 { min: PointU16 { x: min_x, y: min_y }, max: PointU16 { x: max_x, y: max_y } })
-}
-
-pub fn checked_inflate_assign(r: &mut RectU16) {
-    try_checked_inflate_assign(r).unwrap()
-}
-
-pub fn checked_inflate(r: &RectU16) -> RectU16 {
-    try_checked_inflate(r).unwrap()
-}
-
 #[cfg(test)]
 mod tests {
-    use super::{checked_inflate, checked_inflate_assign, try_checked_inflate, try_checked_inflate_assign};
+    use super::super::{checked_inflate, checked_inflate_assign, try_checked_inflate, try_checked_inflate_assign};
     use crate::cartesian::rect::rect_u16::RectU16;
 
     #[test]

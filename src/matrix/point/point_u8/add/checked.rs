@@ -1,30 +1,6 @@
-use crate::matrix::point::{point_i8::PointI8, point_u8::PointU8};
-
-pub fn try_checked_add_assign(p: &mut PointU8, delta: &PointI8) -> Option<()> {
-    let row = p.row.checked_add_signed(delta.row)?;
-    let col = p.col.checked_add_signed(delta.col)?;
-    p.row = row;
-    p.col = col;
-    Some(())
-}
-
-pub fn try_checked_add(p: &PointU8, delta: &PointI8) -> Option<PointU8> {
-    let row = p.row.checked_add_signed(delta.row)?;
-    let col = p.col.checked_add_signed(delta.col)?;
-    Some(PointU8 { row, col })
-}
-
-pub fn checked_add_assign(p: &mut PointU8, delta: &PointI8) {
-    try_checked_add_assign(p, delta).unwrap()
-}
-
-pub fn checked_add(p: &PointU8, delta: &PointI8) -> PointU8 {
-    try_checked_add(p, delta).unwrap()
-}
-
 #[cfg(test)]
 mod tests {
-    use super::{checked_add, checked_add_assign, try_checked_add, try_checked_add_assign};
+    use super::super::{checked_add, checked_add_assign, try_checked_add, try_checked_add_assign};
     use crate::matrix::point::{point_i8::PointI8, point_u8::PointU8};
 
     #[test]

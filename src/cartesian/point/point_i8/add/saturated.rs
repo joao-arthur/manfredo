@@ -1,19 +1,6 @@
-use crate::cartesian::point::point_i8::PointI8;
-
-pub fn saturating_add_assign(p: &mut PointI8, delta: &PointI8) {
-    p.x = p.x.saturating_add(delta.x);
-    p.y = p.y.saturating_add(delta.y);
-}
-
-pub fn saturating_add(p: &PointI8, delta: &PointI8) -> PointI8 {
-    let x = p.x.saturating_add(delta.x);
-    let y = p.y.saturating_add(delta.y);
-    PointI8 { x, y }
-}
-
 #[cfg(test)]
 mod tests {
-    use super::{saturating_add, saturating_add_assign};
+    use super::super::{saturating_add, saturating_add_assign};
     use crate::cartesian::point::point_i8::PointI8;
 
     #[test]

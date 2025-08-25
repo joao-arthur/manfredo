@@ -1,19 +1,6 @@
-use crate::cartesian::point::{point_i16::PointI16, point_u16::PointU16};
-
-pub fn saturating_add_assign(p: &mut PointU16, delta: &PointI16) {
-    p.x = p.x.saturating_add_signed(delta.x);
-    p.y = p.y.saturating_add_signed(delta.y);
-}
-
-pub fn saturating_add(p: &PointU16, delta: &PointI16) -> PointU16 {
-    let x = p.x.saturating_add_signed(delta.x);
-    let y = p.y.saturating_add_signed(delta.y);
-    PointU16 { x, y }
-}
-
 #[cfg(test)]
 mod tests {
-    use super::{saturating_add, saturating_add_assign};
+    use super::super::{saturating_add, saturating_add_assign};
     use crate::cartesian::point::{point_i16::PointI16, point_u16::PointU16};
 
     #[test]

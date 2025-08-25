@@ -1,19 +1,6 @@
-use crate::cartesian::point::point_i32::PointI32;
-
-pub fn saturating_add_assign(p: &mut PointI32, delta: &PointI32) {
-    p.x = p.x.saturating_add(delta.x);
-    p.y = p.y.saturating_add(delta.y);
-}
-
-pub fn saturating_add(p: &PointI32, delta: &PointI32) -> PointI32 {
-    let x = p.x.saturating_add(delta.x);
-    let y = p.y.saturating_add(delta.y);
-    PointI32 { x, y }
-}
-
 #[cfg(test)]
 mod tests {
-    use super::{saturating_add, saturating_add_assign};
+    use super::super::{saturating_add, saturating_add_assign};
     use crate::cartesian::point::point_i32::PointI32;
 
     #[test]

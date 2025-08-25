@@ -1,30 +1,6 @@
-use crate::cartesian::point::{point_i32::PointI32, point_u32::PointU32};
-
-pub fn try_checked_add_assign(p: &mut PointU32, delta: &PointI32) -> Option<()> {
-    let x = p.x.checked_add_signed(delta.x)?;
-    let y = p.y.checked_add_signed(delta.y)?;
-    p.x = x;
-    p.y = y;
-    Some(())
-}
-
-pub fn try_checked_add(p: &PointU32, delta: &PointI32) -> Option<PointU32> {
-    let x = p.x.checked_add_signed(delta.x)?;
-    let y = p.y.checked_add_signed(delta.y)?;
-    Some(PointU32 { x, y })
-}
-
-pub fn checked_add_assign(p: &mut PointU32, delta: &PointI32) {
-    try_checked_add_assign(p, delta).unwrap()
-}
-
-pub fn checked_add(p: &PointU32, delta: &PointI32) -> PointU32 {
-    try_checked_add(p, delta).unwrap()
-}
-
 #[cfg(test)]
 mod tests {
-    use super::{checked_add, checked_add_assign, try_checked_add, try_checked_add_assign};
+    use super::super::{checked_add, checked_add_assign, try_checked_add, try_checked_add_assign};
     use crate::cartesian::point::{point_i32::PointI32, point_u32::PointU32};
 
     #[test]

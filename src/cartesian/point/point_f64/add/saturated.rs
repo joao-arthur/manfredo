@@ -1,21 +1,6 @@
-use crate::cartesian::point::point_f64::{MAX, MIN, PointF64};
-
-pub fn saturating_add_assign(p: &mut PointF64, delta: &PointF64) {
-    let temp_x = p.x + delta.x;
-    let temp_y = p.y + delta.y;
-    p.x = temp_x.clamp(MIN, MAX);
-    p.y = temp_y.clamp(MIN, MAX);
-}
-
-pub fn saturating_add(p: &PointF64, delta: &PointF64) -> PointF64 {
-    let temp_x = p.x + delta.x;
-    let temp_y = p.y + delta.y;
-    PointF64::of(temp_x.clamp(MIN, MAX), temp_y.clamp(MIN, MAX))
-}
-
 #[cfg(test)]
 mod tests {
-    use super::{saturating_add, saturating_add_assign};
+    use super::super::{saturating_add, saturating_add_assign};
     use crate::cartesian::point::point_f64::{MAX, MIN, PointF64};
 
     #[test]

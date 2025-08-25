@@ -1,19 +1,6 @@
-use crate::cartesian::point::point_i16::PointI16;
-
-pub fn wrapping_add_assign(p: &mut PointI16, delta: &PointI16) {
-    p.x = p.x.wrapping_add(delta.x);
-    p.y = p.y.wrapping_add(delta.y);
-}
-
-pub fn wrapping_add(p: &PointI16, delta: &PointI16) -> PointI16 {
-    let x = p.x.wrapping_add(delta.x);
-    let y = p.y.wrapping_add(delta.y);
-    PointI16 { x, y }
-}
-
 #[cfg(test)]
 mod tests {
-    use super::{wrapping_add, wrapping_add_assign};
+    use super::super::{wrapping_add, wrapping_add_assign};
     use crate::cartesian::point::point_i16::PointI16;
 
     #[test]

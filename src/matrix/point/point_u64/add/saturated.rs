@@ -1,19 +1,6 @@
-use crate::matrix::point::{point_i64::PointI64, point_u64::PointU64};
-
-pub fn saturating_add_assign(p: &mut PointU64, delta: &PointI64) {
-    p.row = p.row.saturating_add_signed(delta.row);
-    p.col = p.col.saturating_add_signed(delta.col);
-}
-
-pub fn saturating_add(p: &PointU64, delta: &PointI64) -> PointU64 {
-    let row = p.row.saturating_add_signed(delta.row);
-    let col = p.col.saturating_add_signed(delta.col);
-    PointU64 { row, col }
-}
-
 #[cfg(test)]
 mod tests {
-    use super::{saturating_add, saturating_add_assign};
+    use super::super::{saturating_add, saturating_add_assign};
     use crate::matrix::point::{point_i64::PointI64, point_u64::PointU64};
 
     #[test]

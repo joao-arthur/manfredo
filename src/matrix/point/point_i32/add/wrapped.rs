@@ -1,19 +1,6 @@
-use crate::matrix::point::point_i32::PointI32;
-
-pub fn wrapping_add_assign(p: &mut PointI32, delta: &PointI32) {
-    p.row = p.row.wrapping_add(delta.row);
-    p.col = p.col.wrapping_add(delta.col);
-}
-
-pub fn wrapping_add(p: &PointI32, delta: &PointI32) -> PointI32 {
-    let row = p.row.wrapping_add(delta.row);
-    let col = p.col.wrapping_add(delta.col);
-    PointI32 { row, col }
-}
-
 #[cfg(test)]
 mod tests {
-    use super::{wrapping_add, wrapping_add_assign};
+    use super::super::{wrapping_add, wrapping_add_assign};
     use crate::matrix::point::point_i32::PointI32;
 
     #[test]

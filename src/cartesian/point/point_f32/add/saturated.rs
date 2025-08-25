@@ -1,21 +1,6 @@
-use crate::cartesian::point::point_f32::{MAX, MIN, PointF32};
-
-pub fn saturating_add_assign(p: &mut PointF32, delta: &PointF32) {
-    let temp_x = p.x + delta.x;
-    let temp_y = p.y + delta.y;
-    p.x = temp_x.clamp(MIN, MAX);
-    p.y = temp_y.clamp(MIN, MAX);
-}
-
-pub fn saturating_add(p: &PointF32, delta: &PointF32) -> PointF32 {
-    let temp_x = p.x + delta.x;
-    let temp_y = p.y + delta.y;
-    PointF32::of(temp_x.clamp(MIN, MAX), temp_y.clamp(MIN, MAX))
-}
-
 #[cfg(test)]
 mod tests {
-    use super::{saturating_add, saturating_add_assign};
+    use super::super::{saturating_add, saturating_add_assign};
     use crate::cartesian::point::point_f32::{MAX, MIN, PointF32};
 
     #[test]

@@ -1,36 +1,6 @@
-use crate::cartesian::point::point_f32::{MAX, MIN, PointF32};
-
-pub fn try_checked_add_assign(p: &mut PointF32, delta: &PointF32) -> Option<()> {
-    let x = p.x + delta.x;
-    let y = p.y + delta.y;
-    if x < MIN || x > MAX || y < MIN || y > MAX {
-        return None;
-    }
-    p.x = x;
-    p.y = y;
-    Some(())
-}
-
-pub fn try_checked_add(p: &PointF32, delta: &PointF32) -> Option<PointF32> {
-    let x = p.x + delta.x;
-    let y = p.y + delta.y;
-    if x < MIN || x > MAX || y < MIN || y > MAX {
-        return None;
-    }
-    Some(PointF32 { x, y })
-}
-
-pub fn checked_add_assign(p: &mut PointF32, delta: &PointF32) {
-    try_checked_add_assign(p, delta).unwrap()
-}
-
-pub fn checked_add(p: &PointF32, delta: &PointF32) -> PointF32 {
-    try_checked_add(p, delta).unwrap()
-}
-
 #[cfg(test)]
 mod tests {
-    use super::{checked_add, checked_add_assign, try_checked_add, try_checked_add_assign};
+    use super::super::{checked_add, checked_add_assign, try_checked_add, try_checked_add_assign};
     use crate::cartesian::point::point_f32::{MAX, MIN, PointF32};
 
     #[test]

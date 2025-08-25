@@ -1,19 +1,6 @@
-use crate::cartesian::point::point_i64::PointI64;
-
-pub fn saturating_add_assign(p: &mut PointI64, delta: &PointI64) {
-    p.x = p.x.saturating_add(delta.x);
-    p.y = p.y.saturating_add(delta.y);
-}
-
-pub fn saturating_add(p: &PointI64, delta: &PointI64) -> PointI64 {
-    let x = p.x.saturating_add(delta.x);
-    let y = p.y.saturating_add(delta.y);
-    PointI64 { x, y }
-}
-
 #[cfg(test)]
 mod tests {
-    use super::{saturating_add, saturating_add_assign};
+    use super::super::{saturating_add, saturating_add_assign};
     use crate::cartesian::point::point_i64::PointI64;
 
     #[test]

@@ -18,21 +18,21 @@ fn try_checked_add_to_bounds() {
 }
 
 #[test]
-fn try_checked_add_edge_out_of_bounds() {
-    let r = RectI32::largest();
-    assert_eq!(try_checked_add(&r, &RectI32::of(-1, 0, 0, 0)), None);
-    assert_eq!(try_checked_add(&r, &RectI32::of(0, -1, 0, 0)), None);
-    assert_eq!(try_checked_add(&r, &RectI32::of(0, 0, 1, 0)), None);
-    assert_eq!(try_checked_add(&r, &RectI32::of(0, 0, 0, 1)), None);
-}
-
-#[test]
 fn try_checked_add_out_of_bounds() {
     let r = RectI32::of(i32::MIN + 10, i32::MIN + 10, i32::MAX - 10, i32::MAX - 10);
     assert_eq!(try_checked_add(&r, &RectI32::of(-20, 0, 0, 0)), None);
     assert_eq!(try_checked_add(&r, &RectI32::of(0, -20, 0, 0)), None);
     assert_eq!(try_checked_add(&r, &RectI32::of(0, 0, 20, 0)), None);
     assert_eq!(try_checked_add(&r, &RectI32::of(0, 0, 0, 20)), None);
+}
+
+#[test]
+fn try_checked_add_edge_out_of_bounds() {
+    let r = RectI32::largest();
+    assert_eq!(try_checked_add(&r, &RectI32::of(-1, 0, 0, 0)), None);
+    assert_eq!(try_checked_add(&r, &RectI32::of(0, -1, 0, 0)), None);
+    assert_eq!(try_checked_add(&r, &RectI32::of(0, 0, 1, 0)), None);
+    assert_eq!(try_checked_add(&r, &RectI32::of(0, 0, 0, 1)), None);
 }
 
 #[test]

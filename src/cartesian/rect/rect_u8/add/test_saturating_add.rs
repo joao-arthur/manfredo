@@ -15,21 +15,21 @@ fn saturating_add_to_bounds() {
 }
 
 #[test]
-fn saturating_add_edge_out_of_bounds() {
-    let r = RectU8::largest();
-    assert_eq!(saturating_add(&r, &RectI8::of(-1, 0, 0, 0)), RectU8::largest());
-    assert_eq!(saturating_add(&r, &RectI8::of(0, -1, 0, 0)), RectU8::largest());
-    assert_eq!(saturating_add(&r, &RectI8::of(0, 0, 1, 0)), RectU8::largest());
-    assert_eq!(saturating_add(&r, &RectI8::of(0, 0, 0, 1)), RectU8::largest());
-}
-
-#[test]
 fn saturating_add_out_of_bounds() {
     let r = RectU8::of(10, 10, u8::MAX - 10, u8::MAX - 10);
     assert_eq!(saturating_add(&r, &RectI8::of(-20, 0, 0, 0)), RectU8::of(0, 10, u8::MAX - 10, u8::MAX - 10));
     assert_eq!(saturating_add(&r, &RectI8::of(0, -20, 0, 0)), RectU8::of(10, 0, u8::MAX - 10, u8::MAX - 10));
     assert_eq!(saturating_add(&r, &RectI8::of(0, 0, 20, 0)), RectU8::of(10, 10, u8::MAX, u8::MAX - 10));
     assert_eq!(saturating_add(&r, &RectI8::of(0, 0, 0, 20)), RectU8::of(10, 10, u8::MAX - 10, u8::MAX));
+}
+
+#[test]
+fn saturating_add_edge_out_of_bounds() {
+    let r = RectU8::largest();
+    assert_eq!(saturating_add(&r, &RectI8::of(-1, 0, 0, 0)), RectU8::largest());
+    assert_eq!(saturating_add(&r, &RectI8::of(0, -1, 0, 0)), RectU8::largest());
+    assert_eq!(saturating_add(&r, &RectI8::of(0, 0, 1, 0)), RectU8::largest());
+    assert_eq!(saturating_add(&r, &RectI8::of(0, 0, 0, 1)), RectU8::largest());
 }
 
 #[test]

@@ -26,19 +26,6 @@ fn saturating_add_assign_to_bounds() {
 }
 
 #[test]
-fn saturating_add_assign_edge_out_of_bounds() {
-    let mut r = RectU8::largest();
-    saturating_add_assign(&mut r, &RectI8::of(-1, 0, 0, 0));
-    assert_eq!(r, RectU8::largest());
-    saturating_add_assign(&mut r, &RectI8::of(0, -1, 0, 0));
-    assert_eq!(r, RectU8::largest());
-    saturating_add_assign(&mut r, &RectI8::of(0, 0, 1, 0));
-    assert_eq!(r, RectU8::largest());
-    saturating_add_assign(&mut r, &RectI8::of(0, 0, 0, 1));
-    assert_eq!(r, RectU8::largest());
-}
-
-#[test]
 fn saturating_add_assign_out_of_bounds() {
     let mut r1 = RectU8::of(10, 10, u8::MAX - 10, u8::MAX - 10);
     saturating_add_assign(&mut r1, &RectI8::of(-20, 0, 0, 0));
@@ -55,6 +42,19 @@ fn saturating_add_assign_out_of_bounds() {
     let mut r4 = RectU8::of(10, 10, u8::MAX - 10, u8::MAX - 10);
     saturating_add_assign(&mut r4, &RectI8::of(0, 0, 0, 20));
     assert_eq!(r4, RectU8::of(10, 10, u8::MAX - 10, u8::MAX));
+}
+
+#[test]
+fn saturating_add_assign_edge_out_of_bounds() {
+    let mut r = RectU8::largest();
+    saturating_add_assign(&mut r, &RectI8::of(-1, 0, 0, 0));
+    assert_eq!(r, RectU8::largest());
+    saturating_add_assign(&mut r, &RectI8::of(0, -1, 0, 0));
+    assert_eq!(r, RectU8::largest());
+    saturating_add_assign(&mut r, &RectI8::of(0, 0, 1, 0));
+    assert_eq!(r, RectU8::largest());
+    saturating_add_assign(&mut r, &RectI8::of(0, 0, 0, 1));
+    assert_eq!(r, RectU8::largest());
 }
 
 #[test]

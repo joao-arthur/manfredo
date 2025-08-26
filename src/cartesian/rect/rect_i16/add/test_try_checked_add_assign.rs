@@ -26,16 +26,6 @@ fn try_checked_add_assign_to_bounds() {
 }
 
 #[test]
-fn try_checked_add_assign_edge_out_of_bounds() {
-    let mut r = RectI16::largest();
-    assert_eq!(try_checked_add_assign(&mut r, &RectI16::of(-1, 0, 0, 0)), None);
-    assert_eq!(try_checked_add_assign(&mut r, &RectI16::of(0, -1, 0, 0)), None);
-    assert_eq!(try_checked_add_assign(&mut r, &RectI16::of(0, 0, 1, 0)), None);
-    assert_eq!(try_checked_add_assign(&mut r, &RectI16::of(0, 0, 0, 1)), None);
-    assert_eq!(r, RectI16::largest());
-}
-
-#[test]
 fn try_checked_add_assign_out_of_bounds() {
     let mut r = RectI16::of(i16::MIN + 10, i16::MIN + 10, i16::MAX - 10, i16::MAX - 10);
     assert_eq!(try_checked_add_assign(&mut r, &RectI16::of(-20, 0, 0, 0)), None);
@@ -43,6 +33,16 @@ fn try_checked_add_assign_out_of_bounds() {
     assert_eq!(try_checked_add_assign(&mut r, &RectI16::of(0, 0, 20, 0)), None);
     assert_eq!(try_checked_add_assign(&mut r, &RectI16::of(0, 0, 0, 20)), None);
     assert_eq!(r, RectI16::of(i16::MIN + 10, i16::MIN + 10, i16::MAX - 10, i16::MAX - 10));
+}
+
+#[test]
+fn try_checked_add_assign_edge_out_of_bounds() {
+    let mut r = RectI16::largest();
+    assert_eq!(try_checked_add_assign(&mut r, &RectI16::of(-1, 0, 0, 0)), None);
+    assert_eq!(try_checked_add_assign(&mut r, &RectI16::of(0, -1, 0, 0)), None);
+    assert_eq!(try_checked_add_assign(&mut r, &RectI16::of(0, 0, 1, 0)), None);
+    assert_eq!(try_checked_add_assign(&mut r, &RectI16::of(0, 0, 0, 1)), None);
+    assert_eq!(r, RectI16::largest());
 }
 
 #[test]

@@ -26,19 +26,6 @@ fn saturating_add_assign_to_bounds() {
 }
 
 #[test]
-fn saturating_add_assign_edge_out_of_bounds() {
-    let mut r = RectI64::largest();
-    saturating_add_assign(&mut r, &RectI64::of(-1, 0, 0, 0));
-    assert_eq!(r, RectI64::largest());
-    saturating_add_assign(&mut r, &RectI64::of(0, -1, 0, 0));
-    assert_eq!(r, RectI64::largest());
-    saturating_add_assign(&mut r, &RectI64::of(0, 0, 1, 0));
-    assert_eq!(r, RectI64::largest());
-    saturating_add_assign(&mut r, &RectI64::of(0, 0, 0, 1));
-    assert_eq!(r, RectI64::largest());
-}
-
-#[test]
 fn saturating_add_assign_out_of_bounds() {
     let mut r1 = RectI64::of(i64::MIN + 10, i64::MIN + 10, i64::MAX - 10, i64::MAX - 10);
     saturating_add_assign(&mut r1, &RectI64::of(-20, 0, 0, 0));
@@ -55,6 +42,19 @@ fn saturating_add_assign_out_of_bounds() {
     let mut r4 = RectI64::of(i64::MIN + 10, i64::MIN + 10, i64::MAX - 10, i64::MAX - 10);
     saturating_add_assign(&mut r4, &RectI64::of(0, 0, 0, 20));
     assert_eq!(r4, RectI64::of(i64::MIN + 10, i64::MIN + 10, i64::MAX - 10, i64::MAX));
+}
+
+#[test]
+fn saturating_add_assign_edge_out_of_bounds() {
+    let mut r = RectI64::largest();
+    saturating_add_assign(&mut r, &RectI64::of(-1, 0, 0, 0));
+    assert_eq!(r, RectI64::largest());
+    saturating_add_assign(&mut r, &RectI64::of(0, -1, 0, 0));
+    assert_eq!(r, RectI64::largest());
+    saturating_add_assign(&mut r, &RectI64::of(0, 0, 1, 0));
+    assert_eq!(r, RectI64::largest());
+    saturating_add_assign(&mut r, &RectI64::of(0, 0, 0, 1));
+    assert_eq!(r, RectI64::largest());
 }
 
 #[test]

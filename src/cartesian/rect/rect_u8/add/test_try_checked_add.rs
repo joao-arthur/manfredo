@@ -15,21 +15,21 @@ fn try_checked_add_to_bounds() {
 }
 
 #[test]
-fn try_checked_add_edge_out_of_bounds() {
-    let r = RectU8::largest();
-    assert_eq!(try_checked_add(&r, &RectI8::of(-1, 0, 0, 0)), None);
-    assert_eq!(try_checked_add(&r, &RectI8::of(0, -1, 0, 0)), None);
-    assert_eq!(try_checked_add(&r, &RectI8::of(0, 0, 1, 0)), None);
-    assert_eq!(try_checked_add(&r, &RectI8::of(0, 0, 0, 1)), None);
-}
-
-#[test]
 fn try_checked_add_out_of_bounds() {
     let r = RectU8::of(10, 10, u8::MAX - 10, u8::MAX - 10);
     assert_eq!(try_checked_add(&r, &RectI8::of(-20, 0, 0, 0)), None);
     assert_eq!(try_checked_add(&r, &RectI8::of(0, -20, 0, 0)), None);
     assert_eq!(try_checked_add(&r, &RectI8::of(0, 0, 20, 0)), None);
     assert_eq!(try_checked_add(&r, &RectI8::of(0, 0, 0, 20)), None);
+}
+
+#[test]
+fn try_checked_add_edge_out_of_bounds() {
+    let r = RectU8::largest();
+    assert_eq!(try_checked_add(&r, &RectI8::of(-1, 0, 0, 0)), None);
+    assert_eq!(try_checked_add(&r, &RectI8::of(0, -1, 0, 0)), None);
+    assert_eq!(try_checked_add(&r, &RectI8::of(0, 0, 1, 0)), None);
+    assert_eq!(try_checked_add(&r, &RectI8::of(0, 0, 0, 1)), None);
 }
 
 #[test]

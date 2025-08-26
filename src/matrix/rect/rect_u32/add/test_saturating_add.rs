@@ -15,21 +15,21 @@ fn saturating_add_to_bounds() {
 }
 
 #[test]
-fn saturating_add_edge_out_of_bounds() {
-    let r = RectU32::largest();
-    assert_eq!(saturating_add(&r, &RectI32::of(-1, 0, 0, 0)), RectU32::largest());
-    assert_eq!(saturating_add(&r, &RectI32::of(0, -1, 0, 0)), RectU32::largest());
-    assert_eq!(saturating_add(&r, &RectI32::of(0, 0, 1, 0)), RectU32::largest());
-    assert_eq!(saturating_add(&r, &RectI32::of(0, 0, 0, 1)), RectU32::largest());
-}
-
-#[test]
 fn saturating_add_out_of_bounds() {
     let r = RectU32::of(10, 10, u32::MAX - 10, u32::MAX - 10);
     assert_eq!(saturating_add(&r, &RectI32::of(-20, 0, 0, 0)), RectU32::of(0, 10, u32::MAX - 10, u32::MAX - 10));
     assert_eq!(saturating_add(&r, &RectI32::of(0, -20, 0, 0)), RectU32::of(10, 0, u32::MAX - 10, u32::MAX - 10));
     assert_eq!(saturating_add(&r, &RectI32::of(0, 0, 20, 0)), RectU32::of(10, 10, u32::MAX, u32::MAX - 10));
     assert_eq!(saturating_add(&r, &RectI32::of(0, 0, 0, 20)), RectU32::of(10, 10, u32::MAX - 10, u32::MAX));
+}
+
+#[test]
+fn saturating_add_edge_out_of_bounds() {
+    let r = RectU32::largest();
+    assert_eq!(saturating_add(&r, &RectI32::of(-1, 0, 0, 0)), RectU32::largest());
+    assert_eq!(saturating_add(&r, &RectI32::of(0, -1, 0, 0)), RectU32::largest());
+    assert_eq!(saturating_add(&r, &RectI32::of(0, 0, 1, 0)), RectU32::largest());
+    assert_eq!(saturating_add(&r, &RectI32::of(0, 0, 0, 1)), RectU32::largest());
 }
 
 #[test]

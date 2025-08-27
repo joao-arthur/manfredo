@@ -45,39 +45,33 @@ fn try_saturating_inflate_assign_max_bounds() {
 
 #[test]
 fn try_saturating_inflate_assign_to_bounds() {
-    let mut r_odd = RectU64::of(1, 1, u64::MAX - 1, u64::MAX - 1);
-    assert_eq!(try_saturating_inflate_assign(&mut r_odd), Some(()));
-    assert_eq!(r_odd, RectU64::largest());
+    let mut r = RectU64::of(1, 1, u64::MAX - 1, u64::MAX - 1);
+    assert_eq!(try_saturating_inflate_assign(&mut r), Some(()));
+    assert_eq!(r, RectU64::largest());
 
-    let mut r_even_1 = RectU64::of(0, 0, u64::MAX - 1, u64::MAX - 1);
-    assert_eq!(try_saturating_inflate_assign(&mut r_even_1), Some(()));
-    assert_eq!(r_even_1, RectU64::largest());
-
-    let mut r_even_2 = RectU64::of(1, 1, u64::MAX, u64::MAX);
-    assert_eq!(try_saturating_inflate_assign(&mut r_even_2), Some(()));
-    assert_eq!(r_even_2, RectU64::largest());
-}
-
-#[test]
-fn try_saturating_inflate_assign_width_to_bounds() {
-    let mut r_min = RectU64::of(1, 10, 20, 20);
+    let mut r_min = RectU64::of(0, 0, u64::MAX - 1, u64::MAX - 1);
     assert_eq!(try_saturating_inflate_assign(&mut r_min), Some(()));
-    assert_eq!(r_min, RectU64::of(0, 9, 21, 21));
+    assert_eq!(r_min, RectU64::largest());
 
-    let mut r_max = RectU64::of(10, 10, u64::MAX - 1, 20);
+    let mut r_max = RectU64::of(1, 1, u64::MAX, u64::MAX);
     assert_eq!(try_saturating_inflate_assign(&mut r_max), Some(()));
-    assert_eq!(r_max, RectU64::of(9, 9, u64::MAX, 21));
-}
+    assert_eq!(r_max, RectU64::largest());
 
-#[test]
-fn try_saturating_inflate_assign_height_to_bounds() {
-    let mut r_min = RectU64::of(10, 1, 20, 20);
-    assert_eq!(try_saturating_inflate_assign(&mut r_min), Some(()));
-    assert_eq!(r_min, RectU64::of(9, 0, 21, 21));
+    let mut r_min_x = RectU64::of(1, 10, 20, 20);
+    assert_eq!(try_saturating_inflate_assign(&mut r_min_x), Some(()));
+    assert_eq!(r_min_x, RectU64::of(0, 9, 21, 21));
 
-    let mut r_max = RectU64::of(10, 10, 20, u64::MAX - 1);
-    assert_eq!(try_saturating_inflate_assign(&mut r_max), Some(()));
-    assert_eq!(r_max, RectU64::of(9, 9, 21, u64::MAX));
+    let mut r_min_y = RectU64::of(10, 1, 20, 20);
+    assert_eq!(try_saturating_inflate_assign(&mut r_min_y), Some(()));
+    assert_eq!(r_min_y, RectU64::of(9, 0, 21, 21));
+
+    let mut r_max_x = RectU64::of(10, 10, u64::MAX - 1, 20);
+    assert_eq!(try_saturating_inflate_assign(&mut r_max_x), Some(()));
+    assert_eq!(r_max_x, RectU64::of(9, 9, u64::MAX, 21));
+
+    let mut r_max_y = RectU64::of(10, 10, 20, u64::MAX - 1);
+    assert_eq!(try_saturating_inflate_assign(&mut r_max_y), Some(()));
+    assert_eq!(r_max_y, RectU64::of(9, 9, 21, u64::MAX));
 }
 
 #[test]

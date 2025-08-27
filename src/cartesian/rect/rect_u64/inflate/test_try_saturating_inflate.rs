@@ -54,23 +54,15 @@ fn try_saturating_inflate_to_bounds() {
     assert_eq!(try_saturating_inflate(&RectU64::of(1, 1, u64::MAX - 1, u64::MAX - 1)), Some(RectU64::largest()));
     assert_eq!(try_saturating_inflate(&RectU64::of(0, 0, u64::MAX - 1, u64::MAX - 1)), Some(RectU64::largest()));
     assert_eq!(try_saturating_inflate(&RectU64::of(1, 1, u64::MAX, u64::MAX)), Some(RectU64::largest()));
-}
-
-#[test]
-fn try_saturating_inflate_width_to_bounds() {
-    assert_eq!(try_saturating_inflate(&RectU64::of(1, 10, 20, 20)), Some(RectU64::of(0, 9, 21, 21)));
-    assert_eq!(try_saturating_inflate(&RectU64::of(10, 10, u64::MAX - 1, 20)), Some(RectU64::of(9, 9, u64::MAX, 21)));
-}
-
-#[test]
-fn try_saturating_inflate_height_to_bounds() {
-    assert_eq!(try_saturating_inflate(&RectU64::of(10, 1, 20, 20)), Some(RectU64::of(9, 0, 21, 21)));
-    assert_eq!(try_saturating_inflate(&RectU64::of(10, 10, 20, u64::MAX - 1)), Some(RectU64::of(9, 9, 21, u64::MAX)));
+    assert_eq!(try_saturating_inflate(&RectU64::of(1, 10, u64::MAX - 10, u64::MAX - 10)), Some(RectU64::of(0, 9, u64::MAX - 9, u64::MAX - 9)));
+    assert_eq!(try_saturating_inflate(&RectU64::of(10, 1, u64::MAX - 10, u64::MAX - 10)), Some(RectU64::of(9, 0, u64::MAX - 9, u64::MAX - 9)));
+    assert_eq!(try_saturating_inflate(&RectU64::of(10, 10, u64::MAX - 1, u64::MAX - 10)), Some(RectU64::of(9, 9, u64::MAX, u64::MAX - 9)));
+    assert_eq!(try_saturating_inflate(&RectU64::of(10, 10, u64::MAX - 10, u64::MAX - 1)), Some(RectU64::of(9, 9, u64::MAX - 9, u64::MAX)));
 }
 
 #[test]
 fn try_saturating_inflate_out_of_bounds() {
     assert_eq!(try_saturating_inflate(&RectU64::largest()), None);
-    assert_eq!(try_saturating_inflate(&RectU64::of(0, 10, u64::MAX, 20)), None);
-    assert_eq!(try_saturating_inflate(&RectU64::of(10, 0, 20, u64::MAX)), None);
+    assert_eq!(try_saturating_inflate(&RectU64::of(0, 10, u64::MAX, u64::MAX - 10)), None);
+    assert_eq!(try_saturating_inflate(&RectU64::of(10, 0, u64::MAX - 10, u64::MAX)), None);
 }

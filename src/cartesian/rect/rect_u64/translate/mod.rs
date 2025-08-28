@@ -40,10 +40,12 @@ pub fn saturating_translate_assign(r: &mut RectU64, delta: &PointI64) {
     let clamped_y = temp_min_y.clamp(0, i128::from(u64::MAX) - i128::from(dy));
     let min_x = clamped_x as u64;
     let min_y = clamped_y as u64;
+    let max_x = min_x + dx;
+    let max_y = min_y + dy;
     r.min.x = min_x;
     r.min.y = min_y;
-    r.max.x = min_x + dx;
-    r.max.y = min_y + dy;
+    r.max.x = max_x;
+    r.max.y = max_y;
 }
 
 pub fn saturating_translate(r: &RectU64, delta: &PointI64) -> RectU64 {

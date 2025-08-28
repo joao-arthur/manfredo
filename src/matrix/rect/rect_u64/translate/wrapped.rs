@@ -60,30 +60,30 @@ mod tests {
     fn wrapping_translate_assign_small_rect_limits_out_of_bounds() {
         let mut r_min = RectU64::of(1, 1, 10, 10);
         wrapping_translate_assign(&mut r_min, &PointI64::min());
-        assert_eq!(r_min, RectU64::of((i64::MAX as u64) + 2, (i64::MAX as u64) + 2, (i64::MAX as u64) + 11, (i64::MAX as u64) + 11));
+        assert_eq!(r_min, RectU64::of(u64::MAX / 2 + 2, u64::MAX / 2 + 2, u64::MAX / 2 + 11, u64::MAX / 2 + 11));
 
         let mut r_max = RectU64::of(u64::MAX - 10, u64::MAX - 10, u64::MAX - 1, u64::MAX - 1);
         wrapping_translate_assign(&mut r_max, &PointI64::max());
-        assert_eq!(r_max, RectU64::of((i64::MAX as u64) - 11, (i64::MAX as u64) - 11, (i64::MAX as u64) - 2, (i64::MAX as u64) - 2));
+        assert_eq!(r_max, RectU64::of(u64::MAX / 2 - 11, u64::MAX / 2 - 11, u64::MAX / 2 - 2, u64::MAX / 2 - 2));
     }
 
     #[test]
     fn wrapping_translate_assign_big_rect_limits_out_of_bounds() {
         let mut r1 = RectU64::largest();
         wrapping_translate_assign(&mut r1, &PointI64::min());
-        assert_eq!(r1, RectU64::of((i64::MAX as u64) + 1, (i64::MAX as u64) + 1, i64::MAX as u64, i64::MAX as u64));
+        assert_eq!(r1, RectU64::of(u64::MAX / 2 + 1, u64::MAX / 2 + 1, u64::MAX / 2, u64::MAX / 2));
 
         let mut r2 = RectU64::largest();
         wrapping_translate_assign(&mut r2, &PointI64::max());
-        assert_eq!(r2, RectU64::of(i64::MAX as u64, i64::MAX as u64, (i64::MAX as u64) - 1, (i64::MAX as u64) - 1));
+        assert_eq!(r2, RectU64::of(u64::MAX / 2, u64::MAX / 2, u64::MAX / 2 - 1, u64::MAX / 2 - 1));
 
         let mut r_min = RectU64::of(1, 1, u64::MAX, u64::MAX);
         wrapping_translate_assign(&mut r_min, &PointI64::min());
-        assert_eq!(r_min, RectU64::of((i64::MAX as u64) + 2, (i64::MAX as u64) + 2, i64::MAX as u64, i64::MAX as u64));
+        assert_eq!(r_min, RectU64::of(u64::MAX / 2 + 2, u64::MAX / 2 + 2, u64::MAX / 2, u64::MAX / 2));
 
         let mut r_max = RectU64::of(0, 0, u64::MAX - 1, u64::MAX - 1);
         wrapping_translate_assign(&mut r_max, &PointI64::max());
-        assert_eq!(r_max, RectU64::of(i64::MAX as u64, i64::MAX as u64, (i64::MAX as u64) - 2, (i64::MAX as u64) - 2));
+        assert_eq!(r_max, RectU64::of(u64::MAX / 2, u64::MAX / 2, u64::MAX / 2 - 2, u64::MAX / 2 - 2));
     }
 
     #[test]
@@ -129,11 +129,11 @@ mod tests {
     fn wrapping_translate_small_rect_limits_out_of_bounds() {
         assert_eq!(
             wrapping_translate(&RectU64::of(1, 1, 10, 10), &PointI64::min()),
-            RectU64::of((i64::MAX as u64) + 2, (i64::MAX as u64) + 2, (i64::MAX as u64) + 11, (i64::MAX as u64) + 11)
+            RectU64::of(u64::MAX / 2 + 2, u64::MAX / 2 + 2, u64::MAX / 2 + 11, u64::MAX / 2 + 11)
         );
         assert_eq!(
             wrapping_translate(&RectU64::of(u64::MAX - 10, u64::MAX - 10, u64::MAX - 1, u64::MAX - 1), &PointI64::max()),
-            RectU64::of((i64::MAX as u64) - 11, (i64::MAX as u64) - 11, (i64::MAX as u64) - 2, (i64::MAX as u64) - 2)
+            RectU64::of(u64::MAX / 2 - 11, u64::MAX / 2 - 11, u64::MAX / 2 - 2, u64::MAX / 2 - 2)
         );
     }
 
@@ -141,19 +141,19 @@ mod tests {
     fn wrapping_translate_big_rect_limits_out_of_bounds() {
         assert_eq!(
             wrapping_translate(&RectU64::largest(), &PointI64::min()),
-            RectU64::of((i64::MAX as u64) + 1, (i64::MAX as u64) + 1, i64::MAX as u64, i64::MAX as u64)
+            RectU64::of(u64::MAX / 2 + 1, u64::MAX / 2 + 1, u64::MAX / 2, u64::MAX / 2)
         );
         assert_eq!(
             wrapping_translate(&RectU64::largest(), &PointI64::max()),
-            RectU64::of(i64::MAX as u64, i64::MAX as u64, (i64::MAX as u64) - 1, (i64::MAX as u64) - 1)
+            RectU64::of(u64::MAX / 2, u64::MAX / 2, u64::MAX / 2 - 1, u64::MAX / 2 - 1)
         );
         assert_eq!(
             wrapping_translate(&RectU64::of(1, 1, u64::MAX, u64::MAX), &PointI64::min()),
-            RectU64::of((i64::MAX as u64) + 2, (i64::MAX as u64) + 2, i64::MAX as u64, i64::MAX as u64)
+            RectU64::of(u64::MAX / 2 + 2, u64::MAX / 2 + 2, u64::MAX / 2, u64::MAX / 2)
         );
         assert_eq!(
             wrapping_translate(&RectU64::of(0, 0, u64::MAX - 1, u64::MAX - 1), &PointI64::max()),
-            RectU64::of(i64::MAX as u64, i64::MAX as u64, (i64::MAX as u64) - 2, (i64::MAX as u64) - 2)
+            RectU64::of(u64::MAX / 2, u64::MAX / 2, u64::MAX / 2 - 2, u64::MAX / 2 - 2)
         );
     }
 }

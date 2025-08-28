@@ -62,28 +62,28 @@ fn wrapping_add_assign_big_rect_out_of_bounds() {
 fn wrapping_add_assign_small_rect_limits_out_of_bounds() {
     let mut r_min = RectU64::of(1, 1, 10, 10);
     wrapping_add_assign(&mut r_min, &RectI64::min());
-    assert_eq!(r_min, RectU64::of((i64::MAX as u64) + 2, (i64::MAX as u64) + 2, (i64::MAX as u64) + 11, (i64::MAX as u64) + 11));
+    assert_eq!(r_min, RectU64::of(u64::MAX / 2 + 2, u64::MAX / 2 + 2, u64::MAX / 2 + 11, u64::MAX / 2 + 11));
 
     let mut r_max = RectU64::of(u64::MAX - 10, u64::MAX - 10, u64::MAX - 1, u64::MAX - 1);
     wrapping_add_assign(&mut r_max, &RectI64::max());
-    assert_eq!(r_max, RectU64::of((i64::MAX as u64) - 11, (i64::MAX as u64) - 11, (i64::MAX as u64) - 2, (i64::MAX as u64) - 2));
+    assert_eq!(r_max, RectU64::of(u64::MAX / 2 - 11, u64::MAX / 2 - 11, u64::MAX / 2 - 2, u64::MAX / 2 - 2));
 }
 
 #[test]
 fn wrapping_add_assign_big_rect_limits_out_of_bounds() {
     let mut r1 = RectU64::largest();
     wrapping_add_assign(&mut r1, &RectI64::min());
-    assert_eq!(r1, RectU64::of((i64::MAX as u64) + 1, (i64::MAX as u64) + 1, i64::MAX as u64, i64::MAX as u64));
+    assert_eq!(r1, RectU64::of(u64::MAX / 2 + 1, u64::MAX / 2 + 1, u64::MAX / 2, u64::MAX / 2));
 
     let mut r2 = RectU64::largest();
     wrapping_add_assign(&mut r2, &RectI64::max());
-    assert_eq!(r2, RectU64::of(i64::MAX as u64, i64::MAX as u64, (i64::MAX as u64) - 1, (i64::MAX as u64) - 1));
+    assert_eq!(r2, RectU64::of(u64::MAX / 2, u64::MAX / 2, u64::MAX / 2 - 1, u64::MAX / 2 - 1));
 
     let mut r_min = RectU64::of(1, 1, u64::MAX, u64::MAX);
     wrapping_add_assign(&mut r_min, &RectI64::min());
-    assert_eq!(r_min, RectU64::of((i64::MAX as u64) + 2, (i64::MAX as u64) + 2, i64::MAX as u64, i64::MAX as u64));
+    assert_eq!(r_min, RectU64::of(u64::MAX / 2 + 2, u64::MAX / 2 + 2, u64::MAX / 2, u64::MAX / 2));
 
     let mut r_max = RectU64::of(0, 0, u64::MAX - 1, u64::MAX - 1);
     wrapping_add_assign(&mut r_max, &RectI64::max());
-    assert_eq!(r_max, RectU64::of(i64::MAX as u64, i64::MAX as u64, (i64::MAX as u64) - 2, (i64::MAX as u64) - 2));
+    assert_eq!(r_max, RectU64::of(u64::MAX / 2, u64::MAX / 2, u64::MAX / 2 - 2, u64::MAX / 2 - 2));
 }

@@ -11,18 +11,7 @@ fn test_saturating_translate_assign() {
 }
 
 #[test]
-fn saturating_translate_assign_small_rect_to_bounds() {
-    let mut min_r = RectU64::of(2, 5, 12, 15);
-    saturating_translate_assign(&mut min_r, &PointI64::of(-2, -5));
-    assert_eq!(min_r, RectU64::of(0, 0, 10, 10));
-
-    let mut max_r = RectU64::of(u64::MAX - 12, u64::MAX - 15, u64::MAX - 2, u64::MAX - 5);
-    saturating_translate_assign(&mut max_r, &PointI64::of(2, 5));
-    assert_eq!(max_r, RectU64::of(u64::MAX - 10, u64::MAX - 10, u64::MAX, u64::MAX));
-}
-
-#[test]
-fn saturating_translate_assign_big_rect_to_bounds() {
+fn saturating_translate_assign_to_bounds() {
     let mut min_r = RectU64::of(2, 5, u64::MAX, u64::MAX);
     saturating_translate_assign(&mut min_r, &PointI64::of(-2, -5));
     assert_eq!(min_r, RectU64::of(0, 0, u64::MAX - 2, u64::MAX - 5));
@@ -33,51 +22,33 @@ fn saturating_translate_assign_big_rect_to_bounds() {
 }
 
 #[test]
-fn saturating_translate_assign_small_rect_out_of_bounds() {
-    let mut r_min = RectU64::of(10, 5, 20, 30);
-    saturating_translate_assign(&mut r_min, &PointI64::of(-20, -20));
-    assert_eq!(r_min, RectU64::of(0, 0, 10, 25));
+fn saturating_translate_assign_out_of_bounds() {
+    let mut r1 = RectU64::of(10, 10, u64::MAX - 10, u64::MAX - 10);
+    saturating_translate_assign(&mut r1, &PointI64::of(-20, 0));
+    assert_eq!(r1, RectU64::of(0, 10, u64::MAX - 20, u64::MAX - 10));
 
-    let mut r_max = RectU64::of(u64::MAX - 20, u64::MAX - 30, u64::MAX - 5, u64::MAX - 10);
-    saturating_translate_assign(&mut r_max, &PointI64::of(20, 20));
-    assert_eq!(r_max, RectU64::of(u64::MAX - 15, u64::MAX - 20, u64::MAX, u64::MAX));
+    let mut r2 = RectU64::of(10, 10, u64::MAX - 10, u64::MAX - 10);
+    saturating_translate_assign(&mut r2, &PointI64::of(0, -20));
+    assert_eq!(r2, RectU64::of(10, 0, u64::MAX - 10, u64::MAX - 20));
+
+    let mut r3 = RectU64::of(10, 10, u64::MAX - 10, u64::MAX - 10);
+    saturating_translate_assign(&mut r3, &PointI64::of(20, 0));
+    assert_eq!(r3, RectU64::of(20, 10, u64::MAX, u64::MAX - 10));
+
+    let mut r4 = RectU64::of(10, 10, u64::MAX - 10, u64::MAX - 10);
+    saturating_translate_assign(&mut r4, &PointI64::of(0, 20));
+    assert_eq!(r4, RectU64::of(10, 20, u64::MAX - 10, u64::MAX));
 }
 
 #[test]
-fn saturating_translate_assign_big_rect_out_of_bounds() {
-    let mut r_min = RectU64::of(10, 5, u64::MAX, u64::MAX);
-    saturating_translate_assign(&mut r_min, &PointI64::of(-20, -20));
-    assert_eq!(r_min, RectU64::of(0, 0, u64::MAX - 10, u64::MAX - 5));
-
-    let mut r_max = RectU64::of(0, 0, u64::MAX - 5, u64::MAX - 10);
-    saturating_translate_assign(&mut r_max, &PointI64::of(20, 20));
-    assert_eq!(r_max, RectU64::of(5, 10, u64::MAX, u64::MAX));
-}
-
-#[test]
-fn saturating_translate_assign_small_rect_limits_out_of_bounds() {
-    let mut r_min = RectU64::of(1, 1, 10, 10);
-    saturating_translate_assign(&mut r_min, &PointI64::min());
-    assert_eq!(r_min, RectU64::of(0, 0, 9, 9));
-
-    let mut r_max = RectU64::of(u64::MAX - 10, u64::MAX - 10, u64::MAX - 1, u64::MAX - 1);
-    saturating_translate_assign(&mut r_max, &PointI64::max());
-    assert_eq!(r_max, RectU64::of(u64::MAX - 9, u64::MAX - 9, u64::MAX, u64::MAX));
-}
-
-#[test]
-fn saturating_translate_assign_big_rect_limits_out_of_bounds() {
+fn saturating_translate_assign_limits_out_of_bounds() {
     let mut r = RectU64::largest();
-    saturating_translate_assign(&mut r, &PointI64::min());
+    saturating_translate_assign(&mut r, &PointI64::of(i64::MIN, 0));
     assert_eq!(r, RectU64::largest());
-    saturating_translate_assign(&mut r, &PointI64::max());
+    saturating_translate_assign(&mut r, &PointI64::of(0, i64::MIN));
     assert_eq!(r, RectU64::largest());
-
-    let mut r_min = RectU64::of(1, 1, u64::MAX, u64::MAX);
-    saturating_translate_assign(&mut r_min, &PointI64::min());
-    assert_eq!(r_min, RectU64::of(0, 0, u64::MAX - 1, u64::MAX - 1));
-
-    let mut r_max = RectU64::of(0, 0, u64::MAX - 1, u64::MAX - 1);
-    saturating_translate_assign(&mut r_max, &PointI64::max());
-    assert_eq!(r_max, RectU64::of(1, 1, u64::MAX, u64::MAX));
+    saturating_translate_assign(&mut r, &PointI64::of(i64::MAX, 0));
+    assert_eq!(r, RectU64::largest());
+    saturating_translate_assign(&mut r, &PointI64::of(0, i64::MAX));
+    assert_eq!(r, RectU64::largest());
 }

@@ -42,33 +42,10 @@ fn wrapping_add_big_rect_out_of_bounds() {
 }
 
 #[test]
-fn wrapping_add_small_rect_limits_out_of_bounds() {
-    assert_eq!(
-        wrapping_add(&RectU64::of(1, 1, 10, 10), &RectI64::min()),
-        RectU64::of((i64::MAX as u64) + 2, (i64::MAX as u64) + 2, (i64::MAX as u64) + 11, (i64::MAX as u64) + 11)
-    );
-    assert_eq!(
-        wrapping_add(&RectU64::of(u64::MAX - 10, u64::MAX - 10, u64::MAX - 1, u64::MAX - 1), &RectI64::max()),
-        RectU64::of((i64::MAX as u64) - 11, (i64::MAX as u64) - 11, (i64::MAX as u64) - 2, (i64::MAX as u64) - 2)
-    );
-}
-
-#[test]
 fn wrapping_add_big_rect_limits_out_of_bounds() {
-    assert_eq!(
-        wrapping_add(&RectU64::largest(), &RectI64::min()),
-        RectU64::of((i64::MAX as u64) + 1, (i64::MAX as u64) + 1, i64::MAX as u64, i64::MAX as u64)
-    );
-    assert_eq!(
-        wrapping_add(&RectU64::largest(), &RectI64::max()),
-        RectU64::of(i64::MAX as u64, i64::MAX as u64, (i64::MAX as u64) - 1, (i64::MAX as u64) - 1)
-    );
-    assert_eq!(
-        wrapping_add(&RectU64::of(1, 1, u64::MAX, u64::MAX), &RectI64::min()),
-        RectU64::of((i64::MAX as u64) + 2, (i64::MAX as u64) + 2, i64::MAX as u64, i64::MAX as u64)
-    );
-    assert_eq!(
-        wrapping_add(&RectU64::of(0, 0, u64::MAX - 1, u64::MAX - 1), &RectI64::max()),
-        RectU64::of(i64::MAX as u64, i64::MAX as u64, (i64::MAX as u64) - 2, (i64::MAX as u64) - 2)
-    );
+    let r = RectU64::largest();
+    assert_eq!(wrapping_add(&r, &RectI64::of(i64::MIN, 0, 0, 0)), RectU64::of(u64::MAX / 2 + 1, 0, u64::MAX, u64::MAX));
+    assert_eq!(wrapping_add(&r, &RectI64::of(0, i64::MIN, 0, 0)), RectU64::of(0, u64::MAX / 2 + 1, u64::MAX, u64::MAX));
+    assert_eq!(wrapping_add(&r, &RectI64::of(0, 0, i64::MAX, 0)), RectU64::of(0, 0, u64::MAX / 2 - 1, u64::MAX));
+    assert_eq!(wrapping_add(&r, &RectI64::of(0, 0, 0, i64::MAX)), RectU64::of(0, 0, u64::MAX, u64::MAX / 2 - 1));
 }

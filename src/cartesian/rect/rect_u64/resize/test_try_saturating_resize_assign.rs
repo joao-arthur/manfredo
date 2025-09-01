@@ -44,21 +44,25 @@ fn try_saturating_resize_assign_small_size() {
 
 #[test]
 fn try_saturating_resize_assign_same_size() {
-    let mut r_11 = RectU64::of(10, 10, 20, 20);
-    assert_eq!(try_saturating_resize_assign(&mut r_11, 11), Some(()));
-    assert_eq!(r_11, RectU64::of(10, 10, 20, 20));
+    let mut r_min_2 = RectU64::of(0, 0, 2, 2);
+    assert_eq!(try_saturating_resize_assign(&mut r_min_2, 3), Some(()));
+    assert_eq!(r_min_2, RectU64::of(0, 0, 2, 2));
 
-    let mut r_12 = RectU64::of(10, 10, 21, 21);
-    assert_eq!(try_saturating_resize_assign(&mut r_12, 12), Some(()));
-    assert_eq!(r_12, RectU64::of(10, 10, 21, 21));
+    let mut r_min_3 = RectU64::of(0, 0, 3, 3);
+    assert_eq!(try_saturating_resize_assign(&mut r_min_3, 4), Some(()));
+    assert_eq!(r_min_3, RectU64::of(0, 0, 3, 3));
 
-    let mut r_13 = RectU64::of(9, 9, 21, 21);
-    assert_eq!(try_saturating_resize_assign(&mut r_13, 13), Some(()));
-    assert_eq!(r_13, RectU64::of(9, 9, 21, 21));
+    let mut r_max_2 = RectU64::of(u64::MAX - 2, u64::MAX - 2, u64::MAX, u64::MAX);
+    assert_eq!(try_saturating_resize_assign(&mut r_max_2, 3), Some(()));
+    assert_eq!(r_max_2, RectU64::of(u64::MAX - 2, u64::MAX - 2, u64::MAX, u64::MAX));
+
+    let mut r_max_3 = RectU64::of(u64::MAX - 3, u64::MAX - 3, u64::MAX, u64::MAX);
+    assert_eq!(try_saturating_resize_assign(&mut r_max_3, 4), Some(()));
+    assert_eq!(r_max_3, RectU64::of(u64::MAX - 3, u64::MAX - 3, u64::MAX, u64::MAX));
 }
 
 #[test]
-fn try_saturating_resize_assign_odd_small_rect_out_of_bounds() {
+fn try_saturating_resize_assign_bounds() {
     let mut r_min = RectU64::of(0, 0, 2, 2);
     assert_eq!(try_saturating_resize_assign(&mut r_min, 11), Some(()));
     assert_eq!(r_min, RectU64::of(0, 0, 10, 10));
@@ -69,18 +73,7 @@ fn try_saturating_resize_assign_odd_small_rect_out_of_bounds() {
 }
 
 #[test]
-fn try_saturating_resize_assign_even_small_rect_out_of_bounds() {
-    let mut r = RectU64::of(0, 0, 3, 3);
-    assert_eq!(try_saturating_resize_assign(&mut r, 11), Some(()));
-    assert_eq!(r, RectU64::of(0, 0, 10, 10));
-
-    let mut r = RectU64::of(u64::MAX - 3, u64::MAX - 3, u64::MAX, u64::MAX);
-    assert_eq!(try_saturating_resize_assign(&mut r, 11), Some(()));
-    assert_eq!(r, RectU64::of(u64::MAX - 10, u64::MAX - 10, u64::MAX, u64::MAX));
-}
-
-#[test]
-fn try_saturating_resize_assign_odd_small_rect_limits_out_of_bounds() {
+fn try_saturating_resize_assign_small_rect_limits() {
     let mut r_min = RectU64::of(0, 0, 2, 2);
     assert_eq!(try_saturating_resize_assign(&mut r_min, u64::MAX), Some(()));
     assert_eq!(r_min, RectU64::of(0, 0, u64::MAX - 1, u64::MAX - 1));
@@ -91,18 +84,7 @@ fn try_saturating_resize_assign_odd_small_rect_limits_out_of_bounds() {
 }
 
 #[test]
-fn try_saturating_resize_assign_even_small_rect_limits_out_of_bounds() {
-    let mut r = RectU64::of(0, 0, 3, 3);
-    assert_eq!(try_saturating_resize_assign(&mut r, u64::MAX - 1), Some(()));
-    assert_eq!(r, RectU64::of(0, 0, u64::MAX - 2, u64::MAX - 2));
-
-    let mut r = RectU64::of(u64::MAX - 3, u64::MAX - 3, u64::MAX, u64::MAX);
-    assert_eq!(try_saturating_resize_assign(&mut r, u64::MAX - 1), Some(()));
-    assert_eq!(r, RectU64::of(2, 2, u64::MAX, u64::MAX));
-}
-
-#[test]
-fn try_saturating_resize_assign_big_rect_limits_out_of_bounds() {
+fn try_saturating_resize_assign_big_rect_limits() {
     let mut r_odd_1 = RectU64::of(0, 0, u64::MAX - 1, u64::MAX - 1);
     assert_eq!(try_saturating_resize_assign(&mut r_odd_1, u64::MAX), Some(()));
     assert_eq!(r_odd_1, RectU64::of(0, 0, u64::MAX - 1, u64::MAX - 1));

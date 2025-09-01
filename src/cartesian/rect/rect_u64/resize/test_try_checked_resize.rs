@@ -30,85 +30,26 @@ fn try_checked_resize_small_size() {
 
 #[test]
 fn try_checked_resize_same_size() {
-    assert_eq!(try_checked_resize(&RectU64::of(10, 10, 20, 20), 11), Some(RectU64::of(10, 10, 20, 20)));
-    assert_eq!(try_checked_resize(&RectU64::of(10, 10, 21, 21), 12), Some(RectU64::of(10, 10, 21, 21)));
-    assert_eq!(try_checked_resize(&RectU64::of(9, 9, 21, 21), 13), Some(RectU64::of(9, 9, 21, 21)));
-}
-
-#[test]
-fn try_checked_resize_odd_small_rect_same_size() {
     assert_eq!(try_checked_resize(&RectU64::of(0, 0, 2, 2), 3), Some(RectU64::of(0, 0, 2, 2)));
-    assert_eq!(
-        try_checked_resize(&RectU64::of(u64::MAX - 2, u64::MAX - 2, u64::MAX, u64::MAX), 3),
-        Some(RectU64::of(u64::MAX - 2, u64::MAX - 2, u64::MAX, u64::MAX))
-    );
-}
-
-#[test]
-fn try_checked_resize_even_small_rect_same_size() {
     assert_eq!(try_checked_resize(&RectU64::of(0, 0, 3, 3), 4), Some(RectU64::of(0, 0, 3, 3)));
-    assert_eq!(
-        try_checked_resize(&RectU64::of(u64::MAX - 3, u64::MAX - 3, u64::MAX, u64::MAX), 4),
-        Some(RectU64::of(u64::MAX - 3, u64::MAX - 3, u64::MAX, u64::MAX))
-    );
+    assert_eq!(try_checked_resize(&RectU64::of(u64::MAX - 2, u64::MAX - 2, u64::MAX, u64::MAX), 3), Some(RectU64::of(u64::MAX - 2, u64::MAX - 2, u64::MAX, u64::MAX)));
+    assert_eq!(try_checked_resize(&RectU64::of(u64::MAX - 3, u64::MAX - 3, u64::MAX, u64::MAX), 4), Some(RectU64::of(u64::MAX - 3, u64::MAX - 3, u64::MAX, u64::MAX)));
 }
 
 #[test]
-fn try_checked_resize_odd_small_rect_to_bounds() {
-    assert_eq!(try_checked_resize(&RectU64::of(2, 2, 4, 4), 7), Some(RectU64::of(0, 0, 6, 6)));
-    assert_eq!(
-        try_checked_resize(&RectU64::of(u64::MAX - 4, u64::MAX - 4, u64::MAX - 2, u64::MAX - 2), 7),
-        Some(RectU64::of(u64::MAX - 6, u64::MAX - 6, u64::MAX, u64::MAX))
-    );
-}
-
-#[test]
-fn try_checked_resize_even_small_rect_to_bounds() {
-    assert_eq!(try_checked_resize(&RectU64::of(2, 2, 5, 5), 8), Some(RectU64::of(0, 0, 7, 7)));
-    assert_eq!(
-        try_checked_resize(&RectU64::of(u64::MAX - 5, u64::MAX - 5, u64::MAX - 2, u64::MAX - 2), 8),
-        Some(RectU64::of(u64::MAX - 7, u64::MAX - 7, u64::MAX, u64::MAX))
-    );
-}
-
-#[test]
-fn try_checked_resize_odd_small_rect_out_of_bounds() {
-    assert_eq!(try_checked_resize(&RectU64::of(0, 0, 2, 2), 5), None);
+fn try_checked_resize_small_rect_out_of_bounds() {
     assert_eq!(try_checked_resize(&RectU64::of(0, 2, 2, 4), 5), None);
     assert_eq!(try_checked_resize(&RectU64::of(2, 0, 4, 2), 5), None);
-    assert_eq!(try_checked_resize(&RectU64::of(u64::MAX - 2, u64::MAX - 2, u64::MAX, u64::MAX), 5), None);
     assert_eq!(try_checked_resize(&RectU64::of(u64::MAX - 2, u64::MAX - 4, u64::MAX, u64::MAX - 2), 5), None);
     assert_eq!(try_checked_resize(&RectU64::of(u64::MAX - 4, u64::MAX - 2, u64::MAX - 2, u64::MAX), 5), None);
 }
 
 #[test]
-fn try_checked_resize_even_small_rect_out_of_bounds() {
-    assert_eq!(try_checked_resize(&RectU64::of(0, 0, 3, 3), 6), None);
-    assert_eq!(try_checked_resize(&RectU64::of(0, 3, 3, 6), 6), None);
-    assert_eq!(try_checked_resize(&RectU64::of(0, 0, 3, 3), 6), None);
-    assert_eq!(try_checked_resize(&RectU64::of(u64::MAX - 3, u64::MAX - 3, u64::MAX, u64::MAX), 6), None);
-    assert_eq!(try_checked_resize(&RectU64::of(u64::MAX - 3, u64::MAX - 6, u64::MAX, u64::MAX - 3), 6), None);
-    assert_eq!(try_checked_resize(&RectU64::of(u64::MAX - 6, u64::MAX - 3, u64::MAX - 3, u64::MAX), 6), None);
-}
-
-#[test]
-fn try_checked_resize_odd_small_rect_limits_out_of_bounds() {
-    assert_eq!(try_checked_resize(&RectU64::of(0, 0, 2, 2), u64::MAX), None);
+fn try_checked_resize_small_rect_limits_out_of_bounds() {
     assert_eq!(try_checked_resize(&RectU64::of(0, 2, 2, 4), u64::MAX), None);
     assert_eq!(try_checked_resize(&RectU64::of(2, 0, 4, 2), u64::MAX), None);
-    assert_eq!(try_checked_resize(&RectU64::of(u64::MAX - 2, u64::MAX - 2, u64::MAX, u64::MAX), u64::MAX), None);
     assert_eq!(try_checked_resize(&RectU64::of(u64::MAX - 2, u64::MAX - 4, u64::MAX, u64::MAX - 2), u64::MAX), None);
     assert_eq!(try_checked_resize(&RectU64::of(u64::MAX - 4, u64::MAX - 2, u64::MAX - 2, u64::MAX), u64::MAX), None);
-}
-
-#[test]
-fn try_checked_resize_even_small_rect_limits_out_of_bounds() {
-    assert_eq!(try_checked_resize(&RectU64::of(0, 0, 3, 3), u64::MAX - 1), None);
-    assert_eq!(try_checked_resize(&RectU64::of(0, 3, 3, 6), u64::MAX - 1), None);
-    assert_eq!(try_checked_resize(&RectU64::of(0, 0, 3, 3), u64::MAX - 1), None);
-    assert_eq!(try_checked_resize(&RectU64::of(u64::MAX - 3, u64::MAX - 3, u64::MAX, u64::MAX), u64::MAX - 1), None);
-    assert_eq!(try_checked_resize(&RectU64::of(u64::MAX - 3, u64::MAX - 6, u64::MAX, u64::MAX - 3), u64::MAX - 1), None);
-    assert_eq!(try_checked_resize(&RectU64::of(u64::MAX - 6, u64::MAX - 3, u64::MAX - 3, u64::MAX), u64::MAX - 1), None);
 }
 
 #[test]

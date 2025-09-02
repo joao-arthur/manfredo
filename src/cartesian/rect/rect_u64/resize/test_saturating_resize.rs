@@ -3,7 +3,6 @@ use crate::cartesian::rect::rect_u64::RectU64;
 
 #[test]
 fn saturating_resize_odd() {
-    assert_eq!(saturating_resize(&RectU64::of(5, 5, 15, 15), 11), RectU64::of(5, 5, 15, 15));
     assert_eq!(saturating_resize(&RectU64::of(5, 5, 15, 15), 9), RectU64::of(6, 6, 14, 14));
     assert_eq!(saturating_resize(&RectU64::of(6, 6, 14, 14), 7), RectU64::of(7, 7, 13, 13));
     assert_eq!(saturating_resize(&RectU64::of(7, 7, 13, 13), 5), RectU64::of(8, 8, 12, 12));

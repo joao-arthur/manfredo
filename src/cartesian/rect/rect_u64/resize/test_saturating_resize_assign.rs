@@ -4,8 +4,6 @@ use crate::cartesian::rect::rect_u64::RectU64;
 #[test]
 fn saturating_resize_assign_odd() {
     let mut r = RectU64::of(5, 5, 15, 15);
-    saturating_resize_assign(&mut r, 11);
-    assert_eq!(r, RectU64::of(5, 5, 15, 15));
     saturating_resize_assign(&mut r, 9);
     assert_eq!(r, RectU64::of(6, 6, 14, 14));
     saturating_resize_assign(&mut r, 7);

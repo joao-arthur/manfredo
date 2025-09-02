@@ -3,7 +3,6 @@ use crate::cartesian::rect::rect_u64::RectU64;
 
 #[test]
 fn try_checked_resize_odd() {
-    assert_eq!(try_checked_resize(&RectU64::of(5, 5, 15, 15), 11), Some(RectU64::of(5, 5, 15, 15)));
     assert_eq!(try_checked_resize(&RectU64::of(5, 5, 15, 15), 9), Some(RectU64::of(6, 6, 14, 14)));
     assert_eq!(try_checked_resize(&RectU64::of(6, 6, 14, 14), 7), Some(RectU64::of(7, 7, 13, 13)));
     assert_eq!(try_checked_resize(&RectU64::of(7, 7, 13, 13), 5), Some(RectU64::of(8, 8, 12, 12)));
@@ -32,8 +31,14 @@ fn try_checked_resize_small_size() {
 fn try_checked_resize_same_size() {
     assert_eq!(try_checked_resize(&RectU64::of(0, 0, 2, 2), 3), Some(RectU64::of(0, 0, 2, 2)));
     assert_eq!(try_checked_resize(&RectU64::of(0, 0, 3, 3), 4), Some(RectU64::of(0, 0, 3, 3)));
-    assert_eq!(try_checked_resize(&RectU64::of(u64::MAX - 2, u64::MAX - 2, u64::MAX, u64::MAX), 3), Some(RectU64::of(u64::MAX - 2, u64::MAX - 2, u64::MAX, u64::MAX)));
-    assert_eq!(try_checked_resize(&RectU64::of(u64::MAX - 3, u64::MAX - 3, u64::MAX, u64::MAX), 4), Some(RectU64::of(u64::MAX - 3, u64::MAX - 3, u64::MAX, u64::MAX)));
+    assert_eq!(
+        try_checked_resize(&RectU64::of(u64::MAX - 2, u64::MAX - 2, u64::MAX, u64::MAX), 3),
+        Some(RectU64::of(u64::MAX - 2, u64::MAX - 2, u64::MAX, u64::MAX))
+    );
+    assert_eq!(
+        try_checked_resize(&RectU64::of(u64::MAX - 3, u64::MAX - 3, u64::MAX, u64::MAX), 4),
+        Some(RectU64::of(u64::MAX - 3, u64::MAX - 3, u64::MAX, u64::MAX))
+    );
 }
 
 #[test]

@@ -87,5 +87,80 @@ pub fn saturating_resize(r: &RectU32, size: u32) -> RectU32 {
     try_saturating_resize(r, size).unwrap()
 }
 
-pub mod checked;
-pub mod saturated;
+pub fn try_wrapping_resize_assign(r: &mut RectU32, size: u32) -> Option<()> {
+    if size < 3 {
+        return None;
+    }
+    let diff_row = i64::from(delta_row(r)) + 1 - i64::from(size);
+    let diff_col = i64::from(delta_col(r)) + 1 - i64::from(size);
+    let temp_min_row = i64::from(r.min.row) + diff_row / 2;
+    let temp_min_col = i64::from(r.min.col) + diff_col / 2;
+    let min_row = temp_min_row as u32;
+    let min_col = temp_min_col as u32;
+    let max_row = min_row.wrapping_add(size - 1);
+    let max_col = min_col.wrapping_add(size - 1);
+    r.min.row = min_row;
+    r.min.col = min_col;
+    r.max.row = max_row;
+    r.max.col = max_col;
+    Some(())
+}
+
+pub fn try_wrapping_resize(r: &RectU32, size: u32) -> Option<RectU32> {
+    if size < 3 {
+        return None;
+    }
+    let diff_row = i64::from(delta_row(r)) + 1 - i64::from(size);
+    let diff_col = i64::from(delta_col(r)) + 1 - i64::from(size);
+    let temp_min_row = i64::from(r.min.row) + diff_row / 2;
+    let temp_min_col = i64::from(r.min.col) + diff_col / 2;
+    let min_row = temp_min_row as u32;
+    let min_col = temp_min_col as u32;
+    let max_row = min_row.wrapping_add(size - 1);
+    let max_col = min_col.wrapping_add(size - 1);
+    Some(RectU32 { min: PointU32 { row: min_row, col: min_col }, max: PointU32 { row: max_row, col: max_col } })
+}
+
+pub fn wrapping_resize_assign(r: &mut RectU32, size: u32) {
+    try_wrapping_resize_assign(r, size).unwrap()
+}
+
+pub fn wrapping_resize(r: &RectU32, size: u32) -> RectU32 {
+    try_wrapping_resize(r, size).unwrap()
+}
+
+#[cfg(test)]
+mod test_try_checked_resize_assign;
+
+#[cfg(test)]
+mod test_try_checked_resize;
+
+#[cfg(test)]
+mod test_checked_resize_assign;
+
+#[cfg(test)]
+mod test_checked_resize;
+
+#[cfg(test)]
+mod test_try_saturating_resize_assign;
+
+#[cfg(test)]
+mod test_try_saturating_resize;
+
+#[cfg(test)]
+mod test_saturating_resize_assign;
+
+#[cfg(test)]
+mod test_saturating_resize;
+
+#[cfg(test)]
+mod test_try_wrapping_resize_assign;
+
+#[cfg(test)]
+mod test_try_wrapping_resize;
+
+#[cfg(test)]
+mod test_wrapping_resize_assign;
+
+#[cfg(test)]
+mod test_wrapping_resize;

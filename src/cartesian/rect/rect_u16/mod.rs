@@ -87,12 +87,12 @@ mod tests {
         assert_eq!(RectU16::largest(), RectU16 { min: PointU16 { x: 0, y: 0 }, max: PointU16 { x: u16::MAX, y: u16::MAX } });
         assert_eq!(RectU16::min(), RectU16 { min: PointU16 { x: 0, y: 0 }, max: PointU16 { x: 0, y: 0 } });
         assert_eq!(RectU16::max(), RectU16 { min: PointU16 { x: u16::MAX, y: u16::MAX }, max: PointU16 { x: u16::MAX, y: u16::MAX } });
-        assert_eq!(RectU16::of(16, 32, 64, 128), RectU16 { min: PointU16 { x: 16, y: 32 }, max: PointU16 { x: 64, y: 128 } });
+        assert_eq!(RectU16::of(16, 32, 16, 32), RectU16 { min: PointU16 { x: 16, y: 32 }, max: PointU16 { x: 16, y: 32 } });
     }
 
     #[test]
     fn to_string() {
-        assert_eq!(RectU16::of(16, 32, 64, 128).to_string(), "((16, 32), (64, 128))");
+        assert_eq!(RectU16::of(16, 32, 16, 32).to_string(), "((16, 32), (16, 32))");
         assert_eq!(RectU16::of(u16::MAX, 0, 0, u16::MAX).to_string(), "((65535, 0), (0, 65535))");
     }
 

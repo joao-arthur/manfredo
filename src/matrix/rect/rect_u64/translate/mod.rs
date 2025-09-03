@@ -40,10 +40,12 @@ pub fn saturating_translate_assign(r: &mut RectU64, delta: &PointI64) {
     let clamped_col = temp_min_col.clamp(0, i128::from(u64::MAX) - i128::from(d_col));
     let min_row = clamped_row as u64;
     let min_col = clamped_col as u64;
+    let max_row = min_row + d_row;
+    let max_col = min_col + d_col;
     r.min.row = min_row;
     r.min.col = min_col;
-    r.max.row = min_row + d_row;
-    r.max.col = min_col + d_col;
+    r.max.row = max_row;
+    r.max.col = max_col;
 }
 
 pub fn saturating_translate(r: &RectU64, delta: &PointI64) -> RectU64 {
@@ -83,6 +85,26 @@ pub fn wrapping_translate(r: &RectU64, delta: &PointI64) -> RectU64 {
     RectU64 { min: PointU64 { row: min_row, col: min_col }, max: PointU64 { row: max_row, col: max_col } }
 }
 
-pub mod checked;
-pub mod saturated;
-pub mod wrapped;
+#[cfg(test)]
+mod test_try_checked_translate_assign;
+
+#[cfg(test)]
+mod test_try_checked_translate;
+
+#[cfg(test)]
+mod test_checked_translate_assign;
+
+#[cfg(test)]
+mod test_checked_translate;
+
+#[cfg(test)]
+mod test_saturating_translate_assign;
+
+#[cfg(test)]
+mod test_saturating_translate;
+
+#[cfg(test)]
+mod test_wrapping_translate_assign;
+
+#[cfg(test)]
+mod test_wrapping_translate;

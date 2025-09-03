@@ -40,10 +40,12 @@ pub fn saturating_translate_assign(r: &mut RectU32, delta: &PointI32) {
     let clamped_y = temp_min_y.clamp(0, i64::from(u32::MAX) - i64::from(dy));
     let min_x = clamped_x as u32;
     let min_y = clamped_y as u32;
+    let max_x = min_x + dx;
+    let max_y = min_y + dy;
     r.min.x = min_x;
     r.min.y = min_y;
-    r.max.x = min_x + dx;
-    r.max.y = min_y + dy;
+    r.max.x = max_x;
+    r.max.y = max_y;
 }
 
 pub fn saturating_translate(r: &RectU32, delta: &PointI32) -> RectU32 {
@@ -83,6 +85,26 @@ pub fn wrapping_translate(r: &RectU32, delta: &PointI32) -> RectU32 {
     RectU32 { min: PointU32 { x: min_x, y: min_y }, max: PointU32 { x: max_x, y: max_y } }
 }
 
-pub mod checked;
-pub mod saturated;
-pub mod wrapped;
+#[cfg(test)]
+mod test_try_checked_translate_assign;
+
+#[cfg(test)]
+mod test_try_checked_translate;
+
+#[cfg(test)]
+mod test_checked_translate_assign;
+
+#[cfg(test)]
+mod test_checked_translate;
+
+#[cfg(test)]
+mod test_saturating_translate_assign;
+
+#[cfg(test)]
+mod test_saturating_translate;
+
+#[cfg(test)]
+mod test_wrapping_translate_assign;
+
+#[cfg(test)]
+mod test_wrapping_translate;

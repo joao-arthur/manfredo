@@ -9,6 +9,7 @@ fn test_saturating_add_assign() {
     saturating_add_assign(&mut r, &RectI16::of(-4, -3, -2, -1));
     assert_eq!(r, RectU16::of(1, 1, 13, 11));
 }
+
 #[test]
 fn saturating_add_assign_to_bounds() {
     let mut r = RectU16::of(2, 5, u16::MAX - 2, u16::MAX - 5);

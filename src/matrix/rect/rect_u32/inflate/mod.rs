@@ -74,5 +74,51 @@ pub fn saturating_inflate(r: &RectU32) -> RectU32 {
     try_saturating_inflate(r).unwrap()
 }
 
-pub mod checked;
-pub mod saturated;
+pub fn wrapping_inflate_assign(r: &mut RectU32) {
+    let min_row = r.min.row.wrapping_sub(1);
+    let min_col = r.min.col.wrapping_sub(1);
+    let max_row = r.max.row.wrapping_add(1);
+    let max_col = r.max.col.wrapping_add(1);
+    r.min.row = min_row;
+    r.min.col = min_col;
+    r.max.row = max_row;
+    r.max.col = max_col;
+}
+
+pub fn wrapping_inflate(r: &RectU32) -> RectU32 {
+    let min_row = r.min.row.wrapping_sub(1);
+    let min_col = r.min.col.wrapping_sub(1);
+    let max_row = r.max.row.wrapping_add(1);
+    let max_col = r.max.col.wrapping_add(1);
+    RectU32 { min: PointU32 { row: min_row, col: min_col }, max: PointU32 { row: max_row, col: max_col } }
+}
+
+#[cfg(test)]
+mod test_try_checked_inflate_assign;
+
+#[cfg(test)]
+mod test_try_checked_inflate;
+
+#[cfg(test)]
+mod test_checked_inflate_assign;
+
+#[cfg(test)]
+mod test_checked_inflate;
+
+#[cfg(test)]
+mod test_try_saturating_inflate_assign;
+
+#[cfg(test)]
+mod test_try_saturating_inflate;
+
+#[cfg(test)]
+mod test_saturating_inflate_assign;
+
+#[cfg(test)]
+mod test_saturating_inflate;
+
+#[cfg(test)]
+mod test_wrapping_inflate_assign;
+
+#[cfg(test)]
+mod test_wrapping_inflate;

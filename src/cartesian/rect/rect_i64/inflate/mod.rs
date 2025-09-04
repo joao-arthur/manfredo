@@ -74,5 +74,51 @@ pub fn saturating_inflate(r: &RectI64) -> RectI64 {
     try_saturating_inflate(r).unwrap()
 }
 
-pub mod checked;
-pub mod saturated;
+pub fn wrapping_inflate_assign(r: &mut RectI64) {
+    let min_x = r.min.x.wrapping_sub(1);
+    let min_y = r.min.y.wrapping_sub(1);
+    let max_x = r.max.x.wrapping_add(1);
+    let max_y = r.max.y.wrapping_add(1);
+    r.min.x = min_x;
+    r.min.y = min_y;
+    r.max.x = max_x;
+    r.max.y = max_y;
+}
+
+pub fn wrapping_inflate(r: &RectI64) -> RectI64 {
+    let min_x = r.min.x.wrapping_sub(1);
+    let min_y = r.min.y.wrapping_sub(1);
+    let max_x = r.max.x.wrapping_add(1);
+    let max_y = r.max.y.wrapping_add(1);
+    RectI64 { min: PointI64 { x: min_x, y: min_y }, max: PointI64 { x: max_x, y: max_y } }
+}
+
+#[cfg(test)]
+mod test_try_checked_inflate_assign;
+
+#[cfg(test)]
+mod test_try_checked_inflate;
+
+#[cfg(test)]
+mod test_checked_inflate_assign;
+
+#[cfg(test)]
+mod test_checked_inflate;
+
+#[cfg(test)]
+mod test_try_saturating_inflate_assign;
+
+#[cfg(test)]
+mod test_try_saturating_inflate;
+
+#[cfg(test)]
+mod test_saturating_inflate_assign;
+
+#[cfg(test)]
+mod test_saturating_inflate;
+
+#[cfg(test)]
+mod test_wrapping_inflate_assign;
+
+#[cfg(test)]
+mod test_wrapping_inflate;

@@ -36,43 +36,29 @@ fn try_checked_inflate_max_bounds() {
 #[test]
 fn try_checked_inflate_to_bounds() {
     assert_eq!(try_checked_inflate(&RectI64::of(i64::MIN + 1, i64::MIN + 1, i64::MAX - 1, i64::MAX - 1)), Some(RectI64::largest()));
-}
-
-#[test]
-fn try_checked_inflate_width_to_bounds() {
     assert_eq!(
-        try_checked_inflate(&RectI64::of(i64::MIN + 1, i64::MIN + 10, i64::MIN + 20, i64::MIN + 20)),
-        Some(RectI64::of(i64::MIN, i64::MIN + 9, i64::MIN + 21, i64::MIN + 21))
+        try_checked_inflate(&RectI64::of(i64::MIN + 1, i64::MIN + 10, i64::MAX - 10, i64::MAX - 10)),
+        Some(RectI64::of(i64::MIN, i64::MIN + 9, i64::MAX - 9, i64::MAX - 9))
     );
     assert_eq!(
-        try_checked_inflate(&RectI64::of(i64::MIN + 10, i64::MIN + 10, i64::MAX - 1, i64::MIN + 20)),
-        Some(RectI64::of(i64::MIN + 9, i64::MIN + 9, i64::MAX, i64::MIN + 21))
-    );
-}
-
-#[test]
-fn try_checked_inflate_height_to_bounds() {
-    assert_eq!(
-        try_checked_inflate(&RectI64::of(i64::MIN + 10, i64::MIN + 1, i64::MIN + 20, i64::MIN + 20)),
-        Some(RectI64::of(i64::MIN + 9, i64::MIN, i64::MIN + 21, i64::MIN + 21))
+        try_checked_inflate(&RectI64::of(i64::MIN + 10, i64::MIN + 1, i64::MAX - 10, i64::MAX - 10)),
+        Some(RectI64::of(i64::MIN + 9, i64::MIN, i64::MAX - 9, i64::MAX - 9))
     );
     assert_eq!(
-        try_checked_inflate(&RectI64::of(i64::MIN + 10, i64::MIN + 10, i64::MIN + 20, i64::MAX - 1)),
-        Some(RectI64::of(i64::MIN + 9, i64::MIN + 9, i64::MIN + 21, i64::MAX))
+        try_checked_inflate(&RectI64::of(i64::MIN + 10, i64::MIN + 10, i64::MAX - 1, i64::MAX - 10)),
+        Some(RectI64::of(i64::MIN + 9, i64::MIN + 9, i64::MAX, i64::MAX - 9))
+    );
+    assert_eq!(
+        try_checked_inflate(&RectI64::of(i64::MIN + 10, i64::MIN + 10, i64::MAX - 10, i64::MAX - 1)),
+        Some(RectI64::of(i64::MIN + 9, i64::MIN + 9, i64::MAX - 9, i64::MAX))
     );
 }
 
 #[test]
 fn try_checked_inflate_out_of_bounds() {
-    assert_eq!(try_checked_inflate(&RectI64::of(i64::MIN, i64::MIN + 10, i64::MAX, i64::MIN + 20)), None);
-    assert_eq!(try_checked_inflate(&RectI64::of(i64::MIN + 10, i64::MIN + 10, i64::MAX, i64::MIN + 20)), None);
-    assert_eq!(try_checked_inflate(&RectI64::of(i64::MIN + 10, i64::MIN, i64::MIN + 20, i64::MIN + 20)), None);
-    assert_eq!(try_checked_inflate(&RectI64::of(i64::MIN + 10, i64::MIN + 10, i64::MIN + 20, i64::MAX)), None);
-    assert_eq!(try_checked_inflate(&RectI64::of(i64::MIN, i64::MIN, i64::MIN + 10, i64::MIN + 10)), None);
-    assert_eq!(try_checked_inflate(&RectI64::of(i64::MIN + 10, i64::MIN + 10, i64::MAX, i64::MAX)), None);
-}
-
-#[test]
-fn try_checked_inflate_limits_out_of_bounds() {
     assert_eq!(try_checked_inflate(&RectI64::largest()), None);
+    assert_eq!(try_checked_inflate(&RectI64::of(i64::MIN, i64::MIN + 10, i64::MAX - 10, i64::MAX - 10)), None);
+    assert_eq!(try_checked_inflate(&RectI64::of(i64::MIN + 10, i64::MIN, i64::MAX - 10, i64::MAX - 10)), None);
+    assert_eq!(try_checked_inflate(&RectI64::of(i64::MIN + 10, i64::MIN + 10, i64::MAX, i64::MAX - 10)), None);
+    assert_eq!(try_checked_inflate(&RectI64::of(i64::MIN + 10, i64::MIN + 10, i64::MAX - 10, i64::MAX)), None);
 }

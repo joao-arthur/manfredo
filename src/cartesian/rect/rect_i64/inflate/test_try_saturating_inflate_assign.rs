@@ -45,39 +45,33 @@ fn try_saturating_inflate_assign_max_bounds() {
 
 #[test]
 fn try_saturating_inflate_assign_to_bounds() {
-    let mut r_odd = RectI64::of(i64::MIN + 1, i64::MIN + 1, i64::MAX - 1, i64::MAX - 1);
-    assert_eq!(try_saturating_inflate_assign(&mut r_odd), Some(()));
-    assert_eq!(r_odd, RectI64::largest());
+    let mut r = RectI64::of(i64::MIN + 1, i64::MIN + 1, i64::MAX - 1, i64::MAX - 1);
+    assert_eq!(try_saturating_inflate_assign(&mut r), Some(()));
+    assert_eq!(r, RectI64::largest());
 
-    let mut r_even_1 = RectI64::of(i64::MIN, i64::MIN, i64::MAX - 1, i64::MAX - 1);
-    assert_eq!(try_saturating_inflate_assign(&mut r_even_1), Some(()));
-    assert_eq!(r_even_1, RectI64::largest());
-
-    let mut r_even_2 = RectI64::of(i64::MIN + 1, i64::MIN + 1, i64::MAX, i64::MAX);
-    assert_eq!(try_saturating_inflate_assign(&mut r_even_2), Some(()));
-    assert_eq!(r_even_2, RectI64::largest());
-}
-
-#[test]
-fn try_saturating_inflate_assign_width_to_bounds() {
-    let mut r_min = RectI64::of(i64::MIN + 1, i64::MIN + 10, i64::MIN + 20, i64::MIN + 20);
+    let mut r_min = RectI64::of(i64::MIN, i64::MIN, i64::MAX - 1, i64::MAX - 1);
     assert_eq!(try_saturating_inflate_assign(&mut r_min), Some(()));
-    assert_eq!(r_min, RectI64::of(i64::MIN, i64::MIN + 9, i64::MIN + 21, i64::MIN + 21));
+    assert_eq!(r_min, RectI64::largest());
 
-    let mut r_max = RectI64::of(i64::MIN + 10, i64::MIN + 10, i64::MAX - 1, i64::MIN + 20);
+    let mut r_max = RectI64::of(i64::MIN + 1, i64::MIN + 1, i64::MAX, i64::MAX);
     assert_eq!(try_saturating_inflate_assign(&mut r_max), Some(()));
-    assert_eq!(r_max, RectI64::of(i64::MIN + 9, i64::MIN + 9, i64::MAX, i64::MIN + 21));
-}
+    assert_eq!(r_max, RectI64::largest());
 
-#[test]
-fn try_saturating_inflate_assign_height_to_bounds() {
-    let mut r_min = RectI64::of(i64::MIN + 10, i64::MIN + 1, i64::MIN + 20, i64::MIN + 20);
-    assert_eq!(try_saturating_inflate_assign(&mut r_min), Some(()));
-    assert_eq!(r_min, RectI64::of(i64::MIN + 9, i64::MIN, i64::MIN + 21, i64::MIN + 21));
+    let mut r_min_x = RectI64::of(i64::MIN + 1, i64::MIN + 10, i64::MAX - 10, i64::MAX - 10);
+    assert_eq!(try_saturating_inflate_assign(&mut r_min_x), Some(()));
+    assert_eq!(r_min_x, RectI64::of(i64::MIN, i64::MIN + 9, i64::MAX - 9, i64::MAX - 9));
 
-    let mut r_max = RectI64::of(i64::MIN + 10, i64::MIN + 10, i64::MIN + 20, i64::MAX - 1);
-    assert_eq!(try_saturating_inflate_assign(&mut r_max), Some(()));
-    assert_eq!(r_max, RectI64::of(i64::MIN + 9, i64::MIN + 9, i64::MIN + 21, i64::MAX));
+    let mut r_min_y = RectI64::of(i64::MIN + 10, i64::MIN + 1, i64::MAX - 10, i64::MAX - 10);
+    assert_eq!(try_saturating_inflate_assign(&mut r_min_y), Some(()));
+    assert_eq!(r_min_y, RectI64::of(i64::MIN + 9, i64::MIN, i64::MAX - 9, i64::MAX - 9));
+
+    let mut r_max_x = RectI64::of(i64::MIN + 10, i64::MIN + 10, i64::MAX - 1, i64::MAX - 10);
+    assert_eq!(try_saturating_inflate_assign(&mut r_max_x), Some(()));
+    assert_eq!(r_max_x, RectI64::of(i64::MIN + 9, i64::MIN + 9, i64::MAX, i64::MAX - 9));
+
+    let mut r_max_y = RectI64::of(i64::MIN + 10, i64::MIN + 10, i64::MAX - 10, i64::MAX - 1);
+    assert_eq!(try_saturating_inflate_assign(&mut r_max_y), Some(()));
+    assert_eq!(r_max_y, RectI64::of(i64::MIN + 9, i64::MIN + 9, i64::MAX - 9, i64::MAX));
 }
 
 #[test]
@@ -86,11 +80,11 @@ fn try_saturating_inflate_assign_out_of_bounds() {
     assert_eq!(try_saturating_inflate_assign(&mut r), None);
     assert_eq!(r, RectI64::largest());
 
-    let mut r_x = RectI64::of(i64::MIN, i64::MIN + 10, i64::MAX, i64::MIN + 20);
+    let mut r_x = RectI64::of(i64::MIN, i64::MIN + 10, i64::MAX, i64::MAX - 10);
     assert_eq!(try_saturating_inflate_assign(&mut r_x), None);
-    assert_eq!(r_x, RectI64::of(i64::MIN, i64::MIN + 10, i64::MAX, i64::MIN + 20));
+    assert_eq!(r_x, RectI64::of(i64::MIN, i64::MIN + 10, i64::MAX, i64::MAX - 10));
 
-    let mut r_y = RectI64::of(i64::MIN + 10, i64::MIN, i64::MIN + 20, i64::MAX);
+    let mut r_y = RectI64::of(i64::MIN + 10, i64::MIN, i64::MAX - 10, i64::MAX);
     assert_eq!(try_saturating_inflate_assign(&mut r_y), None);
-    assert_eq!(r_y, RectI64::of(i64::MIN + 10, i64::MIN, i64::MIN + 20, i64::MAX));
+    assert_eq!(r_y, RectI64::of(i64::MIN + 10, i64::MIN, i64::MAX - 10, i64::MAX));
 }

@@ -3,8 +3,8 @@ use crate::cartesian::rect::rect_i64::RectI64;
 
 #[test]
 fn test_wrapping_add() {
-    assert_eq!(wrapping_add(&RectI64::of(0, 0, 12, 15), &RectI64::of(5, 4, 3, 2)), RectI64::of(5, 4, 15, 17));
-    assert_eq!(wrapping_add(&RectI64::of(5, 4, 15, 17), &RectI64::of(-14, -13, -12, -11)), RectI64::of(-9, -9, 3, 6));
+    assert_eq!(wrapping_add(&RectI64::of(-7, 9, -12, 15), &RectI64::of(5, 4, 3, 2)), RectI64::of(-2, 13, -9, 17));
+    assert_eq!(wrapping_add(&RectI64::of(-2, 13, -9, 17), &RectI64::of(9, -10, 11, -12)), RectI64::of(7, 3, 2, 5));
 }
 
 #[test]
@@ -35,8 +35,8 @@ fn wrapping_add_edge_out_of_bounds() {
 #[test]
 fn wrapping_add_limits_out_of_bounds() {
     let r = RectI64::largest();
-    assert_eq!(wrapping_add(&r, &RectI64::of(i64::MIN, 0, 0, 0)), RectI64::of(i64::MAX / 2 + 1, i64::MIN, i64::MAX, i64::MAX));
-    assert_eq!(wrapping_add(&r, &RectI64::of(0, i64::MIN, 0, 0)), RectI64::of(i64::MIN, i64::MAX / 2 + 1, i64::MAX, i64::MAX));
-    assert_eq!(wrapping_add(&r, &RectI64::of(0, 0, i64::MAX, 0)), RectI64::of(i64::MIN, i64::MIN, i64::MAX / 2 - 1, i64::MAX));
-    assert_eq!(wrapping_add(&r, &RectI64::of(0, 0, 0, i64::MAX)), RectI64::of(i64::MIN, i64::MIN, i64::MAX, i64::MAX / 2 - 1));
+    assert_eq!(wrapping_add(&r, &RectI64::of(i64::MIN, 0, 0, 0)), RectI64::of(0, i64::MIN, i64::MAX, i64::MAX));
+    assert_eq!(wrapping_add(&r, &RectI64::of(0, i64::MIN, 0, 0)), RectI64::of(i64::MIN, 0, i64::MAX, i64::MAX));
+    assert_eq!(wrapping_add(&r, &RectI64::of(0, 0, i64::MAX, 0)), RectI64::of(i64::MIN, i64::MIN, -2, i64::MAX));
+    assert_eq!(wrapping_add(&r, &RectI64::of(0, 0, 0, i64::MAX)), RectI64::of(i64::MIN, i64::MIN, i64::MAX, -2));
 }

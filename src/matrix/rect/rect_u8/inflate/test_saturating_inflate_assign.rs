@@ -2,7 +2,7 @@ use super::saturating_inflate_assign;
 use crate::matrix::rect::rect_u8::RectU8;
 
 #[test]
-fn saturating_inflate_assign_min_bounds() {
+fn min_bounds() {
     let mut r = RectU8::of(7, 2, 17, 13);
     saturating_inflate_assign(&mut r);
     assert_eq!(r, RectU8::of(6, 1, 18, 14));
@@ -23,7 +23,7 @@ fn saturating_inflate_assign_min_bounds() {
 }
 
 #[test]
-fn saturating_inflate_assign_max_bounds() {
+fn max_bounds() {
     let mut r = RectU8::of(u8::MAX - 33, u8::MAX - 17, u8::MAX - 5, u8::MAX - 3);
     saturating_inflate_assign(&mut r);
     assert_eq!(r, RectU8::of(u8::MAX - 34, u8::MAX - 18, u8::MAX - 4, u8::MAX - 2));

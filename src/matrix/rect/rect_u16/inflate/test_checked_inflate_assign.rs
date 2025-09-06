@@ -2,7 +2,7 @@ use super::checked_inflate_assign;
 use crate::matrix::rect::rect_u16::RectU16;
 
 #[test]
-fn checked_inflate_assign_min_bounds() {
+fn min_bounds() {
     let mut r = RectU16::of(7, 3, 9, 13);
     checked_inflate_assign(&mut r);
     assert_eq!(r, RectU16::of(6, 2, 10, 14));
@@ -13,7 +13,7 @@ fn checked_inflate_assign_min_bounds() {
 }
 
 #[test]
-fn checked_inflate_assign_max_bounds() {
+fn max_bounds() {
     let mut r = RectU16::of(u16::MAX - 33, u16::MAX - 17, u16::MAX - 5, u16::MAX - 3);
     checked_inflate_assign(&mut r);
     assert_eq!(r, RectU16::of(u16::MAX - 34, u16::MAX - 18, u16::MAX - 4, u16::MAX - 2));

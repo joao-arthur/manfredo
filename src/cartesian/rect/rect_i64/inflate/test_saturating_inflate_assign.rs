@@ -2,7 +2,7 @@ use super::saturating_inflate_assign;
 use crate::cartesian::rect::rect_i64::RectI64;
 
 #[test]
-fn saturating_inflate_assign_min_bounds() {
+fn min_bounds() {
     let mut r = RectI64::of(i64::MIN + 7, i64::MIN + 2, i64::MIN + 17, i64::MIN + 13);
     saturating_inflate_assign(&mut r);
     assert_eq!(r, RectI64::of(i64::MIN + 6, i64::MIN + 1, i64::MIN + 18, i64::MIN + 14));
@@ -23,7 +23,7 @@ fn saturating_inflate_assign_min_bounds() {
 }
 
 #[test]
-fn saturating_inflate_assign_max_bounds() {
+fn max_bounds() {
     let mut r = RectI64::of(i64::MAX - 33, i64::MAX - 17, i64::MAX - 5, i64::MAX - 3);
     saturating_inflate_assign(&mut r);
     assert_eq!(r, RectI64::of(i64::MAX - 34, i64::MAX - 18, i64::MAX - 4, i64::MAX - 2));

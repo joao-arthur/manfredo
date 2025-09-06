@@ -2,7 +2,7 @@ use super::wrapping_add_assign;
 use crate::matrix::rect::rect_i8::RectI8;
 
 #[test]
-fn test_wrapping_add_assign() {
+fn test() {
     let mut r = RectI8::of(0, 0, 12, 15);
     wrapping_add_assign(&mut r, &RectI8::of(5, 4, 3, 2));
     assert_eq!(r, RectI8::of(5, 4, 15, 17));
@@ -11,7 +11,7 @@ fn test_wrapping_add_assign() {
 }
 
 #[test]
-fn wrapping_add_assign_small_rect_to_bounds() {
+fn small_rect_to_bounds() {
     let mut min_r = RectI8::of(i8::MIN + 2, i8::MIN + 5, i8::MIN + 12, i8::MIN + 15);
     wrapping_add_assign(&mut min_r, &RectI8::of(-2, -5, 9, 7));
     assert_eq!(min_r, RectI8::of(i8::MIN, i8::MIN, i8::MIN + 21, i8::MIN + 22));
@@ -22,7 +22,7 @@ fn wrapping_add_assign_small_rect_to_bounds() {
 }
 
 #[test]
-fn wrapping_add_assign_big_rect_to_bounds() {
+fn big_rect_to_bounds() {
     let mut r = RectI8::of(i8::MIN + 2, i8::MIN + 5, i8::MAX - 2, i8::MAX - 5);
     wrapping_add_assign(&mut r, &RectI8::of(-2, -5, 2, 5));
     assert_eq!(r, RectI8::largest());
@@ -37,7 +37,7 @@ fn wrapping_add_assign_big_rect_to_bounds() {
 }
 
 #[test]
-fn wrapping_add_assign_small_rect_out_of_bounds() {
+fn small_rect_out_of_bounds() {
     let mut r_min = RectI8::of(i8::MIN + 10, i8::MIN + 5, i8::MIN + 20, i8::MIN + 30);
     wrapping_add_assign(&mut r_min, &RectI8::of(-20, -20, 0, 0));
     assert_eq!(r_min, RectI8::of(i8::MAX - 9, i8::MAX - 14, i8::MIN + 20, i8::MIN + 30));
@@ -48,7 +48,7 @@ fn wrapping_add_assign_small_rect_out_of_bounds() {
 }
 
 #[test]
-fn wrapping_add_assign_big_rect_out_of_bounds() {
+fn big_rect_out_of_bounds() {
     let mut r_min = RectI8::of(i8::MIN + 10, i8::MIN + 5, i8::MAX, i8::MAX);
     wrapping_add_assign(&mut r_min, &RectI8::of(-20, -20, 0, 0));
     assert_eq!(r_min, RectI8::of(i8::MAX - 9, i8::MAX - 14, i8::MAX, i8::MAX));
@@ -59,7 +59,7 @@ fn wrapping_add_assign_big_rect_out_of_bounds() {
 }
 
 #[test]
-fn wrapping_add_assign_small_rect_limits_out_of_bounds() {
+fn small_rect_limits_out_of_bounds() {
     let mut r_min = RectI8::of(i8::MIN + 1, i8::MIN + 1, i8::MIN + 10, i8::MIN + 10);
     wrapping_add_assign(&mut r_min, &RectI8::min());
     assert_eq!(r_min, RectI8::of(1, 1, 10, 10));
@@ -70,7 +70,7 @@ fn wrapping_add_assign_small_rect_limits_out_of_bounds() {
 }
 
 #[test]
-fn wrapping_add_assign_big_rect_limits_out_of_bounds() {
+fn big_rect_limits_out_of_bounds() {
     let mut r1 = RectI8::largest();
     wrapping_add_assign(&mut r1, &RectI8::min());
     assert_eq!(r1, RectI8::of(0, 0, -1, -1));

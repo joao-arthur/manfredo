@@ -2,7 +2,7 @@ use super::checked_resize;
 use crate::cartesian::rect::rect_i64::RectI64;
 
 #[test]
-fn checked_resize_odd() {
+fn odd() {
     assert_eq!(checked_resize(&RectI64::of(-5, -5, 5, 5), 9), RectI64::of(-4, -4, 4, 4));
     assert_eq!(checked_resize(&RectI64::of(-4, -4, 4, 4), 7), RectI64::of(-3, -3, 3, 3));
     assert_eq!(checked_resize(&RectI64::of(-3, -3, 3, 3), 5), RectI64::of(-2, -2, 2, 2));
@@ -11,7 +11,7 @@ fn checked_resize_odd() {
 }
 
 #[test]
-fn checked_resize_even() {
+fn even() {
     assert_eq!(checked_resize(&RectI64::of(-5, -5, 4, 4), 10), RectI64::of(-5, -5, 4, 4));
     assert_eq!(checked_resize(&RectI64::of(-5, -5, 4, 4), 8), RectI64::of(-4, -4, 3, 3));
     assert_eq!(checked_resize(&RectI64::of(-4, -4, 3, 3), 6), RectI64::of(-3, -3, 2, 2));

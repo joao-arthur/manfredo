@@ -2,7 +2,7 @@ use super::wrapping_inflate_assign;
 use crate::cartesian::rect::rect_i64::RectI64;
 
 #[test]
-fn wrapping_inflate_assign_min_bounds() {
+fn min_bounds() {
     let mut r = RectI64::of(i64::MIN + 7, i64::MIN + 3, i64::MIN + 9, i64::MIN + 13);
     wrapping_inflate_assign(&mut r);
     assert_eq!(r, RectI64::of(i64::MIN + 6, i64::MIN + 2, i64::MIN + 10, i64::MIN + 14));
@@ -13,7 +13,7 @@ fn wrapping_inflate_assign_min_bounds() {
 }
 
 #[test]
-fn wrapping_inflate_assign_max_bounds() {
+fn max_bounds() {
     let mut r = RectI64::of(i64::MAX - 33, i64::MAX - 17, i64::MAX - 5, i64::MAX - 3);
     wrapping_inflate_assign(&mut r);
     assert_eq!(r, RectI64::of(i64::MAX - 34, i64::MAX - 18, i64::MAX - 4, i64::MAX - 2));
@@ -24,7 +24,7 @@ fn wrapping_inflate_assign_max_bounds() {
 }
 
 #[test]
-fn wrapping_inflate_assign_to_bounds() {
+fn to_bounds() {
     let mut r = RectI64::of(i64::MIN + 1, i64::MIN + 1, i64::MAX - 1, i64::MAX - 1);
     wrapping_inflate_assign(&mut r);
     assert_eq!(r, RectI64::largest());
@@ -47,7 +47,7 @@ fn wrapping_inflate_assign_to_bounds() {
 }
 
 #[test]
-fn wrapping_inflate_assign_out_of_bounds() {
+fn out_of_bounds() {
     let mut r = RectI64::largest();
     wrapping_inflate_assign(&mut r);
     assert_eq!(r, RectI64::of(i64::MAX, i64::MAX, i64::MIN, i64::MIN));

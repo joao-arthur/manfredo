@@ -5,7 +5,7 @@ use crate::cartesian::{
 };
 
 #[test]
-fn test_saturating_add_assign() {
+fn test() {
     let mut r = RectF32::of(0.0, 0.0, 12.0, 15.0);
     saturating_add_assign(&mut r, &RectF32::of(5.0, 4.0, 3.0, 2.0));
     assert_eq!(r, RectF32::of(5.0, 4.0, 15.0, 17.0));
@@ -14,7 +14,7 @@ fn test_saturating_add_assign() {
 }
 
 #[test]
-fn saturating_add_assign_small_rect_to_bounds() {
+fn small_rect_to_bounds() {
     let mut min_r = RectF32::of(MIN + 2.0, MIN + 5.0, MIN + 12.0, MIN + 15.0);
     saturating_add_assign(&mut min_r, &RectF32::of(-2.0, -5.0, 9.0, 7.0));
     assert_eq!(min_r, RectF32::of(MIN, MIN, MIN + 21.0, MIN + 22.0));
@@ -25,7 +25,7 @@ fn saturating_add_assign_small_rect_to_bounds() {
 }
 
 #[test]
-fn saturating_add_assign_big_rect_to_bounds() {
+fn big_rect_to_bounds() {
     let mut r = RectF32::of(MIN + 2.0, MIN + 5.0, MAX - 2.0, MAX - 5.0);
     saturating_add_assign(&mut r, &RectF32::of(-2.0, -5.0, 2.0, 5.0));
     assert_eq!(r, RectF32::largest());
@@ -40,7 +40,7 @@ fn saturating_add_assign_big_rect_to_bounds() {
 }
 
 #[test]
-fn saturating_add_assign_small_rect_out_of_bounds() {
+fn small_rect_out_of_bounds() {
     let mut r_min = RectF32::of(MIN + 10.0, MIN + 5.0, MIN + 20.0, MIN + 30.0);
     saturating_add_assign(&mut r_min, &RectF32::of(-20.0, -20.0, 0.0, 0.0));
     assert_eq!(r_min, RectF32::of(MIN, MIN, MIN + 20.0, MIN + 30.0));
@@ -51,7 +51,7 @@ fn saturating_add_assign_small_rect_out_of_bounds() {
 }
 
 #[test]
-fn saturating_add_assign_big_rect_out_of_bounds() {
+fn big_rect_out_of_bounds() {
     let mut r_min = RectF32::of(MIN + 10.0, MIN + 5.0, MAX, MAX);
     saturating_add_assign(&mut r_min, &RectF32::of(-20.0, -20.0, 0.0, 0.0));
     assert_eq!(r_min, RectF32::largest());
@@ -62,7 +62,7 @@ fn saturating_add_assign_big_rect_out_of_bounds() {
 }
 
 #[test]
-fn saturating_add_assign_small_rect_limits_out_of_bounds() {
+fn small_rect_limits_out_of_bounds() {
     let mut r_min = RectF32::of(MIN + 1.0, MIN + 1.0, MIN + 10.0, MIN + 10.0);
     saturating_add_assign(&mut r_min, &RectF32::min());
     assert_eq!(r_min, RectF32::min());
@@ -73,7 +73,7 @@ fn saturating_add_assign_small_rect_limits_out_of_bounds() {
 }
 
 #[test]
-fn saturating_add_assign_big_rect_limits_out_of_bounds() {
+fn big_rect_limits_out_of_bounds() {
     let mut r = RectF32::largest();
     saturating_add_assign(&mut r, &RectF32::largest());
     assert_eq!(r, RectF32::largest());

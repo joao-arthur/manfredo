@@ -2,7 +2,7 @@ use super::try_saturating_inflate_assign;
 use crate::cartesian::rect::rect_u16::RectU16;
 
 #[test]
-fn try_saturating_inflate_assign_min_bounds() {
+fn min_bounds() {
     let mut r = RectU16::of(7, 2, 17, 13);
     assert_eq!(try_saturating_inflate_assign(&mut r), Some(()));
     assert_eq!(r, RectU16::of(6, 1, 18, 14));
@@ -23,7 +23,7 @@ fn try_saturating_inflate_assign_min_bounds() {
 }
 
 #[test]
-fn try_saturating_inflate_assign_max_bounds() {
+fn max_bounds() {
     let mut r = RectU16::of(u16::MAX - 33, u16::MAX - 17, u16::MAX - 5, u16::MAX - 3);
     assert_eq!(try_saturating_inflate_assign(&mut r), Some(()));
     assert_eq!(r, RectU16::of(u16::MAX - 34, u16::MAX - 18, u16::MAX - 4, u16::MAX - 2));
@@ -44,7 +44,7 @@ fn try_saturating_inflate_assign_max_bounds() {
 }
 
 #[test]
-fn try_saturating_inflate_assign_to_bounds() {
+fn to_bounds() {
     let mut r = RectU16::of(1, 1, u16::MAX - 1, u16::MAX - 1);
     assert_eq!(try_saturating_inflate_assign(&mut r), Some(()));
     assert_eq!(r, RectU16::largest());
@@ -75,7 +75,7 @@ fn try_saturating_inflate_assign_to_bounds() {
 }
 
 #[test]
-fn try_saturating_inflate_assign_out_of_bounds() {
+fn out_of_bounds() {
     let mut r = RectU16::largest();
     assert_eq!(try_saturating_inflate_assign(&mut r), None);
     assert_eq!(r, RectU16::largest());

@@ -2,7 +2,7 @@ use super::try_checked_inflate_assign;
 use crate::cartesian::rect::rect_u32::RectU32;
 
 #[test]
-fn try_checked_inflate_assign_min_bounds() {
+fn min_bounds() {
     let mut r = RectU32::of(7, 3, 9, 13);
     assert_eq!(try_checked_inflate_assign(&mut r), Some(()));
     assert_eq!(r, RectU32::of(6, 2, 10, 14));
@@ -13,7 +13,7 @@ fn try_checked_inflate_assign_min_bounds() {
 }
 
 #[test]
-fn try_checked_inflate_assign_max_bounds() {
+fn max_bounds() {
     let mut r = RectU32::of(u32::MAX - 33, u32::MAX - 17, u32::MAX - 5, u32::MAX - 3);
     assert_eq!(try_checked_inflate_assign(&mut r), Some(()));
     assert_eq!(r, RectU32::of(u32::MAX - 34, u32::MAX - 18, u32::MAX - 4, u32::MAX - 2));
@@ -24,7 +24,7 @@ fn try_checked_inflate_assign_max_bounds() {
 }
 
 #[test]
-fn try_checked_inflate_assign_to_bounds() {
+fn to_bounds() {
     let mut r = RectU32::of(1, 1, u32::MAX - 1, u32::MAX - 1);
     assert_eq!(try_checked_inflate_assign(&mut r), Some(()));
     assert_eq!(r, RectU32::largest());
@@ -47,7 +47,7 @@ fn try_checked_inflate_assign_to_bounds() {
 }
 
 #[test]
-fn try_checked_inflate_assign_out_of_bounds() {
+fn out_of_bounds() {
     let mut r = RectU32::largest();
     assert_eq!(try_checked_inflate_assign(&mut r), None);
     assert_eq!(r, RectU32::largest());

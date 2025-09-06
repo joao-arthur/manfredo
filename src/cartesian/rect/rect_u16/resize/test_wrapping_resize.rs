@@ -2,7 +2,7 @@ use super::wrapping_resize;
 use crate::cartesian::rect::rect_u16::RectU16;
 
 #[test]
-fn wrapping_resize_odd() {
+fn odd() {
     assert_eq!(wrapping_resize(&RectU16::of(5, 5, 15, 15), 9), RectU16::of(6, 6, 14, 14));
     assert_eq!(wrapping_resize(&RectU16::of(6, 6, 14, 14), 7), RectU16::of(7, 7, 13, 13));
     assert_eq!(wrapping_resize(&RectU16::of(7, 7, 13, 13), 5), RectU16::of(8, 8, 12, 12));
@@ -11,7 +11,7 @@ fn wrapping_resize_odd() {
 }
 
 #[test]
-fn wrapping_resize_even() {
+fn even() {
     assert_eq!(wrapping_resize(&RectU16::of(5, 5, 14, 14), 10), RectU16::of(5, 5, 14, 14));
     assert_eq!(wrapping_resize(&RectU16::of(5, 5, 14, 14), 8), RectU16::of(6, 6, 13, 13));
     assert_eq!(wrapping_resize(&RectU16::of(6, 6, 13, 13), 6), RectU16::of(7, 7, 12, 12));

@@ -2,7 +2,7 @@ use super::wrapping_inflate_assign;
 use crate::cartesian::rect::rect_u16::RectU16;
 
 #[test]
-fn wrapping_inflate_assign_min_bounds() {
+fn min_bounds() {
     let mut r = RectU16::of(7, 3, 9, 13);
     wrapping_inflate_assign(&mut r);
     assert_eq!(r, RectU16::of(6, 2, 10, 14));
@@ -13,7 +13,7 @@ fn wrapping_inflate_assign_min_bounds() {
 }
 
 #[test]
-fn wrapping_inflate_assign_max_bounds() {
+fn max_bounds() {
     let mut r = RectU16::of(u16::MAX - 33, u16::MAX - 17, u16::MAX - 5, u16::MAX - 3);
     wrapping_inflate_assign(&mut r);
     assert_eq!(r, RectU16::of(u16::MAX - 34, u16::MAX - 18, u16::MAX - 4, u16::MAX - 2));
@@ -24,7 +24,7 @@ fn wrapping_inflate_assign_max_bounds() {
 }
 
 #[test]
-fn wrapping_inflate_assign_to_bounds() {
+fn to_bounds() {
     let mut r = RectU16::of(1, 1, u16::MAX - 1, u16::MAX - 1);
     wrapping_inflate_assign(&mut r);
     assert_eq!(r, RectU16::largest());
@@ -47,7 +47,7 @@ fn wrapping_inflate_assign_to_bounds() {
 }
 
 #[test]
-fn wrapping_inflate_assign_out_of_bounds() {
+fn out_of_bounds() {
     let mut r = RectU16::largest();
     wrapping_inflate_assign(&mut r);
     assert_eq!(r, RectU16::of(u16::MAX, u16::MAX, 0, 0));

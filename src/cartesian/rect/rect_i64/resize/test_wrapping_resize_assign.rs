@@ -2,7 +2,7 @@ use super::wrapping_resize_assign;
 use crate::cartesian::rect::rect_i64::RectI64;
 
 #[test]
-fn wrapping_resize_assign_odd() {
+fn odd() {
     let mut r = RectI64::of(-5, -5, 5, 5);
     wrapping_resize_assign(&mut r, 9);
     assert_eq!(r, RectI64::of(-4, -4, 4, 4));
@@ -17,7 +17,7 @@ fn wrapping_resize_assign_odd() {
 }
 
 #[test]
-fn wrapping_resize_assign_even() {
+fn even() {
     let mut r = RectI64::of(-5, -5, 4, 4);
     wrapping_resize_assign(&mut r, 10);
     assert_eq!(r, RectI64::of(-5, -5, 4, 4));

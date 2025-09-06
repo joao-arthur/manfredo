@@ -2,7 +2,7 @@ use super::saturating_resize_assign;
 use crate::cartesian::rect::rect_u32::RectU32;
 
 #[test]
-fn saturating_resize_assign_odd() {
+fn odd() {
     let mut r = RectU32::of(5, 5, 15, 15);
     saturating_resize_assign(&mut r, 9);
     assert_eq!(r, RectU32::of(6, 6, 14, 14));
@@ -17,7 +17,7 @@ fn saturating_resize_assign_odd() {
 }
 
 #[test]
-fn saturating_resize_assign_even() {
+fn even() {
     let mut r = RectU32::of(5, 5, 14, 14);
     saturating_resize_assign(&mut r, 10);
     assert_eq!(r, RectU32::of(5, 5, 14, 14));

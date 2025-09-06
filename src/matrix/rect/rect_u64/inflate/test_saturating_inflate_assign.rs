@@ -2,7 +2,7 @@ use super::saturating_inflate_assign;
 use crate::matrix::rect::rect_u64::RectU64;
 
 #[test]
-fn saturating_inflate_assign_min_bounds() {
+fn min_bounds() {
     let mut r = RectU64::of(7, 2, 17, 13);
     saturating_inflate_assign(&mut r);
     assert_eq!(r, RectU64::of(6, 1, 18, 14));
@@ -23,7 +23,7 @@ fn saturating_inflate_assign_min_bounds() {
 }
 
 #[test]
-fn saturating_inflate_assign_max_bounds() {
+fn max_bounds() {
     let mut r = RectU64::of(u64::MAX - 33, u64::MAX - 17, u64::MAX - 5, u64::MAX - 3);
     saturating_inflate_assign(&mut r);
     assert_eq!(r, RectU64::of(u64::MAX - 34, u64::MAX - 18, u64::MAX - 4, u64::MAX - 2));

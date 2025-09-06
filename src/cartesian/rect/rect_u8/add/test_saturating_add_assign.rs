@@ -2,7 +2,7 @@ use super::saturating_add_assign;
 use crate::cartesian::rect::{rect_i8::RectI8, rect_u8::RectU8};
 
 #[test]
-fn test_saturating_add_assign() {
+fn test() {
     let mut r = RectU8::of(0, 0, 12, 10);
     saturating_add_assign(&mut r, &RectI8::of(5, 4, 3, 2));
     assert_eq!(r, RectU8::of(5, 4, 15, 12));
@@ -11,7 +11,7 @@ fn test_saturating_add_assign() {
 }
 
 #[test]
-fn saturating_add_assign_to_bounds() {
+fn to_bounds() {
     let mut r = RectU8::of(2, 5, u8::MAX - 2, u8::MAX - 5);
     saturating_add_assign(&mut r, &RectI8::of(-2, -5, 2, 5));
     assert_eq!(r, RectU8::largest());
@@ -26,7 +26,7 @@ fn saturating_add_assign_to_bounds() {
 }
 
 #[test]
-fn saturating_add_assign_out_of_bounds() {
+fn out_of_bounds() {
     let mut r1 = RectU8::of(10, 10, u8::MAX - 10, u8::MAX - 10);
     saturating_add_assign(&mut r1, &RectI8::of(-20, 0, 0, 0));
     assert_eq!(r1, RectU8::of(0, 10, u8::MAX - 10, u8::MAX - 10));
@@ -45,7 +45,7 @@ fn saturating_add_assign_out_of_bounds() {
 }
 
 #[test]
-fn saturating_add_assign_edge_out_of_bounds() {
+fn edge_out_of_bounds() {
     let mut r = RectU8::largest();
     saturating_add_assign(&mut r, &RectI8::of(-1, 0, 0, 0));
     assert_eq!(r, RectU8::largest());
@@ -58,7 +58,7 @@ fn saturating_add_assign_edge_out_of_bounds() {
 }
 
 #[test]
-fn saturating_add_assign_limits_out_of_bounds() {
+fn limits_out_of_bounds() {
     let mut r = RectU8::largest();
     saturating_add_assign(&mut r, &RectI8::of(i8::MIN, 0, 0, 0));
     assert_eq!(r, RectU8::largest());

@@ -79,6 +79,26 @@ pub fn wrapping_translate(r: &RectI32, delta: &PointI32) -> RectI32 {
     RectI32 { min: PointI32 { x: min_x, y: min_y }, max: PointI32 { x: max_x, y: max_y } }
 }
 
-pub mod checked;
-pub mod saturated;
-pub mod wrapped;
+#[cfg(test)]
+mod test_try_checked_translate_assign;
+
+#[cfg(test)]
+mod test_try_checked_translate;
+
+#[cfg(test)]
+mod test_checked_translate_assign;
+
+#[cfg(test)]
+mod test_checked_translate;
+
+#[cfg(test)]
+mod test_saturating_translate_assign;
+
+#[cfg(test)]
+mod test_saturating_translate;
+
+#[cfg(test)]
+mod test_wrapping_translate_assign;
+
+#[cfg(test)]
+mod test_wrapping_translate;

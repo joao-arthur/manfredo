@@ -79,6 +79,26 @@ pub fn wrapping_translate(r: &RectI16, delta: &PointI16) -> RectI16 {
     RectI16 { min: PointI16 { x: min_x, y: min_y }, max: PointI16 { x: max_x, y: max_y } }
 }
 
-pub mod checked;
-pub mod saturated;
-pub mod wrapped;
+#[cfg(test)]
+mod test_try_checked_translate_assign;
+
+#[cfg(test)]
+mod test_try_checked_translate;
+
+#[cfg(test)]
+mod test_checked_translate_assign;
+
+#[cfg(test)]
+mod test_checked_translate;
+
+#[cfg(test)]
+mod test_saturating_translate_assign;
+
+#[cfg(test)]
+mod test_saturating_translate;
+
+#[cfg(test)]
+mod test_wrapping_translate_assign;
+
+#[cfg(test)]
+mod test_wrapping_translate;

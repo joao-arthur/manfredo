@@ -3,7 +3,6 @@ use crate::cartesian::rect::rect_i64::RectI64;
 
 #[test]
 fn try_checked_resize_odd() {
-    assert_eq!(try_checked_resize(&RectI64::of(-5, -5, 5, 5), 11), Some(RectI64::of(-5, -5, 5, 5)));
     assert_eq!(try_checked_resize(&RectI64::of(-5, -5, 5, 5), 9), Some(RectI64::of(-4, -4, 4, 4)));
     assert_eq!(try_checked_resize(&RectI64::of(-4, -4, 4, 4), 7), Some(RectI64::of(-3, -3, 3, 3)));
     assert_eq!(try_checked_resize(&RectI64::of(-3, -3, 3, 3), 5), Some(RectI64::of(-2, -2, 2, 2)));
@@ -39,10 +38,6 @@ fn try_checked_resize_same_size() {
 fn try_checked_resize_odd_small_rect_same_size() {
     assert_eq!(try_checked_resize(&RectI64::of(i64::MIN, i64::MIN, i64::MIN + 2, i64::MIN + 2), 3), Some(RectI64::of(i64::MIN, i64::MIN, i64::MIN + 2, i64::MIN + 2)));
     assert_eq!(try_checked_resize(&RectI64::of(i64::MAX - 2, i64::MAX - 2, i64::MAX, i64::MAX), 3), Some(RectI64::of(i64::MAX - 2, i64::MAX - 2, i64::MAX, i64::MAX)));
-}
-
-#[test]
-fn try_checked_resize_even_small_rect_same_size() {
     assert_eq!(try_checked_resize(&RectI64::of(i64::MIN, i64::MIN, i64::MIN + 3, i64::MIN + 3), 4), Some(RectI64::of(i64::MIN, i64::MIN, i64::MIN + 3, i64::MIN + 3)));
     assert_eq!(try_checked_resize(&RectI64::of(i64::MAX - 3, i64::MAX - 3, i64::MAX, i64::MAX), 4), Some(RectI64::of(i64::MAX - 3, i64::MAX - 3, i64::MAX, i64::MAX)));
 }

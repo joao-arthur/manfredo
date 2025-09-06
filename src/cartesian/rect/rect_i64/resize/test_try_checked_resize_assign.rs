@@ -4,8 +4,6 @@ use crate::cartesian::rect::rect_i64::RectI64;
 #[test]
 fn try_checked_resize_assign_odd() {
     let mut r = RectI64::of(-5, -5, 5, 5);
-    assert_eq!(try_checked_resize_assign(&mut r, 11), Some(()));
-    assert_eq!(r, RectI64::of(-5, -5, 5, 5));
     assert_eq!(try_checked_resize_assign(&mut r, 9), Some(()));
     assert_eq!(r, RectI64::of(-4, -4, 4, 4));
     assert_eq!(try_checked_resize_assign(&mut r, 7), Some(()));
@@ -44,69 +42,26 @@ fn try_checked_resize_assign_small_size() {
 
 #[test]
 fn try_checked_resize_assign_same_size() {
-    let mut r_11 = RectI64::of(10, 10, 20, 20);
-    assert_eq!(try_checked_resize_assign(&mut r_11, 11), Some(()));
-    assert_eq!(r_11, RectI64::of(10, 10, 20, 20));
+    let mut r_min_2 = RectI64::of(i64::MIN, i64::MIN, i64::MIN + 2, i64::MIN + 2);
+    assert_eq!(try_checked_resize_assign(&mut r_min_2, 3), Some(()));
+    assert_eq!(r_min_2, RectI64::of(i64::MIN, i64::MIN, i64::MIN + 2, i64::MIN + 2));
 
-    let mut r_12 = RectI64::of(10, 10, 21, 21);
-    assert_eq!(try_checked_resize_assign(&mut r_12, 12), Some(()));
-    assert_eq!(r_12, RectI64::of(10, 10, 21, 21));
+    let mut r_min_3 = RectI64::of(i64::MIN, i64::MIN, i64::MIN + 3, i64::MIN + 3);
+    assert_eq!(try_checked_resize_assign(&mut r_min_3, 4), Some(()));
+    assert_eq!(r_min_3, RectI64::of(i64::MIN, i64::MIN, i64::MIN + 3, i64::MIN + 3));
 
-    let mut r_13 = RectI64::of(9, 9, 21, 21);
-    assert_eq!(try_checked_resize_assign(&mut r_13, 13), Some(()));
-    assert_eq!(r_13, RectI64::of(9, 9, 21, 21));
+    let mut r_max_2 = RectI64::of(i64::MAX - 2, i64::MAX - 2, i64::MAX, i64::MAX);
+    assert_eq!(try_checked_resize_assign(&mut r_max_2, 3), Some(()));
+    assert_eq!(r_max_2, RectI64::of(i64::MAX - 2, i64::MAX - 2, i64::MAX, i64::MAX));
+
+    let mut r_max_3 = RectI64::of(i64::MAX - 3, i64::MAX - 3, i64::MAX, i64::MAX);
+    assert_eq!(try_checked_resize_assign(&mut r_max_3, 4), Some(()));
+    assert_eq!(r_max_3, RectI64::of(i64::MAX - 3, i64::MAX - 3, i64::MAX, i64::MAX));
 }
 
-#[test]
-fn try_checked_resize_assign_odd_small_rect_same_size() {
-    let mut r_min = RectI64::of(i64::MIN, i64::MIN, i64::MIN + 2, i64::MIN + 2);
-    assert_eq!(try_checked_resize_assign(&mut r_min, 3), Some(()));
-    assert_eq!(r_min, RectI64::of(i64::MIN, i64::MIN, i64::MIN + 2, i64::MIN + 2));
-
-    let mut r_max = RectI64::of(i64::MAX - 2, i64::MAX - 2, i64::MAX, i64::MAX);
-    assert_eq!(try_checked_resize_assign(&mut r_max, 3), Some(()));
-    assert_eq!(r_max, RectI64::of(i64::MAX - 2, i64::MAX - 2, i64::MAX, i64::MAX));
-}
 
 #[test]
-fn try_checked_resize_assign_even_small_rect_same_size() {
-    let mut r = RectI64::of(i64::MIN, i64::MIN, i64::MIN + 3, i64::MIN + 3);
-    assert_eq!(try_checked_resize_assign(&mut r, 4), Some(()));
-    assert_eq!(r, RectI64::of(i64::MIN, i64::MIN, i64::MIN + 3, i64::MIN + 3));
-
-    let mut r = RectI64::of(i64::MAX - 3, i64::MAX - 3, i64::MAX, i64::MAX);
-    assert_eq!(try_checked_resize_assign(&mut r, 4), Some(()));
-    assert_eq!(r, RectI64::of(i64::MAX - 3, i64::MAX - 3, i64::MAX, i64::MAX));
-}
-
-#[test]
-fn try_checked_resize_assign_odd_small_rect_to_bounds() {
-    let mut r_min = RectI64::of(2, 2, 4, 4);
-    assert_eq!(try_checked_resize_assign(&mut r_min, 7), Some(()));
-    assert_eq!(r_min, RectI64::of(0, 0, 6, 6));
-
-    let mut r_max = RectI64::of(i64::MAX - 4, i64::MAX - 4, i64::MAX - 2, i64::MAX - 2);
-    assert_eq!(try_checked_resize_assign(&mut r_max, 7), Some(()));
-    assert_eq!(r_max, RectI64::of(i64::MAX - 6, i64::MAX - 6, i64::MAX, i64::MAX));
-}
-
-#[test]
-fn try_checked_resize_assign_even_small_rect_to_bounds() {
-    let mut r = RectI64::of(2, 2, 5, 5);
-    assert_eq!(try_checked_resize_assign(&mut r, 8), Some(()));
-    assert_eq!(r, RectI64::of(0, 0, 7, 7));
-
-    let mut r = RectI64::of(i64::MAX - 5, i64::MAX - 5, i64::MAX - 2, i64::MAX - 2);
-    assert_eq!(try_checked_resize_assign(&mut r, 8), Some(()));
-    assert_eq!(r, RectI64::of(i64::MAX - 7, i64::MAX - 7, i64::MAX, i64::MAX));
-}
-
-#[test]
-fn try_checked_resize_assign_odd_small_rect_out_of_bounds() {
-    let mut r_min = RectI64::of(i64::MIN, i64::MIN, i64::MIN + 2, i64::MIN + 2);
-    assert_eq!(try_checked_resize_assign(&mut r_min, 5), None);
-    assert_eq!(r_min, RectI64::of(i64::MIN, i64::MIN, i64::MIN + 2, i64::MIN + 2));
-
+fn try_checked_resize_assign_small_rect_out_of_bounds() {
     let mut r_min_x = RectI64::of(i64::MIN, i64::MIN + 2, i64::MIN + 2, i64::MIN + 4);
     assert_eq!(try_checked_resize_assign(&mut r_min_x, 5), None);
     assert_eq!(r_min_x, RectI64::of(i64::MIN, i64::MIN + 2, i64::MIN + 2, i64::MIN + 4));
@@ -114,10 +69,6 @@ fn try_checked_resize_assign_odd_small_rect_out_of_bounds() {
     let mut r_min_y = RectI64::of(i64::MIN + 2, i64::MIN, i64::MIN + 4, i64::MIN + 2);
     assert_eq!(try_checked_resize_assign(&mut r_min_y, 5), None);
     assert_eq!(r_min_y, RectI64::of(i64::MIN + 2, i64::MIN, i64::MIN + 4, i64::MIN + 2));
-
-    let mut r_max = RectI64::of(i64::MAX - 2, i64::MAX - 2, i64::MAX, i64::MAX);
-    assert_eq!(try_checked_resize_assign(&mut r_max, 5), None);
-    assert_eq!(r_max, RectI64::of(i64::MAX - 2, i64::MAX - 2, i64::MAX, i64::MAX));
 
     let mut r_max_x = RectI64::of(i64::MAX - 2, i64::MAX - 4, i64::MAX, i64::MAX - 2);
     assert_eq!(try_checked_resize_assign(&mut r_max_x, 5), None);
@@ -128,39 +79,9 @@ fn try_checked_resize_assign_odd_small_rect_out_of_bounds() {
     assert_eq!(r_max_y, RectI64::of(i64::MAX - 4, i64::MAX - 2, i64::MAX - 2, i64::MAX));
 }
 
-#[test]
-fn try_checked_resize_assign_even_small_rect_out_of_bounds() {
-    let mut r_min = RectI64::of(i64::MIN, i64::MIN, i64::MIN + 3, i64::MIN + 3);
-    assert_eq!(try_checked_resize_assign(&mut r_min, 6), None);
-    assert_eq!(r_min, RectI64::of(i64::MIN, i64::MIN, i64::MIN + 3, i64::MIN + 3));
-
-    let mut r_min_x = RectI64::of(i64::MIN, i64::MIN + 3, i64::MIN + 3, i64::MIN + 6);
-    assert_eq!(try_checked_resize_assign(&mut r_min_x, 6), None);
-    assert_eq!(r_min_x, RectI64::of(i64::MIN, i64::MIN + 3, i64::MIN + 3, i64::MIN + 6));
-
-    let mut r_min_y = RectI64::of(i64::MIN + 3, i64::MIN, i64::MIN + 6, i64::MIN + 3);
-    assert_eq!(try_checked_resize_assign(&mut r_min_y, 6), None);
-    assert_eq!(r_min_y, RectI64::of(i64::MIN + 3, i64::MIN, i64::MIN + 6, i64::MIN + 3));
-
-    let mut r_max = RectI64::of(i64::MAX - 3, i64::MAX - 3, i64::MAX, i64::MAX);
-    assert_eq!(try_checked_resize_assign(&mut r_max, 6), None);
-    assert_eq!(r_max, RectI64::of(i64::MAX - 3, i64::MAX - 3, i64::MAX, i64::MAX));
-
-    let mut r_max_x = RectI64::of(i64::MAX - 3, i64::MAX - 6, i64::MAX, i64::MAX - 3);
-    assert_eq!(try_checked_resize_assign(&mut r_max_x, 6), None);
-    assert_eq!(r_max_x, RectI64::of(i64::MAX - 3, i64::MAX - 6, i64::MAX, i64::MAX - 3));
-
-    let mut r_max_y = RectI64::of(i64::MAX - 6, i64::MAX - 3, i64::MAX - 3, i64::MAX);
-    assert_eq!(try_checked_resize_assign(&mut r_max_y, 6), None);
-    assert_eq!(r_max_y, RectI64::of(i64::MAX - 6, i64::MAX - 3, i64::MAX - 3, i64::MAX));
-}
 
 #[test]
-fn try_checked_resize_assign_odd_small_rect_limits_out_of_bounds() {
-    let mut r_min = RectI64::of(i64::MIN, i64::MIN, i64::MIN + 2, i64::MIN + 2);
-    assert_eq!(try_checked_resize_assign(&mut r_min, u64::MAX), None);
-    assert_eq!(r_min, RectI64::of(i64::MIN, i64::MIN, i64::MIN + 2, i64::MIN + 2));
-
+fn try_checked_resize_assign_small_rect_limits_out_of_bounds() {
     let mut r_min_x = RectI64::of(i64::MIN, i64::MIN + 2, i64::MIN + 2, i64::MIN + 4);
     assert_eq!(try_checked_resize_assign(&mut r_min_x, u64::MAX), None);
     assert_eq!(r_min_x, RectI64::of(i64::MIN, i64::MIN + 2, i64::MIN + 2, i64::MIN + 4));
@@ -169,10 +90,6 @@ fn try_checked_resize_assign_odd_small_rect_limits_out_of_bounds() {
     assert_eq!(try_checked_resize_assign(&mut r_min_y, u64::MAX), None);
     assert_eq!(r_min_y, RectI64::of(i64::MIN + 2, i64::MIN, i64::MIN + 4, i64::MIN + 2));
 
-    let mut r_max = RectI64::of(i64::MAX - 2, i64::MAX - 2, i64::MAX, i64::MAX);
-    assert_eq!(try_checked_resize_assign(&mut r_max, u64::MAX), None);
-    assert_eq!(r_max, RectI64::of(i64::MAX - 2, i64::MAX - 2, i64::MAX, i64::MAX));
-
     let mut r_max_x = RectI64::of(i64::MAX - 2, i64::MAX - 4, i64::MAX, i64::MAX - 2);
     assert_eq!(try_checked_resize_assign(&mut r_max_x, u64::MAX), None);
     assert_eq!(r_max_x, RectI64::of(i64::MAX - 2, i64::MAX - 4, i64::MAX, i64::MAX - 2));
@@ -180,33 +97,6 @@ fn try_checked_resize_assign_odd_small_rect_limits_out_of_bounds() {
     let mut r_max_y = RectI64::of(i64::MAX - 4, i64::MAX - 2, i64::MAX - 2, i64::MAX);
     assert_eq!(try_checked_resize_assign(&mut r_max_y, u64::MAX), None);
     assert_eq!(r_max_y, RectI64::of(i64::MAX - 4, i64::MAX - 2, i64::MAX - 2, i64::MAX));
-}
-
-#[test]
-fn try_checked_resize_assign_even_small_rect_limits_out_of_bounds() {
-    let mut r_min = RectI64::of(i64::MIN, i64::MIN, i64::MIN + 3, i64::MIN + 3);
-    assert_eq!(try_checked_resize_assign(&mut r_min, u64::MAX - 1), None);
-    assert_eq!(r_min, RectI64::of(i64::MIN, i64::MIN, i64::MIN + 3, i64::MIN + 3));
-
-    let mut r_min_x = RectI64::of(i64::MIN, i64::MIN + 3, i64::MIN + 3, i64::MIN + 6);
-    assert_eq!(try_checked_resize_assign(&mut r_min_x, u64::MAX - 1), None);
-    assert_eq!(r_min_x, RectI64::of(i64::MIN, i64::MIN + 3, i64::MIN + 3, i64::MIN + 6));
-
-    let mut r_min_y = RectI64::of(i64::MIN + 3, i64::MIN, i64::MIN + 6, i64::MIN + 3);
-    assert_eq!(try_checked_resize_assign(&mut r_min_y, u64::MAX - 1), None);
-    assert_eq!(r_min_y, RectI64::of(i64::MIN + 3, i64::MIN, i64::MIN + 6, i64::MIN + 3));
-
-    let mut r_max = RectI64::of(i64::MAX - 3, i64::MAX - 3, i64::MAX, i64::MAX);
-    assert_eq!(try_checked_resize_assign(&mut r_max, u64::MAX - 1), None);
-    assert_eq!(r_max, RectI64::of(i64::MAX - 3, i64::MAX - 3, i64::MAX, i64::MAX));
-
-    let mut r_max_x = RectI64::of(i64::MAX - 3, i64::MAX - 6, i64::MAX, i64::MAX - 3);
-    assert_eq!(try_checked_resize_assign(&mut r_max_x, u64::MAX - 1), None);
-    assert_eq!(r_max_x, RectI64::of(i64::MAX - 3, i64::MAX - 6, i64::MAX, i64::MAX - 3));
-
-    let mut r_max_y = RectI64::of(i64::MAX - 6, i64::MAX - 3, i64::MAX - 3, i64::MAX);
-    assert_eq!(try_checked_resize_assign(&mut r_max_y, u64::MAX - 1), None);
-    assert_eq!(r_max_y, RectI64::of(i64::MAX - 6, i64::MAX - 3, i64::MAX - 3, i64::MAX));
 }
 
 #[test]

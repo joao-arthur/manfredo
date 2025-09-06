@@ -18,8 +18,8 @@ fn try_checked_translate_out_of_bounds() {
     let r = RectU16::of(10, 10, u16::MAX - 10, u16::MAX - 10);
     assert_eq!(try_checked_translate(&r, &PointI16::of(-20, 0)), None);
     assert_eq!(try_checked_translate(&r, &PointI16::of(0, -20)), None);
-    assert_eq!(try_checked_translate(&r, &PointI16::of(20, 20)), None);
-    assert_eq!(try_checked_translate(&r, &PointI16::of(20, 20)), None);
+    assert_eq!(try_checked_translate(&r, &PointI16::of(20, 0)), None);
+    assert_eq!(try_checked_translate(&r, &PointI16::of(0, 20)), None);
 }
 
 #[test]

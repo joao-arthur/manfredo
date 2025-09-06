@@ -60,7 +60,7 @@ fn try_checked_resize_assign_same_size() {
 }
 
 #[test]
-fn try_checked_resize_assign_small_rect_out_of_bounds() {
+fn try_checked_resize_assign_out_of_bounds() {
     let mut r_min_x = RectU64::of(0, 2, 2, 4);
     assert_eq!(try_checked_resize_assign(&mut r_min_x, 5), None);
     assert_eq!(r_min_x, RectU64::of(0, 2, 2, 4));

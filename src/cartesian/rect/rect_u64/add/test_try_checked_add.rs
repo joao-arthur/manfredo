@@ -3,8 +3,8 @@ use crate::cartesian::rect::{rect_i64::RectI64, rect_u64::RectU64};
 
 #[test]
 fn test_try_checked_add() {
-    assert_eq!(try_checked_add(&RectU64::of(0, 0, 12, 15), &RectI64::of(5, 4, 3, 2)), Some(RectU64::of(5, 4, 15, 17)));
-    assert_eq!(try_checked_add(&RectU64::of(5, 4, 15, 20), &RectI64::of(-4, -3, -2, -1)), Some(RectU64::of(1, 1, 13, 19)));
+    assert_eq!(try_checked_add(&RectU64::of(0, 0, 12, 10), &RectI64::of(5, 4, 3, 2)), Some(RectU64::of(5, 4, 15, 12)));
+    assert_eq!(try_checked_add(&RectU64::of(5, 4, 15, 12), &RectI64::of(-4, -3, -2, -1)), Some(RectU64::of(1, 1, 13, 11)));
 }
 
 #[test]

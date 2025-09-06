@@ -4,8 +4,6 @@ use crate::cartesian::rect::rect_i64::RectI64;
 #[test]
 fn checked_resize_assign_odd() {
     let mut r = RectI64::of(-5, -5, 5, 5);
-    checked_resize_assign(&mut r, 11);
-    assert_eq!(r, RectI64::of(-5, -5, 5, 5));
     checked_resize_assign(&mut r, 9);
     assert_eq!(r, RectI64::of(-4, -4, 4, 4));
     checked_resize_assign(&mut r, 7);

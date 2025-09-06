@@ -153,14 +153,14 @@ mod test_saturating_resize_assign;
 #[cfg(test)]
 mod test_saturating_resize;
 
-//#[cfg(test)]
-//mod test_try_wrapping_resize_assign;
-//
-//#[cfg(test)]
-//mod test_try_wrapping_resize;
-//
-//#[cfg(test)]
-//mod test_wrapping_resize_assign;
-//
-//#[cfg(test)]
-//mod test_wrapping_resize;
+#[cfg(test)]
+mod test_try_wrapping_resize_assign;
+
+#[cfg(test)]
+mod test_try_wrapping_resize;
+
+#[cfg(test)]
+mod test_wrapping_resize_assign;
+
+#[cfg(test)]
+mod test_wrapping_resize;

@@ -29,31 +29,31 @@ fn small_size() {
 
 #[test]
 fn same_size() {
-    assert_eq!(try_wrapping_resize(&RectI64::of(0, 0, 2, 2), 3), Some(RectI64::of(0, 0, 2, 2)));
-    assert_eq!(try_wrapping_resize(&RectI64::of(0, 0, 3, 3), 4), Some(RectI64::of(0, 0, 3, 3)));
+    assert_eq!(try_wrapping_resize(&RectI64::of(i64::MIN, i64::MIN, i64::MIN + 2, i64::MIN + 2), 3), Some(RectI64::of(i64::MIN, i64::MIN, i64::MIN + 2, i64::MIN + 2)));
+    assert_eq!(try_wrapping_resize(&RectI64::of(i64::MIN, i64::MIN, i64::MIN + 3, i64::MIN + 3), 4), Some(RectI64::of(i64::MIN, i64::MIN, i64::MIN + 3, i64::MIN + 3)));
     assert_eq!(try_wrapping_resize(&RectI64::of(i64::MAX - 2, i64::MAX - 2, i64::MAX, i64::MAX), 3), Some(RectI64::of(i64::MAX - 2, i64::MAX - 2, i64::MAX, i64::MAX)));
     assert_eq!(try_wrapping_resize(&RectI64::of(i64::MAX - 3, i64::MAX - 3, i64::MAX, i64::MAX), 4), Some(RectI64::of(i64::MAX - 3, i64::MAX - 3, i64::MAX, i64::MAX)));
 }
 
 #[test]
-fn small_rect_out_of_bounds() {
-    assert_eq!(try_wrapping_resize(&RectI64::of(0, 2, 2, 4), 5), Some(RectI64::of(i64::MAX, 1, 3, 5)));
-    assert_eq!(try_wrapping_resize(&RectI64::of(2, 0, 4, 2), 5), Some(RectI64::of(1, i64::MAX, 5, 3)));
-    assert_eq!(try_wrapping_resize(&RectI64::of(i64::MAX - 2, i64::MAX - 4, i64::MAX, i64::MAX - 2), 5), Some(RectI64::of(i64::MAX - 3, i64::MAX - 5, 0, i64::MAX - 1)));
-    assert_eq!(try_wrapping_resize(&RectI64::of(i64::MAX - 4, i64::MAX - 2, i64::MAX - 2, i64::MAX), 5), Some(RectI64::of(i64::MAX - 5, i64::MAX - 3, i64::MAX - 1, 0)));
+fn out_of_bounds() {
+    assert_eq!(try_wrapping_resize(&RectI64::of(i64::MIN, i64::MIN + 2, i64::MIN + 2, i64::MIN + 4), 5), Some(RectI64::of(i64::MAX, i64::MIN + 1, i64::MIN + 3, i64::MIN + 5)));
+    assert_eq!(try_wrapping_resize(&RectI64::of(i64::MIN + 2, i64::MIN, i64::MIN + 4, i64::MIN + 2), 5), Some(RectI64::of(i64::MIN + 1, i64::MAX, i64::MIN + 5, i64::MIN + 3)));
+    assert_eq!(try_wrapping_resize(&RectI64::of(i64::MAX - 2, i64::MAX - 4, i64::MAX, i64::MAX - 2), 5), Some(RectI64::of(i64::MAX - 3, i64::MAX - 5, i64::MIN, i64::MAX - 1)));
+    assert_eq!(try_wrapping_resize(&RectI64::of(i64::MAX - 4, i64::MAX - 2, i64::MAX - 2, i64::MAX), 5), Some(RectI64::of(i64::MAX - 5, i64::MAX - 3, i64::MAX - 1, i64::MIN)));
 }
 
 #[test]
 fn small_rect_limits_out_of_bounds() {
-    assert_eq!(try_wrapping_resize(&RectI64::of(0, 2, 2, 4), u64::MAX), Some(RectI64::of(i64::MAX / 2 + 3, i64::MAX / 2 + 5, i64::MAX / 2 + 1, i64::MAX / 2 + 3)));
-    assert_eq!(try_wrapping_resize(&RectI64::of(2, 0, 4, 2), u64::MAX), Some(RectI64::of(i64::MAX / 2 + 5, i64::MAX / 2 + 3, i64::MAX / 2 + 3, i64::MAX / 2 + 1)));
-    assert_eq!(try_wrapping_resize(&RectI64::of(i64::MAX - 2, i64::MAX - 4, i64::MAX, i64::MAX - 2), u64::MAX), Some(RectI64::of(i64::MAX / 2, i64::MAX / 2 - 2, i64::MAX / 2 - 2, i64::MAX / 2 - 4)));
-    assert_eq!(try_wrapping_resize(&RectI64::of(i64::MAX - 4, i64::MAX - 2, i64::MAX - 2, i64::MAX), u64::MAX), Some(RectI64::of(i64::MAX / 2 - 2, i64::MAX / 2, i64::MAX / 2 - 4, i64::MAX / 2 - 2)));
+    assert_eq!(try_wrapping_resize(&RectI64::of(i64::MIN, i64::MIN + 2, i64::MIN + 2, i64::MIN + 4), u64::MAX), Some(RectI64::of(2, 4, 0, 2)));
+    assert_eq!(try_wrapping_resize(&RectI64::of(i64::MIN + 2, i64::MIN, i64::MIN + 4, i64::MIN + 2), u64::MAX), Some(RectI64::of(4, 2, 2, 0)));
+    assert_eq!(try_wrapping_resize(&RectI64::of(i64::MAX - 2, i64::MAX - 4, i64::MAX, i64::MAX - 2), u64::MAX), Some(RectI64::of(-1, -3, -3, -5)));
+    assert_eq!(try_wrapping_resize(&RectI64::of(i64::MAX - 4, i64::MAX - 2, i64::MAX - 2, i64::MAX), u64::MAX), Some(RectI64::of(-3, -1, -5, -3)));
 }
 
 #[test]
 fn big_rect_limits_out_of_bounds() {
-    assert_eq!(try_wrapping_resize(&RectI64::of(0, 0, i64::MAX - 1, i64::MAX - 1), u64::MAX), Some(RectI64::of(0, 0, i64::MAX - 1, i64::MAX - 1)));
-    assert_eq!(try_wrapping_resize(&RectI64::of(1, 1, i64::MAX, i64::MAX), u64::MAX), Some(RectI64::of(1, 1, i64::MAX, i64::MAX)));
-    assert_eq!(try_wrapping_resize(&RectI64::largest(), u64::MAX), Some(RectI64::of(0, 0, i64::MAX - 1, i64::MAX - 1)));
+    assert_eq!(try_wrapping_resize(&RectI64::of(i64::MIN, i64::MIN, i64::MAX - 1, i64::MAX - 1), u64::MAX), Some(RectI64::of(i64::MIN, i64::MIN, i64::MAX - 1, i64::MAX - 1)));
+    assert_eq!(try_wrapping_resize(&RectI64::of(i64::MIN + 1, i64::MIN + 1, i64::MAX, i64::MAX), u64::MAX), Some(RectI64::of(i64::MIN + 1, i64::MIN + 1, i64::MAX, i64::MAX)));
+    assert_eq!(try_wrapping_resize(&RectI64::largest(), u64::MAX), Some(RectI64::of(i64::MIN, i64::MIN, i64::MAX - 1, i64::MAX - 1)));
 }

@@ -97,8 +97,8 @@ pub fn try_wrapping_resize_assign(r: &mut RectI64, size: u64) -> Option<()> {
     let temp_min_y = i128::from(r.min.y) + diff_y / 2;
     let min_x = temp_min_x as i64;
     let min_y = temp_min_y as i64;
-    let max_x = min_x.checked_add_unsigned(size - 1)?;
-    let max_y = min_y.checked_add_unsigned(size - 1)?;
+    let max_x = min_x.wrapping_add_unsigned(size - 1);
+    let max_y = min_y.wrapping_add_unsigned(size - 1);
     r.min.x = min_x;
     r.min.y = min_y;
     r.max.x = max_x;
@@ -116,8 +116,8 @@ pub fn try_wrapping_resize(r: &RectI64, size: u64) -> Option<RectI64> {
     let temp_min_y = i128::from(r.min.y) + diff_y / 2;
     let min_x = temp_min_x as i64;
     let min_y = temp_min_y as i64;
-    let max_x = min_x.checked_add_unsigned(size - 1)?;
-    let max_y = min_y.checked_add_unsigned(size - 1)?;
+    let max_x = min_x.wrapping_add_unsigned(size - 1);
+    let max_y = min_y.wrapping_add_unsigned(size - 1);
     Some(RectI64 { min: PointI64 { x: min_x, y: min_y }, max: PointI64 { x: max_x, y: max_y } })
 }
 

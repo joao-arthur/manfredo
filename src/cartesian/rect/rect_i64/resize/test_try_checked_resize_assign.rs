@@ -59,9 +59,8 @@ fn same_size() {
     assert_eq!(r_max_3, RectI64::of(i64::MAX - 3, i64::MAX - 3, i64::MAX, i64::MAX));
 }
 
-
 #[test]
-fn small_rect_out_of_bounds() {
+fn out_of_bounds() {
     let mut r_min_x = RectI64::of(i64::MIN, i64::MIN + 2, i64::MIN + 2, i64::MIN + 4);
     assert_eq!(try_checked_resize_assign(&mut r_min_x, 5), None);
     assert_eq!(r_min_x, RectI64::of(i64::MIN, i64::MIN + 2, i64::MIN + 2, i64::MIN + 4));
@@ -78,7 +77,6 @@ fn small_rect_out_of_bounds() {
     assert_eq!(try_checked_resize_assign(&mut r_max_y, 5), None);
     assert_eq!(r_max_y, RectI64::of(i64::MAX - 4, i64::MAX - 2, i64::MAX - 2, i64::MAX));
 }
-
 
 #[test]
 fn small_rect_limits_out_of_bounds() {

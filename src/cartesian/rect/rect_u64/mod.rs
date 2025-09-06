@@ -116,18 +116,9 @@ mod tests {
 
     #[test]
     fn from() {
-        assert_eq!(
-            RectU64::from(RectU8::largest()),
-            RectU64 { min: PointU64 { x: 0, y: 0 }, max: PointU64 { x: u8::MAX.into(), y: u8::MAX.into() } }
-        );
-        assert_eq!(
-            RectU64::from(RectU16::largest()),
-            RectU64 { min: PointU64 { x: 0, y: 0 }, max: PointU64 { x: u16::MAX.into(), y: u16::MAX.into() } }
-        );
-        assert_eq!(
-            RectU64::from(RectU32::largest()),
-            RectU64 { min: PointU64 { x: 0, y: 0 }, max: PointU64 { x: u32::MAX.into(), y: u32::MAX.into() } }
-        );
+        assert_eq!(RectU64::from(RectU8::largest()), RectU64 { min: PointU64 { x: 0, y: 0 }, max: PointU64 { x: u8::MAX.into(), y: u8::MAX.into() } });
+        assert_eq!(RectU64::from(RectU16::largest()), RectU64 { min: PointU64 { x: 0, y: 0 }, max: PointU64 { x: u16::MAX.into(), y: u16::MAX.into() } });
+        assert_eq!(RectU64::from(RectU32::largest()), RectU64 { min: PointU64 { x: 0, y: 0 }, max: PointU64 { x: u32::MAX.into(), y: u32::MAX.into() } });
     }
 
     #[test]

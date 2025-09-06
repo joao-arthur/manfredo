@@ -93,10 +93,7 @@ mod tests {
     #[test]
     fn test_delta() {
         assert_eq!(delta(&PointF64::of(0.0, 0.0), &PointF64::of(0.0, 0.0)), PointF64::of(0.0, 0.0));
-        assert_eq!(
-            delta(&PointF64::of(-4_503_599_627_370_496.0, -4_503_599_627_370_496.0), &PointF64::of(4_503_599_627_370_495.0, 4_503_599_627_370_495.0)),
-            PointF64::of(MAX, MAX)
-        );
+        assert_eq!(delta(&PointF64::of(-4_503_599_627_370_496.0, -4_503_599_627_370_496.0), &PointF64::of(4_503_599_627_370_495.0, 4_503_599_627_370_495.0)), PointF64::of(MAX, MAX));
     }
 
     #[test]

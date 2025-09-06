@@ -154,62 +154,32 @@ mod tests {
 
     #[test]
     fn try_saturating_resize_odd_small_rect_out_of_bounds() {
-        assert_eq!(
-            try_saturating_resize(&RectI16::of(i16::MIN, i16::MIN, i16::MIN + 2, i16::MIN + 2), 11),
-            Some(RectI16::of(i16::MIN, i16::MIN, i16::MIN + 10, i16::MIN + 10))
-        );
-        assert_eq!(
-            try_saturating_resize(&RectI16::of(i16::MAX - 2, i16::MAX - 2, i16::MAX, i16::MAX), 11),
-            Some(RectI16::of(i16::MAX - 10, i16::MAX - 10, i16::MAX, i16::MAX))
-        );
+        assert_eq!(try_saturating_resize(&RectI16::of(i16::MIN, i16::MIN, i16::MIN + 2, i16::MIN + 2), 11), Some(RectI16::of(i16::MIN, i16::MIN, i16::MIN + 10, i16::MIN + 10)));
+        assert_eq!(try_saturating_resize(&RectI16::of(i16::MAX - 2, i16::MAX - 2, i16::MAX, i16::MAX), 11), Some(RectI16::of(i16::MAX - 10, i16::MAX - 10, i16::MAX, i16::MAX)));
     }
 
     #[test]
     fn try_saturating_resize_even_small_rect_out_of_bounds() {
-        assert_eq!(
-            try_saturating_resize(&RectI16::of(i16::MIN, i16::MIN, i16::MIN + 3, i16::MIN + 3), 11),
-            Some(RectI16::of(i16::MIN, i16::MIN, i16::MIN + 10, i16::MIN + 10))
-        );
-        assert_eq!(
-            try_saturating_resize(&RectI16::of(i16::MAX - 3, i16::MAX - 3, i16::MAX, i16::MAX), 11),
-            Some(RectI16::of(i16::MAX - 10, i16::MAX - 10, i16::MAX, i16::MAX))
-        );
+        assert_eq!(try_saturating_resize(&RectI16::of(i16::MIN, i16::MIN, i16::MIN + 3, i16::MIN + 3), 11), Some(RectI16::of(i16::MIN, i16::MIN, i16::MIN + 10, i16::MIN + 10)));
+        assert_eq!(try_saturating_resize(&RectI16::of(i16::MAX - 3, i16::MAX - 3, i16::MAX, i16::MAX), 11), Some(RectI16::of(i16::MAX - 10, i16::MAX - 10, i16::MAX, i16::MAX)));
     }
 
     #[test]
     fn try_saturating_resize_odd_small_rect_limits_out_of_bounds() {
-        assert_eq!(
-            try_saturating_resize(&RectI16::of(i16::MIN, i16::MIN, i16::MIN + 2, i16::MIN + 2), u16::MAX),
-            Some(RectI16::of(i16::MIN, i16::MIN, i16::MAX - 1, i16::MAX - 1))
-        );
-        assert_eq!(
-            try_saturating_resize(&RectI16::of(i16::MAX - 2, i16::MAX - 2, i16::MAX, i16::MAX), u16::MAX),
-            Some(RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MAX, i16::MAX))
-        );
+        assert_eq!(try_saturating_resize(&RectI16::of(i16::MIN, i16::MIN, i16::MIN + 2, i16::MIN + 2), u16::MAX), Some(RectI16::of(i16::MIN, i16::MIN, i16::MAX - 1, i16::MAX - 1)));
+        assert_eq!(try_saturating_resize(&RectI16::of(i16::MAX - 2, i16::MAX - 2, i16::MAX, i16::MAX), u16::MAX), Some(RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MAX, i16::MAX)));
     }
 
     #[test]
     fn try_saturating_resize_even_small_rect_limits_out_of_bounds() {
-        assert_eq!(
-            try_saturating_resize(&RectI16::of(i16::MIN, i16::MIN, i16::MIN + 3, i16::MIN + 3), u16::MAX - 1),
-            Some(RectI16::of(i16::MIN, i16::MIN, i16::MAX - 2, i16::MAX - 2))
-        );
-        assert_eq!(
-            try_saturating_resize(&RectI16::of(i16::MAX - 3, i16::MAX - 3, i16::MAX, i16::MAX), u16::MAX - 1),
-            Some(RectI16::of(i16::MIN + 2, i16::MIN + 2, i16::MAX, i16::MAX))
-        );
+        assert_eq!(try_saturating_resize(&RectI16::of(i16::MIN, i16::MIN, i16::MIN + 3, i16::MIN + 3), u16::MAX - 1), Some(RectI16::of(i16::MIN, i16::MIN, i16::MAX - 2, i16::MAX - 2)));
+        assert_eq!(try_saturating_resize(&RectI16::of(i16::MAX - 3, i16::MAX - 3, i16::MAX, i16::MAX), u16::MAX - 1), Some(RectI16::of(i16::MIN + 2, i16::MIN + 2, i16::MAX, i16::MAX)));
     }
 
     #[test]
     fn try_saturating_resize_big_rect_limits_out_of_bounds() {
-        assert_eq!(
-            try_saturating_resize(&RectI16::of(i16::MIN, i16::MIN, i16::MAX - 1, i16::MAX - 1), u16::MAX),
-            Some(RectI16::of(i16::MIN, i16::MIN, i16::MAX - 1, i16::MAX - 1))
-        );
-        assert_eq!(
-            try_saturating_resize(&RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MAX, i16::MAX), u16::MAX),
-            Some(RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MAX, i16::MAX))
-        );
+        assert_eq!(try_saturating_resize(&RectI16::of(i16::MIN, i16::MIN, i16::MAX - 1, i16::MAX - 1), u16::MAX), Some(RectI16::of(i16::MIN, i16::MIN, i16::MAX - 1, i16::MAX - 1)));
+        assert_eq!(try_saturating_resize(&RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MAX, i16::MAX), u16::MAX), Some(RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MAX, i16::MAX)));
         assert_eq!(try_saturating_resize(&RectI16::largest(), u16::MAX), Some(RectI16::of(i16::MIN, i16::MIN, i16::MAX - 1, i16::MAX - 1)));
     }
 

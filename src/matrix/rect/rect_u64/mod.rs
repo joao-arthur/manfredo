@@ -105,10 +105,7 @@ mod tests {
         assert_eq!(RectU64::largest(), RectU64 { min: PointU64 { row: 0, col: 0 }, max: PointU64 { row: u64::MAX, col: u64::MAX } });
         assert_eq!(RectU64::min(), RectU64 { min: PointU64 { row: 0, col: 0 }, max: PointU64 { row: 0, col: 0 } });
         assert_eq!(RectU64::max(), RectU64 { min: PointU64 { row: u64::MAX, col: u64::MAX }, max: PointU64 { row: u64::MAX, col: u64::MAX } });
-        assert_eq!(
-            RectU64::of(4096, 8192, 16384, 32768),
-            RectU64 { min: PointU64 { row: 4096, col: 8192 }, max: PointU64 { row: 16384, col: 32768 } }
-        );
+        assert_eq!(RectU64::of(4096, 8192, 16384, 32768), RectU64 { min: PointU64 { row: 4096, col: 8192 }, max: PointU64 { row: 16384, col: 32768 } });
     }
 
     #[test]
@@ -119,18 +116,9 @@ mod tests {
 
     #[test]
     fn from() {
-        assert_eq!(
-            RectU64::from(RectU8::largest()),
-            RectU64 { min: PointU64 { row: 0, col: 0 }, max: PointU64 { row: u8::MAX.into(), col: u8::MAX.into() } }
-        );
-        assert_eq!(
-            RectU64::from(RectU16::largest()),
-            RectU64 { min: PointU64 { row: 0, col: 0 }, max: PointU64 { row: u16::MAX.into(), col: u16::MAX.into() } }
-        );
-        assert_eq!(
-            RectU64::from(RectU32::largest()),
-            RectU64 { min: PointU64 { row: 0, col: 0 }, max: PointU64 { row: u32::MAX.into(), col: u32::MAX.into() } }
-        );
+        assert_eq!(RectU64::from(RectU8::largest()), RectU64 { min: PointU64 { row: 0, col: 0 }, max: PointU64 { row: u8::MAX.into(), col: u8::MAX.into() } });
+        assert_eq!(RectU64::from(RectU16::largest()), RectU64 { min: PointU64 { row: 0, col: 0 }, max: PointU64 { row: u16::MAX.into(), col: u16::MAX.into() } });
+        assert_eq!(RectU64::from(RectU32::largest()), RectU64 { min: PointU64 { row: 0, col: 0 }, max: PointU64 { row: u32::MAX.into(), col: u32::MAX.into() } });
     }
 
     #[test]

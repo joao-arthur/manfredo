@@ -154,62 +154,32 @@ mod tests {
 
     #[test]
     fn try_saturating_resize_odd_small_rect_out_of_bounds() {
-        assert_eq!(
-            try_saturating_resize(&RectI32::of(i32::MIN, i32::MIN, i32::MIN + 2, i32::MIN + 2), 11),
-            Some(RectI32::of(i32::MIN, i32::MIN, i32::MIN + 10, i32::MIN + 10))
-        );
-        assert_eq!(
-            try_saturating_resize(&RectI32::of(i32::MAX - 2, i32::MAX - 2, i32::MAX, i32::MAX), 11),
-            Some(RectI32::of(i32::MAX - 10, i32::MAX - 10, i32::MAX, i32::MAX))
-        );
+        assert_eq!(try_saturating_resize(&RectI32::of(i32::MIN, i32::MIN, i32::MIN + 2, i32::MIN + 2), 11), Some(RectI32::of(i32::MIN, i32::MIN, i32::MIN + 10, i32::MIN + 10)));
+        assert_eq!(try_saturating_resize(&RectI32::of(i32::MAX - 2, i32::MAX - 2, i32::MAX, i32::MAX), 11), Some(RectI32::of(i32::MAX - 10, i32::MAX - 10, i32::MAX, i32::MAX)));
     }
 
     #[test]
     fn try_saturating_resize_even_small_rect_out_of_bounds() {
-        assert_eq!(
-            try_saturating_resize(&RectI32::of(i32::MIN, i32::MIN, i32::MIN + 3, i32::MIN + 3), 11),
-            Some(RectI32::of(i32::MIN, i32::MIN, i32::MIN + 10, i32::MIN + 10))
-        );
-        assert_eq!(
-            try_saturating_resize(&RectI32::of(i32::MAX - 3, i32::MAX - 3, i32::MAX, i32::MAX), 11),
-            Some(RectI32::of(i32::MAX - 10, i32::MAX - 10, i32::MAX, i32::MAX))
-        );
+        assert_eq!(try_saturating_resize(&RectI32::of(i32::MIN, i32::MIN, i32::MIN + 3, i32::MIN + 3), 11), Some(RectI32::of(i32::MIN, i32::MIN, i32::MIN + 10, i32::MIN + 10)));
+        assert_eq!(try_saturating_resize(&RectI32::of(i32::MAX - 3, i32::MAX - 3, i32::MAX, i32::MAX), 11), Some(RectI32::of(i32::MAX - 10, i32::MAX - 10, i32::MAX, i32::MAX)));
     }
 
     #[test]
     fn try_saturating_resize_odd_small_rect_limits_out_of_bounds() {
-        assert_eq!(
-            try_saturating_resize(&RectI32::of(i32::MIN, i32::MIN, i32::MIN + 2, i32::MIN + 2), u32::MAX),
-            Some(RectI32::of(i32::MIN, i32::MIN, i32::MAX - 1, i32::MAX - 1))
-        );
-        assert_eq!(
-            try_saturating_resize(&RectI32::of(i32::MAX - 2, i32::MAX - 2, i32::MAX, i32::MAX), u32::MAX),
-            Some(RectI32::of(i32::MIN + 1, i32::MIN + 1, i32::MAX, i32::MAX))
-        );
+        assert_eq!(try_saturating_resize(&RectI32::of(i32::MIN, i32::MIN, i32::MIN + 2, i32::MIN + 2), u32::MAX), Some(RectI32::of(i32::MIN, i32::MIN, i32::MAX - 1, i32::MAX - 1)));
+        assert_eq!(try_saturating_resize(&RectI32::of(i32::MAX - 2, i32::MAX - 2, i32::MAX, i32::MAX), u32::MAX), Some(RectI32::of(i32::MIN + 1, i32::MIN + 1, i32::MAX, i32::MAX)));
     }
 
     #[test]
     fn try_saturating_resize_even_small_rect_limits_out_of_bounds() {
-        assert_eq!(
-            try_saturating_resize(&RectI32::of(i32::MIN, i32::MIN, i32::MIN + 3, i32::MIN + 3), u32::MAX - 1),
-            Some(RectI32::of(i32::MIN, i32::MIN, i32::MAX - 2, i32::MAX - 2))
-        );
-        assert_eq!(
-            try_saturating_resize(&RectI32::of(i32::MAX - 3, i32::MAX - 3, i32::MAX, i32::MAX), u32::MAX - 1),
-            Some(RectI32::of(i32::MIN + 2, i32::MIN + 2, i32::MAX, i32::MAX))
-        );
+        assert_eq!(try_saturating_resize(&RectI32::of(i32::MIN, i32::MIN, i32::MIN + 3, i32::MIN + 3), u32::MAX - 1), Some(RectI32::of(i32::MIN, i32::MIN, i32::MAX - 2, i32::MAX - 2)));
+        assert_eq!(try_saturating_resize(&RectI32::of(i32::MAX - 3, i32::MAX - 3, i32::MAX, i32::MAX), u32::MAX - 1), Some(RectI32::of(i32::MIN + 2, i32::MIN + 2, i32::MAX, i32::MAX)));
     }
 
     #[test]
     fn try_saturating_resize_big_rect_limits_out_of_bounds() {
-        assert_eq!(
-            try_saturating_resize(&RectI32::of(i32::MIN, i32::MIN, i32::MAX - 1, i32::MAX - 1), u32::MAX),
-            Some(RectI32::of(i32::MIN, i32::MIN, i32::MAX - 1, i32::MAX - 1))
-        );
-        assert_eq!(
-            try_saturating_resize(&RectI32::of(i32::MIN + 1, i32::MIN + 1, i32::MAX, i32::MAX), u32::MAX),
-            Some(RectI32::of(i32::MIN + 1, i32::MIN + 1, i32::MAX, i32::MAX))
-        );
+        assert_eq!(try_saturating_resize(&RectI32::of(i32::MIN, i32::MIN, i32::MAX - 1, i32::MAX - 1), u32::MAX), Some(RectI32::of(i32::MIN, i32::MIN, i32::MAX - 1, i32::MAX - 1)));
+        assert_eq!(try_saturating_resize(&RectI32::of(i32::MIN + 1, i32::MIN + 1, i32::MAX, i32::MAX), u32::MAX), Some(RectI32::of(i32::MIN + 1, i32::MIN + 1, i32::MAX, i32::MAX)));
         assert_eq!(try_saturating_resize(&RectI32::largest(), u32::MAX), Some(RectI32::of(i32::MIN, i32::MIN, i32::MAX - 1, i32::MAX - 1)));
     }
 

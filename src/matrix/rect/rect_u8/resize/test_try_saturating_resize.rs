@@ -31,23 +31,14 @@ fn try_saturating_resize_small_size() {
 fn try_saturating_resize_same_size() {
     assert_eq!(try_saturating_resize(&RectU8::of(0, 0, 2, 2), 3), Some(RectU8::of(0, 0, 2, 2)));
     assert_eq!(try_saturating_resize(&RectU8::of(0, 0, 3, 3), 4), Some(RectU8::of(0, 0, 3, 3)));
-    assert_eq!(
-        try_saturating_resize(&RectU8::of(u8::MAX - 2, u8::MAX - 2, u8::MAX, u8::MAX), 3),
-        Some(RectU8::of(u8::MAX - 2, u8::MAX - 2, u8::MAX, u8::MAX))
-    );
-    assert_eq!(
-        try_saturating_resize(&RectU8::of(u8::MAX - 3, u8::MAX - 3, u8::MAX, u8::MAX), 4),
-        Some(RectU8::of(u8::MAX - 3, u8::MAX - 3, u8::MAX, u8::MAX))
-    );
+    assert_eq!(try_saturating_resize(&RectU8::of(u8::MAX - 2, u8::MAX - 2, u8::MAX, u8::MAX), 3), Some(RectU8::of(u8::MAX - 2, u8::MAX - 2, u8::MAX, u8::MAX)));
+    assert_eq!(try_saturating_resize(&RectU8::of(u8::MAX - 3, u8::MAX - 3, u8::MAX, u8::MAX), 4), Some(RectU8::of(u8::MAX - 3, u8::MAX - 3, u8::MAX, u8::MAX)));
 }
 
 #[test]
 fn try_saturating_resize_bounds() {
     assert_eq!(try_saturating_resize(&RectU8::of(0, 0, 2, 2), 11), Some(RectU8::of(0, 0, 10, 10)));
-    assert_eq!(
-        try_saturating_resize(&RectU8::of(u8::MAX - 2, u8::MAX - 2, u8::MAX, u8::MAX), 11),
-        Some(RectU8::of(u8::MAX - 10, u8::MAX - 10, u8::MAX, u8::MAX))
-    );
+    assert_eq!(try_saturating_resize(&RectU8::of(u8::MAX - 2, u8::MAX - 2, u8::MAX, u8::MAX), 11), Some(RectU8::of(u8::MAX - 10, u8::MAX - 10, u8::MAX, u8::MAX)));
 }
 
 #[test]

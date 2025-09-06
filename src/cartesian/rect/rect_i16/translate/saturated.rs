@@ -92,26 +92,14 @@ mod tests {
 
     #[test]
     fn saturating_translate_small_rect_to_bounds() {
-        assert_eq!(
-            saturating_translate(&RectI16::of(i16::MIN + 2, i16::MIN + 5, i16::MIN + 12, i16::MIN + 15), &PointI16::of(-2, -5)),
-            RectI16::of(i16::MIN, i16::MIN, i16::MIN + 10, i16::MIN + 10)
-        );
-        assert_eq!(
-            saturating_translate(&RectI16::of(i16::MAX - 12, i16::MAX - 15, i16::MAX - 2, i16::MAX - 5), &PointI16::of(2, 5)),
-            RectI16::of(i16::MAX - 10, i16::MAX - 10, i16::MAX, i16::MAX)
-        );
+        assert_eq!(saturating_translate(&RectI16::of(i16::MIN + 2, i16::MIN + 5, i16::MIN + 12, i16::MIN + 15), &PointI16::of(-2, -5)), RectI16::of(i16::MIN, i16::MIN, i16::MIN + 10, i16::MIN + 10));
+        assert_eq!(saturating_translate(&RectI16::of(i16::MAX - 12, i16::MAX - 15, i16::MAX - 2, i16::MAX - 5), &PointI16::of(2, 5)), RectI16::of(i16::MAX - 10, i16::MAX - 10, i16::MAX, i16::MAX));
     }
 
     #[test]
     fn saturating_translate_big_rect_to_bounds() {
-        assert_eq!(
-            saturating_translate(&RectI16::of(i16::MIN + 2, i16::MIN + 5, i16::MAX, i16::MAX), &PointI16::of(-2, -5)),
-            RectI16::of(i16::MIN, i16::MIN, i16::MAX - 2, i16::MAX - 5)
-        );
-        assert_eq!(
-            saturating_translate(&RectI16::of(i16::MIN, i16::MIN, i16::MAX - 2, i16::MAX - 5), &PointI16::of(2, 5)),
-            RectI16::of(i16::MIN + 2, i16::MIN + 5, i16::MAX, i16::MAX)
-        );
+        assert_eq!(saturating_translate(&RectI16::of(i16::MIN + 2, i16::MIN + 5, i16::MAX, i16::MAX), &PointI16::of(-2, -5)), RectI16::of(i16::MIN, i16::MIN, i16::MAX - 2, i16::MAX - 5));
+        assert_eq!(saturating_translate(&RectI16::of(i16::MIN, i16::MIN, i16::MAX - 2, i16::MAX - 5), &PointI16::of(2, 5)), RectI16::of(i16::MIN + 2, i16::MIN + 5, i16::MAX, i16::MAX));
     }
 
     #[test]
@@ -120,47 +108,26 @@ mod tests {
             saturating_translate(&RectI16::of(i16::MIN + 10, i16::MIN + 5, i16::MIN + 20, i16::MIN + 30), &PointI16::of(-20, -20)),
             RectI16::of(i16::MIN, i16::MIN, i16::MIN + 10, i16::MIN + 25)
         );
-        assert_eq!(
-            saturating_translate(&RectI16::of(i16::MAX - 20, i16::MAX - 30, i16::MAX - 5, i16::MAX - 10), &PointI16::of(20, 20)),
-            RectI16::of(i16::MAX - 15, i16::MAX - 20, i16::MAX, i16::MAX)
-        );
+        assert_eq!(saturating_translate(&RectI16::of(i16::MAX - 20, i16::MAX - 30, i16::MAX - 5, i16::MAX - 10), &PointI16::of(20, 20)), RectI16::of(i16::MAX - 15, i16::MAX - 20, i16::MAX, i16::MAX));
     }
 
     #[test]
     fn saturating_translate_big_rect_out_of_bounds() {
-        assert_eq!(
-            saturating_translate(&RectI16::of(i16::MIN + 10, i16::MIN + 5, i16::MAX, i16::MAX), &PointI16::of(-20, -20)),
-            RectI16::of(i16::MIN, i16::MIN, i16::MAX - 10, i16::MAX - 5)
-        );
-        assert_eq!(
-            saturating_translate(&RectI16::of(i16::MIN, i16::MIN, i16::MAX - 5, i16::MAX - 10), &PointI16::of(20, 20)),
-            RectI16::of(i16::MIN + 5, i16::MIN + 10, i16::MAX, i16::MAX)
-        );
+        assert_eq!(saturating_translate(&RectI16::of(i16::MIN + 10, i16::MIN + 5, i16::MAX, i16::MAX), &PointI16::of(-20, -20)), RectI16::of(i16::MIN, i16::MIN, i16::MAX - 10, i16::MAX - 5));
+        assert_eq!(saturating_translate(&RectI16::of(i16::MIN, i16::MIN, i16::MAX - 5, i16::MAX - 10), &PointI16::of(20, 20)), RectI16::of(i16::MIN + 5, i16::MIN + 10, i16::MAX, i16::MAX));
     }
 
     #[test]
     fn saturating_translate_small_rect_limits_out_of_bounds() {
-        assert_eq!(
-            saturating_translate(&RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MIN + 10, i16::MIN + 10), &PointI16::min()),
-            RectI16::of(i16::MIN, i16::MIN, i16::MIN + 9, i16::MIN + 9)
-        );
-        assert_eq!(
-            saturating_translate(&RectI16::of(i16::MAX - 10, i16::MAX - 10, i16::MAX - 1, i16::MAX - 1), &PointI16::max()),
-            RectI16::of(i16::MAX - 9, i16::MAX - 9, i16::MAX, i16::MAX)
-        );
+        assert_eq!(saturating_translate(&RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MIN + 10, i16::MIN + 10), &PointI16::min()), RectI16::of(i16::MIN, i16::MIN, i16::MIN + 9, i16::MIN + 9));
+        assert_eq!(saturating_translate(&RectI16::of(i16::MAX - 10, i16::MAX - 10, i16::MAX - 1, i16::MAX - 1), &PointI16::max()), RectI16::of(i16::MAX - 9, i16::MAX - 9, i16::MAX, i16::MAX));
     }
 
     #[test]
     fn saturating_translate_big_rect_limits_out_of_bounds() {
         assert_eq!(saturating_translate(&RectI16::largest(), &PointI16::min()), RectI16::largest());
         assert_eq!(saturating_translate(&RectI16::largest(), &PointI16::max()), RectI16::largest());
-        assert_eq!(
-            saturating_translate(&RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MAX, i16::MAX), &PointI16::min()),
-            RectI16::of(i16::MIN, i16::MIN, i16::MAX - 1, i16::MAX - 1)
-        );
-        assert_eq!(
-            saturating_translate(&RectI16::of(i16::MIN, i16::MIN, i16::MAX - 1, i16::MAX - 1), &PointI16::max()),
-            RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MAX, i16::MAX)
-        );
+        assert_eq!(saturating_translate(&RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MAX, i16::MAX), &PointI16::min()), RectI16::of(i16::MIN, i16::MIN, i16::MAX - 1, i16::MAX - 1));
+        assert_eq!(saturating_translate(&RectI16::of(i16::MIN, i16::MIN, i16::MAX - 1, i16::MAX - 1), &PointI16::max()), RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MAX, i16::MAX));
     }
 }

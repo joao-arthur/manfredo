@@ -154,62 +154,32 @@ mod tests {
 
     #[test]
     fn try_saturating_resize_odd_small_rect_out_of_bounds() {
-        assert_eq!(
-            try_saturating_resize(&RectI64::of(i64::MIN, i64::MIN, i64::MIN + 2, i64::MIN + 2), 11),
-            Some(RectI64::of(i64::MIN, i64::MIN, i64::MIN + 10, i64::MIN + 10))
-        );
-        assert_eq!(
-            try_saturating_resize(&RectI64::of(i64::MAX - 2, i64::MAX - 2, i64::MAX, i64::MAX), 11),
-            Some(RectI64::of(i64::MAX - 10, i64::MAX - 10, i64::MAX, i64::MAX))
-        );
+        assert_eq!(try_saturating_resize(&RectI64::of(i64::MIN, i64::MIN, i64::MIN + 2, i64::MIN + 2), 11), Some(RectI64::of(i64::MIN, i64::MIN, i64::MIN + 10, i64::MIN + 10)));
+        assert_eq!(try_saturating_resize(&RectI64::of(i64::MAX - 2, i64::MAX - 2, i64::MAX, i64::MAX), 11), Some(RectI64::of(i64::MAX - 10, i64::MAX - 10, i64::MAX, i64::MAX)));
     }
 
     #[test]
     fn try_saturating_resize_even_small_rect_out_of_bounds() {
-        assert_eq!(
-            try_saturating_resize(&RectI64::of(i64::MIN, i64::MIN, i64::MIN + 3, i64::MIN + 3), 11),
-            Some(RectI64::of(i64::MIN, i64::MIN, i64::MIN + 10, i64::MIN + 10))
-        );
-        assert_eq!(
-            try_saturating_resize(&RectI64::of(i64::MAX - 3, i64::MAX - 3, i64::MAX, i64::MAX), 11),
-            Some(RectI64::of(i64::MAX - 10, i64::MAX - 10, i64::MAX, i64::MAX))
-        );
+        assert_eq!(try_saturating_resize(&RectI64::of(i64::MIN, i64::MIN, i64::MIN + 3, i64::MIN + 3), 11), Some(RectI64::of(i64::MIN, i64::MIN, i64::MIN + 10, i64::MIN + 10)));
+        assert_eq!(try_saturating_resize(&RectI64::of(i64::MAX - 3, i64::MAX - 3, i64::MAX, i64::MAX), 11), Some(RectI64::of(i64::MAX - 10, i64::MAX - 10, i64::MAX, i64::MAX)));
     }
 
     #[test]
     fn try_saturating_resize_odd_small_rect_limits_out_of_bounds() {
-        assert_eq!(
-            try_saturating_resize(&RectI64::of(i64::MIN, i64::MIN, i64::MIN + 2, i64::MIN + 2), u64::MAX),
-            Some(RectI64::of(i64::MIN, i64::MIN, i64::MAX - 1, i64::MAX - 1))
-        );
-        assert_eq!(
-            try_saturating_resize(&RectI64::of(i64::MAX - 2, i64::MAX - 2, i64::MAX, i64::MAX), u64::MAX),
-            Some(RectI64::of(i64::MIN + 1, i64::MIN + 1, i64::MAX, i64::MAX))
-        );
+        assert_eq!(try_saturating_resize(&RectI64::of(i64::MIN, i64::MIN, i64::MIN + 2, i64::MIN + 2), u64::MAX), Some(RectI64::of(i64::MIN, i64::MIN, i64::MAX - 1, i64::MAX - 1)));
+        assert_eq!(try_saturating_resize(&RectI64::of(i64::MAX - 2, i64::MAX - 2, i64::MAX, i64::MAX), u64::MAX), Some(RectI64::of(i64::MIN + 1, i64::MIN + 1, i64::MAX, i64::MAX)));
     }
 
     #[test]
     fn try_saturating_resize_even_small_rect_limits_out_of_bounds() {
-        assert_eq!(
-            try_saturating_resize(&RectI64::of(i64::MIN, i64::MIN, i64::MIN + 3, i64::MIN + 3), u64::MAX - 1),
-            Some(RectI64::of(i64::MIN, i64::MIN, i64::MAX - 2, i64::MAX - 2))
-        );
-        assert_eq!(
-            try_saturating_resize(&RectI64::of(i64::MAX - 3, i64::MAX - 3, i64::MAX, i64::MAX), u64::MAX - 1),
-            Some(RectI64::of(i64::MIN + 2, i64::MIN + 2, i64::MAX, i64::MAX))
-        );
+        assert_eq!(try_saturating_resize(&RectI64::of(i64::MIN, i64::MIN, i64::MIN + 3, i64::MIN + 3), u64::MAX - 1), Some(RectI64::of(i64::MIN, i64::MIN, i64::MAX - 2, i64::MAX - 2)));
+        assert_eq!(try_saturating_resize(&RectI64::of(i64::MAX - 3, i64::MAX - 3, i64::MAX, i64::MAX), u64::MAX - 1), Some(RectI64::of(i64::MIN + 2, i64::MIN + 2, i64::MAX, i64::MAX)));
     }
 
     #[test]
     fn try_saturating_resize_big_rect_limits_out_of_bounds() {
-        assert_eq!(
-            try_saturating_resize(&RectI64::of(i64::MIN, i64::MIN, i64::MAX - 1, i64::MAX - 1), u64::MAX),
-            Some(RectI64::of(i64::MIN, i64::MIN, i64::MAX - 1, i64::MAX - 1))
-        );
-        assert_eq!(
-            try_saturating_resize(&RectI64::of(i64::MIN + 1, i64::MIN + 1, i64::MAX, i64::MAX), u64::MAX),
-            Some(RectI64::of(i64::MIN + 1, i64::MIN + 1, i64::MAX, i64::MAX))
-        );
+        assert_eq!(try_saturating_resize(&RectI64::of(i64::MIN, i64::MIN, i64::MAX - 1, i64::MAX - 1), u64::MAX), Some(RectI64::of(i64::MIN, i64::MIN, i64::MAX - 1, i64::MAX - 1)));
+        assert_eq!(try_saturating_resize(&RectI64::of(i64::MIN + 1, i64::MIN + 1, i64::MAX, i64::MAX), u64::MAX), Some(RectI64::of(i64::MIN + 1, i64::MIN + 1, i64::MAX, i64::MAX)));
         assert_eq!(try_saturating_resize(&RectI64::largest(), u64::MAX), Some(RectI64::of(i64::MIN, i64::MIN, i64::MAX - 1, i64::MAX - 1)));
     }
 

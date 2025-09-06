@@ -110,14 +110,8 @@ mod tests {
 
     #[test]
     fn from() {
-        assert_eq!(
-            RectI32::from(RectI8::largest()),
-            RectI32 { min: PointI32 { x: i8::MIN.into(), y: i8::MIN.into() }, max: PointI32 { x: i8::MAX.into(), y: i8::MAX.into() } }
-        );
-        assert_eq!(
-            RectI32::from(RectI16::largest()),
-            RectI32 { min: PointI32 { x: i16::MIN.into(), y: i16::MIN.into() }, max: PointI32 { x: i16::MAX.into(), y: i16::MAX.into() } }
-        );
+        assert_eq!(RectI32::from(RectI8::largest()), RectI32 { min: PointI32 { x: i8::MIN.into(), y: i8::MIN.into() }, max: PointI32 { x: i8::MAX.into(), y: i8::MAX.into() } });
+        assert_eq!(RectI32::from(RectI16::largest()), RectI32 { min: PointI32 { x: i16::MIN.into(), y: i16::MIN.into() }, max: PointI32 { x: i16::MAX.into(), y: i16::MAX.into() } });
     }
 
     #[test]

@@ -9,10 +9,7 @@ fn test_try_checked_add() {
 
 #[test]
 fn try_checked_add_to_bounds() {
-    assert_eq!(
-        try_checked_add(&RectI16::of(i16::MIN + 2, i16::MIN + 5, i16::MAX - 2, i16::MAX - 5), &RectI16::of(-2, -5, 2, 5)),
-        Some(RectI16::largest())
-    );
+    assert_eq!(try_checked_add(&RectI16::of(i16::MIN + 2, i16::MIN + 5, i16::MAX - 2, i16::MAX - 5), &RectI16::of(-2, -5, 2, 5)), Some(RectI16::largest()));
     assert_eq!(try_checked_add(&RectI16::of(i16::MIN + 2, i16::MIN + 5, i16::MAX, i16::MAX), &RectI16::of(-2, -5, 0, 0)), Some(RectI16::largest()));
     assert_eq!(try_checked_add(&RectI16::of(i16::MIN, i16::MIN, i16::MAX - 2, i16::MAX - 5), &RectI16::of(0, 0, 2, 5)), Some(RectI16::largest()));
 }

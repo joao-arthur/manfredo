@@ -9,14 +9,8 @@ fn test_try_checked_translate() {
 
 #[test]
 fn try_checked_translate_to_bounds() {
-    assert_eq!(
-        try_checked_translate(&RectU32::of(2, 5, u32::MAX, u32::MAX), &PointI32::of(-2, -5)),
-        Some(RectU32::of(0, 0, u32::MAX - 2, u32::MAX - 5))
-    );
-    assert_eq!(
-        try_checked_translate(&RectU32::of(0, 0, u32::MAX - 2, u32::MAX - 5), &PointI32::of(2, 5)),
-        Some(RectU32::of(2, 5, u32::MAX, u32::MAX))
-    );
+    assert_eq!(try_checked_translate(&RectU32::of(2, 5, u32::MAX, u32::MAX), &PointI32::of(-2, -5)), Some(RectU32::of(0, 0, u32::MAX - 2, u32::MAX - 5)));
+    assert_eq!(try_checked_translate(&RectU32::of(0, 0, u32::MAX - 2, u32::MAX - 5), &PointI32::of(2, 5)), Some(RectU32::of(2, 5, u32::MAX, u32::MAX)));
 }
 
 #[test]

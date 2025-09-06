@@ -31,48 +31,24 @@ fn try_wrapping_resize_small_size() {
 fn try_wrapping_resize_same_size() {
     assert_eq!(try_wrapping_resize(&RectU8::of(0, 0, 2, 2), 3), Some(RectU8::of(0, 0, 2, 2)));
     assert_eq!(try_wrapping_resize(&RectU8::of(0, 0, 3, 3), 4), Some(RectU8::of(0, 0, 3, 3)));
-    assert_eq!(
-        try_wrapping_resize(&RectU8::of(u8::MAX - 2, u8::MAX - 2, u8::MAX, u8::MAX), 3),
-        Some(RectU8::of(u8::MAX - 2, u8::MAX - 2, u8::MAX, u8::MAX))
-    );
-    assert_eq!(
-        try_wrapping_resize(&RectU8::of(u8::MAX - 3, u8::MAX - 3, u8::MAX, u8::MAX), 4),
-        Some(RectU8::of(u8::MAX - 3, u8::MAX - 3, u8::MAX, u8::MAX))
-    );
+    assert_eq!(try_wrapping_resize(&RectU8::of(u8::MAX - 2, u8::MAX - 2, u8::MAX, u8::MAX), 3), Some(RectU8::of(u8::MAX - 2, u8::MAX - 2, u8::MAX, u8::MAX)));
+    assert_eq!(try_wrapping_resize(&RectU8::of(u8::MAX - 3, u8::MAX - 3, u8::MAX, u8::MAX), 4), Some(RectU8::of(u8::MAX - 3, u8::MAX - 3, u8::MAX, u8::MAX)));
 }
 
 #[test]
 fn try_wrapping_resize_small_rect_out_of_bounds() {
     assert_eq!(try_wrapping_resize(&RectU8::of(0, 2, 2, 4), 5), Some(RectU8::of(u8::MAX, 1, 3, 5)));
     assert_eq!(try_wrapping_resize(&RectU8::of(2, 0, 4, 2), 5), Some(RectU8::of(1, u8::MAX, 5, 3)));
-    assert_eq!(
-        try_wrapping_resize(&RectU8::of(u8::MAX - 2, u8::MAX - 4, u8::MAX, u8::MAX - 2), 5),
-        Some(RectU8::of(u8::MAX - 3, u8::MAX - 5, 0, u8::MAX - 1))
-    );
-    assert_eq!(
-        try_wrapping_resize(&RectU8::of(u8::MAX - 4, u8::MAX - 2, u8::MAX - 2, u8::MAX), 5),
-        Some(RectU8::of(u8::MAX - 5, u8::MAX - 3, u8::MAX - 1, 0))
-    );
+    assert_eq!(try_wrapping_resize(&RectU8::of(u8::MAX - 2, u8::MAX - 4, u8::MAX, u8::MAX - 2), 5), Some(RectU8::of(u8::MAX - 3, u8::MAX - 5, 0, u8::MAX - 1)));
+    assert_eq!(try_wrapping_resize(&RectU8::of(u8::MAX - 4, u8::MAX - 2, u8::MAX - 2, u8::MAX), 5), Some(RectU8::of(u8::MAX - 5, u8::MAX - 3, u8::MAX - 1, 0)));
 }
 
 #[test]
 fn try_wrapping_resize_small_rect_limits_out_of_bounds() {
-    assert_eq!(
-        try_wrapping_resize(&RectU8::of(0, 2, 2, 4), u8::MAX),
-        Some(RectU8::of(u8::MAX / 2 + 3, u8::MAX / 2 + 5, u8::MAX / 2 + 1, u8::MAX / 2 + 3))
-    );
-    assert_eq!(
-        try_wrapping_resize(&RectU8::of(2, 0, 4, 2), u8::MAX),
-        Some(RectU8::of(u8::MAX / 2 + 5, u8::MAX / 2 + 3, u8::MAX / 2 + 3, u8::MAX / 2 + 1))
-    );
-    assert_eq!(
-        try_wrapping_resize(&RectU8::of(u8::MAX - 2, u8::MAX - 4, u8::MAX, u8::MAX - 2), u8::MAX),
-        Some(RectU8::of(u8::MAX / 2, u8::MAX / 2 - 2, u8::MAX / 2 - 2, u8::MAX / 2 - 4))
-    );
-    assert_eq!(
-        try_wrapping_resize(&RectU8::of(u8::MAX - 4, u8::MAX - 2, u8::MAX - 2, u8::MAX), u8::MAX),
-        Some(RectU8::of(u8::MAX / 2 - 2, u8::MAX / 2, u8::MAX / 2 - 4, u8::MAX / 2 - 2))
-    );
+    assert_eq!(try_wrapping_resize(&RectU8::of(0, 2, 2, 4), u8::MAX), Some(RectU8::of(u8::MAX / 2 + 3, u8::MAX / 2 + 5, u8::MAX / 2 + 1, u8::MAX / 2 + 3)));
+    assert_eq!(try_wrapping_resize(&RectU8::of(2, 0, 4, 2), u8::MAX), Some(RectU8::of(u8::MAX / 2 + 5, u8::MAX / 2 + 3, u8::MAX / 2 + 3, u8::MAX / 2 + 1)));
+    assert_eq!(try_wrapping_resize(&RectU8::of(u8::MAX - 2, u8::MAX - 4, u8::MAX, u8::MAX - 2), u8::MAX), Some(RectU8::of(u8::MAX / 2, u8::MAX / 2 - 2, u8::MAX / 2 - 2, u8::MAX / 2 - 4)));
+    assert_eq!(try_wrapping_resize(&RectU8::of(u8::MAX - 4, u8::MAX - 2, u8::MAX - 2, u8::MAX), u8::MAX), Some(RectU8::of(u8::MAX / 2 - 2, u8::MAX / 2, u8::MAX / 2 - 4, u8::MAX / 2 - 2)));
 }
 
 #[test]

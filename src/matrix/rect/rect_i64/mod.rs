@@ -105,10 +105,7 @@ mod tests {
         assert_eq!(RectI64::largest(), RectI64 { min: PointI64 { row: i64::MIN, col: i64::MIN }, max: PointI64 { row: i64::MAX, col: i64::MAX } });
         assert_eq!(RectI64::min(), RectI64 { min: PointI64 { row: i64::MIN, col: i64::MIN }, max: PointI64 { row: i64::MIN, col: i64::MIN } });
         assert_eq!(RectI64::max(), RectI64 { min: PointI64 { row: i64::MAX, col: i64::MAX }, max: PointI64 { row: i64::MAX, col: i64::MAX } });
-        assert_eq!(
-            RectI64::of(i64::MIN, -1, 1, i64::MAX),
-            RectI64 { min: PointI64 { row: i64::MIN, col: -1 }, max: PointI64 { row: 1, col: i64::MAX } }
-        );
+        assert_eq!(RectI64::of(i64::MIN, -1, 1, i64::MAX), RectI64 { min: PointI64 { row: i64::MIN, col: -1 }, max: PointI64 { row: 1, col: i64::MAX } });
     }
 
     #[test]
@@ -119,18 +116,9 @@ mod tests {
 
     #[test]
     fn from() {
-        assert_eq!(
-            RectI64::from(RectI8::largest()),
-            RectI64 { min: PointI64 { row: i8::MIN.into(), col: i8::MIN.into() }, max: PointI64 { row: i8::MAX.into(), col: i8::MAX.into() } }
-        );
-        assert_eq!(
-            RectI64::from(RectI16::largest()),
-            RectI64 { min: PointI64 { row: i16::MIN.into(), col: i16::MIN.into() }, max: PointI64 { row: i16::MAX.into(), col: i16::MAX.into() } }
-        );
-        assert_eq!(
-            RectI64::from(RectI32::largest()),
-            RectI64 { min: PointI64 { row: i32::MIN.into(), col: i32::MIN.into() }, max: PointI64 { row: i32::MAX.into(), col: i32::MAX.into() } }
-        );
+        assert_eq!(RectI64::from(RectI8::largest()), RectI64 { min: PointI64 { row: i8::MIN.into(), col: i8::MIN.into() }, max: PointI64 { row: i8::MAX.into(), col: i8::MAX.into() } });
+        assert_eq!(RectI64::from(RectI16::largest()), RectI64 { min: PointI64 { row: i16::MIN.into(), col: i16::MIN.into() }, max: PointI64 { row: i16::MAX.into(), col: i16::MAX.into() } });
+        assert_eq!(RectI64::from(RectI32::largest()), RectI64 { min: PointI64 { row: i32::MIN.into(), col: i32::MIN.into() }, max: PointI64 { row: i32::MAX.into(), col: i32::MAX.into() } });
     }
 
     #[test]

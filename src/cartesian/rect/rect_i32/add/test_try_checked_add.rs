@@ -9,10 +9,7 @@ fn test_try_checked_add() {
 
 #[test]
 fn try_checked_add_to_bounds() {
-    assert_eq!(
-        try_checked_add(&RectI32::of(i32::MIN + 2, i32::MIN + 5, i32::MAX - 2, i32::MAX - 5), &RectI32::of(-2, -5, 2, 5)),
-        Some(RectI32::largest())
-    );
+    assert_eq!(try_checked_add(&RectI32::of(i32::MIN + 2, i32::MIN + 5, i32::MAX - 2, i32::MAX - 5), &RectI32::of(-2, -5, 2, 5)), Some(RectI32::largest()));
     assert_eq!(try_checked_add(&RectI32::of(i32::MIN + 2, i32::MIN + 5, i32::MAX, i32::MAX), &RectI32::of(-2, -5, 0, 0)), Some(RectI32::largest()));
     assert_eq!(try_checked_add(&RectI32::of(i32::MIN, i32::MIN, i32::MAX - 2, i32::MAX - 5), &RectI32::of(0, 0, 2, 5)), Some(RectI32::largest()));
 }

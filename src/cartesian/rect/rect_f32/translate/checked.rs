@@ -105,34 +105,19 @@ mod tests {
     #[test]
     fn test_try_checked_translate() {
         assert_eq!(try_checked_translate(&RectF32::of(0.0, 0.0, 10.0, 10.0), &PointF32::of(10.0, 20.0)), Some(RectF32::of(10.0, 20.0, 20.0, 30.0)));
-        assert_eq!(
-            try_checked_translate(&RectF32::of(10.0, 20.0, 20.0, 30.0), &PointF32::of(-20.0, -15.0)),
-            Some(RectF32::of(-10.0, 5.0, 0.0, 15.0))
-        );
+        assert_eq!(try_checked_translate(&RectF32::of(10.0, 20.0, 20.0, 30.0), &PointF32::of(-20.0, -15.0)), Some(RectF32::of(-10.0, 5.0, 0.0, 15.0)));
     }
 
     #[test]
     fn try_checked_translate_small_rect_to_bounds() {
-        assert_eq!(
-            try_checked_translate(&RectF32::of(MIN + 2.0, MIN + 5.0, MIN + 12.0, MIN + 15.0), &PointF32::of(-2.0, -5.0)),
-            Some(RectF32::of(MIN, MIN, MIN + 10.0, MIN + 10.0))
-        );
-        assert_eq!(
-            try_checked_translate(&RectF32::of(MAX - 12.0, MAX - 15.0, MAX - 2.0, MAX - 5.0), &PointF32::of(2.0, 5.0)),
-            Some(RectF32::of(MAX - 10.0, MAX - 10.0, MAX, MAX))
-        );
+        assert_eq!(try_checked_translate(&RectF32::of(MIN + 2.0, MIN + 5.0, MIN + 12.0, MIN + 15.0), &PointF32::of(-2.0, -5.0)), Some(RectF32::of(MIN, MIN, MIN + 10.0, MIN + 10.0)));
+        assert_eq!(try_checked_translate(&RectF32::of(MAX - 12.0, MAX - 15.0, MAX - 2.0, MAX - 5.0), &PointF32::of(2.0, 5.0)), Some(RectF32::of(MAX - 10.0, MAX - 10.0, MAX, MAX)));
     }
 
     #[test]
     fn try_checked_translate_big_rect_to_bounds() {
-        assert_eq!(
-            try_checked_translate(&RectF32::of(MIN + 2.0, MIN + 5.0, MAX, MAX), &PointF32::of(-2.0, -5.0)),
-            Some(RectF32::of(MIN, MIN, MAX - 2.0, MAX - 5.0))
-        );
-        assert_eq!(
-            try_checked_translate(&RectF32::of(MIN, MIN, MAX - 2.0, MAX - 5.0), &PointF32::of(2.0, 5.0)),
-            Some(RectF32::of(MIN + 2.0, MIN + 5.0, MAX, MAX))
-        );
+        assert_eq!(try_checked_translate(&RectF32::of(MIN + 2.0, MIN + 5.0, MAX, MAX), &PointF32::of(-2.0, -5.0)), Some(RectF32::of(MIN, MIN, MAX - 2.0, MAX - 5.0)));
+        assert_eq!(try_checked_translate(&RectF32::of(MIN, MIN, MAX - 2.0, MAX - 5.0), &PointF32::of(2.0, 5.0)), Some(RectF32::of(MIN + 2.0, MIN + 5.0, MAX, MAX)));
     }
 
     #[test]

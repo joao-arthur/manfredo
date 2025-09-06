@@ -94,59 +94,32 @@ mod tests {
 
     #[test]
     fn wrapping_translate_small_rect_to_bounds() {
-        assert_eq!(
-            wrapping_translate(&RectI8::of(i8::MIN + 2, i8::MIN + 5, i8::MIN + 12, i8::MIN + 15), &PointI8::of(-2, -5)),
-            RectI8::of(i8::MIN, i8::MIN, i8::MIN + 10, i8::MIN + 10)
-        );
-        assert_eq!(
-            wrapping_translate(&RectI8::of(i8::MAX - 12, i8::MAX - 15, i8::MAX - 2, i8::MAX - 5), &PointI8::of(2, 5)),
-            RectI8::of(i8::MAX - 10, i8::MAX - 10, i8::MAX, i8::MAX)
-        );
+        assert_eq!(wrapping_translate(&RectI8::of(i8::MIN + 2, i8::MIN + 5, i8::MIN + 12, i8::MIN + 15), &PointI8::of(-2, -5)), RectI8::of(i8::MIN, i8::MIN, i8::MIN + 10, i8::MIN + 10));
+        assert_eq!(wrapping_translate(&RectI8::of(i8::MAX - 12, i8::MAX - 15, i8::MAX - 2, i8::MAX - 5), &PointI8::of(2, 5)), RectI8::of(i8::MAX - 10, i8::MAX - 10, i8::MAX, i8::MAX));
     }
 
     #[test]
     fn wrapping_translate_big_rect_to_bounds() {
-        assert_eq!(
-            wrapping_translate(&RectI8::of(i8::MIN + 2, i8::MIN + 5, i8::MAX, i8::MAX), &PointI8::of(-2, -5)),
-            RectI8::of(i8::MIN, i8::MIN, i8::MAX - 2, i8::MAX - 5)
-        );
-        assert_eq!(
-            wrapping_translate(&RectI8::of(i8::MIN, i8::MIN, i8::MAX - 2, i8::MAX - 5), &PointI8::of(2, 5)),
-            RectI8::of(i8::MIN + 2, i8::MIN + 5, i8::MAX, i8::MAX)
-        );
+        assert_eq!(wrapping_translate(&RectI8::of(i8::MIN + 2, i8::MIN + 5, i8::MAX, i8::MAX), &PointI8::of(-2, -5)), RectI8::of(i8::MIN, i8::MIN, i8::MAX - 2, i8::MAX - 5));
+        assert_eq!(wrapping_translate(&RectI8::of(i8::MIN, i8::MIN, i8::MAX - 2, i8::MAX - 5), &PointI8::of(2, 5)), RectI8::of(i8::MIN + 2, i8::MIN + 5, i8::MAX, i8::MAX));
     }
 
     #[test]
     fn wrapping_translate_small_rect_out_of_bounds() {
-        assert_eq!(
-            wrapping_translate(&RectI8::of(i8::MIN + 10, i8::MIN + 5, i8::MIN + 20, i8::MIN + 30), &PointI8::of(-20, -20)),
-            RectI8::of(i8::MAX - 9, i8::MAX - 14, i8::MIN, i8::MIN + 10)
-        );
-        assert_eq!(
-            wrapping_translate(&RectI8::of(i8::MAX - 20, i8::MAX - 30, i8::MAX - 5, i8::MAX - 10), &PointI8::of(20, 20)),
-            RectI8::of(i8::MAX, i8::MAX - 10, i8::MIN + 14, i8::MIN + 9)
-        );
+        assert_eq!(wrapping_translate(&RectI8::of(i8::MIN + 10, i8::MIN + 5, i8::MIN + 20, i8::MIN + 30), &PointI8::of(-20, -20)), RectI8::of(i8::MAX - 9, i8::MAX - 14, i8::MIN, i8::MIN + 10));
+        assert_eq!(wrapping_translate(&RectI8::of(i8::MAX - 20, i8::MAX - 30, i8::MAX - 5, i8::MAX - 10), &PointI8::of(20, 20)), RectI8::of(i8::MAX, i8::MAX - 10, i8::MIN + 14, i8::MIN + 9));
     }
 
     #[test]
     fn wrapping_translate_big_rect_out_of_bounds() {
-        assert_eq!(
-            wrapping_translate(&RectI8::of(i8::MIN + 10, i8::MIN + 5, i8::MAX, i8::MAX), &PointI8::of(-20, -20)),
-            RectI8::of(i8::MAX - 9, i8::MAX - 14, i8::MAX - 20, i8::MAX - 20)
-        );
-        assert_eq!(
-            wrapping_translate(&RectI8::of(i8::MIN, i8::MIN, i8::MAX - 5, i8::MAX - 10), &PointI8::of(20, 20)),
-            RectI8::of(i8::MIN + 20, i8::MIN + 20, i8::MIN + 14, i8::MIN + 9)
-        );
+        assert_eq!(wrapping_translate(&RectI8::of(i8::MIN + 10, i8::MIN + 5, i8::MAX, i8::MAX), &PointI8::of(-20, -20)), RectI8::of(i8::MAX - 9, i8::MAX - 14, i8::MAX - 20, i8::MAX - 20));
+        assert_eq!(wrapping_translate(&RectI8::of(i8::MIN, i8::MIN, i8::MAX - 5, i8::MAX - 10), &PointI8::of(20, 20)), RectI8::of(i8::MIN + 20, i8::MIN + 20, i8::MIN + 14, i8::MIN + 9));
     }
 
     #[test]
     fn wrapping_translate_small_rect_limits_out_of_bounds() {
         assert_eq!(wrapping_translate(&RectI8::of(i8::MIN + 1, i8::MIN + 1, i8::MIN + 10, i8::MIN + 10), &PointI8::min()), RectI8::of(1, 1, 10, 10));
-        assert_eq!(
-            wrapping_translate(&RectI8::of(i8::MAX - 10, i8::MAX - 10, i8::MAX - 1, i8::MAX - 1), &PointI8::max()),
-            RectI8::of(-12, -12, -3, -3)
-        );
+        assert_eq!(wrapping_translate(&RectI8::of(i8::MAX - 10, i8::MAX - 10, i8::MAX - 1, i8::MAX - 1), &PointI8::max()), RectI8::of(-12, -12, -3, -3));
     }
 
     #[test]

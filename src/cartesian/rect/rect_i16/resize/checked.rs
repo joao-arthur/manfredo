@@ -262,50 +262,26 @@ mod tests {
 
     #[test]
     fn try_checked_resize_odd_small_rect_same_size() {
-        assert_eq!(
-            try_checked_resize(&RectI16::of(i16::MIN, i16::MIN, i16::MIN + 2, i16::MIN + 2), 3),
-            Some(RectI16::of(i16::MIN, i16::MIN, i16::MIN + 2, i16::MIN + 2))
-        );
-        assert_eq!(
-            try_checked_resize(&RectI16::of(i16::MAX - 2, i16::MAX - 2, i16::MAX, i16::MAX), 3),
-            Some(RectI16::of(i16::MAX - 2, i16::MAX - 2, i16::MAX, i16::MAX))
-        );
+        assert_eq!(try_checked_resize(&RectI16::of(i16::MIN, i16::MIN, i16::MIN + 2, i16::MIN + 2), 3), Some(RectI16::of(i16::MIN, i16::MIN, i16::MIN + 2, i16::MIN + 2)));
+        assert_eq!(try_checked_resize(&RectI16::of(i16::MAX - 2, i16::MAX - 2, i16::MAX, i16::MAX), 3), Some(RectI16::of(i16::MAX - 2, i16::MAX - 2, i16::MAX, i16::MAX)));
     }
 
     #[test]
     fn try_checked_resize_even_small_rect_same_size() {
-        assert_eq!(
-            try_checked_resize(&RectI16::of(i16::MIN, i16::MIN, i16::MIN + 3, i16::MIN + 3), 4),
-            Some(RectI16::of(i16::MIN, i16::MIN, i16::MIN + 3, i16::MIN + 3))
-        );
-        assert_eq!(
-            try_checked_resize(&RectI16::of(i16::MAX - 3, i16::MAX - 3, i16::MAX, i16::MAX), 4),
-            Some(RectI16::of(i16::MAX - 3, i16::MAX - 3, i16::MAX, i16::MAX))
-        );
+        assert_eq!(try_checked_resize(&RectI16::of(i16::MIN, i16::MIN, i16::MIN + 3, i16::MIN + 3), 4), Some(RectI16::of(i16::MIN, i16::MIN, i16::MIN + 3, i16::MIN + 3)));
+        assert_eq!(try_checked_resize(&RectI16::of(i16::MAX - 3, i16::MAX - 3, i16::MAX, i16::MAX), 4), Some(RectI16::of(i16::MAX - 3, i16::MAX - 3, i16::MAX, i16::MAX)));
     }
 
     #[test]
     fn try_checked_resize_odd_small_rect_to_bounds() {
-        assert_eq!(
-            try_checked_resize(&RectI16::of(i16::MIN + 2, i16::MIN + 2, i16::MIN + 4, i16::MIN + 4), 7),
-            Some(RectI16::of(i16::MIN, i16::MIN, i16::MIN + 6, i16::MIN + 6))
-        );
-        assert_eq!(
-            try_checked_resize(&RectI16::of(i16::MAX - 4, i16::MAX - 4, i16::MAX - 2, i16::MAX - 2), 7),
-            Some(RectI16::of(i16::MAX - 6, i16::MAX - 6, i16::MAX, i16::MAX))
-        );
+        assert_eq!(try_checked_resize(&RectI16::of(i16::MIN + 2, i16::MIN + 2, i16::MIN + 4, i16::MIN + 4), 7), Some(RectI16::of(i16::MIN, i16::MIN, i16::MIN + 6, i16::MIN + 6)));
+        assert_eq!(try_checked_resize(&RectI16::of(i16::MAX - 4, i16::MAX - 4, i16::MAX - 2, i16::MAX - 2), 7), Some(RectI16::of(i16::MAX - 6, i16::MAX - 6, i16::MAX, i16::MAX)));
     }
 
     #[test]
     fn try_checked_resize_even_small_rect_to_bounds() {
-        assert_eq!(
-            try_checked_resize(&RectI16::of(i16::MIN + 2, i16::MIN + 2, i16::MIN + 5, i16::MIN + 5), 8),
-            Some(RectI16::of(i16::MIN, i16::MIN, i16::MIN + 7, i16::MIN + 7))
-        );
-        assert_eq!(
-            try_checked_resize(&RectI16::of(i16::MAX - 5, i16::MAX - 5, i16::MAX - 2, i16::MAX - 2), 8),
-            Some(RectI16::of(i16::MAX - 7, i16::MAX - 7, i16::MAX, i16::MAX))
-        );
+        assert_eq!(try_checked_resize(&RectI16::of(i16::MIN + 2, i16::MIN + 2, i16::MIN + 5, i16::MIN + 5), 8), Some(RectI16::of(i16::MIN, i16::MIN, i16::MIN + 7, i16::MIN + 7)));
+        assert_eq!(try_checked_resize(&RectI16::of(i16::MAX - 5, i16::MAX - 5, i16::MAX - 2, i16::MAX - 2), 8), Some(RectI16::of(i16::MAX - 7, i16::MAX - 7, i16::MAX, i16::MAX)));
     }
 
     #[test]
@@ -350,14 +326,8 @@ mod tests {
 
     #[test]
     fn try_checked_resize_big_rect_limits_out_of_bounds() {
-        assert_eq!(
-            try_checked_resize(&RectI16::of(i16::MIN, i16::MIN, i16::MAX - 1, i16::MAX - 1), u16::MAX),
-            Some(RectI16::of(i16::MIN, i16::MIN, i16::MAX - 1, i16::MAX - 1))
-        );
-        assert_eq!(
-            try_checked_resize(&RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MAX, i16::MAX), u16::MAX),
-            Some(RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MAX, i16::MAX))
-        );
+        assert_eq!(try_checked_resize(&RectI16::of(i16::MIN, i16::MIN, i16::MAX - 1, i16::MAX - 1), u16::MAX), Some(RectI16::of(i16::MIN, i16::MIN, i16::MAX - 1, i16::MAX - 1)));
+        assert_eq!(try_checked_resize(&RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MAX, i16::MAX), u16::MAX), Some(RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MAX, i16::MAX)));
         assert_eq!(try_checked_resize(&RectI16::largest(), u16::MAX), Some(RectI16::of(i16::MIN, i16::MIN, i16::MAX - 1, i16::MAX - 1)));
     }
 

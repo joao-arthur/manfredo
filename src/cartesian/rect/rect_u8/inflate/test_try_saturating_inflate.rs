@@ -15,38 +15,14 @@ fn try_saturating_inflate_min_bounds() {
 
 #[test]
 fn try_saturating_inflate_max_bounds() {
-    assert_eq!(
-        try_saturating_inflate(&RectU8::of(u8::MAX - 33, u8::MAX - 17, u8::MAX - 5, u8::MAX - 3)),
-        Some(RectU8::of(u8::MAX - 34, u8::MAX - 18, u8::MAX - 4, u8::MAX - 2))
-    );
-    assert_eq!(
-        try_saturating_inflate(&RectU8::of(u8::MAX - 34, u8::MAX - 18, u8::MAX - 4, u8::MAX - 2)),
-        Some(RectU8::of(u8::MAX - 35, u8::MAX - 19, u8::MAX - 3, u8::MAX - 1))
-    );
-    assert_eq!(
-        try_saturating_inflate(&RectU8::of(u8::MAX - 35, u8::MAX - 19, u8::MAX - 3, u8::MAX - 1)),
-        Some(RectU8::of(u8::MAX - 36, u8::MAX - 20, u8::MAX - 2, u8::MAX))
-    );
-    assert_eq!(
-        try_saturating_inflate(&RectU8::of(u8::MAX - 36, u8::MAX - 20, u8::MAX - 2, u8::MAX)),
-        Some(RectU8::of(u8::MAX - 37, u8::MAX - 22, u8::MAX - 1, u8::MAX))
-    );
-    assert_eq!(
-        try_saturating_inflate(&RectU8::of(u8::MAX - 37, u8::MAX - 22, u8::MAX - 1, u8::MAX)),
-        Some(RectU8::of(u8::MAX - 38, u8::MAX - 24, u8::MAX, u8::MAX))
-    );
-    assert_eq!(
-        try_saturating_inflate(&RectU8::of(u8::MAX - 38, u8::MAX - 24, u8::MAX, u8::MAX)),
-        Some(RectU8::of(u8::MAX - 40, u8::MAX - 26, u8::MAX, u8::MAX))
-    );
-    assert_eq!(
-        try_saturating_inflate(&RectU8::of(u8::MAX - 40, u8::MAX - 26, u8::MAX, u8::MAX)),
-        Some(RectU8::of(u8::MAX - 42, u8::MAX - 28, u8::MAX, u8::MAX))
-    );
-    assert_eq!(
-        try_saturating_inflate(&RectU8::of(u8::MAX - 42, u8::MAX - 28, u8::MAX, u8::MAX)),
-        Some(RectU8::of(u8::MAX - 44, u8::MAX - 30, u8::MAX, u8::MAX))
-    );
+    assert_eq!(try_saturating_inflate(&RectU8::of(u8::MAX - 33, u8::MAX - 17, u8::MAX - 5, u8::MAX - 3)), Some(RectU8::of(u8::MAX - 34, u8::MAX - 18, u8::MAX - 4, u8::MAX - 2)));
+    assert_eq!(try_saturating_inflate(&RectU8::of(u8::MAX - 34, u8::MAX - 18, u8::MAX - 4, u8::MAX - 2)), Some(RectU8::of(u8::MAX - 35, u8::MAX - 19, u8::MAX - 3, u8::MAX - 1)));
+    assert_eq!(try_saturating_inflate(&RectU8::of(u8::MAX - 35, u8::MAX - 19, u8::MAX - 3, u8::MAX - 1)), Some(RectU8::of(u8::MAX - 36, u8::MAX - 20, u8::MAX - 2, u8::MAX)));
+    assert_eq!(try_saturating_inflate(&RectU8::of(u8::MAX - 36, u8::MAX - 20, u8::MAX - 2, u8::MAX)), Some(RectU8::of(u8::MAX - 37, u8::MAX - 22, u8::MAX - 1, u8::MAX)));
+    assert_eq!(try_saturating_inflate(&RectU8::of(u8::MAX - 37, u8::MAX - 22, u8::MAX - 1, u8::MAX)), Some(RectU8::of(u8::MAX - 38, u8::MAX - 24, u8::MAX, u8::MAX)));
+    assert_eq!(try_saturating_inflate(&RectU8::of(u8::MAX - 38, u8::MAX - 24, u8::MAX, u8::MAX)), Some(RectU8::of(u8::MAX - 40, u8::MAX - 26, u8::MAX, u8::MAX)));
+    assert_eq!(try_saturating_inflate(&RectU8::of(u8::MAX - 40, u8::MAX - 26, u8::MAX, u8::MAX)), Some(RectU8::of(u8::MAX - 42, u8::MAX - 28, u8::MAX, u8::MAX)));
+    assert_eq!(try_saturating_inflate(&RectU8::of(u8::MAX - 42, u8::MAX - 28, u8::MAX, u8::MAX)), Some(RectU8::of(u8::MAX - 44, u8::MAX - 30, u8::MAX, u8::MAX)));
 }
 
 #[test]

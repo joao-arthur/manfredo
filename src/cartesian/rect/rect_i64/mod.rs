@@ -116,18 +116,9 @@ mod tests {
 
     #[test]
     fn from() {
-        assert_eq!(
-            RectI64::from(RectI8::largest()),
-            RectI64 { min: PointI64 { x: i8::MIN.into(), y: i8::MIN.into() }, max: PointI64 { x: i8::MAX.into(), y: i8::MAX.into() } }
-        );
-        assert_eq!(
-            RectI64::from(RectI16::largest()),
-            RectI64 { min: PointI64 { x: i16::MIN.into(), y: i16::MIN.into() }, max: PointI64 { x: i16::MAX.into(), y: i16::MAX.into() } }
-        );
-        assert_eq!(
-            RectI64::from(RectI32::largest()),
-            RectI64 { min: PointI64 { x: i32::MIN.into(), y: i32::MIN.into() }, max: PointI64 { x: i32::MAX.into(), y: i32::MAX.into() } }
-        );
+        assert_eq!(RectI64::from(RectI8::largest()), RectI64 { min: PointI64 { x: i8::MIN.into(), y: i8::MIN.into() }, max: PointI64 { x: i8::MAX.into(), y: i8::MAX.into() } });
+        assert_eq!(RectI64::from(RectI16::largest()), RectI64 { min: PointI64 { x: i16::MIN.into(), y: i16::MIN.into() }, max: PointI64 { x: i16::MAX.into(), y: i16::MAX.into() } });
+        assert_eq!(RectI64::from(RectI32::largest()), RectI64 { min: PointI64 { x: i32::MIN.into(), y: i32::MIN.into() }, max: PointI64 { x: i32::MAX.into(), y: i32::MAX.into() } });
     }
 
     #[test]

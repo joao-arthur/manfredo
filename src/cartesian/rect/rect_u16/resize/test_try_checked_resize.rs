@@ -31,14 +31,8 @@ fn try_checked_resize_small_size() {
 fn try_checked_resize_same_size() {
     assert_eq!(try_checked_resize(&RectU16::of(0, 0, 2, 2), 3), Some(RectU16::of(0, 0, 2, 2)));
     assert_eq!(try_checked_resize(&RectU16::of(0, 0, 3, 3), 4), Some(RectU16::of(0, 0, 3, 3)));
-    assert_eq!(
-        try_checked_resize(&RectU16::of(u16::MAX - 2, u16::MAX - 2, u16::MAX, u16::MAX), 3),
-        Some(RectU16::of(u16::MAX - 2, u16::MAX - 2, u16::MAX, u16::MAX))
-    );
-    assert_eq!(
-        try_checked_resize(&RectU16::of(u16::MAX - 3, u16::MAX - 3, u16::MAX, u16::MAX), 4),
-        Some(RectU16::of(u16::MAX - 3, u16::MAX - 3, u16::MAX, u16::MAX))
-    );
+    assert_eq!(try_checked_resize(&RectU16::of(u16::MAX - 2, u16::MAX - 2, u16::MAX, u16::MAX), 3), Some(RectU16::of(u16::MAX - 2, u16::MAX - 2, u16::MAX, u16::MAX)));
+    assert_eq!(try_checked_resize(&RectU16::of(u16::MAX - 3, u16::MAX - 3, u16::MAX, u16::MAX), 4), Some(RectU16::of(u16::MAX - 3, u16::MAX - 3, u16::MAX, u16::MAX)));
 }
 
 #[test]

@@ -154,62 +154,32 @@ mod tests {
 
     #[test]
     fn try_saturating_resize_odd_small_rect_out_of_bounds() {
-        assert_eq!(
-            try_saturating_resize(&RectI8::of(i8::MIN, i8::MIN, i8::MIN + 2, i8::MIN + 2), 11),
-            Some(RectI8::of(i8::MIN, i8::MIN, i8::MIN + 10, i8::MIN + 10))
-        );
-        assert_eq!(
-            try_saturating_resize(&RectI8::of(i8::MAX - 2, i8::MAX - 2, i8::MAX, i8::MAX), 11),
-            Some(RectI8::of(i8::MAX - 10, i8::MAX - 10, i8::MAX, i8::MAX))
-        );
+        assert_eq!(try_saturating_resize(&RectI8::of(i8::MIN, i8::MIN, i8::MIN + 2, i8::MIN + 2), 11), Some(RectI8::of(i8::MIN, i8::MIN, i8::MIN + 10, i8::MIN + 10)));
+        assert_eq!(try_saturating_resize(&RectI8::of(i8::MAX - 2, i8::MAX - 2, i8::MAX, i8::MAX), 11), Some(RectI8::of(i8::MAX - 10, i8::MAX - 10, i8::MAX, i8::MAX)));
     }
 
     #[test]
     fn try_saturating_resize_even_small_rect_out_of_bounds() {
-        assert_eq!(
-            try_saturating_resize(&RectI8::of(i8::MIN, i8::MIN, i8::MIN + 3, i8::MIN + 3), 11),
-            Some(RectI8::of(i8::MIN, i8::MIN, i8::MIN + 10, i8::MIN + 10))
-        );
-        assert_eq!(
-            try_saturating_resize(&RectI8::of(i8::MAX - 3, i8::MAX - 3, i8::MAX, i8::MAX), 11),
-            Some(RectI8::of(i8::MAX - 10, i8::MAX - 10, i8::MAX, i8::MAX))
-        );
+        assert_eq!(try_saturating_resize(&RectI8::of(i8::MIN, i8::MIN, i8::MIN + 3, i8::MIN + 3), 11), Some(RectI8::of(i8::MIN, i8::MIN, i8::MIN + 10, i8::MIN + 10)));
+        assert_eq!(try_saturating_resize(&RectI8::of(i8::MAX - 3, i8::MAX - 3, i8::MAX, i8::MAX), 11), Some(RectI8::of(i8::MAX - 10, i8::MAX - 10, i8::MAX, i8::MAX)));
     }
 
     #[test]
     fn try_saturating_resize_odd_small_rect_limits_out_of_bounds() {
-        assert_eq!(
-            try_saturating_resize(&RectI8::of(i8::MIN, i8::MIN, i8::MIN + 2, i8::MIN + 2), u8::MAX),
-            Some(RectI8::of(i8::MIN, i8::MIN, i8::MAX - 1, i8::MAX - 1))
-        );
-        assert_eq!(
-            try_saturating_resize(&RectI8::of(i8::MAX - 2, i8::MAX - 2, i8::MAX, i8::MAX), u8::MAX),
-            Some(RectI8::of(i8::MIN + 1, i8::MIN + 1, i8::MAX, i8::MAX))
-        );
+        assert_eq!(try_saturating_resize(&RectI8::of(i8::MIN, i8::MIN, i8::MIN + 2, i8::MIN + 2), u8::MAX), Some(RectI8::of(i8::MIN, i8::MIN, i8::MAX - 1, i8::MAX - 1)));
+        assert_eq!(try_saturating_resize(&RectI8::of(i8::MAX - 2, i8::MAX - 2, i8::MAX, i8::MAX), u8::MAX), Some(RectI8::of(i8::MIN + 1, i8::MIN + 1, i8::MAX, i8::MAX)));
     }
 
     #[test]
     fn try_saturating_resize_even_small_rect_limits_out_of_bounds() {
-        assert_eq!(
-            try_saturating_resize(&RectI8::of(i8::MIN, i8::MIN, i8::MIN + 3, i8::MIN + 3), u8::MAX - 1),
-            Some(RectI8::of(i8::MIN, i8::MIN, i8::MAX - 2, i8::MAX - 2))
-        );
-        assert_eq!(
-            try_saturating_resize(&RectI8::of(i8::MAX - 3, i8::MAX - 3, i8::MAX, i8::MAX), u8::MAX - 1),
-            Some(RectI8::of(i8::MIN + 2, i8::MIN + 2, i8::MAX, i8::MAX))
-        );
+        assert_eq!(try_saturating_resize(&RectI8::of(i8::MIN, i8::MIN, i8::MIN + 3, i8::MIN + 3), u8::MAX - 1), Some(RectI8::of(i8::MIN, i8::MIN, i8::MAX - 2, i8::MAX - 2)));
+        assert_eq!(try_saturating_resize(&RectI8::of(i8::MAX - 3, i8::MAX - 3, i8::MAX, i8::MAX), u8::MAX - 1), Some(RectI8::of(i8::MIN + 2, i8::MIN + 2, i8::MAX, i8::MAX)));
     }
 
     #[test]
     fn try_saturating_resize_big_rect_limits_out_of_bounds() {
-        assert_eq!(
-            try_saturating_resize(&RectI8::of(i8::MIN, i8::MIN, i8::MAX - 1, i8::MAX - 1), u8::MAX),
-            Some(RectI8::of(i8::MIN, i8::MIN, i8::MAX - 1, i8::MAX - 1))
-        );
-        assert_eq!(
-            try_saturating_resize(&RectI8::of(i8::MIN + 1, i8::MIN + 1, i8::MAX, i8::MAX), u8::MAX),
-            Some(RectI8::of(i8::MIN + 1, i8::MIN + 1, i8::MAX, i8::MAX))
-        );
+        assert_eq!(try_saturating_resize(&RectI8::of(i8::MIN, i8::MIN, i8::MAX - 1, i8::MAX - 1), u8::MAX), Some(RectI8::of(i8::MIN, i8::MIN, i8::MAX - 1, i8::MAX - 1)));
+        assert_eq!(try_saturating_resize(&RectI8::of(i8::MIN + 1, i8::MIN + 1, i8::MAX, i8::MAX), u8::MAX), Some(RectI8::of(i8::MIN + 1, i8::MIN + 1, i8::MAX, i8::MAX)));
         assert_eq!(try_saturating_resize(&RectI8::largest(), u8::MAX), Some(RectI8::of(i8::MIN, i8::MIN, i8::MAX - 1, i8::MAX - 1)));
     }
 

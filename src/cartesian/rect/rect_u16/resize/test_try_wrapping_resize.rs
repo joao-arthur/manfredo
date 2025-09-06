@@ -31,48 +31,24 @@ fn try_wrapping_resize_small_size() {
 fn try_wrapping_resize_same_size() {
     assert_eq!(try_wrapping_resize(&RectU16::of(0, 0, 2, 2), 3), Some(RectU16::of(0, 0, 2, 2)));
     assert_eq!(try_wrapping_resize(&RectU16::of(0, 0, 3, 3), 4), Some(RectU16::of(0, 0, 3, 3)));
-    assert_eq!(
-        try_wrapping_resize(&RectU16::of(u16::MAX - 2, u16::MAX - 2, u16::MAX, u16::MAX), 3),
-        Some(RectU16::of(u16::MAX - 2, u16::MAX - 2, u16::MAX, u16::MAX))
-    );
-    assert_eq!(
-        try_wrapping_resize(&RectU16::of(u16::MAX - 3, u16::MAX - 3, u16::MAX, u16::MAX), 4),
-        Some(RectU16::of(u16::MAX - 3, u16::MAX - 3, u16::MAX, u16::MAX))
-    );
+    assert_eq!(try_wrapping_resize(&RectU16::of(u16::MAX - 2, u16::MAX - 2, u16::MAX, u16::MAX), 3), Some(RectU16::of(u16::MAX - 2, u16::MAX - 2, u16::MAX, u16::MAX)));
+    assert_eq!(try_wrapping_resize(&RectU16::of(u16::MAX - 3, u16::MAX - 3, u16::MAX, u16::MAX), 4), Some(RectU16::of(u16::MAX - 3, u16::MAX - 3, u16::MAX, u16::MAX)));
 }
 
 #[test]
 fn try_wrapping_resize_small_rect_out_of_bounds() {
     assert_eq!(try_wrapping_resize(&RectU16::of(0, 2, 2, 4), 5), Some(RectU16::of(u16::MAX, 1, 3, 5)));
     assert_eq!(try_wrapping_resize(&RectU16::of(2, 0, 4, 2), 5), Some(RectU16::of(1, u16::MAX, 5, 3)));
-    assert_eq!(
-        try_wrapping_resize(&RectU16::of(u16::MAX - 2, u16::MAX - 4, u16::MAX, u16::MAX - 2), 5),
-        Some(RectU16::of(u16::MAX - 3, u16::MAX - 5, 0, u16::MAX - 1))
-    );
-    assert_eq!(
-        try_wrapping_resize(&RectU16::of(u16::MAX - 4, u16::MAX - 2, u16::MAX - 2, u16::MAX), 5),
-        Some(RectU16::of(u16::MAX - 5, u16::MAX - 3, u16::MAX - 1, 0))
-    );
+    assert_eq!(try_wrapping_resize(&RectU16::of(u16::MAX - 2, u16::MAX - 4, u16::MAX, u16::MAX - 2), 5), Some(RectU16::of(u16::MAX - 3, u16::MAX - 5, 0, u16::MAX - 1)));
+    assert_eq!(try_wrapping_resize(&RectU16::of(u16::MAX - 4, u16::MAX - 2, u16::MAX - 2, u16::MAX), 5), Some(RectU16::of(u16::MAX - 5, u16::MAX - 3, u16::MAX - 1, 0)));
 }
 
 #[test]
 fn try_wrapping_resize_small_rect_limits_out_of_bounds() {
-    assert_eq!(
-        try_wrapping_resize(&RectU16::of(0, 2, 2, 4), u16::MAX),
-        Some(RectU16::of(u16::MAX / 2 + 3, u16::MAX / 2 + 5, u16::MAX / 2 + 1, u16::MAX / 2 + 3))
-    );
-    assert_eq!(
-        try_wrapping_resize(&RectU16::of(2, 0, 4, 2), u16::MAX),
-        Some(RectU16::of(u16::MAX / 2 + 5, u16::MAX / 2 + 3, u16::MAX / 2 + 3, u16::MAX / 2 + 1))
-    );
-    assert_eq!(
-        try_wrapping_resize(&RectU16::of(u16::MAX - 2, u16::MAX - 4, u16::MAX, u16::MAX - 2), u16::MAX),
-        Some(RectU16::of(u16::MAX / 2, u16::MAX / 2 - 2, u16::MAX / 2 - 2, u16::MAX / 2 - 4))
-    );
-    assert_eq!(
-        try_wrapping_resize(&RectU16::of(u16::MAX - 4, u16::MAX - 2, u16::MAX - 2, u16::MAX), u16::MAX),
-        Some(RectU16::of(u16::MAX / 2 - 2, u16::MAX / 2, u16::MAX / 2 - 4, u16::MAX / 2 - 2))
-    );
+    assert_eq!(try_wrapping_resize(&RectU16::of(0, 2, 2, 4), u16::MAX), Some(RectU16::of(u16::MAX / 2 + 3, u16::MAX / 2 + 5, u16::MAX / 2 + 1, u16::MAX / 2 + 3)));
+    assert_eq!(try_wrapping_resize(&RectU16::of(2, 0, 4, 2), u16::MAX), Some(RectU16::of(u16::MAX / 2 + 5, u16::MAX / 2 + 3, u16::MAX / 2 + 3, u16::MAX / 2 + 1)));
+    assert_eq!(try_wrapping_resize(&RectU16::of(u16::MAX - 2, u16::MAX - 4, u16::MAX, u16::MAX - 2), u16::MAX), Some(RectU16::of(u16::MAX / 2, u16::MAX / 2 - 2, u16::MAX / 2 - 2, u16::MAX / 2 - 4)));
+    assert_eq!(try_wrapping_resize(&RectU16::of(u16::MAX - 4, u16::MAX - 2, u16::MAX - 2, u16::MAX), u16::MAX), Some(RectU16::of(u16::MAX / 2 - 2, u16::MAX / 2, u16::MAX / 2 - 4, u16::MAX / 2 - 2)));
 }
 
 #[test]

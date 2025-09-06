@@ -31,32 +31,20 @@ fn try_saturating_resize_small_size() {
 fn try_saturating_resize_same_size() {
     assert_eq!(try_saturating_resize(&RectU64::of(0, 0, 2, 2), 3), Some(RectU64::of(0, 0, 2, 2)));
     assert_eq!(try_saturating_resize(&RectU64::of(0, 0, 3, 3), 4), Some(RectU64::of(0, 0, 3, 3)));
-    assert_eq!(
-        try_saturating_resize(&RectU64::of(u64::MAX - 2, u64::MAX - 2, u64::MAX, u64::MAX), 3),
-        Some(RectU64::of(u64::MAX - 2, u64::MAX - 2, u64::MAX, u64::MAX))
-    );
-    assert_eq!(
-        try_saturating_resize(&RectU64::of(u64::MAX - 3, u64::MAX - 3, u64::MAX, u64::MAX), 4),
-        Some(RectU64::of(u64::MAX - 3, u64::MAX - 3, u64::MAX, u64::MAX))
-    );
+    assert_eq!(try_saturating_resize(&RectU64::of(u64::MAX - 2, u64::MAX - 2, u64::MAX, u64::MAX), 3), Some(RectU64::of(u64::MAX - 2, u64::MAX - 2, u64::MAX, u64::MAX)));
+    assert_eq!(try_saturating_resize(&RectU64::of(u64::MAX - 3, u64::MAX - 3, u64::MAX, u64::MAX), 4), Some(RectU64::of(u64::MAX - 3, u64::MAX - 3, u64::MAX, u64::MAX)));
 }
 
 #[test]
 fn try_saturating_resize_bounds() {
     assert_eq!(try_saturating_resize(&RectU64::of(0, 0, 2, 2), 11), Some(RectU64::of(0, 0, 10, 10)));
-    assert_eq!(
-        try_saturating_resize(&RectU64::of(u64::MAX - 2, u64::MAX - 2, u64::MAX, u64::MAX), 11),
-        Some(RectU64::of(u64::MAX - 10, u64::MAX - 10, u64::MAX, u64::MAX))
-    );
+    assert_eq!(try_saturating_resize(&RectU64::of(u64::MAX - 2, u64::MAX - 2, u64::MAX, u64::MAX), 11), Some(RectU64::of(u64::MAX - 10, u64::MAX - 10, u64::MAX, u64::MAX)));
 }
 
 #[test]
 fn try_saturating_resize_small_rect_limits() {
     assert_eq!(try_saturating_resize(&RectU64::of(0, 0, 2, 2), u64::MAX), Some(RectU64::of(0, 0, u64::MAX - 1, u64::MAX - 1)));
-    assert_eq!(
-        try_saturating_resize(&RectU64::of(u64::MAX - 2, u64::MAX - 2, u64::MAX, u64::MAX), u64::MAX),
-        Some(RectU64::of(1, 1, u64::MAX, u64::MAX))
-    );
+    assert_eq!(try_saturating_resize(&RectU64::of(u64::MAX - 2, u64::MAX - 2, u64::MAX, u64::MAX), u64::MAX), Some(RectU64::of(1, 1, u64::MAX, u64::MAX)));
 }
 
 #[test]

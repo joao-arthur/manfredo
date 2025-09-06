@@ -98,10 +98,7 @@ mod tests {
 
     #[test]
     fn from() {
-        assert_eq!(
-            RectU16::from(RectU8::largest()),
-            RectU16 { min: PointU16 { row: 0, col: 0 }, max: PointU16 { row: u8::MAX.into(), col: u8::MAX.into() } }
-        );
+        assert_eq!(RectU16::from(RectU8::largest()), RectU16 { min: PointU16 { row: 0, col: 0 }, max: PointU16 { row: u8::MAX.into(), col: u8::MAX.into() } });
     }
 
     #[test]

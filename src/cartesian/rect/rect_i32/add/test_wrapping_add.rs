@@ -9,14 +9,8 @@ fn test_wrapping_add() {
 
 #[test]
 fn wrapping_add_small_rect_to_bounds() {
-    assert_eq!(
-        wrapping_add(&RectI32::of(i32::MIN + 2, i32::MIN + 5, i32::MIN + 12, i32::MIN + 15), &RectI32::of(-2, -5, 9, 7)),
-        RectI32::of(i32::MIN, i32::MIN, i32::MIN + 21, i32::MIN + 22)
-    );
-    assert_eq!(
-        wrapping_add(&RectI32::of(i32::MAX - 12, i32::MAX - 15, i32::MAX - 2, i32::MAX - 5), &RectI32::of(-9, -7, 2, 5)),
-        RectI32::of(i32::MAX - 21, i32::MAX - 22, i32::MAX, i32::MAX)
-    );
+    assert_eq!(wrapping_add(&RectI32::of(i32::MIN + 2, i32::MIN + 5, i32::MIN + 12, i32::MIN + 15), &RectI32::of(-2, -5, 9, 7)), RectI32::of(i32::MIN, i32::MIN, i32::MIN + 21, i32::MIN + 22));
+    assert_eq!(wrapping_add(&RectI32::of(i32::MAX - 12, i32::MAX - 15, i32::MAX - 2, i32::MAX - 5), &RectI32::of(-9, -7, 2, 5)), RectI32::of(i32::MAX - 21, i32::MAX - 22, i32::MAX, i32::MAX));
 }
 
 #[test]
@@ -40,14 +34,8 @@ fn wrapping_add_small_rect_out_of_bounds() {
 
 #[test]
 fn wrapping_add_big_rect_out_of_bounds() {
-    assert_eq!(
-        wrapping_add(&RectI32::of(i32::MIN + 10, i32::MIN + 5, i32::MAX, i32::MAX), &RectI32::of(-20, -20, 0, 0)),
-        RectI32::of(i32::MAX - 9, i32::MAX - 14, i32::MAX, i32::MAX)
-    );
-    assert_eq!(
-        wrapping_add(&RectI32::of(i32::MIN, i32::MIN, i32::MAX - 5, i32::MAX - 10), &RectI32::of(0, 0, 20, 20)),
-        RectI32::of(i32::MIN, i32::MIN, i32::MIN + 14, i32::MIN + 9)
-    );
+    assert_eq!(wrapping_add(&RectI32::of(i32::MIN + 10, i32::MIN + 5, i32::MAX, i32::MAX), &RectI32::of(-20, -20, 0, 0)), RectI32::of(i32::MAX - 9, i32::MAX - 14, i32::MAX, i32::MAX));
+    assert_eq!(wrapping_add(&RectI32::of(i32::MIN, i32::MIN, i32::MAX - 5, i32::MAX - 10), &RectI32::of(0, 0, 20, 20)), RectI32::of(i32::MIN, i32::MIN, i32::MIN + 14, i32::MIN + 9));
 }
 
 #[test]

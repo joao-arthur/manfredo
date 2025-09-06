@@ -94,26 +94,14 @@ mod tests {
 
     #[test]
     fn wrapping_translate_small_rect_to_bounds() {
-        assert_eq!(
-            wrapping_translate(&RectI16::of(i16::MIN + 2, i16::MIN + 5, i16::MIN + 12, i16::MIN + 15), &PointI16::of(-2, -5)),
-            RectI16::of(i16::MIN, i16::MIN, i16::MIN + 10, i16::MIN + 10)
-        );
-        assert_eq!(
-            wrapping_translate(&RectI16::of(i16::MAX - 12, i16::MAX - 15, i16::MAX - 2, i16::MAX - 5), &PointI16::of(2, 5)),
-            RectI16::of(i16::MAX - 10, i16::MAX - 10, i16::MAX, i16::MAX)
-        );
+        assert_eq!(wrapping_translate(&RectI16::of(i16::MIN + 2, i16::MIN + 5, i16::MIN + 12, i16::MIN + 15), &PointI16::of(-2, -5)), RectI16::of(i16::MIN, i16::MIN, i16::MIN + 10, i16::MIN + 10));
+        assert_eq!(wrapping_translate(&RectI16::of(i16::MAX - 12, i16::MAX - 15, i16::MAX - 2, i16::MAX - 5), &PointI16::of(2, 5)), RectI16::of(i16::MAX - 10, i16::MAX - 10, i16::MAX, i16::MAX));
     }
 
     #[test]
     fn wrapping_translate_big_rect_to_bounds() {
-        assert_eq!(
-            wrapping_translate(&RectI16::of(i16::MIN + 2, i16::MIN + 5, i16::MAX, i16::MAX), &PointI16::of(-2, -5)),
-            RectI16::of(i16::MIN, i16::MIN, i16::MAX - 2, i16::MAX - 5)
-        );
-        assert_eq!(
-            wrapping_translate(&RectI16::of(i16::MIN, i16::MIN, i16::MAX - 2, i16::MAX - 5), &PointI16::of(2, 5)),
-            RectI16::of(i16::MIN + 2, i16::MIN + 5, i16::MAX, i16::MAX)
-        );
+        assert_eq!(wrapping_translate(&RectI16::of(i16::MIN + 2, i16::MIN + 5, i16::MAX, i16::MAX), &PointI16::of(-2, -5)), RectI16::of(i16::MIN, i16::MIN, i16::MAX - 2, i16::MAX - 5));
+        assert_eq!(wrapping_translate(&RectI16::of(i16::MIN, i16::MIN, i16::MAX - 2, i16::MAX - 5), &PointI16::of(2, 5)), RectI16::of(i16::MIN + 2, i16::MIN + 5, i16::MAX, i16::MAX));
     }
 
     #[test]
@@ -130,26 +118,14 @@ mod tests {
 
     #[test]
     fn wrapping_translate_big_rect_out_of_bounds() {
-        assert_eq!(
-            wrapping_translate(&RectI16::of(i16::MIN + 10, i16::MIN + 5, i16::MAX, i16::MAX), &PointI16::of(-20, -20)),
-            RectI16::of(i16::MAX - 9, i16::MAX - 14, i16::MAX - 20, i16::MAX - 20)
-        );
-        assert_eq!(
-            wrapping_translate(&RectI16::of(i16::MIN, i16::MIN, i16::MAX - 5, i16::MAX - 10), &PointI16::of(20, 20)),
-            RectI16::of(i16::MIN + 20, i16::MIN + 20, i16::MIN + 14, i16::MIN + 9)
-        );
+        assert_eq!(wrapping_translate(&RectI16::of(i16::MIN + 10, i16::MIN + 5, i16::MAX, i16::MAX), &PointI16::of(-20, -20)), RectI16::of(i16::MAX - 9, i16::MAX - 14, i16::MAX - 20, i16::MAX - 20));
+        assert_eq!(wrapping_translate(&RectI16::of(i16::MIN, i16::MIN, i16::MAX - 5, i16::MAX - 10), &PointI16::of(20, 20)), RectI16::of(i16::MIN + 20, i16::MIN + 20, i16::MIN + 14, i16::MIN + 9));
     }
 
     #[test]
     fn wrapping_translate_small_rect_limits_out_of_bounds() {
-        assert_eq!(
-            wrapping_translate(&RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MIN + 10, i16::MIN + 10), &PointI16::min()),
-            RectI16::of(1, 1, 10, 10)
-        );
-        assert_eq!(
-            wrapping_translate(&RectI16::of(i16::MAX - 10, i16::MAX - 10, i16::MAX - 1, i16::MAX - 1), &PointI16::max()),
-            RectI16::of(-12, -12, -3, -3)
-        );
+        assert_eq!(wrapping_translate(&RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MIN + 10, i16::MIN + 10), &PointI16::min()), RectI16::of(1, 1, 10, 10));
+        assert_eq!(wrapping_translate(&RectI16::of(i16::MAX - 10, i16::MAX - 10, i16::MAX - 1, i16::MAX - 1), &PointI16::max()), RectI16::of(-12, -12, -3, -3));
     }
 
     #[test]

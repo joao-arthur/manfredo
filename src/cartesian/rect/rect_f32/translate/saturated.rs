@@ -97,14 +97,8 @@ mod tests {
 
     #[test]
     fn saturating_translate_small_rect_to_bounds() {
-        assert_eq!(
-            saturating_translate(&RectF32::of(MIN + 2.0, MIN + 5.0, MIN + 12.0, MIN + 15.0), &PointF32::of(-2.0, -5.0)),
-            RectF32::of(MIN, MIN, MIN + 10.0, MIN + 10.0)
-        );
-        assert_eq!(
-            saturating_translate(&RectF32::of(MAX - 12.0, MAX - 15.0, MAX - 2.0, MAX - 5.0), &PointF32::of(2.0, 5.0)),
-            RectF32::of(MAX - 10.0, MAX - 10.0, MAX, MAX)
-        );
+        assert_eq!(saturating_translate(&RectF32::of(MIN + 2.0, MIN + 5.0, MIN + 12.0, MIN + 15.0), &PointF32::of(-2.0, -5.0)), RectF32::of(MIN, MIN, MIN + 10.0, MIN + 10.0));
+        assert_eq!(saturating_translate(&RectF32::of(MAX - 12.0, MAX - 15.0, MAX - 2.0, MAX - 5.0), &PointF32::of(2.0, 5.0)), RectF32::of(MAX - 10.0, MAX - 10.0, MAX, MAX));
     }
 
     #[test]
@@ -115,35 +109,20 @@ mod tests {
 
     #[test]
     fn saturating_translate_small_rect_out_of_bounds() {
-        assert_eq!(
-            saturating_translate(&RectF32::of(MIN + 10.0, MIN + 5.0, MIN + 20.0, MIN + 30.0), &PointF32::of(-20.0, -20.0)),
-            RectF32::of(MIN, MIN, MIN + 10.0, MIN + 25.0)
-        );
-        assert_eq!(
-            saturating_translate(&RectF32::of(MAX - 20.0, MAX - 30.0, MAX - 5.0, MAX - 10.0), &PointF32::of(20.0, 20.0)),
-            RectF32::of(MAX - 15.0, MAX - 20.0, MAX, MAX)
-        );
+        assert_eq!(saturating_translate(&RectF32::of(MIN + 10.0, MIN + 5.0, MIN + 20.0, MIN + 30.0), &PointF32::of(-20.0, -20.0)), RectF32::of(MIN, MIN, MIN + 10.0, MIN + 25.0));
+        assert_eq!(saturating_translate(&RectF32::of(MAX - 20.0, MAX - 30.0, MAX - 5.0, MAX - 10.0), &PointF32::of(20.0, 20.0)), RectF32::of(MAX - 15.0, MAX - 20.0, MAX, MAX));
     }
 
     #[test]
     fn saturating_translate_big_rect_out_of_bounds() {
-        assert_eq!(
-            saturating_translate(&RectF32::of(MIN + 10.0, MIN + 5.0, 0.0, 0.0), &PointF32::of(-20.0, -20.0)),
-            RectF32::of(MIN, MIN, -10.0, -5.0)
-        );
+        assert_eq!(saturating_translate(&RectF32::of(MIN + 10.0, MIN + 5.0, 0.0, 0.0), &PointF32::of(-20.0, -20.0)), RectF32::of(MIN, MIN, -10.0, -5.0));
         assert_eq!(saturating_translate(&RectF32::of(0.0, 0.0, MAX - 5.0, MAX - 10.0), &PointF32::of(20.0, 20.0)), RectF32::of(5.0, 10.0, MAX, MAX));
     }
 
     #[test]
     fn saturating_translate_small_rect_limits_out_of_bounds() {
-        assert_eq!(
-            saturating_translate(&RectF32::of(MIN + 1.0, MIN + 1.0, MIN + 10.0, MIN + 10.0), &PointF32::min()),
-            RectF32::of(MIN, MIN, MIN + 9.0, MIN + 9.0)
-        );
-        assert_eq!(
-            saturating_translate(&RectF32::of(MAX - 10.0, MAX - 10.0, MAX - 1.0, MAX - 1.0), &PointF32::max()),
-            RectF32::of(MAX - 9.0, MAX - 9.0, MAX, MAX)
-        );
+        assert_eq!(saturating_translate(&RectF32::of(MIN + 1.0, MIN + 1.0, MIN + 10.0, MIN + 10.0), &PointF32::min()), RectF32::of(MIN, MIN, MIN + 9.0, MIN + 9.0));
+        assert_eq!(saturating_translate(&RectF32::of(MAX - 10.0, MAX - 10.0, MAX - 1.0, MAX - 1.0), &PointF32::max()), RectF32::of(MAX - 9.0, MAX - 9.0, MAX, MAX));
     }
 
     #[test]

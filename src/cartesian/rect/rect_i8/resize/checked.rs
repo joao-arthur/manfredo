@@ -262,50 +262,26 @@ mod tests {
 
     #[test]
     fn try_checked_resize_odd_small_rect_same_size() {
-        assert_eq!(
-            try_checked_resize(&RectI8::of(i8::MIN, i8::MIN, i8::MIN + 2, i8::MIN + 2), 3),
-            Some(RectI8::of(i8::MIN, i8::MIN, i8::MIN + 2, i8::MIN + 2))
-        );
-        assert_eq!(
-            try_checked_resize(&RectI8::of(i8::MAX - 2, i8::MAX - 2, i8::MAX, i8::MAX), 3),
-            Some(RectI8::of(i8::MAX - 2, i8::MAX - 2, i8::MAX, i8::MAX))
-        );
+        assert_eq!(try_checked_resize(&RectI8::of(i8::MIN, i8::MIN, i8::MIN + 2, i8::MIN + 2), 3), Some(RectI8::of(i8::MIN, i8::MIN, i8::MIN + 2, i8::MIN + 2)));
+        assert_eq!(try_checked_resize(&RectI8::of(i8::MAX - 2, i8::MAX - 2, i8::MAX, i8::MAX), 3), Some(RectI8::of(i8::MAX - 2, i8::MAX - 2, i8::MAX, i8::MAX)));
     }
 
     #[test]
     fn try_checked_resize_even_small_rect_same_size() {
-        assert_eq!(
-            try_checked_resize(&RectI8::of(i8::MIN, i8::MIN, i8::MIN + 3, i8::MIN + 3), 4),
-            Some(RectI8::of(i8::MIN, i8::MIN, i8::MIN + 3, i8::MIN + 3))
-        );
-        assert_eq!(
-            try_checked_resize(&RectI8::of(i8::MAX - 3, i8::MAX - 3, i8::MAX, i8::MAX), 4),
-            Some(RectI8::of(i8::MAX - 3, i8::MAX - 3, i8::MAX, i8::MAX))
-        );
+        assert_eq!(try_checked_resize(&RectI8::of(i8::MIN, i8::MIN, i8::MIN + 3, i8::MIN + 3), 4), Some(RectI8::of(i8::MIN, i8::MIN, i8::MIN + 3, i8::MIN + 3)));
+        assert_eq!(try_checked_resize(&RectI8::of(i8::MAX - 3, i8::MAX - 3, i8::MAX, i8::MAX), 4), Some(RectI8::of(i8::MAX - 3, i8::MAX - 3, i8::MAX, i8::MAX)));
     }
 
     #[test]
     fn try_checked_resize_odd_small_rect_to_bounds() {
-        assert_eq!(
-            try_checked_resize(&RectI8::of(i8::MIN + 2, i8::MIN + 2, i8::MIN + 4, i8::MIN + 4), 7),
-            Some(RectI8::of(i8::MIN, i8::MIN, i8::MIN + 6, i8::MIN + 6))
-        );
-        assert_eq!(
-            try_checked_resize(&RectI8::of(i8::MAX - 4, i8::MAX - 4, i8::MAX - 2, i8::MAX - 2), 7),
-            Some(RectI8::of(i8::MAX - 6, i8::MAX - 6, i8::MAX, i8::MAX))
-        );
+        assert_eq!(try_checked_resize(&RectI8::of(i8::MIN + 2, i8::MIN + 2, i8::MIN + 4, i8::MIN + 4), 7), Some(RectI8::of(i8::MIN, i8::MIN, i8::MIN + 6, i8::MIN + 6)));
+        assert_eq!(try_checked_resize(&RectI8::of(i8::MAX - 4, i8::MAX - 4, i8::MAX - 2, i8::MAX - 2), 7), Some(RectI8::of(i8::MAX - 6, i8::MAX - 6, i8::MAX, i8::MAX)));
     }
 
     #[test]
     fn try_checked_resize_even_small_rect_to_bounds() {
-        assert_eq!(
-            try_checked_resize(&RectI8::of(i8::MIN + 2, i8::MIN + 2, i8::MIN + 5, i8::MIN + 5), 8),
-            Some(RectI8::of(i8::MIN, i8::MIN, i8::MIN + 7, i8::MIN + 7))
-        );
-        assert_eq!(
-            try_checked_resize(&RectI8::of(i8::MAX - 5, i8::MAX - 5, i8::MAX - 2, i8::MAX - 2), 8),
-            Some(RectI8::of(i8::MAX - 7, i8::MAX - 7, i8::MAX, i8::MAX))
-        );
+        assert_eq!(try_checked_resize(&RectI8::of(i8::MIN + 2, i8::MIN + 2, i8::MIN + 5, i8::MIN + 5), 8), Some(RectI8::of(i8::MIN, i8::MIN, i8::MIN + 7, i8::MIN + 7)));
+        assert_eq!(try_checked_resize(&RectI8::of(i8::MAX - 5, i8::MAX - 5, i8::MAX - 2, i8::MAX - 2), 8), Some(RectI8::of(i8::MAX - 7, i8::MAX - 7, i8::MAX, i8::MAX)));
     }
 
     #[test]
@@ -350,14 +326,8 @@ mod tests {
 
     #[test]
     fn try_checked_resize_big_rect_limits_out_of_bounds() {
-        assert_eq!(
-            try_checked_resize(&RectI8::of(i8::MIN, i8::MIN, i8::MAX - 1, i8::MAX - 1), u8::MAX),
-            Some(RectI8::of(i8::MIN, i8::MIN, i8::MAX - 1, i8::MAX - 1))
-        );
-        assert_eq!(
-            try_checked_resize(&RectI8::of(i8::MIN + 1, i8::MIN + 1, i8::MAX, i8::MAX), u8::MAX),
-            Some(RectI8::of(i8::MIN + 1, i8::MIN + 1, i8::MAX, i8::MAX))
-        );
+        assert_eq!(try_checked_resize(&RectI8::of(i8::MIN, i8::MIN, i8::MAX - 1, i8::MAX - 1), u8::MAX), Some(RectI8::of(i8::MIN, i8::MIN, i8::MAX - 1, i8::MAX - 1)));
+        assert_eq!(try_checked_resize(&RectI8::of(i8::MIN + 1, i8::MIN + 1, i8::MAX, i8::MAX), u8::MAX), Some(RectI8::of(i8::MIN + 1, i8::MIN + 1, i8::MAX, i8::MAX)));
         assert_eq!(try_checked_resize(&RectI8::largest(), u8::MAX), Some(RectI8::of(i8::MIN, i8::MIN, i8::MAX - 1, i8::MAX - 1)));
     }
 

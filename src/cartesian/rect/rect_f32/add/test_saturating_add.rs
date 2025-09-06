@@ -12,14 +12,8 @@ fn test_saturating_add() {
 
 #[test]
 fn saturating_add_small_rect_to_bounds() {
-    assert_eq!(
-        saturating_add(&RectF32::of(MIN + 2.0, MIN + 5.0, MIN + 12.0, MIN + 15.0), &RectF32::of(-2.0, -5.0, 9.0, 7.0)),
-        RectF32::of(MIN, MIN, MIN + 21.0, MIN + 22.0)
-    );
-    assert_eq!(
-        saturating_add(&RectF32::of(MAX - 12.0, MAX - 15.0, MAX - 2.0, MAX - 5.0), &RectF32::of(-9.0, -7.0, 2.0, 5.0)),
-        RectF32::of(MAX - 21.0, MAX - 22.0, MAX, MAX)
-    );
+    assert_eq!(saturating_add(&RectF32::of(MIN + 2.0, MIN + 5.0, MIN + 12.0, MIN + 15.0), &RectF32::of(-2.0, -5.0, 9.0, 7.0)), RectF32::of(MIN, MIN, MIN + 21.0, MIN + 22.0));
+    assert_eq!(saturating_add(&RectF32::of(MAX - 12.0, MAX - 15.0, MAX - 2.0, MAX - 5.0), &RectF32::of(-9.0, -7.0, 2.0, 5.0)), RectF32::of(MAX - 21.0, MAX - 22.0, MAX, MAX));
 }
 
 #[test]
@@ -31,14 +25,8 @@ fn saturating_add_big_rect_to_bounds() {
 
 #[test]
 fn saturating_add_small_rect_out_of_bounds() {
-    assert_eq!(
-        saturating_add(&RectF32::of(MIN + 10.0, MIN + 5.0, MIN + 20.0, MIN + 30.0), &RectF32::of(-20.0, -20.0, 0.0, 0.0)),
-        RectF32::of(MIN, MIN, MIN + 20.0, MIN + 30.0)
-    );
-    assert_eq!(
-        saturating_add(&RectF32::of(MAX - 20.0, MAX - 30.0, MAX - 5.0, MAX - 10.0), &RectF32::of(0.0, 0.0, 20.0, 20.0)),
-        RectF32::of(MAX - 20.0, MAX - 30.0, MAX, MAX)
-    );
+    assert_eq!(saturating_add(&RectF32::of(MIN + 10.0, MIN + 5.0, MIN + 20.0, MIN + 30.0), &RectF32::of(-20.0, -20.0, 0.0, 0.0)), RectF32::of(MIN, MIN, MIN + 20.0, MIN + 30.0));
+    assert_eq!(saturating_add(&RectF32::of(MAX - 20.0, MAX - 30.0, MAX - 5.0, MAX - 10.0), &RectF32::of(0.0, 0.0, 20.0, 20.0)), RectF32::of(MAX - 20.0, MAX - 30.0, MAX, MAX));
 }
 
 #[test]

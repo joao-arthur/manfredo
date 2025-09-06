@@ -111,14 +111,8 @@ mod tests {
 
     #[test]
     fn try_checked_translate_big_rect_to_bounds() {
-        assert_eq!(
-            try_checked_translate(&RectI16::of(i16::MIN + 2, i16::MIN + 5, i16::MAX, i16::MAX), &PointI16::of(-2, -5)),
-            Some(RectI16::of(i16::MIN, i16::MIN, i16::MAX - 2, i16::MAX - 5))
-        );
-        assert_eq!(
-            try_checked_translate(&RectI16::of(i16::MIN, i16::MIN, i16::MAX - 2, i16::MAX - 5), &PointI16::of(2, 5)),
-            Some(RectI16::of(i16::MIN + 2, i16::MIN + 5, i16::MAX, i16::MAX))
-        );
+        assert_eq!(try_checked_translate(&RectI16::of(i16::MIN + 2, i16::MIN + 5, i16::MAX, i16::MAX), &PointI16::of(-2, -5)), Some(RectI16::of(i16::MIN, i16::MIN, i16::MAX - 2, i16::MAX - 5)));
+        assert_eq!(try_checked_translate(&RectI16::of(i16::MIN, i16::MIN, i16::MAX - 2, i16::MAX - 5), &PointI16::of(2, 5)), Some(RectI16::of(i16::MIN + 2, i16::MIN + 5, i16::MAX, i16::MAX)));
     }
 
     #[test]

@@ -98,10 +98,7 @@ mod tests {
 
     #[test]
     fn from() {
-        assert_eq!(
-            RectI16::from(RectI8::largest()),
-            RectI16 { min: PointI16 { x: i8::MIN.into(), y: i8::MIN.into() }, max: PointI16 { x: i8::MAX.into(), y: i8::MAX.into() } }
-        );
+        assert_eq!(RectI16::from(RectI8::largest()), RectI16 { min: PointI16 { x: i8::MIN.into(), y: i8::MIN.into() }, max: PointI16 { x: i8::MAX.into(), y: i8::MAX.into() } });
     }
 
     #[test]

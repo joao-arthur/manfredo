@@ -111,14 +111,8 @@ mod tests {
 
     #[test]
     fn try_checked_translate_big_rect_to_bounds() {
-        assert_eq!(
-            try_checked_translate(&RectI32::of(i32::MIN + 2, i32::MIN + 5, i32::MAX, i32::MAX), &PointI32::of(-2, -5)),
-            Some(RectI32::of(i32::MIN, i32::MIN, i32::MAX - 2, i32::MAX - 5))
-        );
-        assert_eq!(
-            try_checked_translate(&RectI32::of(i32::MIN, i32::MIN, i32::MAX - 2, i32::MAX - 5), &PointI32::of(2, 5)),
-            Some(RectI32::of(i32::MIN + 2, i32::MIN + 5, i32::MAX, i32::MAX))
-        );
+        assert_eq!(try_checked_translate(&RectI32::of(i32::MIN + 2, i32::MIN + 5, i32::MAX, i32::MAX), &PointI32::of(-2, -5)), Some(RectI32::of(i32::MIN, i32::MIN, i32::MAX - 2, i32::MAX - 5)));
+        assert_eq!(try_checked_translate(&RectI32::of(i32::MIN, i32::MIN, i32::MAX - 2, i32::MAX - 5), &PointI32::of(2, 5)), Some(RectI32::of(i32::MIN + 2, i32::MIN + 5, i32::MAX, i32::MAX)));
     }
 
     #[test]

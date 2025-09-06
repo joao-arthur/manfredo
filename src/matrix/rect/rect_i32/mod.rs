@@ -99,10 +99,7 @@ mod tests {
         assert_eq!(RectI32::largest(), RectI32 { min: PointI32 { row: i32::MIN, col: i32::MIN }, max: PointI32 { row: i32::MAX, col: i32::MAX } });
         assert_eq!(RectI32::min(), RectI32 { min: PointI32 { row: i32::MIN, col: i32::MIN }, max: PointI32 { row: i32::MIN, col: i32::MIN } });
         assert_eq!(RectI32::max(), RectI32 { min: PointI32 { row: i32::MAX, col: i32::MAX }, max: PointI32 { row: i32::MAX, col: i32::MAX } });
-        assert_eq!(
-            RectI32::of(i32::MIN, -1, 1, i32::MAX),
-            RectI32 { min: PointI32 { row: i32::MIN, col: -1 }, max: PointI32 { row: 1, col: i32::MAX } }
-        );
+        assert_eq!(RectI32::of(i32::MIN, -1, 1, i32::MAX), RectI32 { min: PointI32 { row: i32::MIN, col: -1 }, max: PointI32 { row: 1, col: i32::MAX } });
     }
 
     #[test]
@@ -113,14 +110,8 @@ mod tests {
 
     #[test]
     fn from() {
-        assert_eq!(
-            RectI32::from(RectI8::largest()),
-            RectI32 { min: PointI32 { row: i8::MIN.into(), col: i8::MIN.into() }, max: PointI32 { row: i8::MAX.into(), col: i8::MAX.into() } }
-        );
-        assert_eq!(
-            RectI32::from(RectI16::largest()),
-            RectI32 { min: PointI32 { row: i16::MIN.into(), col: i16::MIN.into() }, max: PointI32 { row: i16::MAX.into(), col: i16::MAX.into() } }
-        );
+        assert_eq!(RectI32::from(RectI8::largest()), RectI32 { min: PointI32 { row: i8::MIN.into(), col: i8::MIN.into() }, max: PointI32 { row: i8::MAX.into(), col: i8::MAX.into() } });
+        assert_eq!(RectI32::from(RectI16::largest()), RectI32 { min: PointI32 { row: i16::MIN.into(), col: i16::MIN.into() }, max: PointI32 { row: i16::MAX.into(), col: i16::MAX.into() } });
     }
 
     #[test]

@@ -9,14 +9,8 @@ fn test_try_checked_translate() {
 
 #[test]
 fn try_checked_translate_to_bounds() {
-    assert_eq!(
-        try_checked_translate(&RectU64::of(2, 5, u64::MAX, u64::MAX), &PointI64::of(-2, -5)),
-        Some(RectU64::of(0, 0, u64::MAX - 2, u64::MAX - 5))
-    );
-    assert_eq!(
-        try_checked_translate(&RectU64::of(0, 0, u64::MAX - 2, u64::MAX - 5), &PointI64::of(2, 5)),
-        Some(RectU64::of(2, 5, u64::MAX, u64::MAX))
-    );
+    assert_eq!(try_checked_translate(&RectU64::of(2, 5, u64::MAX, u64::MAX), &PointI64::of(-2, -5)), Some(RectU64::of(0, 0, u64::MAX - 2, u64::MAX - 5)));
+    assert_eq!(try_checked_translate(&RectU64::of(0, 0, u64::MAX - 2, u64::MAX - 5), &PointI64::of(2, 5)), Some(RectU64::of(2, 5, u64::MAX, u64::MAX)));
 }
 
 #[test]

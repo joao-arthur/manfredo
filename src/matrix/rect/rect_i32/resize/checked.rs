@@ -262,50 +262,26 @@ mod tests {
 
     #[test]
     fn try_checked_resize_odd_small_rect_same_size() {
-        assert_eq!(
-            try_checked_resize(&RectI32::of(i32::MIN, i32::MIN, i32::MIN + 2, i32::MIN + 2), 3),
-            Some(RectI32::of(i32::MIN, i32::MIN, i32::MIN + 2, i32::MIN + 2))
-        );
-        assert_eq!(
-            try_checked_resize(&RectI32::of(i32::MAX - 2, i32::MAX - 2, i32::MAX, i32::MAX), 3),
-            Some(RectI32::of(i32::MAX - 2, i32::MAX - 2, i32::MAX, i32::MAX))
-        );
+        assert_eq!(try_checked_resize(&RectI32::of(i32::MIN, i32::MIN, i32::MIN + 2, i32::MIN + 2), 3), Some(RectI32::of(i32::MIN, i32::MIN, i32::MIN + 2, i32::MIN + 2)));
+        assert_eq!(try_checked_resize(&RectI32::of(i32::MAX - 2, i32::MAX - 2, i32::MAX, i32::MAX), 3), Some(RectI32::of(i32::MAX - 2, i32::MAX - 2, i32::MAX, i32::MAX)));
     }
 
     #[test]
     fn try_checked_resize_even_small_rect_same_size() {
-        assert_eq!(
-            try_checked_resize(&RectI32::of(i32::MIN, i32::MIN, i32::MIN + 3, i32::MIN + 3), 4),
-            Some(RectI32::of(i32::MIN, i32::MIN, i32::MIN + 3, i32::MIN + 3))
-        );
-        assert_eq!(
-            try_checked_resize(&RectI32::of(i32::MAX - 3, i32::MAX - 3, i32::MAX, i32::MAX), 4),
-            Some(RectI32::of(i32::MAX - 3, i32::MAX - 3, i32::MAX, i32::MAX))
-        );
+        assert_eq!(try_checked_resize(&RectI32::of(i32::MIN, i32::MIN, i32::MIN + 3, i32::MIN + 3), 4), Some(RectI32::of(i32::MIN, i32::MIN, i32::MIN + 3, i32::MIN + 3)));
+        assert_eq!(try_checked_resize(&RectI32::of(i32::MAX - 3, i32::MAX - 3, i32::MAX, i32::MAX), 4), Some(RectI32::of(i32::MAX - 3, i32::MAX - 3, i32::MAX, i32::MAX)));
     }
 
     #[test]
     fn try_checked_resize_odd_small_rect_to_bounds() {
-        assert_eq!(
-            try_checked_resize(&RectI32::of(i32::MIN + 2, i32::MIN + 2, i32::MIN + 4, i32::MIN + 4), 7),
-            Some(RectI32::of(i32::MIN, i32::MIN, i32::MIN + 6, i32::MIN + 6))
-        );
-        assert_eq!(
-            try_checked_resize(&RectI32::of(i32::MAX - 4, i32::MAX - 4, i32::MAX - 2, i32::MAX - 2), 7),
-            Some(RectI32::of(i32::MAX - 6, i32::MAX - 6, i32::MAX, i32::MAX))
-        );
+        assert_eq!(try_checked_resize(&RectI32::of(i32::MIN + 2, i32::MIN + 2, i32::MIN + 4, i32::MIN + 4), 7), Some(RectI32::of(i32::MIN, i32::MIN, i32::MIN + 6, i32::MIN + 6)));
+        assert_eq!(try_checked_resize(&RectI32::of(i32::MAX - 4, i32::MAX - 4, i32::MAX - 2, i32::MAX - 2), 7), Some(RectI32::of(i32::MAX - 6, i32::MAX - 6, i32::MAX, i32::MAX)));
     }
 
     #[test]
     fn try_checked_resize_even_small_rect_to_bounds() {
-        assert_eq!(
-            try_checked_resize(&RectI32::of(i32::MIN + 2, i32::MIN + 2, i32::MIN + 5, i32::MIN + 5), 8),
-            Some(RectI32::of(i32::MIN, i32::MIN, i32::MIN + 7, i32::MIN + 7))
-        );
-        assert_eq!(
-            try_checked_resize(&RectI32::of(i32::MAX - 5, i32::MAX - 5, i32::MAX - 2, i32::MAX - 2), 8),
-            Some(RectI32::of(i32::MAX - 7, i32::MAX - 7, i32::MAX, i32::MAX))
-        );
+        assert_eq!(try_checked_resize(&RectI32::of(i32::MIN + 2, i32::MIN + 2, i32::MIN + 5, i32::MIN + 5), 8), Some(RectI32::of(i32::MIN, i32::MIN, i32::MIN + 7, i32::MIN + 7)));
+        assert_eq!(try_checked_resize(&RectI32::of(i32::MAX - 5, i32::MAX - 5, i32::MAX - 2, i32::MAX - 2), 8), Some(RectI32::of(i32::MAX - 7, i32::MAX - 7, i32::MAX, i32::MAX)));
     }
 
     #[test]
@@ -350,14 +326,8 @@ mod tests {
 
     #[test]
     fn try_checked_resize_big_rect_limits_out_of_bounds() {
-        assert_eq!(
-            try_checked_resize(&RectI32::of(i32::MIN, i32::MIN, i32::MAX - 1, i32::MAX - 1), u32::MAX),
-            Some(RectI32::of(i32::MIN, i32::MIN, i32::MAX - 1, i32::MAX - 1))
-        );
-        assert_eq!(
-            try_checked_resize(&RectI32::of(i32::MIN + 1, i32::MIN + 1, i32::MAX, i32::MAX), u32::MAX),
-            Some(RectI32::of(i32::MIN + 1, i32::MIN + 1, i32::MAX, i32::MAX))
-        );
+        assert_eq!(try_checked_resize(&RectI32::of(i32::MIN, i32::MIN, i32::MAX - 1, i32::MAX - 1), u32::MAX), Some(RectI32::of(i32::MIN, i32::MIN, i32::MAX - 1, i32::MAX - 1)));
+        assert_eq!(try_checked_resize(&RectI32::of(i32::MIN + 1, i32::MIN + 1, i32::MAX, i32::MAX), u32::MAX), Some(RectI32::of(i32::MIN + 1, i32::MIN + 1, i32::MAX, i32::MAX)));
         assert_eq!(try_checked_resize(&RectI32::largest(), u32::MAX), Some(RectI32::of(i32::MIN, i32::MIN, i32::MAX - 1, i32::MAX - 1)));
     }
 

@@ -101,34 +101,16 @@ mod tests {
 
     #[test]
     fn try_checked_inflate_min_bounds() {
-        assert_eq!(
-            try_checked_inflate(&RectF32::of(MIN + 7.0, MIN + 3.0, MIN + 9.0, MIN + 13.0)),
-            Some(RectF32::of(MIN + 6.0, MIN + 2.0, MIN + 10.0, MIN + 14.0))
-        );
-        assert_eq!(
-            try_checked_inflate(&RectF32::of(MIN + 6.0, MIN + 2.0, MIN + 10.0, MIN + 14.0)),
-            Some(RectF32::of(MIN + 5.0, MIN + 1.0, MIN + 11.0, MIN + 15.0))
-        );
-        assert_eq!(
-            try_checked_inflate(&RectF32::of(MIN + 5.0, MIN + 1.0, MIN + 11.0, MIN + 15.0)),
-            Some(RectF32::of(MIN + 4.0, MIN, MIN + 12.0, MIN + 16.0))
-        );
+        assert_eq!(try_checked_inflate(&RectF32::of(MIN + 7.0, MIN + 3.0, MIN + 9.0, MIN + 13.0)), Some(RectF32::of(MIN + 6.0, MIN + 2.0, MIN + 10.0, MIN + 14.0)));
+        assert_eq!(try_checked_inflate(&RectF32::of(MIN + 6.0, MIN + 2.0, MIN + 10.0, MIN + 14.0)), Some(RectF32::of(MIN + 5.0, MIN + 1.0, MIN + 11.0, MIN + 15.0)));
+        assert_eq!(try_checked_inflate(&RectF32::of(MIN + 5.0, MIN + 1.0, MIN + 11.0, MIN + 15.0)), Some(RectF32::of(MIN + 4.0, MIN, MIN + 12.0, MIN + 16.0)));
     }
 
     #[test]
     fn try_checked_inflate_max_bounds() {
-        assert_eq!(
-            try_checked_inflate(&RectF32::of(MAX - 33.0, MAX - 17.0, MAX - 5.0, MAX - 3.0)),
-            Some(RectF32::of(MAX - 34.0, MAX - 18.0, MAX - 4.0, MAX - 2.0))
-        );
-        assert_eq!(
-            try_checked_inflate(&RectF32::of(MAX - 34.0, MAX - 18.0, MAX - 4.0, MAX - 2.0)),
-            Some(RectF32::of(MAX - 35.0, MAX - 19.0, MAX - 3.0, MAX - 1.0))
-        );
-        assert_eq!(
-            try_checked_inflate(&RectF32::of(MAX - 35.0, MAX - 19.0, MAX - 3.0, MAX - 1.0)),
-            Some(RectF32::of(MAX - 36.0, MAX - 20.0, MAX - 2.0, MAX))
-        );
+        assert_eq!(try_checked_inflate(&RectF32::of(MAX - 33.0, MAX - 17.0, MAX - 5.0, MAX - 3.0)), Some(RectF32::of(MAX - 34.0, MAX - 18.0, MAX - 4.0, MAX - 2.0)));
+        assert_eq!(try_checked_inflate(&RectF32::of(MAX - 34.0, MAX - 18.0, MAX - 4.0, MAX - 2.0)), Some(RectF32::of(MAX - 35.0, MAX - 19.0, MAX - 3.0, MAX - 1.0)));
+        assert_eq!(try_checked_inflate(&RectF32::of(MAX - 35.0, MAX - 19.0, MAX - 3.0, MAX - 1.0)), Some(RectF32::of(MAX - 36.0, MAX - 20.0, MAX - 2.0, MAX)));
     }
 
     #[test]
@@ -140,26 +122,14 @@ mod tests {
 
     #[test]
     fn try_checked_inflate_width_to_bounds() {
-        assert_eq!(
-            try_checked_inflate(&RectF32::of(MIN + 1.0, MIN + 10.0, MIN + 20.0, MIN + 20.0)),
-            Some(RectF32::of(MIN, MIN + 9.0, MIN + 21.0, MIN + 21.0))
-        );
-        assert_eq!(
-            try_checked_inflate(&RectF32::of(MIN + 10.0, MIN + 10.0, MAX - 1.0, MIN + 20.0)),
-            Some(RectF32::of(MIN + 9.0, MIN + 9.0, MAX, MIN + 21.0))
-        );
+        assert_eq!(try_checked_inflate(&RectF32::of(MIN + 1.0, MIN + 10.0, MIN + 20.0, MIN + 20.0)), Some(RectF32::of(MIN, MIN + 9.0, MIN + 21.0, MIN + 21.0)));
+        assert_eq!(try_checked_inflate(&RectF32::of(MIN + 10.0, MIN + 10.0, MAX - 1.0, MIN + 20.0)), Some(RectF32::of(MIN + 9.0, MIN + 9.0, MAX, MIN + 21.0)));
     }
 
     #[test]
     fn try_checked_inflate_height_to_bounds() {
-        assert_eq!(
-            try_checked_inflate(&RectF32::of(MIN + 10.0, MIN + 1.0, MIN + 20.0, MIN + 20.0)),
-            Some(RectF32::of(MIN + 9.0, MIN, MIN + 21.0, MIN + 21.0))
-        );
-        assert_eq!(
-            try_checked_inflate(&RectF32::of(MIN + 10.0, MIN + 10.0, MIN + 20.0, MAX - 1.0)),
-            Some(RectF32::of(MIN + 9.0, MIN + 9.0, MIN + 21.0, MAX))
-        );
+        assert_eq!(try_checked_inflate(&RectF32::of(MIN + 10.0, MIN + 1.0, MIN + 20.0, MIN + 20.0)), Some(RectF32::of(MIN + 9.0, MIN, MIN + 21.0, MIN + 21.0)));
+        assert_eq!(try_checked_inflate(&RectF32::of(MIN + 10.0, MIN + 10.0, MIN + 20.0, MAX - 1.0)), Some(RectF32::of(MIN + 9.0, MIN + 9.0, MIN + 21.0, MAX)));
     }
 
     #[test]
@@ -203,27 +173,15 @@ mod tests {
 
     #[test]
     fn checked_inflate_min_bounds() {
-        assert_eq!(
-            checked_inflate(&RectF32::of(MIN + 7.0, MIN + 3.0, MIN + 9.0, MIN + 13.0)),
-            RectF32::of(MIN + 6.0, MIN + 2.0, MIN + 10.0, MIN + 14.0)
-        );
-        assert_eq!(
-            checked_inflate(&RectF32::of(MIN + 6.0, MIN + 2.0, MIN + 10.0, MIN + 14.0)),
-            RectF32::of(MIN + 5.0, MIN + 1.0, MIN + 11.0, MIN + 15.0)
-        );
+        assert_eq!(checked_inflate(&RectF32::of(MIN + 7.0, MIN + 3.0, MIN + 9.0, MIN + 13.0)), RectF32::of(MIN + 6.0, MIN + 2.0, MIN + 10.0, MIN + 14.0));
+        assert_eq!(checked_inflate(&RectF32::of(MIN + 6.0, MIN + 2.0, MIN + 10.0, MIN + 14.0)), RectF32::of(MIN + 5.0, MIN + 1.0, MIN + 11.0, MIN + 15.0));
         assert_eq!(checked_inflate(&RectF32::of(MIN + 5.0, MIN + 1.0, MIN + 11.0, MIN + 15.0)), RectF32::of(MIN + 4.0, MIN, MIN + 12.0, MIN + 16.0));
     }
 
     #[test]
     fn checked_inflate_max_bounds() {
-        assert_eq!(
-            checked_inflate(&RectF32::of(MAX - 33.0, MAX - 17.0, MAX - 5.0, MAX - 3.0)),
-            RectF32::of(MAX - 34.0, MAX - 18.0, MAX - 4.0, MAX - 2.0)
-        );
-        assert_eq!(
-            checked_inflate(&RectF32::of(MAX - 34.0, MAX - 18.0, MAX - 4.0, MAX - 2.0)),
-            RectF32::of(MAX - 35.0, MAX - 19.0, MAX - 3.0, MAX - 1.0)
-        );
+        assert_eq!(checked_inflate(&RectF32::of(MAX - 33.0, MAX - 17.0, MAX - 5.0, MAX - 3.0)), RectF32::of(MAX - 34.0, MAX - 18.0, MAX - 4.0, MAX - 2.0));
+        assert_eq!(checked_inflate(&RectF32::of(MAX - 34.0, MAX - 18.0, MAX - 4.0, MAX - 2.0)), RectF32::of(MAX - 35.0, MAX - 19.0, MAX - 3.0, MAX - 1.0));
         assert_eq!(checked_inflate(&RectF32::of(MAX - 35.0, MAX - 19.0, MAX - 3.0, MAX - 1.0)), RectF32::of(MAX - 36.0, MAX - 20.0, MAX - 2.0, MAX));
     }
 }

@@ -7,30 +7,18 @@ use crate::cartesian::{
 #[test]
 fn test_try_checked_add() {
     assert_eq!(try_checked_add(&RectF32::of(0.0, 0.0, 12.0, 15.0), &RectF32::of(5.0, 4.0, 3.0, 2.0)), Some(RectF32::of(5.0, 4.0, 15.0, 17.0)));
-    assert_eq!(
-        try_checked_add(&RectF32::of(5.0, 4.0, 15.0, 17.0), &RectF32::of(-14.0, -13.0, -12.0, -11.0)),
-        Some(RectF32::of(-9.0, -9.0, 3.0, 6.0))
-    );
+    assert_eq!(try_checked_add(&RectF32::of(5.0, 4.0, 15.0, 17.0), &RectF32::of(-14.0, -13.0, -12.0, -11.0)), Some(RectF32::of(-9.0, -9.0, 3.0, 6.0)));
 }
 
 #[test]
 fn try_checked_add_small_rect_to_bounds() {
-    assert_eq!(
-        try_checked_add(&RectF32::of(MIN + 2.0, MIN + 5.0, MIN + 12.0, MIN + 15.0), &RectF32::of(-2.0, -5.0, 10.0, 20.0)),
-        Some(RectF32::of(MIN, MIN, MIN + 22.0, MIN + 35.0))
-    );
-    assert_eq!(
-        try_checked_add(&RectF32::of(MAX - 12.0, MAX - 15.0, MAX - 2.0, MAX - 5.0), &RectF32::of(-1.0, -4.0, 2.0, 5.0)),
-        Some(RectF32::of(MAX - 13.0, MAX - 19.0, MAX, MAX))
-    );
+    assert_eq!(try_checked_add(&RectF32::of(MIN + 2.0, MIN + 5.0, MIN + 12.0, MIN + 15.0), &RectF32::of(-2.0, -5.0, 10.0, 20.0)), Some(RectF32::of(MIN, MIN, MIN + 22.0, MIN + 35.0)));
+    assert_eq!(try_checked_add(&RectF32::of(MAX - 12.0, MAX - 15.0, MAX - 2.0, MAX - 5.0), &RectF32::of(-1.0, -4.0, 2.0, 5.0)), Some(RectF32::of(MAX - 13.0, MAX - 19.0, MAX, MAX)));
 }
 
 #[test]
 fn try_checked_add_to_bounds() {
-    assert_eq!(
-        try_checked_add(&RectF32::of(MIN + 2.0, MIN + 5.0, MAX - 2.0, MAX - 5.0), &RectF32::of(-2.0, -5.0, 2.0, 5.0)),
-        Some(RectF32::largest())
-    );
+    assert_eq!(try_checked_add(&RectF32::of(MIN + 2.0, MIN + 5.0, MAX - 2.0, MAX - 5.0), &RectF32::of(-2.0, -5.0, 2.0, 5.0)), Some(RectF32::largest()));
     assert_eq!(try_checked_add(&RectF32::of(MIN + 2.0, MIN + 5.0, MAX, MAX), &RectF32::of(-2.0, -5.0, 0.0, 0.0)), Some(RectF32::largest()));
     assert_eq!(try_checked_add(&RectF32::of(MIN, MIN, MAX - 2.0, MAX - 5.0), &RectF32::of(0.0, 0.0, 2.0, 5.0)), Some(RectF32::largest()));
 }

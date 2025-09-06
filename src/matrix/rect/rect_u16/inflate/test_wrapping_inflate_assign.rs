@@ -29,9 +29,9 @@ fn to_bounds() {
     wrapping_inflate_assign(&mut r);
     assert_eq!(r, RectU16::largest());
 
-    let mut r_min_x = RectU16::of(1, 10, u16::MAX - 10, u16::MAX - 10);
-    wrapping_inflate_assign(&mut r_min_x);
-    assert_eq!(r_min_x, RectU16::of(0, 9, u16::MAX - 9, u16::MAX - 9));
+    let mut r_min_row = RectU16::of(1, 10, u16::MAX - 10, u16::MAX - 10);
+    wrapping_inflate_assign(&mut r_min_row);
+    assert_eq!(r_min_row, RectU16::of(0, 9, u16::MAX - 9, u16::MAX - 9));
 
     let mut r_min_y = RectU16::of(10, 1, u16::MAX - 10, u16::MAX - 10);
     wrapping_inflate_assign(&mut r_min_y);
@@ -52,9 +52,9 @@ fn out_of_bounds() {
     wrapping_inflate_assign(&mut r);
     assert_eq!(r, RectU16::of(u16::MAX, u16::MAX, 0, 0));
 
-    let mut r_min_x = RectU16::of(0, 10, u16::MAX - 10, u16::MAX - 10);
-    wrapping_inflate_assign(&mut r_min_x);
-    assert_eq!(r_min_x, RectU16::of(u16::MAX, 9, u16::MAX - 9, u16::MAX - 9));
+    let mut r_min_row = RectU16::of(0, 10, u16::MAX - 10, u16::MAX - 10);
+    wrapping_inflate_assign(&mut r_min_row);
+    assert_eq!(r_min_row, RectU16::of(u16::MAX, 9, u16::MAX - 9, u16::MAX - 9));
 
     let mut r_min_y = RectU16::of(10, 0, u16::MAX - 10, u16::MAX - 10);
     wrapping_inflate_assign(&mut r_min_y);

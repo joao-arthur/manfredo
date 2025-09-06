@@ -61,9 +61,9 @@ fn same_size() {
 
 #[test]
 fn out_of_bounds() {
-    let mut r_min_x = RectU64::of(0, 2, 2, 4);
-    assert_eq!(try_wrapping_resize_assign(&mut r_min_x, 5), Some(()));
-    assert_eq!(r_min_x, RectU64::of(u64::MAX, 1, 3, 5));
+    let mut r_min_row = RectU64::of(0, 2, 2, 4);
+    assert_eq!(try_wrapping_resize_assign(&mut r_min_row, 5), Some(()));
+    assert_eq!(r_min_row, RectU64::of(u64::MAX, 1, 3, 5));
 
     let mut r_min_y = RectU64::of(2, 0, 4, 2);
     assert_eq!(try_wrapping_resize_assign(&mut r_min_y, 5), Some(()));
@@ -80,9 +80,9 @@ fn out_of_bounds() {
 
 #[test]
 fn small_rect_limits_out_of_bounds() {
-    let mut r_min_x = RectU64::of(0, 2, 2, 4);
-    assert_eq!(try_wrapping_resize_assign(&mut r_min_x, u64::MAX), Some(()));
-    assert_eq!(r_min_x, RectU64::of(u64::MAX / 2 + 3, u64::MAX / 2 + 5, u64::MAX / 2 + 1, u64::MAX / 2 + 3));
+    let mut r_min_row = RectU64::of(0, 2, 2, 4);
+    assert_eq!(try_wrapping_resize_assign(&mut r_min_row, u64::MAX), Some(()));
+    assert_eq!(r_min_row, RectU64::of(u64::MAX / 2 + 3, u64::MAX / 2 + 5, u64::MAX / 2 + 1, u64::MAX / 2 + 3));
 
     let mut r_min_y = RectU64::of(2, 0, 4, 2);
     assert_eq!(try_wrapping_resize_assign(&mut r_min_y, u64::MAX), Some(()));

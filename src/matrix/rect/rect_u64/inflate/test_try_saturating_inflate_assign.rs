@@ -57,9 +57,9 @@ fn to_bounds() {
     assert_eq!(try_saturating_inflate_assign(&mut r_max), Some(()));
     assert_eq!(r_max, RectU64::largest());
 
-    let mut r_min_x = RectU64::of(1, 10, 20, 20);
-    assert_eq!(try_saturating_inflate_assign(&mut r_min_x), Some(()));
-    assert_eq!(r_min_x, RectU64::of(0, 9, 21, 21));
+    let mut r_min_row = RectU64::of(1, 10, 20, 20);
+    assert_eq!(try_saturating_inflate_assign(&mut r_min_row), Some(()));
+    assert_eq!(r_min_row, RectU64::of(0, 9, 21, 21));
 
     let mut r_min_y = RectU64::of(10, 1, 20, 20);
     assert_eq!(try_saturating_inflate_assign(&mut r_min_y), Some(()));

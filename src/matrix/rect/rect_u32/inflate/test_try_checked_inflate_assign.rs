@@ -29,9 +29,9 @@ fn to_bounds() {
     assert_eq!(try_checked_inflate_assign(&mut r), Some(()));
     assert_eq!(r, RectU32::largest());
 
-    let mut r_min_x = RectU32::of(1, 10, u32::MAX - 10, u32::MAX - 10);
-    assert_eq!(try_checked_inflate_assign(&mut r_min_x), Some(()));
-    assert_eq!(r_min_x, RectU32::of(0, 9, u32::MAX - 9, u32::MAX - 9));
+    let mut r_min_row = RectU32::of(1, 10, u32::MAX - 10, u32::MAX - 10);
+    assert_eq!(try_checked_inflate_assign(&mut r_min_row), Some(()));
+    assert_eq!(r_min_row, RectU32::of(0, 9, u32::MAX - 9, u32::MAX - 9));
 
     let mut r_min_y = RectU32::of(10, 1, u32::MAX - 10, u32::MAX - 10);
     assert_eq!(try_checked_inflate_assign(&mut r_min_y), Some(()));
@@ -52,9 +52,9 @@ fn out_of_bounds() {
     assert_eq!(try_checked_inflate_assign(&mut r), None);
     assert_eq!(r, RectU32::largest());
 
-    let mut r_min_x = RectU32::of(0, 9, u32::MAX - 9, u32::MAX - 9);
-    assert_eq!(try_checked_inflate_assign(&mut r_min_x), None);
-    assert_eq!(r_min_x, RectU32::of(0, 9, u32::MAX - 9, u32::MAX - 9));
+    let mut r_min_row = RectU32::of(0, 9, u32::MAX - 9, u32::MAX - 9);
+    assert_eq!(try_checked_inflate_assign(&mut r_min_row), None);
+    assert_eq!(r_min_row, RectU32::of(0, 9, u32::MAX - 9, u32::MAX - 9));
 
     let mut r_min_y = RectU32::of(9, 0, u32::MAX - 9, u32::MAX - 9);
     assert_eq!(try_checked_inflate_assign(&mut r_min_y), None);

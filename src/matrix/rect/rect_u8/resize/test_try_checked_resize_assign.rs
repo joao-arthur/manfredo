@@ -61,9 +61,9 @@ fn same_size() {
 
 #[test]
 fn out_of_bounds() {
-    let mut r_min_x = RectU8::of(0, 2, 2, 4);
-    assert_eq!(try_checked_resize_assign(&mut r_min_x, 5), None);
-    assert_eq!(r_min_x, RectU8::of(0, 2, 2, 4));
+    let mut r_min_row = RectU8::of(0, 2, 2, 4);
+    assert_eq!(try_checked_resize_assign(&mut r_min_row, 5), None);
+    assert_eq!(r_min_row, RectU8::of(0, 2, 2, 4));
 
     let mut r_min_y = RectU8::of(2, 0, 4, 2);
     assert_eq!(try_checked_resize_assign(&mut r_min_y, 5), None);
@@ -80,9 +80,9 @@ fn out_of_bounds() {
 
 #[test]
 fn small_rect_limits_out_of_bounds() {
-    let mut r_min_x = RectU8::of(0, 2, 2, 4);
-    assert_eq!(try_checked_resize_assign(&mut r_min_x, u8::MAX), None);
-    assert_eq!(r_min_x, RectU8::of(0, 2, 2, 4));
+    let mut r_min_row = RectU8::of(0, 2, 2, 4);
+    assert_eq!(try_checked_resize_assign(&mut r_min_row, u8::MAX), None);
+    assert_eq!(r_min_row, RectU8::of(0, 2, 2, 4));
 
     let mut r_min_y = RectU8::of(2, 0, 4, 2);
     assert_eq!(try_checked_resize_assign(&mut r_min_y, u8::MAX), None);

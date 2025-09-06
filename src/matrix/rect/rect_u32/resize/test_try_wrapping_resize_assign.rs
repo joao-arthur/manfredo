@@ -61,9 +61,9 @@ fn same_size() {
 
 #[test]
 fn out_of_bounds() {
-    let mut r_min_x = RectU32::of(0, 2, 2, 4);
-    assert_eq!(try_wrapping_resize_assign(&mut r_min_x, 5), Some(()));
-    assert_eq!(r_min_x, RectU32::of(u32::MAX, 1, 3, 5));
+    let mut r_min_row = RectU32::of(0, 2, 2, 4);
+    assert_eq!(try_wrapping_resize_assign(&mut r_min_row, 5), Some(()));
+    assert_eq!(r_min_row, RectU32::of(u32::MAX, 1, 3, 5));
 
     let mut r_min_y = RectU32::of(2, 0, 4, 2);
     assert_eq!(try_wrapping_resize_assign(&mut r_min_y, 5), Some(()));
@@ -80,9 +80,9 @@ fn out_of_bounds() {
 
 #[test]
 fn small_rect_limits_out_of_bounds() {
-    let mut r_min_x = RectU32::of(0, 2, 2, 4);
-    assert_eq!(try_wrapping_resize_assign(&mut r_min_x, u32::MAX), Some(()));
-    assert_eq!(r_min_x, RectU32::of(u32::MAX / 2 + 3, u32::MAX / 2 + 5, u32::MAX / 2 + 1, u32::MAX / 2 + 3));
+    let mut r_min_row = RectU32::of(0, 2, 2, 4);
+    assert_eq!(try_wrapping_resize_assign(&mut r_min_row, u32::MAX), Some(()));
+    assert_eq!(r_min_row, RectU32::of(u32::MAX / 2 + 3, u32::MAX / 2 + 5, u32::MAX / 2 + 1, u32::MAX / 2 + 3));
 
     let mut r_min_y = RectU32::of(2, 0, 4, 2);
     assert_eq!(try_wrapping_resize_assign(&mut r_min_y, u32::MAX), Some(()));

@@ -16,13 +16,13 @@ fn to_bounds() {
     assert_eq!(try_checked_add_assign(&mut r, &RectI64::of(-2, -5, 2, 5)), Some(()));
     assert_eq!(r, RectU64::largest());
 
-    let mut min_r = RectU64::of(2, 5, u64::MAX, u64::MAX);
-    assert_eq!(try_checked_add_assign(&mut min_r, &RectI64::of(-2, -5, 0, 0)), Some(()));
-    assert_eq!(min_r, RectU64::largest());
+    let mut r_min = RectU64::of(2, 5, u64::MAX, u64::MAX);
+    assert_eq!(try_checked_add_assign(&mut r_min, &RectI64::of(-2, -5, 0, 0)), Some(()));
+    assert_eq!(r_min, RectU64::largest());
 
-    let mut max_r = RectU64::of(0, 0, u64::MAX - 2, u64::MAX - 5);
-    assert_eq!(try_checked_add_assign(&mut max_r, &RectI64::of(0, 0, 2, 5)), Some(()));
-    assert_eq!(max_r, RectU64::largest());
+    let mut r_max = RectU64::of(0, 0, u64::MAX - 2, u64::MAX - 5);
+    assert_eq!(try_checked_add_assign(&mut r_max, &RectI64::of(0, 0, 2, 5)), Some(()));
+    assert_eq!(r_max, RectU64::largest());
 }
 
 #[test]

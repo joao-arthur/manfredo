@@ -12,13 +12,13 @@ fn test() {
 
 #[test]
 fn to_bounds() {
-    let mut min_r = RectI16::of(i16::MIN + 2, i16::MIN + 5, i16::MAX, i16::MAX);
-    assert_eq!(try_checked_translate_assign(&mut min_r, &PointI16::of(-2, -5)), Some(()));
-    assert_eq!(min_r, RectI16::of(i16::MIN, i16::MIN, i16::MAX - 2, i16::MAX - 5));
+    let mut r_min = RectI16::of(i16::MIN + 2, i16::MIN + 5, i16::MAX, i16::MAX);
+    assert_eq!(try_checked_translate_assign(&mut r_min, &PointI16::of(-2, -5)), Some(()));
+    assert_eq!(r_min, RectI16::of(i16::MIN, i16::MIN, i16::MAX - 2, i16::MAX - 5));
 
-    let mut max_r = RectI16::of(i16::MIN, i16::MIN, i16::MAX - 2, i16::MAX - 5);
-    assert_eq!(try_checked_translate_assign(&mut max_r, &PointI16::of(2, 5)), Some(()));
-    assert_eq!(max_r, RectI16::of(i16::MIN + 2, i16::MIN + 5, i16::MAX, i16::MAX));
+    let mut r_max = RectI16::of(i16::MIN, i16::MIN, i16::MAX - 2, i16::MAX - 5);
+    assert_eq!(try_checked_translate_assign(&mut r_max, &PointI16::of(2, 5)), Some(()));
+    assert_eq!(r_max, RectI16::of(i16::MIN + 2, i16::MIN + 5, i16::MAX, i16::MAX));
 }
 
 #[test]

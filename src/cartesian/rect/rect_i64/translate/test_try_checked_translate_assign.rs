@@ -12,13 +12,13 @@ fn test() {
 
 #[test]
 fn to_bounds() {
-    let mut min_r = RectI64::of(i64::MIN + 2, i64::MIN + 5, i64::MAX, i64::MAX);
-    assert_eq!(try_checked_translate_assign(&mut min_r, &PointI64::of(-2, -5)), Some(()));
-    assert_eq!(min_r, RectI64::of(i64::MIN, i64::MIN, i64::MAX - 2, i64::MAX - 5));
+    let mut r_min = RectI64::of(i64::MIN + 2, i64::MIN + 5, i64::MAX, i64::MAX);
+    assert_eq!(try_checked_translate_assign(&mut r_min, &PointI64::of(-2, -5)), Some(()));
+    assert_eq!(r_min, RectI64::of(i64::MIN, i64::MIN, i64::MAX - 2, i64::MAX - 5));
 
-    let mut max_r = RectI64::of(i64::MIN, i64::MIN, i64::MAX - 2, i64::MAX - 5);
-    assert_eq!(try_checked_translate_assign(&mut max_r, &PointI64::of(2, 5)), Some(()));
-    assert_eq!(max_r, RectI64::of(i64::MIN + 2, i64::MIN + 5, i64::MAX, i64::MAX));
+    let mut r_max = RectI64::of(i64::MIN, i64::MIN, i64::MAX - 2, i64::MAX - 5);
+    assert_eq!(try_checked_translate_assign(&mut r_max, &PointI64::of(2, 5)), Some(()));
+    assert_eq!(r_max, RectI64::of(i64::MIN + 2, i64::MIN + 5, i64::MAX, i64::MAX));
 }
 
 #[test]

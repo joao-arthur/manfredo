@@ -12,13 +12,13 @@ fn test() {
 
 #[test]
 fn to_bounds() {
-    let mut min_r = RectI8::of(i8::MIN + 2, i8::MIN + 5, i8::MAX, i8::MAX);
-    assert_eq!(try_checked_translate_assign(&mut min_r, &PointI8::of(-2, -5)), Some(()));
-    assert_eq!(min_r, RectI8::of(i8::MIN, i8::MIN, i8::MAX - 2, i8::MAX - 5));
+    let mut r_min = RectI8::of(i8::MIN + 2, i8::MIN + 5, i8::MAX, i8::MAX);
+    assert_eq!(try_checked_translate_assign(&mut r_min, &PointI8::of(-2, -5)), Some(()));
+    assert_eq!(r_min, RectI8::of(i8::MIN, i8::MIN, i8::MAX - 2, i8::MAX - 5));
 
-    let mut max_r = RectI8::of(i8::MIN, i8::MIN, i8::MAX - 2, i8::MAX - 5);
-    assert_eq!(try_checked_translate_assign(&mut max_r, &PointI8::of(2, 5)), Some(()));
-    assert_eq!(max_r, RectI8::of(i8::MIN + 2, i8::MIN + 5, i8::MAX, i8::MAX));
+    let mut r_max = RectI8::of(i8::MIN, i8::MIN, i8::MAX - 2, i8::MAX - 5);
+    assert_eq!(try_checked_translate_assign(&mut r_max, &PointI8::of(2, 5)), Some(()));
+    assert_eq!(r_max, RectI8::of(i8::MIN + 2, i8::MIN + 5, i8::MAX, i8::MAX));
 }
 
 #[test]

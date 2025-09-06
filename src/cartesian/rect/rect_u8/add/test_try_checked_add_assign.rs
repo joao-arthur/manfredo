@@ -16,13 +16,13 @@ fn to_bounds() {
     assert_eq!(try_checked_add_assign(&mut r, &RectI8::of(-2, -5, 2, 5)), Some(()));
     assert_eq!(r, RectU8::largest());
 
-    let mut min_r = RectU8::of(2, 5, u8::MAX, u8::MAX);
-    assert_eq!(try_checked_add_assign(&mut min_r, &RectI8::of(-2, -5, 0, 0)), Some(()));
-    assert_eq!(min_r, RectU8::largest());
+    let mut r_min = RectU8::of(2, 5, u8::MAX, u8::MAX);
+    assert_eq!(try_checked_add_assign(&mut r_min, &RectI8::of(-2, -5, 0, 0)), Some(()));
+    assert_eq!(r_min, RectU8::largest());
 
-    let mut max_r = RectU8::of(0, 0, u8::MAX - 2, u8::MAX - 5);
-    assert_eq!(try_checked_add_assign(&mut max_r, &RectI8::of(0, 0, 2, 5)), Some(()));
-    assert_eq!(max_r, RectU8::largest());
+    let mut r_max = RectU8::of(0, 0, u8::MAX - 2, u8::MAX - 5);
+    assert_eq!(try_checked_add_assign(&mut r_max, &RectI8::of(0, 0, 2, 5)), Some(()));
+    assert_eq!(r_max, RectU8::largest());
 }
 
 #[test]

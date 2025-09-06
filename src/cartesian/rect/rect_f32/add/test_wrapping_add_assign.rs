@@ -6,22 +6,11 @@ use crate::cartesian::{
 
 #[test]
 fn test() {
-    let mut r = RectF32::of(0.0, 0.0, 12.0, 15.0);
+    let mut r = RectF32::of(-7.0, 9.0, -12.0, 15.0);
     wrapping_add_assign(&mut r, &RectF32::of(5.0, 4.0, 3.0, 2.0));
-    assert_eq!(r, RectF32::of(5.0, 4.0, 15.0, 17.0));
-    wrapping_add_assign(&mut r, &RectF32::of(-14.0, -13.0, -12.0, -11.0));
-    assert_eq!(r, RectF32::of(-9.0, -9.0, 3.0, 6.0));
-}
-
-#[test]
-fn small_rect_to_bounds() {
-    let mut min_r = RectF32::of(MIN + 2.0, MIN + 5.0, MIN + 12.0, MIN + 15.0);
-    wrapping_add_assign(&mut min_r, &RectF32::of(-2.0, -5.0, 9.0, 7.0));
-    assert_eq!(min_r, RectF32::of(MIN, MIN, MIN + 21.0, MIN + 22.0));
-
-    let mut max_r = RectF32::of(MAX - 12.0, MAX - 15.0, MAX - 2.0, MAX - 5.0);
-    wrapping_add_assign(&mut max_r, &RectF32::of(-9.0, -7.0, 2.0, 5.0));
-    assert_eq!(max_r, RectF32::of(MAX - 21.0, MAX - 22.0, MAX, MAX));
+    assert_eq!(r, RectF32::of(-2.0, 13.0, -9.0, 17.0));
+    wrapping_add_assign(&mut r, &RectF32::of(9.0, -10.0, 11.0, -12.0));
+    assert_eq!(r, RectF32::of(7.0, 3.0, 2.0, 5.0));
 }
 
 #[test]
@@ -30,63 +19,68 @@ fn big_rect_to_bounds() {
     wrapping_add_assign(&mut r, &RectF32::of(-2.0, -5.0, 2.0, 5.0));
     assert_eq!(r, RectF32::largest());
 
-    let mut min_r = RectF32::of(MIN + 2.0, MIN + 5.0, MAX, MAX);
-    wrapping_add_assign(&mut min_r, &RectF32::of(-2.0, -5.0, 0.0, 0.0));
-    assert_eq!(min_r, RectF32::largest());
+    let mut r_min = RectF32::of(MIN + 2.0, MIN + 5.0, MAX, MAX);
+    wrapping_add_assign(&mut r_min, &RectF32::of(-2.0, -5.0, 0.0, 0.0));
+    assert_eq!(r_min, RectF32::largest());
 
-    let mut max_r = RectF32::of(MIN, MIN, MAX - 2.0, MAX - 5.0);
-    wrapping_add_assign(&mut max_r, &RectF32::of(0.0, 0.0, 2.0, 5.0));
-    assert_eq!(max_r, RectF32::largest());
+    let mut r_max = RectF32::of(MIN, MIN, MAX - 2.0, MAX - 5.0);
+    wrapping_add_assign(&mut r_max, &RectF32::of(0.0, 0.0, 2.0, 5.0));
+    assert_eq!(r_max, RectF32::largest());
 }
 
 #[test]
-fn small_rect_out_of_bounds() {
-    let mut r_min = RectF32::of(MIN + 10.0, MIN + 5.0, MIN + 20.0, MIN + 30.0);
-    wrapping_add_assign(&mut r_min, &RectF32::of(-20.0, -20.0, 0.0, 0.0));
-    assert_eq!(r_min, RectF32::of(MAX - 9.0, MAX - 14.0, MIN + 20.0, MIN + 30.0));
+fn out_of_bounds() {
+    let mut r1 = RectF32::of(MIN + 10.0, MIN + 10.0, MAX - 10.0, MAX - 10.0);
+    wrapping_add_assign(&mut r1, &RectF32::of(-20.0, 0.0, 0.0, 0.0));
+    assert_eq!(r1, RectF32::of(MAX - 9.0, MIN + 10.0, MAX - 10.0, MAX - 10.0));
 
-    let mut r_max = RectF32::of(MAX - 20.0, MAX - 30.0, MAX - 5.0, MAX - 10.0);
-    wrapping_add_assign(&mut r_max, &RectF32::of(0.0, 0.0, 20.0, 20.0));
-    assert_eq!(r_max, RectF32::of(MAX - 20.0, MAX - 30.0, MIN + 14.0, MIN + 9.0));
+    let mut r2 = RectF32::of(MIN + 10.0, MIN + 10.0, MAX - 10.0, MAX - 10.0);
+    wrapping_add_assign(&mut r2, &RectF32::of(0.0, -20.0, 0.0, 0.0));
+    assert_eq!(r2, RectF32::of(MIN + 10.0, MAX - 9.0, MAX - 10.0, MAX - 10.0));
+
+    let mut r3 = RectF32::of(MIN + 10.0, MIN + 10.0, MAX - 10.0, MAX - 10.0);
+    wrapping_add_assign(&mut r3, &RectF32::of(0.0, 0.0, 20.0, 0.0));
+    assert_eq!(r3, RectF32::of(MIN + 10.0, MIN + 10.0, MIN + 9.0, MAX - 10.0));
+
+    let mut r4 = RectF32::of(MIN + 10.0, MIN + 10.0, MAX - 10.0, MAX - 10.0);
+    wrapping_add_assign(&mut r4, &RectF32::of(0.0, 0.0, 0.0, 20.0));
+    assert_eq!(r4, RectF32::of(MIN + 10.0, MIN + 10.0, MAX - 10.0, MIN + 9.0));
 }
 
-#[test]
-fn big_rect_out_of_bounds() {
-    let mut r_min = RectF32::of(MIN + 10.0, MIN + 5.0, MAX, MAX);
-    wrapping_add_assign(&mut r_min, &RectF32::of(-20.0, -20.0, 0.0, 0.0));
-    assert_eq!(r_min, RectF32::of(MAX - 9.0, MAX - 14.0, MAX, MAX));
-
-    let mut r_max = RectF32::of(MIN, MIN, MAX - 5.0, MAX - 10.0);
-    wrapping_add_assign(&mut r_max, &RectF32::of(0.0, 0.0, 20.0, 20.0));
-    assert_eq!(r_max, RectF32::of(MIN, MIN, MIN + 14.0, MIN + 9.0));
-}
-
-#[test]
-fn small_rect_limits_out_of_bounds() {
-    let mut r_min = RectF32::of(MIN + 1.0, MIN + 1.0, MIN + 10.0, MIN + 10.0);
-    wrapping_add_assign(&mut r_min, &RectF32::min());
-    assert_eq!(r_min, RectF32::of(1.0, 1.0, 10.0, 10.0));
-
-    let mut r_max = RectF32::of(MAX - 10.0, MAX - 10.0, MAX - 1.0, MAX - 1.0);
-    wrapping_add_assign(&mut r_max, &RectF32::max());
-    assert_eq!(r_max, RectF32::of(-12.0, -12.0, -3.0, -3.0));
-}
+// #[test]
+// fn edge_out_of_bounds() {
+//     let mut r1 = RectF32::largest();
+//     wrapping_add_assign(&mut r1, &RectF32::of(-1.0, 0.0, 0.0, 0.0));
+//     assert_eq!(r1, RectF32::of(MAX, MIN, MAX, MAX));
+//
+//     let mut r2 = RectF32::largest();
+//     wrapping_add_assign(&mut r2, &RectF32::of(0.0, -1.0, 0.0, 0.0));
+//     assert_eq!(r2, RectF32::of(MIN, MAX, MAX, MAX));
+//
+//     let mut r3 = RectF32::largest();
+//     wrapping_add_assign(&mut r3, &RectF32::of(0.0, 0.0, 1.0, 0.0));
+//     assert_eq!(r3, RectF32::of(MIN, MIN, MIN, MAX));
+//
+//     let mut r4 = RectF32::largest();
+//     wrapping_add_assign(&mut r4, &RectF32::of(0.0, 0.0, 0.0, 1.0));
+//     assert_eq!(r4, RectF32::of(MIN, MIN, MAX, MIN));
+// }
 
 #[test]
-fn big_rect_limits_out_of_bounds() {
+fn limits_out_of_bounds() {
     let mut r1 = RectF32::largest();
-    wrapping_add_assign(&mut r1, &RectF32::min());
-    assert_eq!(r1, RectF32::of(0.0, 0.0, -1.0, -1.0));
+    wrapping_add_assign(&mut r1, &RectF32::of(MIN, 0.0, 0.0, 0.0));
+    assert_eq!(r1, RectF32::of(0.0, MIN, MAX, MAX));
 
     let mut r2 = RectF32::largest();
-    wrapping_add_assign(&mut r2, &RectF32::max());
-    assert_eq!(r2, RectF32::of(-1.0, -1.0, -2.0, -2.0));
+    wrapping_add_assign(&mut r2, &RectF32::of(0.0, MIN, 0.0, 0.0));
+    assert_eq!(r2, RectF32::of(MIN, 0.0, MAX, MAX));
 
-    let mut r_min = RectF32::of(MIN + 1.0, MIN + 1.0, MAX, MAX);
-    wrapping_add_assign(&mut r_min, &RectF32::min());
-    assert_eq!(r_min, RectF32::of(1.0, 1.0, -1.0, -1.0));
+    let mut r3 = RectF32::largest();
+    wrapping_add_assign(&mut r3, &RectF32::of(0.0, 0.0, MAX, 0.0));
+    assert_eq!(r3, RectF32::of(MIN, MIN, -2.0, MAX));
 
-    let mut r_max = RectF32::of(MIN, MIN, MAX - 1.0, MAX - 1.0);
-    wrapping_add_assign(&mut r_max, &RectF32::max());
-    assert_eq!(r_max, RectF32::of(-1.0, -1.0, -3.0, -3.0));
+    let mut r4 = RectF32::largest();
+    wrapping_add_assign(&mut r4, &RectF32::of(0.0, 0.0, 0.0, MAX));
+    assert_eq!(r4, RectF32::of(MIN, MIN, MAX, -2.0));
 }

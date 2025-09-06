@@ -12,13 +12,13 @@ fn test() {
 
 #[test]
 fn to_bounds() {
-    let mut min_r = RectU32::of(2, 5, u32::MAX, u32::MAX);
-    assert_eq!(try_checked_translate_assign(&mut min_r, &PointI32::of(-2, -5)), Some(()));
-    assert_eq!(min_r, RectU32::of(0, 0, u32::MAX - 2, u32::MAX - 5));
+    let mut r_min = RectU32::of(2, 5, u32::MAX, u32::MAX);
+    assert_eq!(try_checked_translate_assign(&mut r_min, &PointI32::of(-2, -5)), Some(()));
+    assert_eq!(r_min, RectU32::of(0, 0, u32::MAX - 2, u32::MAX - 5));
 
-    let mut max_r = RectU32::of(0, 0, u32::MAX - 2, u32::MAX - 5);
-    assert_eq!(try_checked_translate_assign(&mut max_r, &PointI32::of(2, 5)), Some(()));
-    assert_eq!(max_r, RectU32::of(2, 5, u32::MAX, u32::MAX));
+    let mut r_max = RectU32::of(0, 0, u32::MAX - 2, u32::MAX - 5);
+    assert_eq!(try_checked_translate_assign(&mut r_max, &PointI32::of(2, 5)), Some(()));
+    assert_eq!(r_max, RectU32::of(2, 5, u32::MAX, u32::MAX));
 }
 
 #[test]

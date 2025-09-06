@@ -12,13 +12,13 @@ fn test() {
 
 #[test]
 fn to_bounds() {
-    let mut min_r = RectU64::of(2, 5, u64::MAX, u64::MAX);
-    saturating_translate_assign(&mut min_r, &PointI64::of(-2, -5));
-    assert_eq!(min_r, RectU64::of(0, 0, u64::MAX - 2, u64::MAX - 5));
+    let mut r_min = RectU64::of(2, 5, u64::MAX, u64::MAX);
+    saturating_translate_assign(&mut r_min, &PointI64::of(-2, -5));
+    assert_eq!(r_min, RectU64::of(0, 0, u64::MAX - 2, u64::MAX - 5));
 
-    let mut max_r = RectU64::of(0, 0, u64::MAX - 2, u64::MAX - 5);
-    saturating_translate_assign(&mut max_r, &PointI64::of(2, 5));
-    assert_eq!(max_r, RectU64::of(2, 5, u64::MAX, u64::MAX));
+    let mut r_max = RectU64::of(0, 0, u64::MAX - 2, u64::MAX - 5);
+    saturating_translate_assign(&mut r_max, &PointI64::of(2, 5));
+    assert_eq!(r_max, RectU64::of(2, 5, u64::MAX, u64::MAX));
 }
 
 #[test]

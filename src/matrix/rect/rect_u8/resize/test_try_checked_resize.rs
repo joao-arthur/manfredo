@@ -36,7 +36,7 @@ fn same_size() {
 }
 
 #[test]
-fn small_rect_out_of_bounds() {
+fn out_of_bounds() {
     assert_eq!(try_checked_resize(&RectU8::of(0, 2, 2, 4), 5), None);
     assert_eq!(try_checked_resize(&RectU8::of(2, 0, 4, 2), 5), None);
     assert_eq!(try_checked_resize(&RectU8::of(u8::MAX - 2, u8::MAX - 4, u8::MAX, u8::MAX - 2), 5), None);

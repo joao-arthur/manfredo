@@ -36,7 +36,7 @@ fn same_size() {
 }
 
 #[test]
-fn small_rect_out_of_bounds() {
+fn out_of_bounds() {
     assert_eq!(try_wrapping_resize(&RectU64::of(0, 2, 2, 4), 5), Some(RectU64::of(u64::MAX, 1, 3, 5)));
     assert_eq!(try_wrapping_resize(&RectU64::of(2, 0, 4, 2), 5), Some(RectU64::of(1, u64::MAX, 5, 3)));
     assert_eq!(try_wrapping_resize(&RectU64::of(u64::MAX - 2, u64::MAX - 4, u64::MAX, u64::MAX - 2), 5), Some(RectU64::of(u64::MAX - 3, u64::MAX - 5, 0, u64::MAX - 1)));

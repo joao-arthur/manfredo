@@ -37,7 +37,7 @@ fn big_rect_to_bounds() {
 }
 
 #[test]
-fn small_rect_out_of_bounds() {
+fn out_of_bounds() {
     let mut r_min = RectI64::of(i64::MIN + 10, i64::MIN + 5, i64::MIN + 20, i64::MIN + 30);
     wrapping_add_assign(&mut r_min, &RectI64::of(-20, -20, 0, 0));
     assert_eq!(r_min, RectI64::of(i64::MAX - 9, i64::MAX - 14, i64::MIN + 20, i64::MIN + 30));

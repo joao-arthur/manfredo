@@ -60,7 +60,7 @@ fn same_size() {
 }
 
 #[test]
-fn small_rect_out_of_bounds() {
+fn out_of_bounds() {
     let mut r_min_x = RectU64::of(0, 2, 2, 4);
     assert_eq!(try_wrapping_resize_assign(&mut r_min_x, 5), Some(()));
     assert_eq!(r_min_x, RectU64::of(u64::MAX, 1, 3, 5));

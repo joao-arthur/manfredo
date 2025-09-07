@@ -12,7 +12,7 @@ mod tests {
     use super::{CartesianPoint, MatrixPoint, matrix_to_cartesian};
 
     #[test]
-    fn matrix_to_cartesian_edges() {
+    fn edges() {
         assert_eq!(matrix_to_cartesian(&MatrixPoint::of(0, 0)), CartesianPoint::of(i8::MIN, i8::MAX));
         assert_eq!(matrix_to_cartesian(&MatrixPoint::of(u8::MAX, 0)), CartesianPoint::min());
         assert_eq!(matrix_to_cartesian(&MatrixPoint::of(0, u8::MAX)), CartesianPoint::max());
@@ -20,14 +20,14 @@ mod tests {
     }
 
     #[test]
-    fn matrix_to_cartesian_sequence_min() {
+    fn sequence_min() {
         assert_eq!(matrix_to_cartesian(&MatrixPoint::of(1, 1)), CartesianPoint::of(i8::MIN + 1, i8::MAX - 1));
         assert_eq!(matrix_to_cartesian(&MatrixPoint::of(2, 2)), CartesianPoint::of(i8::MIN + 2, i8::MAX - 2));
         assert_eq!(matrix_to_cartesian(&MatrixPoint::of(3, 3)), CartesianPoint::of(i8::MIN + 3, i8::MAX - 3));
     }
 
     #[test]
-    fn matrix_to_cartesian_sequence_max() {
+    fn sequence_max() {
         assert_eq!(matrix_to_cartesian(&MatrixPoint::of(u8::MAX - 1, u8::MAX - 1)), CartesianPoint::of(i8::MAX - 1, i8::MIN + 1));
         assert_eq!(matrix_to_cartesian(&MatrixPoint::of(u8::MAX - 2, u8::MAX - 2)), CartesianPoint::of(i8::MAX - 2, i8::MIN + 2));
         assert_eq!(matrix_to_cartesian(&MatrixPoint::of(u8::MAX - 3, u8::MAX - 3)), CartesianPoint::of(i8::MAX - 3, i8::MIN + 3));

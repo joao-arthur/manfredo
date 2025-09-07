@@ -13,7 +13,7 @@ mod tests {
     use super::{Cam, CartesianPoint, MatrixPoint, cartesian_in_cam_to_matrix};
 
     #[test]
-    fn cartesian_in_cam_to_matrix_3x3() {
+    fn test_3x3() {
         let cam = Cam::of(-1, -1, 1, 1);
         assert_eq!(cartesian_in_cam_to_matrix(&CartesianPoint::of(-1, -1), &cam), MatrixPoint::of(2, 0));
         assert_eq!(cartesian_in_cam_to_matrix(&CartesianPoint::of(-1, 0), &cam), MatrixPoint::of(1, 0));
@@ -29,7 +29,7 @@ mod tests {
     }
 
     #[test]
-    fn cartesian_in_cam_to_matrix_4x4() {
+    fn test_4x4() {
         let cam = Cam::of(-2, -2, 1, 1);
         assert_eq!(cartesian_in_cam_to_matrix(&CartesianPoint::of(-2, -2), &cam), MatrixPoint::of(3, 0));
         assert_eq!(cartesian_in_cam_to_matrix(&CartesianPoint::of(-2, -1), &cam), MatrixPoint::of(2, 0));
@@ -53,7 +53,7 @@ mod tests {
     }
 
     #[test]
-    fn cartesian_in_cam_to_matrix_bounds() {
+    fn bounds() {
         let cam = Cam::largest();
         assert_eq!(cartesian_in_cam_to_matrix(&CartesianPoint::min(), &cam), MatrixPoint::of(u16::MAX, 0));
         assert_eq!(cartesian_in_cam_to_matrix(&CartesianPoint::of(i16::MAX, i16::MIN), &cam), MatrixPoint::max());
@@ -62,7 +62,7 @@ mod tests {
     }
 
     #[test]
-    fn cartesian_in_cam_to_matrix_sequence_min() {
+    fn sequence_min() {
         let cam = Cam::largest();
         assert_eq!(cartesian_in_cam_to_matrix(&CartesianPoint::of(i16::MIN + 1, i16::MIN + 1), &cam), MatrixPoint::of(u16::MAX - 1, 1));
         assert_eq!(cartesian_in_cam_to_matrix(&CartesianPoint::of(i16::MIN + 2, i16::MIN + 2), &cam), MatrixPoint::of(u16::MAX - 2, 2));
@@ -70,7 +70,7 @@ mod tests {
     }
 
     #[test]
-    fn cartesian_in_cam_to_matrix_sequence_max() {
+    fn sequence_max() {
         let cam = Cam::largest();
         assert_eq!(cartesian_in_cam_to_matrix(&CartesianPoint::of(i16::MAX - 1, i16::MAX - 1), &cam), MatrixPoint::of(1, u16::MAX - 1));
         assert_eq!(cartesian_in_cam_to_matrix(&CartesianPoint::of(i16::MAX - 2, i16::MAX - 2), &cam), MatrixPoint::of(2, u16::MAX - 2));

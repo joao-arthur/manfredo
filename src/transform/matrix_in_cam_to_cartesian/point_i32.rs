@@ -13,7 +13,7 @@ mod tests {
     use super::{Cam, CartesianPoint, MatrixPoint, matrix_in_cam_to_cartesian};
 
     #[test]
-    fn matrix_in_cam_to_cartesian_3x3() {
+    fn test_3x3() {
         let cam = Cam::of(0, 0, 2, 2);
         assert_eq!(matrix_in_cam_to_cartesian(&MatrixPoint::of(0, 0), &cam), CartesianPoint::of(i32::MIN, i32::MIN + 2));
         assert_eq!(matrix_in_cam_to_cartesian(&MatrixPoint::of(0, 1), &cam), CartesianPoint::of(i32::MIN + 1, i32::MIN + 2));
@@ -29,7 +29,7 @@ mod tests {
     }
 
     #[test]
-    fn matrix_in_cam_to_cartesian_4x4() {
+    fn test_4x4() {
         let cam = Cam::of(10, 10, 13, 13);
         assert_eq!(matrix_in_cam_to_cartesian(&MatrixPoint::of(10, 10), &cam), CartesianPoint::of(i32::MIN, i32::MIN + 3));
         assert_eq!(matrix_in_cam_to_cartesian(&MatrixPoint::of(10, 11), &cam), CartesianPoint::of(i32::MIN + 1, i32::MIN + 3));
@@ -53,7 +53,7 @@ mod tests {
     }
 
     #[test]
-    fn matrix_in_cam_to_cartesian_edges() {
+    fn edges() {
         let cam = Cam::largest();
         assert_eq!(matrix_in_cam_to_cartesian(&MatrixPoint::of(0, 0), &cam), CartesianPoint::of(i32::MIN, i32::MAX));
         assert_eq!(matrix_in_cam_to_cartesian(&MatrixPoint::of(u32::MAX, 0), &cam), CartesianPoint::min());
@@ -62,7 +62,7 @@ mod tests {
     }
 
     #[test]
-    fn matrix_in_cam_to_cartesian_sequence_min() {
+    fn sequence_min() {
         let cam = Cam::largest();
         assert_eq!(matrix_in_cam_to_cartesian(&MatrixPoint::of(1, 1), &cam), CartesianPoint::of(i32::MIN + 1, i32::MAX - 1));
         assert_eq!(matrix_in_cam_to_cartesian(&MatrixPoint::of(2, 2), &cam), CartesianPoint::of(i32::MIN + 2, i32::MAX - 2));
@@ -70,7 +70,7 @@ mod tests {
     }
 
     #[test]
-    fn matrix_in_cam_to_cartesian_sequence_max() {
+    fn sequence_max() {
         let cam = Cam::largest();
         assert_eq!(matrix_in_cam_to_cartesian(&MatrixPoint::of(u32::MAX - 1, u32::MAX - 1), &cam), CartesianPoint::of(i32::MAX - 1, i32::MIN + 1));
         assert_eq!(matrix_in_cam_to_cartesian(&MatrixPoint::of(u32::MAX - 2, u32::MAX - 2), &cam), CartesianPoint::of(i32::MAX - 2, i32::MIN + 2));

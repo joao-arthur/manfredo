@@ -36,7 +36,7 @@ fn edge_out_of_bounds() {
 }
 
 #[test]
-fn big_rect_limits_out_of_bounds() {
+fn limits_out_of_bounds() {
     let r = RectF32::largest();
     assert_eq!(try_checked_add(&r, &RectF32::of(MIN, 0.0, 0.0, 0.0)), None);
     assert_eq!(try_checked_add(&r, &RectF32::of(0.0, MIN, 0.0, 0.0)), None);

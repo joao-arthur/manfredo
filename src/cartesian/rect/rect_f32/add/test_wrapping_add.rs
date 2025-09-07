@@ -26,14 +26,14 @@ fn out_of_bounds() {
     assert_eq!(wrapping_add(&r, &RectF32::of(0.0, 0.0, 0.0, 20.0)), RectF32::of(MIN + 10.0, MIN + 10.0, MAX - 10.0, MIN + 9.0));
 }
 
-// #[test]
-// fn edge_out_of_bounds() {
-//     let r = RectF32::largest();
-//     assert_eq!(wrapping_add(&r, &RectF32::of(-1.0, 0.0, 0.0, 0.0)), RectF32::of(MAX, MIN, MAX, MAX));
-//     assert_eq!(wrapping_add(&r, &RectF32::of(0.0, -1.0, 0.0, 0.0)), RectF32::of(MIN, MAX, MAX, MAX));
-//     assert_eq!(wrapping_add(&r, &RectF32::of(0.0, 0.0, 1.0, 0.0)), RectF32::of(MIN, MIN, MIN, MAX));
-//     assert_eq!(wrapping_add(&r, &RectF32::of(0.0, 0.0, 0.0, 1.0)), RectF32::of(MIN, MIN, MAX, MIN));
-// }
+#[test]
+fn edge_out_of_bounds() {
+    let r = RectF32::largest();
+    assert_eq!(wrapping_add(&r, &RectF32::of(-1.0, 0.0, 0.0, 0.0)), RectF32::of(MAX, MIN, MAX, MAX));
+    assert_eq!(wrapping_add(&r, &RectF32::of(0.0, -1.0, 0.0, 0.0)), RectF32::of(MIN, MAX, MAX, MAX));
+    assert_eq!(wrapping_add(&r, &RectF32::of(0.0, 0.0, 1.0, 0.0)), RectF32::of(MIN, MIN, MIN, MAX));
+    assert_eq!(wrapping_add(&r, &RectF32::of(0.0, 0.0, 0.0, 1.0)), RectF32::of(MIN, MIN, MAX, MIN));
+}
 
 #[test]
 fn limits_out_of_bounds() {

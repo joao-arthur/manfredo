@@ -49,47 +49,47 @@ pub fn saturating_add(r: &RectF32, delta: &RectF32) -> RectF32 {
 }
 
 pub fn wrapping_add_assign(r: &mut RectF32, delta: &RectF32) {
-    if r.min.x + delta.min.x > MAX {
-        let diff_min_x = MAX - r.min.x;
-        let delta_x_adjusted = delta.min.x - diff_min_x - 1.0;
-        r.min.x = MIN + delta_x_adjusted;
-    } else if r.min.x + delta.min.x < MIN {
-        let diff_min_x = MIN - r.min.x;
-        let delta_x_adjusted = delta.min.x - diff_min_x + 1.0;
-        r.min.x = MAX + delta_x_adjusted;
+    if delta.min.x > 0.0 && MAX - r.min.x < delta.min.x {
+        let diff = MAX - r.min.x;
+        let delta_adjusted = delta.min.x - diff - 1.0;
+        r.min.x = MIN + delta_adjusted;
+    } else if delta.min.x < 0.0 && -(r.min.x - MIN) > delta.min.x {
+        let diff = MIN - r.min.x;
+        let delta_adjusted = delta.min.x - diff + 1.0;
+        r.min.x = MAX + delta_adjusted;
     } else {
         r.min.x += delta.min.x;
     }
-    if r.min.y + delta.min.y > MAX {
-        let diff_min_y = MAX - r.min.y;
-        let delta_y_adjusted = delta.min.y - diff_min_y - 1.0;
-        r.min.y = MIN + delta_y_adjusted;
-    } else if r.min.y + delta.min.y < MIN {
-        let diff_min_y = MIN - r.min.y;
-        let delta_y_adjusted = delta.min.y - diff_min_y + 1.0;
-        r.min.y = MAX + delta_y_adjusted;
+    if delta.min.y > 0.0 && MAX - r.min.y < delta.min.y {
+        let diff = MAX - r.min.y;
+        let delta_adjusted = delta.min.y - diff - 1.0;
+        r.min.y = MIN + delta_adjusted;
+    } else if delta.min.y < 0.0 && -(r.min.y - MIN) > delta.min.y {
+        let diff = MIN - r.min.y;
+        let delta_adjusted = delta.min.y - diff + 1.0;
+        r.min.y = MAX + delta_adjusted;
     } else {
         r.min.y += delta.min.y;
     }
-    if r.max.x + delta.max.x > MAX {
-        let diff_min_x = MAX - r.max.x;
-        let delta_x_adjusted = delta.max.x - diff_min_x - 1.0;
-        r.max.x = MIN + delta_x_adjusted;
-    } else if r.max.x + delta.max.x < MIN {
-        let diff_min_x = MIN - r.max.x;
-        let delta_x_adjusted = delta.max.x - diff_min_x + 1.0;
-        r.max.x = MAX + delta_x_adjusted;
+    if delta.max.x > 0.0 && MAX - r.max.x < delta.max.x {
+        let diff = MAX - r.max.x;
+        let delta_adjusted = delta.max.x - diff - 1.0;
+        r.max.x = MIN + delta_adjusted;
+    } else if delta.max.x < 0.0 && -(r.max.x - MIN) > delta.max.x {
+        let diff = MIN - r.max.x;
+        let delta_adjusted = delta.max.x - diff + 1.0;
+        r.max.x = MAX + delta_adjusted;
     } else {
         r.max.x += delta.max.x;
     }
-    if r.max.y + delta.max.y > MAX {
-        let diff_min_y = MAX - r.max.y;
-        let delta_y_adjusted = delta.max.y - diff_min_y - 1.0;
-        r.max.y = MIN + delta_y_adjusted;
-    } else if r.max.y + delta.max.y < MIN {
-        let diff_min_y = MIN - r.max.y;
-        let delta_y_adjusted = delta.max.y - diff_min_y + 1.0;
-        r.max.y = MAX + delta_y_adjusted;
+    if delta.max.y > 0.0 && MAX - r.max.y < delta.max.y {
+        let diff = MAX - r.max.y;
+        let delta_adjusted = delta.max.y - diff - 1.0;
+        r.max.y = MIN + delta_adjusted;
+    } else if delta.max.y < 0.0 && -(r.max.y - MIN) > delta.max.y {
+        let diff = MIN - r.max.y;
+        let delta_adjusted = delta.max.y - diff + 1.0;
+        r.max.y = MAX + delta_adjusted;
     } else {
         r.max.y += delta.max.y;
     }
@@ -100,47 +100,47 @@ pub fn wrapping_add(r: &RectF32, delta: &RectF32) -> RectF32 {
     let mut min_y = r.min.y;
     let mut max_x = r.max.x;
     let mut max_y = r.max.y;
-    if min_x + delta.min.x > MAX {
-        let diff_min_x = MAX - min_x;
-        let delta_x_adjusted = delta.min.x - diff_min_x - 1.0;
-        min_x = MIN + delta_x_adjusted;
-    } else if min_x + delta.min.x < MIN {
-        let diff_min_x = MIN - min_x;
-        let delta_x_adjusted = delta.min.x - diff_min_x + 1.0;
-        min_x = MAX + delta_x_adjusted;
+    if delta.min.x > 0.0 && MAX - r.min.x < delta.min.x {
+        let diff = MAX - min_x;
+        let delta_adjusted = delta.min.x - diff - 1.0;
+        min_x = MIN + delta_adjusted;
+    } else if delta.min.x < 0.0 && -(r.min.x - MIN) > delta.min.x {
+        let diff = MIN - min_x;
+        let delta_adjusted = delta.min.x - diff + 1.0;
+        min_x = MAX + delta_adjusted;
     } else {
         min_x += delta.min.x;
     }
-    if min_y + delta.min.y > MAX {
-        let diff_min_y = MAX - min_y;
-        let delta_y_adjusted = delta.min.y - diff_min_y - 1.0;
-        min_y = MIN + delta_y_adjusted;
-    } else if min_y + delta.min.y < MIN {
-        let diff_min_y = MIN - min_y;
-        let delta_y_adjusted = delta.min.y - diff_min_y + 1.0;
-        min_y = MAX + delta_y_adjusted;
+    if delta.min.y > 0.0 && MAX - r.min.y < delta.min.y {
+        let diff = MAX - min_y;
+        let delta_adjusted = delta.min.y - diff - 1.0;
+        min_y = MIN + delta_adjusted;
+    } else if delta.min.y < 0.0 && -(r.min.y - MIN) > delta.min.y {
+        let diff = MIN - min_y;
+        let delta_adjusted = delta.min.y - diff + 1.0;
+        min_y = MAX + delta_adjusted;
     } else {
         min_y += delta.min.y;
     }
-    if max_x + delta.max.x > MAX {
-        let diff_min_x = MAX - max_x;
-        let delta_x_adjusted = delta.max.x - diff_min_x - 1.0;
-        max_x = MIN + delta_x_adjusted;
-    } else if max_x + delta.max.x < MIN {
-        let diff_min_x = MIN - max_x;
-        let delta_x_adjusted = delta.max.x - diff_min_x + 1.0;
-        max_x = MAX + delta_x_adjusted;
+    if delta.max.x > 0.0 && MAX - r.max.x < delta.max.x {
+        let diff = MAX - max_x;
+        let delta_adjusted = delta.max.x - diff - 1.0;
+        max_x = MIN + delta_adjusted;
+    } else if delta.max.x < 0.0 && -(r.max.x - MIN) > delta.max.x {
+        let diff = MIN - max_x;
+        let delta_adjusted = delta.max.x - diff + 1.0;
+        max_x = MAX + delta_adjusted;
     } else {
         max_x += delta.max.x;
     }
-    if max_y + delta.max.y > MAX {
-        let diff_min_y = MAX - max_y;
-        let delta_y_adjusted = delta.max.y - diff_min_y - 1.0;
-        max_y = MIN + delta_y_adjusted;
-    } else if max_y + delta.max.y < MIN {
-        let diff_min_y = MIN - max_y;
-        let delta_y_adjusted = delta.max.y - diff_min_y + 1.0;
-        max_y = MAX + delta_y_adjusted;
+    if delta.max.y > 0.0 && MAX - r.max.y < delta.max.y {
+        let diff = MAX - max_y;
+        let delta_adjusted = delta.max.y - diff - 1.0;
+        max_y = MIN + delta_adjusted;
+    } else if delta.max.y < 0.0 && -(r.max.y - MIN) > delta.max.y {
+        let diff = MIN - max_y;
+        let delta_adjusted = delta.max.y - diff + 1.0;
+        max_y = MAX + delta_adjusted;
     } else {
         max_y += delta.max.y;
     }

@@ -5,7 +5,7 @@ use crate::cartesian::{
 };
 
 #[test]
-fn test_wrapping_translate_assign() {
+fn test() {
     let mut r = RectF32::of(0.0, 0.0, 12.0, 15.0);
     wrapping_translate_assign(&mut r, &PointF32::of(5.0, 4.0));
     assert_eq!(r, RectF32::of(5.0, 4.0, 17.0, 19.0));
@@ -14,7 +14,7 @@ fn test_wrapping_translate_assign() {
 }
 
 #[test]
-fn big_rect_to_bounds() {
+fn to_bounds() {
     let mut r_min = RectF32::of(MIN + 2.0, MIN + 5.0, MAX, MAX);
     wrapping_translate_assign(&mut r_min, &PointF32::of(-2.0, -5.0));
     assert_eq!(r_min, RectF32::of(MIN, MIN, MAX - 2.0, MAX - 5.0));

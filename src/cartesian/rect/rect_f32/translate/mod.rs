@@ -34,8 +34,8 @@ pub fn checked_translate(r: &RectF32, delta: &PointF32) -> RectF32 {
 }
 
 pub fn saturating_translate_assign(r: &mut RectF32, delta: &PointF32) {
-    let dx = delta_x(r);
-    let dy = delta_y(r);
+    let dx = delta_x(r).clamp(MIN, MAX);
+    let dy = delta_y(r).clamp(MIN, MAX);
     let temp_min_x = r.min.x + delta.x;
     let temp_min_y = r.min.y + delta.y;
     let min_x = temp_min_x.clamp(MIN, MAX - dx);
@@ -49,8 +49,8 @@ pub fn saturating_translate_assign(r: &mut RectF32, delta: &PointF32) {
 }
 
 pub fn saturating_translate(r: &RectF32, delta: &PointF32) -> RectF32 {
-    let dx = delta_x(r);
-    let dy = delta_y(r);
+    let dx = delta_x(r).clamp(MIN, MAX);
+    let dy = delta_y(r).clamp(MIN, MAX);
     let temp_min_x = r.min.x + delta.x;
     let temp_min_y = r.min.y + delta.y;
     let min_x = temp_min_x.clamp(MIN, MAX - dx);

@@ -57,9 +57,11 @@ fn small_rect_limits_out_of_bounds() {
     assert_eq!(try_checked_resize(&RectF32::of(MAX - 4.0, MAX - 2.0, MAX - 2.0, MAX), MAX), None);
 }
 
-//#[test]
-//fn big_rect_limits_out_of_bounds() {
-//    assert_eq!(try_checked_resize(&RectF32::of(MIN, MIN, MAX - 1.0, MAX - 1.0), MAX), Some(RectF32::of(MIN, MIN, MAX - 1.0, MAX - 1.0)));
-//    assert_eq!(try_checked_resize(&RectF32::of(MIN + 1.0, MIN + 1.0, MAX, MAX), MAX), Some(RectF32::of(MIN + 1.0, MIN + 1.0, MAX, MAX)));
-//    assert_eq!(try_checked_resize(&RectF32::largest(), MAX), Some(RectF32::of(MIN, MIN, MAX - 1.0, MAX - 1.0)));
-//}
+#[test]
+fn big_rect_limits_out_of_bounds() {
+    assert_eq!(try_checked_resize(&RectF32::of(MIN, MIN, -2.0, -2.0), MAX), Some(RectF32::of(MIN, MIN, -2.0, -2.0)));
+    assert_eq!(try_checked_resize(&RectF32::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0), MAX), Some(RectF32::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0)));
+    assert_eq!(try_checked_resize(&RectF32::of(MIN + 2.0, MIN + 2.0, 0.0, 0.0), MAX), Some(RectF32::of(MIN + 2.0, MIN + 2.0, 0.0, 0.0)));
+    assert_eq!(try_checked_resize(&RectF32::of(0.0, 0.0, MAX - 1.0, MAX - 1.0), MAX), Some(RectF32::of(0.0, 0.0, MAX - 1.0, MAX - 1.0)));
+    assert_eq!(try_checked_resize(&RectF32::of(1.0, 1.0, MAX, MAX), MAX), Some(RectF32::of(1.0, 1.0, MAX, MAX)));
+}

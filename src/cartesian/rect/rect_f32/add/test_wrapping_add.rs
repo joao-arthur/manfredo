@@ -24,6 +24,12 @@ fn out_of_bounds() {
     assert_eq!(wrapping_add(&r, &RectF32::of(0.0, -20.0, 0.0, 0.0)), RectF32::of(MIN + 10.0, MAX - 9.0, MAX - 10.0, MAX - 10.0));
     assert_eq!(wrapping_add(&r, &RectF32::of(0.0, 0.0, 20.0, 0.0)), RectF32::of(MIN + 10.0, MIN + 10.0, MIN + 9.0, MAX - 10.0));
     assert_eq!(wrapping_add(&r, &RectF32::of(0.0, 0.0, 0.0, 20.0)), RectF32::of(MIN + 10.0, MIN + 10.0, MAX - 10.0, MIN + 9.0));
+
+    let r_min = RectF32::of(MIN, MIN, MIN + 10.0, MIN + 10.0);
+    assert_eq!(wrapping_add(&r_min, &RectF32::of(-20.0, -20.0, -20.0, -20.0)), RectF32::of(MAX - 19.0, MAX - 19.0, MAX - 9.0, MAX - 9.0));
+
+    let r_max = RectF32::of(MAX, MAX, MAX - 10.0, MAX - 10.0);
+    assert_eq!(wrapping_add(&r_max, &RectF32::of(20.0, 20.0, 20.0, 20.0)), RectF32::of(MIN + 19.0, MIN + 19.0, MIN + 9.0, MIN + 9.0));
 }
 
 #[test]

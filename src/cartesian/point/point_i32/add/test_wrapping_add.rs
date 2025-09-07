@@ -1,4 +1,4 @@
-use super::{wrapping_add, wrapping_add_assign};
+use super::wrapping_add;
 use crate::cartesian::point::point_i32::PointI32;
 
 const MIN: i32 = i32::MIN;

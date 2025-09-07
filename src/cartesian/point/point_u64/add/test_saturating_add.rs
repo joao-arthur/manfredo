@@ -1,4 +1,4 @@
-use super::{saturating_add, saturating_add_assign};
+use super::saturating_add;
 use crate::cartesian::point::{point_i64::PointI64, point_u64::PointU64};
 
 const MAX: u64 = u64::MAX;

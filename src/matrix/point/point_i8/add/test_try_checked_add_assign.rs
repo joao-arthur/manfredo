@@ -1,4 +1,4 @@
-use super::{checked_add, checked_add_assign, try_checked_add, try_checked_add_assign};
+use super::try_checked_add_assign;
 use crate::matrix::point::point_i8::PointI8;
 
 const MIN: i8 = i8::MIN;

@@ -1,4 +1,4 @@
-use super::{saturating_add, saturating_add_assign};
+use super::saturating_add;
 use crate::matrix::point::point_i16::PointI16;
 
 const MIN: i16 = i16::MIN;

@@ -1,4 +1,4 @@
-use super::{saturating_add, saturating_add_assign};
+use super::saturating_add;
 use crate::cartesian::point::point_i8::PointI8;
 
 const MIN: i8 = i8::MIN;

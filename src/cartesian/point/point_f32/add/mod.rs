@@ -3,7 +3,7 @@ use crate::cartesian::point::point_f32::{MAX, MIN, PointF32};
 pub fn try_checked_add_assign(p: &mut PointF32, delta: &PointF32) -> Option<()> {
     let x = p.x + delta.x;
     let y = p.y + delta.y;
-    if x < MIN || x > MAX || y < MIN || y > MAX {
+    if !(MIN..=MAX).contains(&x) || !(MIN..=MAX).contains(&y) {
         return None;
     }
     p.x = x;
@@ -14,7 +14,7 @@ pub fn try_checked_add_assign(p: &mut PointF32, delta: &PointF32) -> Option<()> 
 pub fn try_checked_add(p: &PointF32, delta: &PointF32) -> Option<PointF32> {
     let x = p.x + delta.x;
     let y = p.y + delta.y;
-    if x < MIN || x > MAX || y < MIN || y > MAX {
+    if !(MIN..=MAX).contains(&x) || !(MIN..=MAX).contains(&y) {
         return None;
     }
     Some(PointF32 { x, y })

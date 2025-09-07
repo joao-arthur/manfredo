@@ -1,4 +1,4 @@
-use super::{wrapping_add, wrapping_add_assign};
+use super::wrapping_add_assign;
 use crate::cartesian::point::{point_i8::PointI8, point_u8::PointU8};
 
 const MAX: u8 = u8::MAX;

@@ -1,4 +1,4 @@
-use super::{checked_add, checked_add_assign, try_checked_add, try_checked_add_assign};
+use super::try_checked_add;
 use crate::matrix::point::{point_i32::PointI32, point_u32::PointU32};
 
 const MAX: u32 = u32::MAX;

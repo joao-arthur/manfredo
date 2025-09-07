@@ -1,5 +1,5 @@
-use super::{checked_add, checked_add_assign, try_checked_add, try_checked_add_assign};
-use crate::cartesian::point::point_f32::{MAX, MIN, PointF32};
+use super::checked_add_assign;
+use crate::cartesian::point::point_f32::PointF32;
 
 #[test]
 fn test() {

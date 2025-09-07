@@ -1,4 +1,4 @@
-use super::{wrapping_add, wrapping_add_assign};
+use super::wrapping_add;
 use crate::matrix::point::{point_i64::PointI64, point_u64::PointU64};
 
 const MAX: u64 = u64::MAX;

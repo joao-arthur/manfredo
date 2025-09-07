@@ -1,4 +1,4 @@
-use super::{wrapping_add, wrapping_add_assign};
+use super::wrapping_add;
 use crate::matrix::point::point_i16::PointI16;
 
 const MIN: i16 = i16::MIN;

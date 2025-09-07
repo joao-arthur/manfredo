@@ -4,7 +4,7 @@ use crate::cartesian::{
 };
 
 pub fn try_checked_resize_assign(r: &mut RectF32, size: f32) -> Option<()> {
-    if size < 3.0 || size > MAX {
+    if !(3.0..=MAX).contains(&size) {
         return None;
     }
     let diff_x = ((delta_x(r) + 1.0 - size) / 2.0).floor();
@@ -27,7 +27,7 @@ pub fn try_checked_resize_assign(r: &mut RectF32, size: f32) -> Option<()> {
 }
 
 pub fn try_checked_resize(r: &RectF32, size: f32) -> Option<RectF32> {
-    if size < 3.0 || size > MAX {
+    if !(3.0..=MAX).contains(&size) {
         return None;
     }
     let diff_x = ((delta_x(r) + 1.0 - size) / 2.0).floor();
@@ -54,7 +54,7 @@ pub fn checked_resize(r: &RectF32, size: f32) -> RectF32 {
 }
 
 pub fn try_saturating_resize_assign(r: &mut RectF32, size: f32) -> Option<()> {
-    if size < 3.0 || size > MAX {
+    if !(3.0..=MAX).contains(&size) {
         return None;
     }
     let diff_x = delta_x(r) + 1.0 - size;
@@ -73,7 +73,7 @@ pub fn try_saturating_resize_assign(r: &mut RectF32, size: f32) -> Option<()> {
 }
 
 pub fn try_saturating_resize(r: &RectF32, size: f32) -> Option<RectF32> {
-    if size < 3.0 || size > MAX {
+    if !(3.0..=MAX).contains(&size) {
         return None;
     }
     let diff_x = delta_x(r) + 1.0 - size;

@@ -1,7 +1,5 @@
-use super::{checked_add, checked_add_assign, try_checked_add, try_checked_add_assign};
+use super::checked_add;
 use crate::cartesian::point::{point_i16::PointI16, point_u16::PointU16};
-
-const MAX: u16 = u16::MAX;
 
 #[test]
 fn test() {

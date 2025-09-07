@@ -1,4 +1,4 @@
-use super::{saturating_add, saturating_add_assign};
+use super::saturating_add;
 use crate::cartesian::point::point_f32::{MAX, MIN, PointF32};
 
 #[test]

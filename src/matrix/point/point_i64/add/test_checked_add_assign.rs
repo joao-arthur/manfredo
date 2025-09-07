@@ -1,8 +1,5 @@
-use super::{checked_add, checked_add_assign, try_checked_add, try_checked_add_assign};
+use super::checked_add_assign;
 use crate::matrix::point::point_i64::PointI64;
-
-const MIN: i64 = i64::MIN;
-const MAX: i64 = i64::MAX;
 
 #[test]
 fn test() {

@@ -1,8 +1,5 @@
-use super::{checked_add, checked_add_assign, try_checked_add, try_checked_add_assign};
+use super::checked_add_assign;
 use crate::matrix::point::point_i32::PointI32;
-
-const MIN: i32 = i32::MIN;
-const MAX: i32 = i32::MAX;
 
 #[test]
 fn test() {

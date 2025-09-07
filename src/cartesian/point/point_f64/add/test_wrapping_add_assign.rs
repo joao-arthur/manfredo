@@ -1,4 +1,4 @@
-use super::{wrapping_add, wrapping_add_assign};
+use super::wrapping_add_assign;
 use crate::cartesian::point::point_f64::{MAX, MIN, PointF64};
 
 #[test]

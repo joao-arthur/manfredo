@@ -1,4 +1,4 @@
-use super::{wrapping_add, wrapping_add_assign};
+use super::wrapping_add_assign;
 use crate::cartesian::point::{point_i32::PointI32, point_u32::PointU32};
 
 const MAX: u32 = u32::MAX;

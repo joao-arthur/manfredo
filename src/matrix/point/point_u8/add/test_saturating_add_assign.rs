@@ -1,4 +1,4 @@
-use super::{saturating_add, saturating_add_assign};
+use super::saturating_add_assign;
 use crate::matrix::point::{point_i8::PointI8, point_u8::PointU8};
 
 const MAX: u8 = u8::MAX;

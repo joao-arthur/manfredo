@@ -44,6 +44,26 @@ pub fn wrapping_add(p: &PointU16, delta: &PointI16) -> PointU16 {
     PointU16 { row, col }
 }
 
-pub mod checked;
-pub mod saturated;
-pub mod wrapped;
+#[cfg(test)]
+mod test_checked_add_assign;
+
+#[cfg(test)]
+mod test_checked_add;
+
+#[cfg(test)]
+mod test_try_checked_add_assign;
+
+#[cfg(test)]
+mod test_try_checked_add;
+
+#[cfg(test)]
+mod test_saturating_add_assign;
+
+#[cfg(test)]
+mod test_saturating_add;
+
+#[cfg(test)]
+mod test_wrapping_add_assign;
+
+#[cfg(test)]
+mod test_wrapping_add;

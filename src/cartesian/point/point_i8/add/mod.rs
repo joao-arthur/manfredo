@@ -44,6 +44,26 @@ pub fn wrapping_add(p: &PointI8, delta: &PointI8) -> PointI8 {
     PointI8 { x, y }
 }
 
-pub mod checked;
-pub mod saturated;
-pub mod wrapped;
+#[cfg(test)]
+mod test_checked_add_assign;
+
+#[cfg(test)]
+mod test_checked_add;
+
+#[cfg(test)]
+mod test_try_checked_add_assign;
+
+#[cfg(test)]
+mod test_try_checked_add;
+
+#[cfg(test)]
+mod test_saturating_add_assign;
+
+#[cfg(test)]
+mod test_saturating_add;
+
+#[cfg(test)]
+mod test_wrapping_add_assign;
+
+#[cfg(test)]
+mod test_wrapping_add;

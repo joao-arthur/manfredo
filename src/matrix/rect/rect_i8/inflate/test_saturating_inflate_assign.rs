@@ -1,44 +1,47 @@
 use super::saturating_inflate_assign;
 use crate::matrix::rect::rect_i8::RectI8;
 
+const MIN: i8 = i8::MIN;
+const MAX: i8 = i8::MAX;
+
 #[test]
 fn min_bounds() {
-    let mut r = RectI8::of(i8::MIN + 7, i8::MIN + 2, i8::MIN + 17, i8::MIN + 13);
+    let mut r = RectI8::of(MIN + 7, MIN + 2, MIN + 17, MIN + 13);
     saturating_inflate_assign(&mut r);
-    assert_eq!(r, RectI8::of(i8::MIN + 6, i8::MIN + 1, i8::MIN + 18, i8::MIN + 14));
+    assert_eq!(r, RectI8::of(MIN + 6, MIN + 1, MIN + 18, MIN + 14));
     saturating_inflate_assign(&mut r);
-    assert_eq!(r, RectI8::of(i8::MIN + 5, i8::MIN, i8::MIN + 19, i8::MIN + 15));
+    assert_eq!(r, RectI8::of(MIN + 5, MIN, MIN + 19, MIN + 15));
     saturating_inflate_assign(&mut r);
-    assert_eq!(r, RectI8::of(i8::MIN + 4, i8::MIN, i8::MIN + 20, i8::MIN + 17));
+    assert_eq!(r, RectI8::of(MIN + 4, MIN, MIN + 20, MIN + 17));
     saturating_inflate_assign(&mut r);
-    assert_eq!(r, RectI8::of(i8::MIN + 3, i8::MIN, i8::MIN + 21, i8::MIN + 19));
+    assert_eq!(r, RectI8::of(MIN + 3, MIN, MIN + 21, MIN + 19));
     saturating_inflate_assign(&mut r);
-    assert_eq!(r, RectI8::of(i8::MIN + 2, i8::MIN, i8::MIN + 22, i8::MIN + 21));
+    assert_eq!(r, RectI8::of(MIN + 2, MIN, MIN + 22, MIN + 21));
     saturating_inflate_assign(&mut r);
-    assert_eq!(r, RectI8::of(i8::MIN + 1, i8::MIN, i8::MIN + 23, i8::MIN + 23));
+    assert_eq!(r, RectI8::of(MIN + 1, MIN, MIN + 23, MIN + 23));
     saturating_inflate_assign(&mut r);
-    assert_eq!(r, RectI8::of(i8::MIN, i8::MIN, i8::MIN + 24, i8::MIN + 25));
+    assert_eq!(r, RectI8::of(MIN, MIN, MIN + 24, MIN + 25));
     saturating_inflate_assign(&mut r);
-    assert_eq!(r, RectI8::of(i8::MIN, i8::MIN, i8::MIN + 26, i8::MIN + 27));
+    assert_eq!(r, RectI8::of(MIN, MIN, MIN + 26, MIN + 27));
 }
 
 #[test]
 fn max_bounds() {
-    let mut r = RectI8::of(i8::MAX - 33, i8::MAX - 17, i8::MAX - 5, i8::MAX - 3);
+    let mut r = RectI8::of(MAX - 33, MAX - 17, MAX - 5, MAX - 3);
     saturating_inflate_assign(&mut r);
-    assert_eq!(r, RectI8::of(i8::MAX - 34, i8::MAX - 18, i8::MAX - 4, i8::MAX - 2));
+    assert_eq!(r, RectI8::of(MAX - 34, MAX - 18, MAX - 4, MAX - 2));
     saturating_inflate_assign(&mut r);
-    assert_eq!(r, RectI8::of(i8::MAX - 35, i8::MAX - 19, i8::MAX - 3, i8::MAX - 1));
+    assert_eq!(r, RectI8::of(MAX - 35, MAX - 19, MAX - 3, MAX - 1));
     saturating_inflate_assign(&mut r);
-    assert_eq!(r, RectI8::of(i8::MAX - 36, i8::MAX - 20, i8::MAX - 2, i8::MAX));
+    assert_eq!(r, RectI8::of(MAX - 36, MAX - 20, MAX - 2, MAX));
     saturating_inflate_assign(&mut r);
-    assert_eq!(r, RectI8::of(i8::MAX - 37, i8::MAX - 22, i8::MAX - 1, i8::MAX));
+    assert_eq!(r, RectI8::of(MAX - 37, MAX - 22, MAX - 1, MAX));
     saturating_inflate_assign(&mut r);
-    assert_eq!(r, RectI8::of(i8::MAX - 38, i8::MAX - 24, i8::MAX, i8::MAX));
+    assert_eq!(r, RectI8::of(MAX - 38, MAX - 24, MAX, MAX));
     saturating_inflate_assign(&mut r);
-    assert_eq!(r, RectI8::of(i8::MAX - 40, i8::MAX - 26, i8::MAX, i8::MAX));
+    assert_eq!(r, RectI8::of(MAX - 40, MAX - 26, MAX, MAX));
     saturating_inflate_assign(&mut r);
-    assert_eq!(r, RectI8::of(i8::MAX - 42, i8::MAX - 28, i8::MAX, i8::MAX));
+    assert_eq!(r, RectI8::of(MAX - 42, MAX - 28, MAX, MAX));
     saturating_inflate_assign(&mut r);
-    assert_eq!(r, RectI8::of(i8::MAX - 44, i8::MAX - 30, i8::MAX, i8::MAX));
+    assert_eq!(r, RectI8::of(MAX - 44, MAX - 30, MAX, MAX));
 }

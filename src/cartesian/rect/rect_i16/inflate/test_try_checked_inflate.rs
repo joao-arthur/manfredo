@@ -1,34 +1,37 @@
 use super::try_checked_inflate;
 use crate::cartesian::rect::rect_i16::RectI16;
 
+const MIN: i16 = i16::MIN;
+const MAX: i16 = i16::MAX;
+
 #[test]
 fn min_bounds() {
-    assert_eq!(try_checked_inflate(&RectI16::of(i16::MIN + 7, i16::MIN + 3, i16::MIN + 9, i16::MIN + 13)), Some(RectI16::of(i16::MIN + 6, i16::MIN + 2, i16::MIN + 10, i16::MIN + 14)));
-    assert_eq!(try_checked_inflate(&RectI16::of(i16::MIN + 6, i16::MIN + 2, i16::MIN + 10, i16::MIN + 14)), Some(RectI16::of(i16::MIN + 5, i16::MIN + 1, i16::MIN + 11, i16::MIN + 15)));
-    assert_eq!(try_checked_inflate(&RectI16::of(i16::MIN + 5, i16::MIN + 1, i16::MIN + 11, i16::MIN + 15)), Some(RectI16::of(i16::MIN + 4, i16::MIN, i16::MIN + 12, i16::MIN + 16)));
+    assert_eq!(try_checked_inflate(&RectI16::of(MIN + 7, MIN + 3, MIN + 9, MIN + 13)), Some(RectI16::of(MIN + 6, MIN + 2, MIN + 10, MIN + 14)));
+    assert_eq!(try_checked_inflate(&RectI16::of(MIN + 6, MIN + 2, MIN + 10, MIN + 14)), Some(RectI16::of(MIN + 5, MIN + 1, MIN + 11, MIN + 15)));
+    assert_eq!(try_checked_inflate(&RectI16::of(MIN + 5, MIN + 1, MIN + 11, MIN + 15)), Some(RectI16::of(MIN + 4, MIN, MIN + 12, MIN + 16)));
 }
 
 #[test]
 fn max_bounds() {
-    assert_eq!(try_checked_inflate(&RectI16::of(i16::MAX - 33, i16::MAX - 17, i16::MAX - 5, i16::MAX - 3)), Some(RectI16::of(i16::MAX - 34, i16::MAX - 18, i16::MAX - 4, i16::MAX - 2)));
-    assert_eq!(try_checked_inflate(&RectI16::of(i16::MAX - 34, i16::MAX - 18, i16::MAX - 4, i16::MAX - 2)), Some(RectI16::of(i16::MAX - 35, i16::MAX - 19, i16::MAX - 3, i16::MAX - 1)));
-    assert_eq!(try_checked_inflate(&RectI16::of(i16::MAX - 35, i16::MAX - 19, i16::MAX - 3, i16::MAX - 1)), Some(RectI16::of(i16::MAX - 36, i16::MAX - 20, i16::MAX - 2, i16::MAX)));
+    assert_eq!(try_checked_inflate(&RectI16::of(MAX - 33, MAX - 17, MAX - 5, MAX - 3)), Some(RectI16::of(MAX - 34, MAX - 18, MAX - 4, MAX - 2)));
+    assert_eq!(try_checked_inflate(&RectI16::of(MAX - 34, MAX - 18, MAX - 4, MAX - 2)), Some(RectI16::of(MAX - 35, MAX - 19, MAX - 3, MAX - 1)));
+    assert_eq!(try_checked_inflate(&RectI16::of(MAX - 35, MAX - 19, MAX - 3, MAX - 1)), Some(RectI16::of(MAX - 36, MAX - 20, MAX - 2, MAX)));
 }
 
 #[test]
 fn to_bounds() {
-    assert_eq!(try_checked_inflate(&RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MAX - 1, i16::MAX - 1)), Some(RectI16::largest()));
-    assert_eq!(try_checked_inflate(&RectI16::of(i16::MIN + 1, i16::MIN + 10, i16::MAX - 10, i16::MAX - 10)), Some(RectI16::of(i16::MIN, i16::MIN + 9, i16::MAX - 9, i16::MAX - 9)));
-    assert_eq!(try_checked_inflate(&RectI16::of(i16::MIN + 10, i16::MIN + 1, i16::MAX - 10, i16::MAX - 10)), Some(RectI16::of(i16::MIN + 9, i16::MIN, i16::MAX - 9, i16::MAX - 9)));
-    assert_eq!(try_checked_inflate(&RectI16::of(i16::MIN + 10, i16::MIN + 10, i16::MAX - 1, i16::MAX - 10)), Some(RectI16::of(i16::MIN + 9, i16::MIN + 9, i16::MAX, i16::MAX - 9)));
-    assert_eq!(try_checked_inflate(&RectI16::of(i16::MIN + 10, i16::MIN + 10, i16::MAX - 10, i16::MAX - 1)), Some(RectI16::of(i16::MIN + 9, i16::MIN + 9, i16::MAX - 9, i16::MAX)));
+    assert_eq!(try_checked_inflate(&RectI16::of(MIN + 1, MIN + 1, MAX - 1, MAX - 1)), Some(RectI16::largest()));
+    assert_eq!(try_checked_inflate(&RectI16::of(MIN + 1, MIN + 10, MAX - 10, MAX - 10)), Some(RectI16::of(MIN, MIN + 9, MAX - 9, MAX - 9)));
+    assert_eq!(try_checked_inflate(&RectI16::of(MIN + 10, MIN + 1, MAX - 10, MAX - 10)), Some(RectI16::of(MIN + 9, MIN, MAX - 9, MAX - 9)));
+    assert_eq!(try_checked_inflate(&RectI16::of(MIN + 10, MIN + 10, MAX - 1, MAX - 10)), Some(RectI16::of(MIN + 9, MIN + 9, MAX, MAX - 9)));
+    assert_eq!(try_checked_inflate(&RectI16::of(MIN + 10, MIN + 10, MAX - 10, MAX - 1)), Some(RectI16::of(MIN + 9, MIN + 9, MAX - 9, MAX)));
 }
 
 #[test]
 fn out_of_bounds() {
     assert_eq!(try_checked_inflate(&RectI16::largest()), None);
-    assert_eq!(try_checked_inflate(&RectI16::of(i16::MIN, i16::MIN + 10, i16::MAX - 10, i16::MAX - 10)), None);
-    assert_eq!(try_checked_inflate(&RectI16::of(i16::MIN + 10, i16::MIN, i16::MAX - 10, i16::MAX - 10)), None);
-    assert_eq!(try_checked_inflate(&RectI16::of(i16::MIN + 10, i16::MIN + 10, i16::MAX, i16::MAX - 10)), None);
-    assert_eq!(try_checked_inflate(&RectI16::of(i16::MIN + 10, i16::MIN + 10, i16::MAX - 10, i16::MAX)), None);
+    assert_eq!(try_checked_inflate(&RectI16::of(MIN, MIN + 10, MAX - 10, MAX - 10)), None);
+    assert_eq!(try_checked_inflate(&RectI16::of(MIN + 10, MIN, MAX - 10, MAX - 10)), None);
+    assert_eq!(try_checked_inflate(&RectI16::of(MIN + 10, MIN + 10, MAX, MAX - 10)), None);
+    assert_eq!(try_checked_inflate(&RectI16::of(MIN + 10, MIN + 10, MAX - 10, MAX)), None);
 }

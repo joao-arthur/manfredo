@@ -1,34 +1,37 @@
 use super::wrapping_inflate;
 use crate::cartesian::rect::rect_i64::RectI64;
 
+const MIN: i64 = i64::MIN;
+const MAX: i64 = i64::MAX;
+
 #[test]
 fn min_bounds() {
-    assert_eq!(wrapping_inflate(&RectI64::of(i64::MIN + 7, i64::MIN + 3, i64::MIN + 9, i64::MIN + 13)), RectI64::of(i64::MIN + 6, i64::MIN + 2, i64::MIN + 10, i64::MIN + 14));
-    assert_eq!(wrapping_inflate(&RectI64::of(i64::MIN + 6, i64::MIN + 2, i64::MIN + 10, i64::MIN + 14)), RectI64::of(i64::MIN + 5, i64::MIN + 1, i64::MIN + 11, i64::MIN + 15));
-    assert_eq!(wrapping_inflate(&RectI64::of(i64::MIN + 5, i64::MIN + 1, i64::MIN + 11, i64::MIN + 15)), RectI64::of(i64::MIN + 4, i64::MIN, i64::MIN + 12, i64::MIN + 16));
+    assert_eq!(wrapping_inflate(&RectI64::of(MIN + 7, MIN + 3, MIN + 9, MIN + 13)), RectI64::of(MIN + 6, MIN + 2, MIN + 10, MIN + 14));
+    assert_eq!(wrapping_inflate(&RectI64::of(MIN + 6, MIN + 2, MIN + 10, MIN + 14)), RectI64::of(MIN + 5, MIN + 1, MIN + 11, MIN + 15));
+    assert_eq!(wrapping_inflate(&RectI64::of(MIN + 5, MIN + 1, MIN + 11, MIN + 15)), RectI64::of(MIN + 4, MIN, MIN + 12, MIN + 16));
 }
 
 #[test]
 fn max_bounds() {
-    assert_eq!(wrapping_inflate(&RectI64::of(i64::MAX - 33, i64::MAX - 17, i64::MAX - 5, i64::MAX - 3)), RectI64::of(i64::MAX - 34, i64::MAX - 18, i64::MAX - 4, i64::MAX - 2));
-    assert_eq!(wrapping_inflate(&RectI64::of(i64::MAX - 34, i64::MAX - 18, i64::MAX - 4, i64::MAX - 2)), RectI64::of(i64::MAX - 35, i64::MAX - 19, i64::MAX - 3, i64::MAX - 1));
-    assert_eq!(wrapping_inflate(&RectI64::of(i64::MAX - 35, i64::MAX - 19, i64::MAX - 3, i64::MAX - 1)), RectI64::of(i64::MAX - 36, i64::MAX - 20, i64::MAX - 2, i64::MAX));
+    assert_eq!(wrapping_inflate(&RectI64::of(MAX - 33, MAX - 17, MAX - 5, MAX - 3)), RectI64::of(MAX - 34, MAX - 18, MAX - 4, MAX - 2));
+    assert_eq!(wrapping_inflate(&RectI64::of(MAX - 34, MAX - 18, MAX - 4, MAX - 2)), RectI64::of(MAX - 35, MAX - 19, MAX - 3, MAX - 1));
+    assert_eq!(wrapping_inflate(&RectI64::of(MAX - 35, MAX - 19, MAX - 3, MAX - 1)), RectI64::of(MAX - 36, MAX - 20, MAX - 2, MAX));
 }
 
 #[test]
 fn to_bounds() {
-    assert_eq!(wrapping_inflate(&RectI64::of(i64::MIN + 1, i64::MIN + 1, i64::MAX - 1, i64::MAX - 1)), RectI64::largest());
-    assert_eq!(wrapping_inflate(&RectI64::of(i64::MIN + 1, i64::MIN + 10, i64::MAX - 10, i64::MAX - 10)), RectI64::of(i64::MIN, i64::MIN + 9, i64::MAX - 9, i64::MAX - 9));
-    assert_eq!(wrapping_inflate(&RectI64::of(i64::MIN + 10, i64::MIN + 1, i64::MAX - 10, i64::MAX - 10)), RectI64::of(i64::MIN + 9, i64::MIN, i64::MAX - 9, i64::MAX - 9));
-    assert_eq!(wrapping_inflate(&RectI64::of(i64::MIN + 10, i64::MIN + 10, i64::MAX - 1, i64::MAX - 10)), RectI64::of(i64::MIN + 9, i64::MIN + 9, i64::MAX, i64::MAX - 9));
-    assert_eq!(wrapping_inflate(&RectI64::of(i64::MIN + 10, i64::MIN + 10, i64::MAX - 10, i64::MAX - 1)), RectI64::of(i64::MIN + 9, i64::MIN + 9, i64::MAX - 9, i64::MAX));
+    assert_eq!(wrapping_inflate(&RectI64::of(MIN + 1, MIN + 1, MAX - 1, MAX - 1)), RectI64::largest());
+    assert_eq!(wrapping_inflate(&RectI64::of(MIN + 1, MIN + 10, MAX - 10, MAX - 10)), RectI64::of(MIN, MIN + 9, MAX - 9, MAX - 9));
+    assert_eq!(wrapping_inflate(&RectI64::of(MIN + 10, MIN + 1, MAX - 10, MAX - 10)), RectI64::of(MIN + 9, MIN, MAX - 9, MAX - 9));
+    assert_eq!(wrapping_inflate(&RectI64::of(MIN + 10, MIN + 10, MAX - 1, MAX - 10)), RectI64::of(MIN + 9, MIN + 9, MAX, MAX - 9));
+    assert_eq!(wrapping_inflate(&RectI64::of(MIN + 10, MIN + 10, MAX - 10, MAX - 1)), RectI64::of(MIN + 9, MIN + 9, MAX - 9, MAX));
 }
 
 #[test]
 fn out_of_bounds() {
-    assert_eq!(wrapping_inflate(&RectI64::largest()), RectI64::of(i64::MAX, i64::MAX, i64::MIN, i64::MIN));
-    assert_eq!(wrapping_inflate(&RectI64::of(i64::MIN, i64::MIN + 10, i64::MAX - 10, i64::MAX - 10)), RectI64::of(i64::MAX, i64::MIN + 9, i64::MAX - 9, i64::MAX - 9));
-    assert_eq!(wrapping_inflate(&RectI64::of(i64::MIN + 10, i64::MIN, i64::MAX - 10, i64::MAX - 10)), RectI64::of(i64::MIN + 9, i64::MAX, i64::MAX - 9, i64::MAX - 9));
-    assert_eq!(wrapping_inflate(&RectI64::of(i64::MIN + 10, i64::MIN + 10, i64::MAX, i64::MAX - 10)), RectI64::of(i64::MIN + 9, i64::MIN + 9, i64::MIN, i64::MAX - 9));
-    assert_eq!(wrapping_inflate(&RectI64::of(i64::MIN + 10, i64::MIN + 10, i64::MAX - 10, i64::MAX)), RectI64::of(i64::MIN + 9, i64::MIN + 9, i64::MAX - 9, i64::MIN));
+    assert_eq!(wrapping_inflate(&RectI64::largest()), RectI64::of(MAX, MAX, MIN, MIN));
+    assert_eq!(wrapping_inflate(&RectI64::of(MIN, MIN + 10, MAX - 10, MAX - 10)), RectI64::of(MAX, MIN + 9, MAX - 9, MAX - 9));
+    assert_eq!(wrapping_inflate(&RectI64::of(MIN + 10, MIN, MAX - 10, MAX - 10)), RectI64::of(MIN + 9, MAX, MAX - 9, MAX - 9));
+    assert_eq!(wrapping_inflate(&RectI64::of(MIN + 10, MIN + 10, MAX, MAX - 10)), RectI64::of(MIN + 9, MIN + 9, MIN, MAX - 9));
+    assert_eq!(wrapping_inflate(&RectI64::of(MIN + 10, MIN + 10, MAX - 10, MAX)), RectI64::of(MIN + 9, MIN + 9, MAX - 9, MIN));
 }

@@ -32,6 +32,15 @@ fn out_of_bounds() {
 }
 
 #[test]
+fn edge_out_of_bounds() {
+    let r = RectF64::largest();
+    assert_eq!(wrapping_translate(&r, &PointF64::of(-1.0, 0.0)), RectF64::of(MAX, MIN, MAX - 1.0, MAX));
+    assert_eq!(wrapping_translate(&r, &PointF64::of(0.0, -1.0)), RectF64::of(MIN, MAX, MAX, MAX - 1.0));
+    assert_eq!(wrapping_translate(&r, &PointF64::of(1.0, 0.0)), RectF64::of(MIN + 1.0, MIN, MIN, MAX));
+    assert_eq!(wrapping_translate(&r, &PointF64::of(0.0, 1.0)), RectF64::of(MIN, MIN + 1.0, MAX, MIN));
+}
+
+#[test]
 fn limits_out_of_bounds() {
     let r = RectF64::largest();
     assert_eq!(wrapping_translate(&r, &PointF64::of(MIN, 0.0)), RectF64::of(0.0, MIN, -1.0, MAX));

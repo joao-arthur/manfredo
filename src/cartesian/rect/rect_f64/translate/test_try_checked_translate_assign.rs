@@ -35,6 +35,16 @@ fn out_of_bounds() {
 }
 
 #[test]
+fn edge_out_of_bounds() {
+    let mut r = RectF64::largest();
+    assert_eq!(try_checked_translate_assign(&mut r, &PointF64::of(-1.0, 0.0)), None);
+    assert_eq!(try_checked_translate_assign(&mut r, &PointF64::of(0.0, -1.0)), None);
+    assert_eq!(try_checked_translate_assign(&mut r, &PointF64::of(1.0, 0.0)), None);
+    assert_eq!(try_checked_translate_assign(&mut r, &PointF64::of(0.0, 1.0)), None);
+    assert_eq!(r, RectF64::largest());
+}
+
+#[test]
 fn limits_out_of_bounds() {
     let mut r = RectF64::largest();
     assert_eq!(try_checked_translate_assign(&mut r, &PointF64::of(MIN, 0.0)), None);

@@ -52,6 +52,25 @@ fn out_of_bounds() {
 }
 
 #[test]
+fn edge_out_of_bounds() {
+    let mut r1 = RectF32::largest();
+    wrapping_translate_assign(&mut r1, &PointF32::of(-1.0, 0.0));
+    assert_eq!(r1, RectF32::of(MAX, MIN, MAX - 1.0, MAX));
+
+    let mut r2 = RectF32::largest();
+    wrapping_translate_assign(&mut r2, &PointF32::of(0.0, -1.0));
+    assert_eq!(r2, RectF32::of(MIN, MAX, MAX, MAX - 1.0));
+
+    let mut r3 = RectF32::largest();
+    wrapping_translate_assign(&mut r3, &PointF32::of(1.0, 0.0));
+    assert_eq!(r3, RectF32::of(MIN + 1.0, MIN, MIN, MAX));
+
+    let mut r4 = RectF32::largest();
+    wrapping_translate_assign(&mut r4, &PointF32::of(0.0, 1.0));
+    assert_eq!(r4, RectF32::of(MIN, MIN + 1.0, MAX, MIN));
+}
+
+#[test]
 fn limits_out_of_bounds() {
     let mut r1 = RectF32::largest();
     wrapping_translate_assign(&mut r1, &PointF32::of(MIN, 0.0));

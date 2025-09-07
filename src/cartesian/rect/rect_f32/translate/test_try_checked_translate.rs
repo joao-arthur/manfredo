@@ -26,6 +26,15 @@ fn out_of_bounds() {
 }
 
 #[test]
+fn edge_out_of_bounds() {
+    let r = RectF32::largest();
+    assert_eq!(try_checked_translate(&r, &PointF32::of(-1.0, 0.0)), None);
+    assert_eq!(try_checked_translate(&r, &PointF32::of(0.0, -1.0)), None);
+    assert_eq!(try_checked_translate(&r, &PointF32::of(1.0, 0.0)), None);
+    assert_eq!(try_checked_translate(&r, &PointF32::of(0.0, 1.0)), None);
+}
+
+#[test]
 fn limits_out_of_bounds() {
     let r = RectF32::largest();
     assert_eq!(try_checked_translate(&r, &PointF32::of(MIN, 0.0)), None);

@@ -1,4 +1,4 @@
-use crate::cartesian::point::point_f64;
+use crate::cartesian::{point::point_f64, rect::rect_f32::RectF32};
 
 pub mod add;
 pub mod contains_point;
@@ -69,6 +69,12 @@ impl RectF64 {
     }
 }
 
+impl From<RectF32> for RectF64 {
+    fn from(r: RectF32) -> Self {
+        RectF64 { min: point_f64::PointF64::of(r.min.x.into(), r.min.y.into()), max: point_f64::PointF64::of(r.max.x.into(), r.max.y.into()) }
+    }
+}
+
 impl std::fmt::Display for RectF64 {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "({}, {})", self.min, self.max)
@@ -102,7 +108,13 @@ pub fn max_len(r: &RectF64) -> f64 {
 #[cfg(test)]
 mod tests {
     use super::{RectF64, delta_x, delta_y, len_x, len_y, max_delta, max_len};
-    use crate::cartesian::point::point_f64::{MAX, MIN, PointF64};
+    use crate::cartesian::{
+        point::{
+            point_f32,
+            point_f64::{MAX, MIN, PointF64},
+        },
+        rect::rect_f32::RectF32,
+    };
 
     #[test]
     fn rect_f64() {
@@ -116,6 +128,14 @@ mod tests {
     fn to_string() {
         assert_eq!(RectF64::largest().to_string(), "((-9007199254740992, -9007199254740992), (9007199254740991, 9007199254740991))");
         assert_eq!(RectF64::of(MIN, -0.0, 0.0, MAX).to_string(), "((-9007199254740992, -0), (0, 9007199254740991))");
+    }
+
+    #[test]
+    fn from() {
+        assert_eq!(
+            RectF64::from(RectF32::largest()),
+            RectF64 { min: PointF64 { x: point_f32::MIN.into(), y: point_f32::MIN.into() }, max: PointF64 { x: point_f32::MAX.into(), y: point_f32::MAX.into() } }
+        );
     }
 
     #[test]

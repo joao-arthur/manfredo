@@ -3,6 +3,8 @@ mod tests {
     use super::super::{saturating_add, saturating_add_assign};
     use crate::matrix::point::{point_i16::PointI16, point_u16::PointU16};
 
+    const MAX: u16 = u16::MAX;
+
     #[test]
     fn test_saturating_add_assign() {
         let mut p = PointU16::min();
@@ -18,7 +20,7 @@ mod tests {
         saturating_add_assign(&mut p_min, &PointI16::of(-2, -5));
         assert_eq!(p_min, PointU16::min());
 
-        let mut p_max = PointU16::of(u16::MAX - 2, u16::MAX - 5);
+        let mut p_max = PointU16::of(MAX - 2, MAX - 5);
         saturating_add_assign(&mut p_max, &PointI16::of(2, 5));
         assert_eq!(p_max, PointU16::max());
     }
@@ -29,7 +31,7 @@ mod tests {
         saturating_add_assign(&mut p_min, &PointI16::of(-10, -10));
         assert_eq!(p_min, PointU16::min());
 
-        let mut p_max = PointU16::of(u16::MAX - 2, u16::MAX - 5);
+        let mut p_max = PointU16::of(MAX - 2, MAX - 5);
         saturating_add_assign(&mut p_max, &PointI16::of(10, 10));
         assert_eq!(p_max, PointU16::max());
     }
@@ -40,7 +42,7 @@ mod tests {
         saturating_add_assign(&mut p_min, &PointI16::min());
         assert_eq!(p_min, PointU16::min());
 
-        let mut p_max = PointU16::of(u16::MAX - 1, u16::MAX - 1);
+        let mut p_max = PointU16::of(MAX - 1, MAX - 1);
         saturating_add_assign(&mut p_max, &PointI16::max());
         assert_eq!(p_max, PointU16::max());
     }
@@ -54,18 +56,18 @@ mod tests {
     #[test]
     fn saturating_add_to_bounds() {
         assert_eq!(saturating_add(&PointU16::of(2, 5), &PointI16::of(-2, -5)), PointU16::min());
-        assert_eq!(saturating_add(&PointU16::of(u16::MAX - 2, u16::MAX - 5), &PointI16::of(2, 5)), PointU16::max());
+        assert_eq!(saturating_add(&PointU16::of(MAX - 2, MAX - 5), &PointI16::of(2, 5)), PointU16::max());
     }
 
     #[test]
     fn saturating_add_out_of_bounds() {
         assert_eq!(saturating_add(&PointU16::of(2, 5), &PointI16::of(-10, -10)), PointU16::min());
-        assert_eq!(saturating_add(&PointU16::of(u16::MAX - 2, u16::MAX - 5), &PointI16::of(10, 10)), PointU16::max());
+        assert_eq!(saturating_add(&PointU16::of(MAX - 2, MAX - 5), &PointI16::of(10, 10)), PointU16::max());
     }
 
     #[test]
     fn saturating_add_limits_out_of_bounds() {
         assert_eq!(saturating_add(&PointU16::of(1, 1), &PointI16::min()), PointU16::min());
-        assert_eq!(saturating_add(&PointU16::of(u16::MAX - 1, u16::MAX - 1), &PointI16::max()), PointU16::max());
+        assert_eq!(saturating_add(&PointU16::of(MAX - 1, MAX - 1), &PointI16::max()), PointU16::max());
     }
 }

@@ -9,39 +9,42 @@ mod tests {
     use super::contains_rect;
     use crate::cartesian::rect::rect_i16::RectI16;
 
+    const MIN: i16 = i16::MIN;
+    const MAX: i16 = i16::MAX;
+
     #[test]
-    fn contains_rect_inside() {
-        let r = RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MAX - 1, i16::MAX - 1);
-        assert!(contains_rect(&r, &RectI16::of(i16::MIN + 2, i16::MIN + 2, i16::MAX - 2, i16::MAX - 2)));
-        assert!(contains_rect(&r, &RectI16::of(i16::MIN + 3, i16::MIN + 3, i16::MAX - 3, i16::MAX - 3)));
-        assert!(contains_rect(&r, &RectI16::of(i16::MIN + 10, i16::MIN + 10, i16::MAX - 10, i16::MAX - 10)));
+    fn inside() {
+        let r = RectI16::of(MIN + 1, MIN + 1, MAX - 1, MAX - 1);
+        assert!(contains_rect(&r, &RectI16::of(MIN + 2, MIN + 2, MAX - 2, MAX - 2)));
+        assert!(contains_rect(&r, &RectI16::of(MIN + 3, MIN + 3, MAX - 3, MAX - 3)));
+        assert!(contains_rect(&r, &RectI16::of(MIN + 10, MIN + 10, MAX - 10, MAX - 10)));
     }
 
     #[test]
-    fn contains_rect_borders() {
-        let r = RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MAX - 1, i16::MAX - 1);
-        assert!(contains_rect(&r, &RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MAX - 1, i16::MAX - 1)));
+    fn borders() {
+        let r = RectI16::of(MIN + 1, MIN + 1, MAX - 1, MAX - 1);
+        assert!(contains_rect(&r, &RectI16::of(MIN + 1, MIN + 1, MAX - 1, MAX - 1)));
 
-        assert!(contains_rect(&r, &RectI16::of(i16::MIN + 2, i16::MIN + 1, i16::MAX - 1, i16::MAX - 1)));
-        assert!(contains_rect(&r, &RectI16::of(i16::MIN + 1, i16::MIN + 2, i16::MAX - 1, i16::MAX - 1)));
-        assert!(contains_rect(&r, &RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MAX - 2, i16::MAX - 1)));
-        assert!(contains_rect(&r, &RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MAX - 1, i16::MAX - 2)));
+        assert!(contains_rect(&r, &RectI16::of(MIN + 2, MIN + 1, MAX - 1, MAX - 1)));
+        assert!(contains_rect(&r, &RectI16::of(MIN + 1, MIN + 2, MAX - 1, MAX - 1)));
+        assert!(contains_rect(&r, &RectI16::of(MIN + 1, MIN + 1, MAX - 2, MAX - 1)));
+        assert!(contains_rect(&r, &RectI16::of(MIN + 1, MIN + 1, MAX - 1, MAX - 2)));
 
-        assert!(contains_rect(&r, &RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MAX - 2, i16::MAX - 2)));
-        assert!(contains_rect(&r, &RectI16::of(i16::MIN + 2, i16::MIN + 2, i16::MAX - 1, i16::MAX - 1)));
+        assert!(contains_rect(&r, &RectI16::of(MIN + 1, MIN + 1, MAX - 2, MAX - 2)));
+        assert!(contains_rect(&r, &RectI16::of(MIN + 2, MIN + 2, MAX - 1, MAX - 1)));
     }
 
     #[test]
-    fn contains_rect_outside() {
-        let r = RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MAX - 1, i16::MAX - 1);
+    fn outside() {
+        let r = RectI16::of(MIN + 1, MIN + 1, MAX - 1, MAX - 1);
         assert!(!contains_rect(&r, &RectI16::largest()));
 
-        assert!(!contains_rect(&r, &RectI16::of(i16::MIN, i16::MIN + 1, i16::MAX - 1, i16::MAX - 1)));
-        assert!(!contains_rect(&r, &RectI16::of(i16::MIN + 1, i16::MIN, i16::MAX - 1, i16::MAX - 1)));
-        assert!(!contains_rect(&r, &RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MAX, i16::MAX - 1)));
-        assert!(!contains_rect(&r, &RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MAX - 1, i16::MAX)));
+        assert!(!contains_rect(&r, &RectI16::of(MIN, MIN + 1, MAX - 1, MAX - 1)));
+        assert!(!contains_rect(&r, &RectI16::of(MIN + 1, MIN, MAX - 1, MAX - 1)));
+        assert!(!contains_rect(&r, &RectI16::of(MIN + 1, MIN + 1, MAX, MAX - 1)));
+        assert!(!contains_rect(&r, &RectI16::of(MIN + 1, MIN + 1, MAX - 1, MAX)));
 
-        assert!(!contains_rect(&r, &RectI16::of(i16::MIN + 1, i16::MIN + 1, i16::MAX, i16::MAX)));
-        assert!(!contains_rect(&r, &RectI16::of(i16::MIN, i16::MIN, i16::MAX - 1, i16::MAX - 1)));
+        assert!(!contains_rect(&r, &RectI16::of(MIN + 1, MIN + 1, MAX, MAX)));
+        assert!(!contains_rect(&r, &RectI16::of(MIN, MIN, MAX - 1, MAX - 1)));
     }
 }

@@ -1,6 +1,8 @@
 use super::try_checked_add_assign;
 use crate::matrix::rect::{rect_i16::RectI16, rect_u16::RectU16};
 
+const MAX: u16 = u16::MAX;
+
 #[test]
 fn test() {
     let mut r = RectU16::of(0, 0, 12, 12);
@@ -12,27 +14,27 @@ fn test() {
 
 #[test]
 fn to_bounds() {
-    let mut r = RectU16::of(2, 5, u16::MAX - 2, u16::MAX - 5);
+    let mut r = RectU16::of(2, 5, MAX - 2, MAX - 5);
     assert_eq!(try_checked_add_assign(&mut r, &RectI16::of(-2, -5, 2, 5)), Some(()));
     assert_eq!(r, RectU16::largest());
 
-    let mut r_min = RectU16::of(2, 5, u16::MAX, u16::MAX);
+    let mut r_min = RectU16::of(2, 5, MAX, MAX);
     assert_eq!(try_checked_add_assign(&mut r_min, &RectI16::of(-2, -5, 0, 0)), Some(()));
     assert_eq!(r_min, RectU16::largest());
 
-    let mut r_max = RectU16::of(0, 0, u16::MAX - 2, u16::MAX - 5);
+    let mut r_max = RectU16::of(0, 0, MAX - 2, MAX - 5);
     assert_eq!(try_checked_add_assign(&mut r_max, &RectI16::of(0, 0, 2, 5)), Some(()));
     assert_eq!(r_max, RectU16::largest());
 }
 
 #[test]
 fn out_of_bounds() {
-    let mut r = RectU16::of(10, 10, u16::MAX - 10, u16::MAX - 10);
+    let mut r = RectU16::of(10, 10, MAX - 10, MAX - 10);
     assert_eq!(try_checked_add_assign(&mut r, &RectI16::of(-20, 0, 0, 0)), None);
     assert_eq!(try_checked_add_assign(&mut r, &RectI16::of(0, -20, 0, 0)), None);
     assert_eq!(try_checked_add_assign(&mut r, &RectI16::of(0, 0, 20, 0)), None);
     assert_eq!(try_checked_add_assign(&mut r, &RectI16::of(0, 0, 0, 20)), None);
-    assert_eq!(r, RectU16::of(10, 10, u16::MAX - 10, u16::MAX - 10));
+    assert_eq!(r, RectU16::of(10, 10, MAX - 10, MAX - 10));
 }
 
 #[test]

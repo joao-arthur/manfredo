@@ -13,7 +13,7 @@ mod tests {
     const MAX: i32 = i32::MAX;
 
     #[test]
-    fn contains_rect_inside() {
+    fn inside() {
         let r = RectI32::of(MIN + 1, MIN + 1, MAX - 1, MAX - 1);
         assert!(contains_rect(&r, &RectI32::of(MIN + 2, MIN + 2, MAX - 2, MAX - 2)));
         assert!(contains_rect(&r, &RectI32::of(MIN + 3, MIN + 3, MAX - 3, MAX - 3)));
@@ -21,7 +21,7 @@ mod tests {
     }
 
     #[test]
-    fn contains_rect_borders() {
+    fn borders() {
         let r = RectI32::of(MIN + 1, MIN + 1, MAX - 1, MAX - 1);
         assert!(contains_rect(&r, &RectI32::of(MIN + 1, MIN + 1, MAX - 1, MAX - 1)));
 
@@ -35,7 +35,7 @@ mod tests {
     }
 
     #[test]
-    fn contains_rect_outside() {
+    fn outside() {
         let r = RectI32::of(MIN + 1, MIN + 1, MAX - 1, MAX - 1);
         assert!(!contains_rect(&r, &RectI32::largest()));
 

@@ -1,6 +1,8 @@
 use super::try_saturating_inflate_assign;
 use crate::matrix::rect::rect_u32::RectU32;
 
+const MAX: u32 = u32::MAX;
+
 #[test]
 fn min_bounds() {
     let mut r = RectU32::of(7, 2, 17, 13);
@@ -24,36 +26,36 @@ fn min_bounds() {
 
 #[test]
 fn max_bounds() {
-    let mut r = RectU32::of(u32::MAX - 33, u32::MAX - 17, u32::MAX - 5, u32::MAX - 3);
+    let mut r = RectU32::of(MAX - 33, MAX - 17, MAX - 5, MAX - 3);
     assert_eq!(try_saturating_inflate_assign(&mut r), Some(()));
-    assert_eq!(r, RectU32::of(u32::MAX - 34, u32::MAX - 18, u32::MAX - 4, u32::MAX - 2));
+    assert_eq!(r, RectU32::of(MAX - 34, MAX - 18, MAX - 4, MAX - 2));
     assert_eq!(try_saturating_inflate_assign(&mut r), Some(()));
-    assert_eq!(r, RectU32::of(u32::MAX - 35, u32::MAX - 19, u32::MAX - 3, u32::MAX - 1));
+    assert_eq!(r, RectU32::of(MAX - 35, MAX - 19, MAX - 3, MAX - 1));
     assert_eq!(try_saturating_inflate_assign(&mut r), Some(()));
-    assert_eq!(r, RectU32::of(u32::MAX - 36, u32::MAX - 20, u32::MAX - 2, u32::MAX));
+    assert_eq!(r, RectU32::of(MAX - 36, MAX - 20, MAX - 2, MAX));
     assert_eq!(try_saturating_inflate_assign(&mut r), Some(()));
-    assert_eq!(r, RectU32::of(u32::MAX - 37, u32::MAX - 22, u32::MAX - 1, u32::MAX));
+    assert_eq!(r, RectU32::of(MAX - 37, MAX - 22, MAX - 1, MAX));
     assert_eq!(try_saturating_inflate_assign(&mut r), Some(()));
-    assert_eq!(r, RectU32::of(u32::MAX - 38, u32::MAX - 24, u32::MAX, u32::MAX));
+    assert_eq!(r, RectU32::of(MAX - 38, MAX - 24, MAX, MAX));
     assert_eq!(try_saturating_inflate_assign(&mut r), Some(()));
-    assert_eq!(r, RectU32::of(u32::MAX - 40, u32::MAX - 26, u32::MAX, u32::MAX));
+    assert_eq!(r, RectU32::of(MAX - 40, MAX - 26, MAX, MAX));
     assert_eq!(try_saturating_inflate_assign(&mut r), Some(()));
-    assert_eq!(r, RectU32::of(u32::MAX - 42, u32::MAX - 28, u32::MAX, u32::MAX));
+    assert_eq!(r, RectU32::of(MAX - 42, MAX - 28, MAX, MAX));
     assert_eq!(try_saturating_inflate_assign(&mut r), Some(()));
-    assert_eq!(r, RectU32::of(u32::MAX - 44, u32::MAX - 30, u32::MAX, u32::MAX));
+    assert_eq!(r, RectU32::of(MAX - 44, MAX - 30, MAX, MAX));
 }
 
 #[test]
 fn to_bounds() {
-    let mut r = RectU32::of(1, 1, u32::MAX - 1, u32::MAX - 1);
+    let mut r = RectU32::of(1, 1, MAX - 1, MAX - 1);
     assert_eq!(try_saturating_inflate_assign(&mut r), Some(()));
     assert_eq!(r, RectU32::largest());
 
-    let mut r_min = RectU32::of(0, 0, u32::MAX - 1, u32::MAX - 1);
+    let mut r_min = RectU32::of(0, 0, MAX - 1, MAX - 1);
     assert_eq!(try_saturating_inflate_assign(&mut r_min), Some(()));
     assert_eq!(r_min, RectU32::largest());
 
-    let mut r_max = RectU32::of(1, 1, u32::MAX, u32::MAX);
+    let mut r_max = RectU32::of(1, 1, MAX, MAX);
     assert_eq!(try_saturating_inflate_assign(&mut r_max), Some(()));
     assert_eq!(r_max, RectU32::largest());
 
@@ -65,13 +67,13 @@ fn to_bounds() {
     assert_eq!(try_saturating_inflate_assign(&mut r_min_y), Some(()));
     assert_eq!(r_min_y, RectU32::of(9, 0, 21, 21));
 
-    let mut r_max_x = RectU32::of(10, 10, u32::MAX - 1, 20);
+    let mut r_max_x = RectU32::of(10, 10, MAX - 1, 20);
     assert_eq!(try_saturating_inflate_assign(&mut r_max_x), Some(()));
-    assert_eq!(r_max_x, RectU32::of(9, 9, u32::MAX, 21));
+    assert_eq!(r_max_x, RectU32::of(9, 9, MAX, 21));
 
-    let mut r_max_y = RectU32::of(10, 10, 20, u32::MAX - 1);
+    let mut r_max_y = RectU32::of(10, 10, 20, MAX - 1);
     assert_eq!(try_saturating_inflate_assign(&mut r_max_y), Some(()));
-    assert_eq!(r_max_y, RectU32::of(9, 9, 21, u32::MAX));
+    assert_eq!(r_max_y, RectU32::of(9, 9, 21, MAX));
 }
 
 #[test]
@@ -80,11 +82,11 @@ fn out_of_bounds() {
     assert_eq!(try_saturating_inflate_assign(&mut r), None);
     assert_eq!(r, RectU32::largest());
 
-    let mut r_x = RectU32::of(0, 10, u32::MAX, 20);
+    let mut r_x = RectU32::of(0, 10, MAX, 20);
     assert_eq!(try_saturating_inflate_assign(&mut r_x), None);
-    assert_eq!(r_x, RectU32::of(0, 10, u32::MAX, 20));
+    assert_eq!(r_x, RectU32::of(0, 10, MAX, 20));
 
-    let mut r_y = RectU32::of(10, 0, 20, u32::MAX);
+    let mut r_y = RectU32::of(10, 0, 20, MAX);
     assert_eq!(try_saturating_inflate_assign(&mut r_y), None);
-    assert_eq!(r_y, RectU32::of(10, 0, 20, u32::MAX));
+    assert_eq!(r_y, RectU32::of(10, 0, 20, MAX));
 }

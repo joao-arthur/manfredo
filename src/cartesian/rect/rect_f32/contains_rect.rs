@@ -13,7 +13,7 @@ mod tests {
     };
 
     #[test]
-    fn contains_rect_inside() {
+    fn inside() {
         let r_negative = RectF32::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0);
         assert!(contains_rect(&r_negative, &RectF32::of(MIN + 2.0, MIN + 2.0, -2.0, -2.0)));
         assert!(contains_rect(&r_negative, &RectF32::of(MIN + 3.0, MIN + 3.0, -3.0, -3.0)));
@@ -26,7 +26,7 @@ mod tests {
     }
 
     #[test]
-    fn contains_rect_borders() {
+    fn borders() {
         let r_negative = RectF32::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0);
         assert!(contains_rect(&r_negative, &RectF32::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0)));
 
@@ -51,7 +51,7 @@ mod tests {
     }
 
     #[test]
-    fn contains_rect_outside() {
+    fn outside() {
         let r_negative = RectF32::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0);
         assert!(!contains_rect(&r_negative, &RectF32::largest()));
 

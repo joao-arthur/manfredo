@@ -1,6 +1,8 @@
 use super::saturating_add;
 use crate::cartesian::rect::{rect_i8::RectI8, rect_u8::RectU8};
 
+const MAX: u8 = u8::MAX;
+
 #[test]
 fn test() {
     assert_eq!(saturating_add(&RectU8::of(0, 0, 12, 15), &RectI8::of(5, 4, 3, 2)), RectU8::of(5, 4, 15, 17));
@@ -9,18 +11,18 @@ fn test() {
 
 #[test]
 fn to_bounds() {
-    assert_eq!(saturating_add(&RectU8::of(2, 5, u8::MAX - 2, u8::MAX - 5), &RectI8::of(-2, -5, 2, 5)), RectU8::largest());
-    assert_eq!(saturating_add(&RectU8::of(2, 5, u8::MAX, u8::MAX), &RectI8::of(-2, -5, 0, 0)), RectU8::largest());
-    assert_eq!(saturating_add(&RectU8::of(0, 0, u8::MAX - 2, u8::MAX - 5), &RectI8::of(0, 0, 2, 5)), RectU8::largest());
+    assert_eq!(saturating_add(&RectU8::of(2, 5, MAX - 2, MAX - 5), &RectI8::of(-2, -5, 2, 5)), RectU8::largest());
+    assert_eq!(saturating_add(&RectU8::of(2, 5, MAX, MAX), &RectI8::of(-2, -5, 0, 0)), RectU8::largest());
+    assert_eq!(saturating_add(&RectU8::of(0, 0, MAX - 2, MAX - 5), &RectI8::of(0, 0, 2, 5)), RectU8::largest());
 }
 
 #[test]
 fn out_of_bounds() {
-    let r = RectU8::of(10, 10, u8::MAX - 10, u8::MAX - 10);
-    assert_eq!(saturating_add(&r, &RectI8::of(-20, 0, 0, 0)), RectU8::of(0, 10, u8::MAX - 10, u8::MAX - 10));
-    assert_eq!(saturating_add(&r, &RectI8::of(0, -20, 0, 0)), RectU8::of(10, 0, u8::MAX - 10, u8::MAX - 10));
-    assert_eq!(saturating_add(&r, &RectI8::of(0, 0, 20, 0)), RectU8::of(10, 10, u8::MAX, u8::MAX - 10));
-    assert_eq!(saturating_add(&r, &RectI8::of(0, 0, 0, 20)), RectU8::of(10, 10, u8::MAX - 10, u8::MAX));
+    let r = RectU8::of(10, 10, MAX - 10, MAX - 10);
+    assert_eq!(saturating_add(&r, &RectI8::of(-20, 0, 0, 0)), RectU8::of(0, 10, MAX - 10, MAX - 10));
+    assert_eq!(saturating_add(&r, &RectI8::of(0, -20, 0, 0)), RectU8::of(10, 0, MAX - 10, MAX - 10));
+    assert_eq!(saturating_add(&r, &RectI8::of(0, 0, 20, 0)), RectU8::of(10, 10, MAX, MAX - 10));
+    assert_eq!(saturating_add(&r, &RectI8::of(0, 0, 0, 20)), RectU8::of(10, 10, MAX - 10, MAX));
 }
 
 #[test]

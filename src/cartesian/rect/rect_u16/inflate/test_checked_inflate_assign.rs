@@ -1,6 +1,8 @@
 use super::checked_inflate_assign;
 use crate::cartesian::rect::rect_u16::RectU16;
 
+const MAX: u16 = u16::MAX;
+
 #[test]
 fn min_bounds() {
     let mut r = RectU16::of(7, 3, 9, 13);
@@ -14,11 +16,11 @@ fn min_bounds() {
 
 #[test]
 fn max_bounds() {
-    let mut r = RectU16::of(u16::MAX - 33, u16::MAX - 17, u16::MAX - 5, u16::MAX - 3);
+    let mut r = RectU16::of(MAX - 33, MAX - 17, MAX - 5, MAX - 3);
     checked_inflate_assign(&mut r);
-    assert_eq!(r, RectU16::of(u16::MAX - 34, u16::MAX - 18, u16::MAX - 4, u16::MAX - 2));
+    assert_eq!(r, RectU16::of(MAX - 34, MAX - 18, MAX - 4, MAX - 2));
     checked_inflate_assign(&mut r);
-    assert_eq!(r, RectU16::of(u16::MAX - 35, u16::MAX - 19, u16::MAX - 3, u16::MAX - 1));
+    assert_eq!(r, RectU16::of(MAX - 35, MAX - 19, MAX - 3, MAX - 1));
     checked_inflate_assign(&mut r);
-    assert_eq!(r, RectU16::of(u16::MAX - 36, u16::MAX - 20, u16::MAX - 2, u16::MAX));
+    assert_eq!(r, RectU16::of(MAX - 36, MAX - 20, MAX - 2, MAX));
 }

@@ -13,7 +13,7 @@ mod tests {
     };
 
     #[test]
-    fn contains_point_inside_borders() {
+    fn inside_borders() {
         let r_negative = RectF64::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0);
         assert!(contains_point(&r_negative, &PointF64::of(MIN + 1.0, MIN + 1.0)));
         assert!(contains_point(&r_negative, &PointF64::of(MIN + 1.0, -1.0)));
@@ -28,7 +28,7 @@ mod tests {
     }
 
     #[test]
-    fn contains_point_outside_borders() {
+    fn outside_borders() {
         let r_negative = RectF64::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0);
         assert!(!contains_point(&r_negative, &PointF64::min()));
         assert!(!contains_point(&r_negative, &PointF64::of(MIN + 1.0, MIN)));
@@ -65,7 +65,7 @@ mod tests {
     }
 
     #[test]
-    fn contains_point_inside() {
+    fn inside() {
         let r_negative = RectF64::of(MIN + 1.0, MIN + 1.0, -1.0, -1.0);
         assert!(contains_point(&r_negative, &PointF64::of(MIN + 10.0, MIN + 10.0)));
         assert!(contains_point(&r_negative, &PointF64::of(-10.0, MIN + 10.0)));

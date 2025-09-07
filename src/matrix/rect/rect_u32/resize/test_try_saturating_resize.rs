@@ -1,6 +1,8 @@
 use super::try_saturating_resize;
 use crate::matrix::rect::rect_u32::RectU32;
 
+const MAX: u32 = u32::MAX;
+
 #[test]
 fn odd() {
     assert_eq!(try_saturating_resize(&RectU32::of(5, 5, 15, 15), 9), Some(RectU32::of(6, 6, 14, 14)));
@@ -31,25 +33,25 @@ fn small_size() {
 fn same_size() {
     assert_eq!(try_saturating_resize(&RectU32::of(0, 0, 2, 2), 3), Some(RectU32::of(0, 0, 2, 2)));
     assert_eq!(try_saturating_resize(&RectU32::of(0, 0, 3, 3), 4), Some(RectU32::of(0, 0, 3, 3)));
-    assert_eq!(try_saturating_resize(&RectU32::of(u32::MAX - 2, u32::MAX - 2, u32::MAX, u32::MAX), 3), Some(RectU32::of(u32::MAX - 2, u32::MAX - 2, u32::MAX, u32::MAX)));
-    assert_eq!(try_saturating_resize(&RectU32::of(u32::MAX - 3, u32::MAX - 3, u32::MAX, u32::MAX), 4), Some(RectU32::of(u32::MAX - 3, u32::MAX - 3, u32::MAX, u32::MAX)));
+    assert_eq!(try_saturating_resize(&RectU32::of(MAX - 2, MAX - 2, MAX, MAX), 3), Some(RectU32::of(MAX - 2, MAX - 2, MAX, MAX)));
+    assert_eq!(try_saturating_resize(&RectU32::of(MAX - 3, MAX - 3, MAX, MAX), 4), Some(RectU32::of(MAX - 3, MAX - 3, MAX, MAX)));
 }
 
 #[test]
 fn bounds() {
     assert_eq!(try_saturating_resize(&RectU32::of(0, 0, 2, 2), 11), Some(RectU32::of(0, 0, 10, 10)));
-    assert_eq!(try_saturating_resize(&RectU32::of(u32::MAX - 2, u32::MAX - 2, u32::MAX, u32::MAX), 11), Some(RectU32::of(u32::MAX - 10, u32::MAX - 10, u32::MAX, u32::MAX)));
+    assert_eq!(try_saturating_resize(&RectU32::of(MAX - 2, MAX - 2, MAX, MAX), 11), Some(RectU32::of(MAX - 10, MAX - 10, MAX, MAX)));
 }
 
 #[test]
 fn small_rect_limits() {
-    assert_eq!(try_saturating_resize(&RectU32::of(0, 0, 2, 2), u32::MAX), Some(RectU32::of(0, 0, u32::MAX - 1, u32::MAX - 1)));
-    assert_eq!(try_saturating_resize(&RectU32::of(u32::MAX - 2, u32::MAX - 2, u32::MAX, u32::MAX), u32::MAX), Some(RectU32::of(1, 1, u32::MAX, u32::MAX)));
+    assert_eq!(try_saturating_resize(&RectU32::of(0, 0, 2, 2), MAX), Some(RectU32::of(0, 0, MAX - 1, MAX - 1)));
+    assert_eq!(try_saturating_resize(&RectU32::of(MAX - 2, MAX - 2, MAX, MAX), MAX), Some(RectU32::of(1, 1, MAX, MAX)));
 }
 
 #[test]
 fn big_rect_limits() {
-    assert_eq!(try_saturating_resize(&RectU32::of(0, 0, u32::MAX - 1, u32::MAX - 1), u32::MAX), Some(RectU32::of(0, 0, u32::MAX - 1, u32::MAX - 1)));
-    assert_eq!(try_saturating_resize(&RectU32::of(1, 1, u32::MAX, u32::MAX), u32::MAX), Some(RectU32::of(1, 1, u32::MAX, u32::MAX)));
-    assert_eq!(try_saturating_resize(&RectU32::largest(), u32::MAX), Some(RectU32::of(0, 0, u32::MAX - 1, u32::MAX - 1)));
+    assert_eq!(try_saturating_resize(&RectU32::of(0, 0, MAX - 1, MAX - 1), MAX), Some(RectU32::of(0, 0, MAX - 1, MAX - 1)));
+    assert_eq!(try_saturating_resize(&RectU32::of(1, 1, MAX, MAX), MAX), Some(RectU32::of(1, 1, MAX, MAX)));
+    assert_eq!(try_saturating_resize(&RectU32::largest(), MAX), Some(RectU32::of(0, 0, MAX - 1, MAX - 1)));
 }

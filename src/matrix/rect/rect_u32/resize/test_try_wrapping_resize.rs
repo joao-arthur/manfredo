@@ -1,6 +1,8 @@
 use super::try_wrapping_resize;
 use crate::matrix::rect::rect_u32::RectU32;
 
+const MAX: u32 = u32::MAX;
+
 #[test]
 fn odd() {
     assert_eq!(try_wrapping_resize(&RectU32::of(5, 5, 15, 15), 9), Some(RectU32::of(6, 6, 14, 14)));
@@ -31,29 +33,29 @@ fn small_size() {
 fn same_size() {
     assert_eq!(try_wrapping_resize(&RectU32::of(0, 0, 2, 2), 3), Some(RectU32::of(0, 0, 2, 2)));
     assert_eq!(try_wrapping_resize(&RectU32::of(0, 0, 3, 3), 4), Some(RectU32::of(0, 0, 3, 3)));
-    assert_eq!(try_wrapping_resize(&RectU32::of(u32::MAX - 2, u32::MAX - 2, u32::MAX, u32::MAX), 3), Some(RectU32::of(u32::MAX - 2, u32::MAX - 2, u32::MAX, u32::MAX)));
-    assert_eq!(try_wrapping_resize(&RectU32::of(u32::MAX - 3, u32::MAX - 3, u32::MAX, u32::MAX), 4), Some(RectU32::of(u32::MAX - 3, u32::MAX - 3, u32::MAX, u32::MAX)));
+    assert_eq!(try_wrapping_resize(&RectU32::of(MAX - 2, MAX - 2, MAX, MAX), 3), Some(RectU32::of(MAX - 2, MAX - 2, MAX, MAX)));
+    assert_eq!(try_wrapping_resize(&RectU32::of(MAX - 3, MAX - 3, MAX, MAX), 4), Some(RectU32::of(MAX - 3, MAX - 3, MAX, MAX)));
 }
 
 #[test]
 fn out_of_bounds() {
-    assert_eq!(try_wrapping_resize(&RectU32::of(0, 2, 2, 4), 5), Some(RectU32::of(u32::MAX, 1, 3, 5)));
-    assert_eq!(try_wrapping_resize(&RectU32::of(2, 0, 4, 2), 5), Some(RectU32::of(1, u32::MAX, 5, 3)));
-    assert_eq!(try_wrapping_resize(&RectU32::of(u32::MAX - 2, u32::MAX - 4, u32::MAX, u32::MAX - 2), 5), Some(RectU32::of(u32::MAX - 3, u32::MAX - 5, 0, u32::MAX - 1)));
-    assert_eq!(try_wrapping_resize(&RectU32::of(u32::MAX - 4, u32::MAX - 2, u32::MAX - 2, u32::MAX), 5), Some(RectU32::of(u32::MAX - 5, u32::MAX - 3, u32::MAX - 1, 0)));
+    assert_eq!(try_wrapping_resize(&RectU32::of(0, 2, 2, 4), 5), Some(RectU32::of(MAX, 1, 3, 5)));
+    assert_eq!(try_wrapping_resize(&RectU32::of(2, 0, 4, 2), 5), Some(RectU32::of(1, MAX, 5, 3)));
+    assert_eq!(try_wrapping_resize(&RectU32::of(MAX - 2, MAX - 4, MAX, MAX - 2), 5), Some(RectU32::of(MAX - 3, MAX - 5, 0, MAX - 1)));
+    assert_eq!(try_wrapping_resize(&RectU32::of(MAX - 4, MAX - 2, MAX - 2, MAX), 5), Some(RectU32::of(MAX - 5, MAX - 3, MAX - 1, 0)));
 }
 
 #[test]
 fn small_rect_limits_out_of_bounds() {
-    assert_eq!(try_wrapping_resize(&RectU32::of(0, 2, 2, 4), u32::MAX), Some(RectU32::of(u32::MAX / 2 + 3, u32::MAX / 2 + 5, u32::MAX / 2 + 1, u32::MAX / 2 + 3)));
-    assert_eq!(try_wrapping_resize(&RectU32::of(2, 0, 4, 2), u32::MAX), Some(RectU32::of(u32::MAX / 2 + 5, u32::MAX / 2 + 3, u32::MAX / 2 + 3, u32::MAX / 2 + 1)));
-    assert_eq!(try_wrapping_resize(&RectU32::of(u32::MAX - 2, u32::MAX - 4, u32::MAX, u32::MAX - 2), u32::MAX), Some(RectU32::of(u32::MAX / 2, u32::MAX / 2 - 2, u32::MAX / 2 - 2, u32::MAX / 2 - 4)));
-    assert_eq!(try_wrapping_resize(&RectU32::of(u32::MAX - 4, u32::MAX - 2, u32::MAX - 2, u32::MAX), u32::MAX), Some(RectU32::of(u32::MAX / 2 - 2, u32::MAX / 2, u32::MAX / 2 - 4, u32::MAX / 2 - 2)));
+    assert_eq!(try_wrapping_resize(&RectU32::of(0, 2, 2, 4), MAX), Some(RectU32::of(MAX / 2 + 3, MAX / 2 + 5, MAX / 2 + 1, MAX / 2 + 3)));
+    assert_eq!(try_wrapping_resize(&RectU32::of(2, 0, 4, 2), MAX), Some(RectU32::of(MAX / 2 + 5, MAX / 2 + 3, MAX / 2 + 3, MAX / 2 + 1)));
+    assert_eq!(try_wrapping_resize(&RectU32::of(MAX - 2, MAX - 4, MAX, MAX - 2), MAX), Some(RectU32::of(MAX / 2, MAX / 2 - 2, MAX / 2 - 2, MAX / 2 - 4)));
+    assert_eq!(try_wrapping_resize(&RectU32::of(MAX - 4, MAX - 2, MAX - 2, MAX), MAX), Some(RectU32::of(MAX / 2 - 2, MAX / 2, MAX / 2 - 4, MAX / 2 - 2)));
 }
 
 #[test]
 fn big_rect_limits_out_of_bounds() {
-    assert_eq!(try_wrapping_resize(&RectU32::of(0, 0, u32::MAX - 1, u32::MAX - 1), u32::MAX), Some(RectU32::of(0, 0, u32::MAX - 1, u32::MAX - 1)));
-    assert_eq!(try_wrapping_resize(&RectU32::of(1, 1, u32::MAX, u32::MAX), u32::MAX), Some(RectU32::of(1, 1, u32::MAX, u32::MAX)));
-    assert_eq!(try_wrapping_resize(&RectU32::largest(), u32::MAX), Some(RectU32::of(0, 0, u32::MAX - 1, u32::MAX - 1)));
+    assert_eq!(try_wrapping_resize(&RectU32::of(0, 0, MAX - 1, MAX - 1), MAX), Some(RectU32::of(0, 0, MAX - 1, MAX - 1)));
+    assert_eq!(try_wrapping_resize(&RectU32::of(1, 1, MAX, MAX), MAX), Some(RectU32::of(1, 1, MAX, MAX)));
+    assert_eq!(try_wrapping_resize(&RectU32::largest(), MAX), Some(RectU32::of(0, 0, MAX - 1, MAX - 1)));
 }

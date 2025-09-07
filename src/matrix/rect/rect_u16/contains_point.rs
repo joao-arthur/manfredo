@@ -9,41 +9,43 @@ mod tests {
     use super::contains_point;
     use crate::matrix::{point::point_u16::PointU16, rect::rect_u16::RectU16};
 
+    const MAX: u16 = u16::MAX;
+
     #[test]
-    fn contains_point_inside_borders() {
-        let r = RectU16::of(1, 1, u16::MAX - 1, u16::MAX - 1);
+    fn inside_borders() {
+        let r = RectU16::of(1, 1, MAX - 1, MAX - 1);
         assert!(contains_point(&r, &PointU16::of(1, 1)));
-        assert!(contains_point(&r, &PointU16::of(1, u16::MAX - 1)));
+        assert!(contains_point(&r, &PointU16::of(1, MAX - 1)));
         assert!(contains_point(&r, &PointU16::of(u16::MAX - 1, 1)));
-        assert!(contains_point(&r, &PointU16::of(u16::MAX - 1, u16::MAX - 1)));
+        assert!(contains_point(&r, &PointU16::of(u16::MAX - 1, MAX - 1)));
     }
 
     #[test]
-    fn contains_point_outside_borders() {
-        let r = RectU16::of(1, 1, u16::MAX - 1, u16::MAX - 1);
+    fn outside_borders() {
+        let r = RectU16::of(1, 1, MAX - 1, MAX - 1);
         assert!(!contains_point(&r, &PointU16::min()));
         assert!(!contains_point(&r, &PointU16::of(1, 0)));
         assert!(!contains_point(&r, &PointU16::of(0, 1)));
 
-        assert!(!contains_point(&r, &PointU16::of(0, u16::MAX)));
-        assert!(!contains_point(&r, &PointU16::of(0, u16::MAX - 1)));
-        assert!(!contains_point(&r, &PointU16::of(1, u16::MAX)));
+        assert!(!contains_point(&r, &PointU16::of(0, MAX)));
+        assert!(!contains_point(&r, &PointU16::of(0, MAX - 1)));
+        assert!(!contains_point(&r, &PointU16::of(1, MAX)));
 
         assert!(!contains_point(&r, &PointU16::of(u16::MAX, 0)));
         assert!(!contains_point(&r, &PointU16::of(u16::MAX, 1)));
         assert!(!contains_point(&r, &PointU16::of(u16::MAX - 1, 0)));
 
         assert!(!contains_point(&r, &PointU16::max()));
-        assert!(!contains_point(&r, &PointU16::of(u16::MAX - 1, u16::MAX)));
-        assert!(!contains_point(&r, &PointU16::of(u16::MAX, u16::MAX - 1)));
+        assert!(!contains_point(&r, &PointU16::of(u16::MAX - 1, MAX)));
+        assert!(!contains_point(&r, &PointU16::of(u16::MAX, MAX - 1)));
     }
 
     #[test]
-    fn contains_point_inside() {
-        let r = RectU16::of(1, 1, u16::MAX - 1, u16::MAX - 1);
+    fn inside() {
+        let r = RectU16::of(1, 1, MAX - 1, MAX - 1);
         assert!(contains_point(&r, &PointU16::of(10, 10)));
         assert!(contains_point(&r, &PointU16::of(u16::MAX - 10, 10)));
-        assert!(contains_point(&r, &PointU16::of(10, u16::MAX - 10)));
-        assert!(contains_point(&r, &PointU16::of(u16::MAX - 10, u16::MAX - 10)));
+        assert!(contains_point(&r, &PointU16::of(10, MAX - 10)));
+        assert!(contains_point(&r, &PointU16::of(u16::MAX - 10, MAX - 10)));
     }
 }

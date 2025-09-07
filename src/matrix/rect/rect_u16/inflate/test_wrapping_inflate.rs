@@ -1,6 +1,8 @@
 use super::wrapping_inflate;
 use crate::matrix::rect::rect_u16::RectU16;
 
+const MAX: u16 = u16::MAX;
+
 #[test]
 fn min_bounds() {
     assert_eq!(wrapping_inflate(&RectU16::of(7, 3, 9, 13)), RectU16::of(6, 2, 10, 14));
@@ -10,25 +12,25 @@ fn min_bounds() {
 
 #[test]
 fn max_bounds() {
-    assert_eq!(wrapping_inflate(&RectU16::of(u16::MAX - 33, u16::MAX - 17, u16::MAX - 5, u16::MAX - 3)), RectU16::of(u16::MAX - 34, u16::MAX - 18, u16::MAX - 4, u16::MAX - 2));
-    assert_eq!(wrapping_inflate(&RectU16::of(u16::MAX - 34, u16::MAX - 18, u16::MAX - 4, u16::MAX - 2)), RectU16::of(u16::MAX - 35, u16::MAX - 19, u16::MAX - 3, u16::MAX - 1));
-    assert_eq!(wrapping_inflate(&RectU16::of(u16::MAX - 35, u16::MAX - 19, u16::MAX - 3, u16::MAX - 1)), RectU16::of(u16::MAX - 36, u16::MAX - 20, u16::MAX - 2, u16::MAX));
+    assert_eq!(wrapping_inflate(&RectU16::of(MAX - 33, MAX - 17, MAX - 5, MAX - 3)), RectU16::of(MAX - 34, MAX - 18, MAX - 4, MAX - 2));
+    assert_eq!(wrapping_inflate(&RectU16::of(MAX - 34, MAX - 18, MAX - 4, MAX - 2)), RectU16::of(MAX - 35, MAX - 19, MAX - 3, MAX - 1));
+    assert_eq!(wrapping_inflate(&RectU16::of(MAX - 35, MAX - 19, MAX - 3, MAX - 1)), RectU16::of(MAX - 36, MAX - 20, MAX - 2, MAX));
 }
 
 #[test]
 fn to_bounds() {
-    assert_eq!(wrapping_inflate(&RectU16::of(1, 1, u16::MAX - 1, u16::MAX - 1)), RectU16::largest());
-    assert_eq!(wrapping_inflate(&RectU16::of(1, 10, u16::MAX - 10, u16::MAX - 10)), RectU16::of(0, 9, u16::MAX - 9, u16::MAX - 9));
-    assert_eq!(wrapping_inflate(&RectU16::of(10, 1, u16::MAX - 10, u16::MAX - 10)), RectU16::of(9, 0, u16::MAX - 9, u16::MAX - 9));
-    assert_eq!(wrapping_inflate(&RectU16::of(10, 10, u16::MAX - 1, u16::MAX - 10)), RectU16::of(9, 9, u16::MAX, u16::MAX - 9));
-    assert_eq!(wrapping_inflate(&RectU16::of(10, 10, u16::MAX - 10, u16::MAX - 1)), RectU16::of(9, 9, u16::MAX - 9, u16::MAX));
+    assert_eq!(wrapping_inflate(&RectU16::of(1, 1, MAX - 1, MAX - 1)), RectU16::largest());
+    assert_eq!(wrapping_inflate(&RectU16::of(1, 10, MAX - 10, MAX - 10)), RectU16::of(0, 9, MAX - 9, MAX - 9));
+    assert_eq!(wrapping_inflate(&RectU16::of(10, 1, MAX - 10, MAX - 10)), RectU16::of(9, 0, MAX - 9, MAX - 9));
+    assert_eq!(wrapping_inflate(&RectU16::of(10, 10, MAX - 1, MAX - 10)), RectU16::of(9, 9, MAX, MAX - 9));
+    assert_eq!(wrapping_inflate(&RectU16::of(10, 10, MAX - 10, MAX - 1)), RectU16::of(9, 9, MAX - 9, MAX));
 }
 
 #[test]
 fn out_of_bounds() {
-    assert_eq!(wrapping_inflate(&RectU16::largest()), RectU16::of(u16::MAX, u16::MAX, 0, 0));
-    assert_eq!(wrapping_inflate(&RectU16::of(0, 10, u16::MAX - 10, u16::MAX - 10)), RectU16::of(u16::MAX, 9, u16::MAX - 9, u16::MAX - 9));
-    assert_eq!(wrapping_inflate(&RectU16::of(10, 0, u16::MAX - 10, u16::MAX - 10)), RectU16::of(9, u16::MAX, u16::MAX - 9, u16::MAX - 9));
-    assert_eq!(wrapping_inflate(&RectU16::of(10, 10, u16::MAX, u16::MAX - 10)), RectU16::of(9, 9, 0, u16::MAX - 9));
-    assert_eq!(wrapping_inflate(&RectU16::of(10, 10, u16::MAX - 10, u16::MAX)), RectU16::of(9, 9, u16::MAX - 9, 0));
+    assert_eq!(wrapping_inflate(&RectU16::largest()), RectU16::of(MAX, MAX, 0, 0));
+    assert_eq!(wrapping_inflate(&RectU16::of(0, 10, MAX - 10, MAX - 10)), RectU16::of(MAX, 9, MAX - 9, MAX - 9));
+    assert_eq!(wrapping_inflate(&RectU16::of(10, 0, MAX - 10, MAX - 10)), RectU16::of(9, MAX, MAX - 9, MAX - 9));
+    assert_eq!(wrapping_inflate(&RectU16::of(10, 10, MAX, MAX - 10)), RectU16::of(9, 9, 0, MAX - 9));
+    assert_eq!(wrapping_inflate(&RectU16::of(10, 10, MAX - 10, MAX)), RectU16::of(9, 9, MAX - 9, 0));
 }

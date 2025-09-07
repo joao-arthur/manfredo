@@ -1,6 +1,8 @@
 use super::try_wrapping_resize_assign;
 use crate::cartesian::rect::rect_u32::RectU32;
 
+const MAX: u32 = u32::MAX;
+
 #[test]
 fn odd() {
     let mut r = RectU32::of(5, 5, 15, 15);
@@ -50,64 +52,64 @@ fn same_size() {
     assert_eq!(try_wrapping_resize_assign(&mut r_min_3, 4), Some(()));
     assert_eq!(r_min_3, RectU32::of(0, 0, 3, 3));
 
-    let mut r_max_2 = RectU32::of(u32::MAX - 2, u32::MAX - 2, u32::MAX, u32::MAX);
+    let mut r_max_2 = RectU32::of(MAX - 2, MAX - 2, MAX, MAX);
     assert_eq!(try_wrapping_resize_assign(&mut r_max_2, 3), Some(()));
-    assert_eq!(r_max_2, RectU32::of(u32::MAX - 2, u32::MAX - 2, u32::MAX, u32::MAX));
+    assert_eq!(r_max_2, RectU32::of(MAX - 2, MAX - 2, MAX, MAX));
 
-    let mut r_max_3 = RectU32::of(u32::MAX - 3, u32::MAX - 3, u32::MAX, u32::MAX);
+    let mut r_max_3 = RectU32::of(MAX - 3, MAX - 3, MAX, MAX);
     assert_eq!(try_wrapping_resize_assign(&mut r_max_3, 4), Some(()));
-    assert_eq!(r_max_3, RectU32::of(u32::MAX - 3, u32::MAX - 3, u32::MAX, u32::MAX));
+    assert_eq!(r_max_3, RectU32::of(MAX - 3, MAX - 3, MAX, MAX));
 }
 
 #[test]
 fn out_of_bounds() {
     let mut r_min_x = RectU32::of(0, 2, 2, 4);
     assert_eq!(try_wrapping_resize_assign(&mut r_min_x, 5), Some(()));
-    assert_eq!(r_min_x, RectU32::of(u32::MAX, 1, 3, 5));
+    assert_eq!(r_min_x, RectU32::of(MAX, 1, 3, 5));
 
     let mut r_min_y = RectU32::of(2, 0, 4, 2);
     assert_eq!(try_wrapping_resize_assign(&mut r_min_y, 5), Some(()));
-    assert_eq!(r_min_y, RectU32::of(1, u32::MAX, 5, 3));
+    assert_eq!(r_min_y, RectU32::of(1, MAX, 5, 3));
 
-    let mut r_max_x = RectU32::of(u32::MAX - 2, u32::MAX - 4, u32::MAX, u32::MAX - 2);
+    let mut r_max_x = RectU32::of(MAX - 2, MAX - 4, MAX, MAX - 2);
     assert_eq!(try_wrapping_resize_assign(&mut r_max_x, 5), Some(()));
-    assert_eq!(r_max_x, RectU32::of(u32::MAX - 3, u32::MAX - 5, 0, u32::MAX - 1));
+    assert_eq!(r_max_x, RectU32::of(MAX - 3, MAX - 5, 0, MAX - 1));
 
-    let mut r_max_y = RectU32::of(u32::MAX - 4, u32::MAX - 2, u32::MAX - 2, u32::MAX);
+    let mut r_max_y = RectU32::of(MAX - 4, MAX - 2, MAX - 2, MAX);
     assert_eq!(try_wrapping_resize_assign(&mut r_max_y, 5), Some(()));
-    assert_eq!(r_max_y, RectU32::of(u32::MAX - 5, u32::MAX - 3, u32::MAX - 1, 0));
+    assert_eq!(r_max_y, RectU32::of(MAX - 5, MAX - 3, MAX - 1, 0));
 }
 
 #[test]
 fn small_rect_limits_out_of_bounds() {
     let mut r_min_x = RectU32::of(0, 2, 2, 4);
-    assert_eq!(try_wrapping_resize_assign(&mut r_min_x, u32::MAX), Some(()));
-    assert_eq!(r_min_x, RectU32::of(u32::MAX / 2 + 3, u32::MAX / 2 + 5, u32::MAX / 2 + 1, u32::MAX / 2 + 3));
+    assert_eq!(try_wrapping_resize_assign(&mut r_min_x, MAX), Some(()));
+    assert_eq!(r_min_x, RectU32::of(MAX / 2 + 3, MAX / 2 + 5, MAX / 2 + 1, MAX / 2 + 3));
 
     let mut r_min_y = RectU32::of(2, 0, 4, 2);
-    assert_eq!(try_wrapping_resize_assign(&mut r_min_y, u32::MAX), Some(()));
-    assert_eq!(r_min_y, RectU32::of(u32::MAX / 2 + 5, u32::MAX / 2 + 3, u32::MAX / 2 + 3, u32::MAX / 2 + 1));
+    assert_eq!(try_wrapping_resize_assign(&mut r_min_y, MAX), Some(()));
+    assert_eq!(r_min_y, RectU32::of(MAX / 2 + 5, MAX / 2 + 3, MAX / 2 + 3, MAX / 2 + 1));
 
-    let mut r_max_x = RectU32::of(u32::MAX - 2, u32::MAX - 4, u32::MAX, u32::MAX - 2);
-    assert_eq!(try_wrapping_resize_assign(&mut r_max_x, u32::MAX), Some(()));
-    assert_eq!(r_max_x, RectU32::of(u32::MAX / 2, u32::MAX / 2 - 2, u32::MAX / 2 - 2, u32::MAX / 2 - 4));
+    let mut r_max_x = RectU32::of(MAX - 2, MAX - 4, MAX, MAX - 2);
+    assert_eq!(try_wrapping_resize_assign(&mut r_max_x, MAX), Some(()));
+    assert_eq!(r_max_x, RectU32::of(MAX / 2, MAX / 2 - 2, MAX / 2 - 2, MAX / 2 - 4));
 
-    let mut r_max_y = RectU32::of(u32::MAX - 4, u32::MAX - 2, u32::MAX - 2, u32::MAX);
-    assert_eq!(try_wrapping_resize_assign(&mut r_max_y, u32::MAX), Some(()));
-    assert_eq!(r_max_y, RectU32::of(u32::MAX / 2 - 2, u32::MAX / 2, u32::MAX / 2 - 4, u32::MAX / 2 - 2));
+    let mut r_max_y = RectU32::of(MAX - 4, MAX - 2, MAX - 2, MAX);
+    assert_eq!(try_wrapping_resize_assign(&mut r_max_y, MAX), Some(()));
+    assert_eq!(r_max_y, RectU32::of(MAX / 2 - 2, MAX / 2, MAX / 2 - 4, MAX / 2 - 2));
 }
 
 #[test]
 fn big_rect_limits_out_of_bounds() {
-    let mut r_odd_1 = RectU32::of(0, 0, u32::MAX - 1, u32::MAX - 1);
-    assert_eq!(try_wrapping_resize_assign(&mut r_odd_1, u32::MAX), Some(()));
-    assert_eq!(r_odd_1, RectU32::of(0, 0, u32::MAX - 1, u32::MAX - 1));
+    let mut r_odd_1 = RectU32::of(0, 0, MAX - 1, MAX - 1);
+    assert_eq!(try_wrapping_resize_assign(&mut r_odd_1, MAX), Some(()));
+    assert_eq!(r_odd_1, RectU32::of(0, 0, MAX - 1, MAX - 1));
 
-    let mut r_odd_1 = RectU32::of(1, 1, u32::MAX, u32::MAX);
-    assert_eq!(try_wrapping_resize_assign(&mut r_odd_1, u32::MAX), Some(()));
-    assert_eq!(r_odd_1, RectU32::of(1, 1, u32::MAX, u32::MAX));
+    let mut r_odd_1 = RectU32::of(1, 1, MAX, MAX);
+    assert_eq!(try_wrapping_resize_assign(&mut r_odd_1, MAX), Some(()));
+    assert_eq!(r_odd_1, RectU32::of(1, 1, MAX, MAX));
 
     let mut r_even = RectU32::largest();
-    assert_eq!(try_wrapping_resize_assign(&mut r_even, u32::MAX), Some(()));
-    assert_eq!(r_even, RectU32::of(0, 0, u32::MAX - 1, u32::MAX - 1));
+    assert_eq!(try_wrapping_resize_assign(&mut r_even, MAX), Some(()));
+    assert_eq!(r_even, RectU32::of(0, 0, MAX - 1, MAX - 1));
 }

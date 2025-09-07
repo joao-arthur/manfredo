@@ -13,7 +13,7 @@ mod tests {
     const MAX: i32 = i32::MAX;
 
     #[test]
-    fn contains_point_inside_borders() {
+    fn inside_borders() {
         let r = RectI32::of(MIN + 1, MIN + 1, MAX - 1, MAX - 1);
         assert!(contains_point(&r, &PointI32::of(MIN + 1, MIN + 1)));
         assert!(contains_point(&r, &PointI32::of(MIN + 1, MAX - 1)));
@@ -22,7 +22,7 @@ mod tests {
     }
 
     #[test]
-    fn contains_point_outside_borders() {
+    fn outside_borders() {
         let r = RectI32::of(MIN + 1, MIN + 1, MAX - 1, MAX - 1);
         assert!(!contains_point(&r, &PointI32::min()));
         assert!(!contains_point(&r, &PointI32::of(MIN + 1, MIN)));
@@ -42,7 +42,7 @@ mod tests {
     }
 
     #[test]
-    fn contains_point_inside() {
+    fn inside() {
         let r = RectI32::of(MIN + 1, MIN + 1, MAX - 1, MAX - 1);
         assert!(contains_point(&r, &PointI32::of(MIN + 10, MIN + 10)));
         assert!(contains_point(&r, &PointI32::of(MAX - 10, MIN + 10)));

@@ -1,6 +1,8 @@
 use super::checked_inflate_assign;
 use crate::matrix::rect::rect_u64::RectU64;
 
+const MAX: u64 = u64::MAX;
+
 #[test]
 fn min_bounds() {
     let mut r = RectU64::of(7, 3, 9, 13);
@@ -14,11 +16,11 @@ fn min_bounds() {
 
 #[test]
 fn max_bounds() {
-    let mut r = RectU64::of(u64::MAX - 33, u64::MAX - 17, u64::MAX - 5, u64::MAX - 3);
+    let mut r = RectU64::of(MAX - 33, MAX - 17, MAX - 5, MAX - 3);
     checked_inflate_assign(&mut r);
-    assert_eq!(r, RectU64::of(u64::MAX - 34, u64::MAX - 18, u64::MAX - 4, u64::MAX - 2));
+    assert_eq!(r, RectU64::of(MAX - 34, MAX - 18, MAX - 4, MAX - 2));
     checked_inflate_assign(&mut r);
-    assert_eq!(r, RectU64::of(u64::MAX - 35, u64::MAX - 19, u64::MAX - 3, u64::MAX - 1));
+    assert_eq!(r, RectU64::of(MAX - 35, MAX - 19, MAX - 3, MAX - 1));
     checked_inflate_assign(&mut r);
-    assert_eq!(r, RectU64::of(u64::MAX - 36, u64::MAX - 20, u64::MAX - 2, u64::MAX));
+    assert_eq!(r, RectU64::of(MAX - 36, MAX - 20, MAX - 2, MAX));
 }

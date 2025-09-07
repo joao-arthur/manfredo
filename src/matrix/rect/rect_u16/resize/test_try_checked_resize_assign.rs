@@ -1,6 +1,8 @@
 use super::try_checked_resize_assign;
 use crate::matrix::rect::rect_u16::RectU16;
 
+const MAX: u16 = u16::MAX;
+
 #[test]
 fn odd() {
     let mut r = RectU16::of(5, 5, 15, 15);
@@ -50,13 +52,13 @@ fn same_size() {
     assert_eq!(try_checked_resize_assign(&mut r_min_3, 4), Some(()));
     assert_eq!(r_min_3, RectU16::of(0, 0, 3, 3));
 
-    let mut r_max_2 = RectU16::of(u16::MAX - 2, u16::MAX - 2, u16::MAX, u16::MAX);
+    let mut r_max_2 = RectU16::of(MAX - 2, MAX - 2, MAX, MAX);
     assert_eq!(try_checked_resize_assign(&mut r_max_2, 3), Some(()));
-    assert_eq!(r_max_2, RectU16::of(u16::MAX - 2, u16::MAX - 2, u16::MAX, u16::MAX));
+    assert_eq!(r_max_2, RectU16::of(MAX - 2, MAX - 2, MAX, MAX));
 
-    let mut r_max_3 = RectU16::of(u16::MAX - 3, u16::MAX - 3, u16::MAX, u16::MAX);
+    let mut r_max_3 = RectU16::of(MAX - 3, MAX - 3, MAX, MAX);
     assert_eq!(try_checked_resize_assign(&mut r_max_3, 4), Some(()));
-    assert_eq!(r_max_3, RectU16::of(u16::MAX - 3, u16::MAX - 3, u16::MAX, u16::MAX));
+    assert_eq!(r_max_3, RectU16::of(MAX - 3, MAX - 3, MAX, MAX));
 }
 
 #[test]
@@ -69,45 +71,45 @@ fn out_of_bounds() {
     assert_eq!(try_checked_resize_assign(&mut r_min_y, 5), None);
     assert_eq!(r_min_y, RectU16::of(2, 0, 4, 2));
 
-    let mut r_max_x = RectU16::of(u16::MAX - 2, u16::MAX - 4, u16::MAX, u16::MAX - 2);
+    let mut r_max_x = RectU16::of(MAX - 2, MAX - 4, MAX, MAX - 2);
     assert_eq!(try_checked_resize_assign(&mut r_max_x, 5), None);
-    assert_eq!(r_max_x, RectU16::of(u16::MAX - 2, u16::MAX - 4, u16::MAX, u16::MAX - 2));
+    assert_eq!(r_max_x, RectU16::of(MAX - 2, MAX - 4, MAX, MAX - 2));
 
-    let mut r_max_y = RectU16::of(u16::MAX - 4, u16::MAX - 2, u16::MAX - 2, u16::MAX);
+    let mut r_max_y = RectU16::of(MAX - 4, MAX - 2, MAX - 2, MAX);
     assert_eq!(try_checked_resize_assign(&mut r_max_y, 5), None);
-    assert_eq!(r_max_y, RectU16::of(u16::MAX - 4, u16::MAX - 2, u16::MAX - 2, u16::MAX));
+    assert_eq!(r_max_y, RectU16::of(MAX - 4, MAX - 2, MAX - 2, MAX));
 }
 
 #[test]
 fn small_rect_limits_out_of_bounds() {
     let mut r_min_row = RectU16::of(0, 2, 2, 4);
-    assert_eq!(try_checked_resize_assign(&mut r_min_row, u16::MAX), None);
+    assert_eq!(try_checked_resize_assign(&mut r_min_row, MAX), None);
     assert_eq!(r_min_row, RectU16::of(0, 2, 2, 4));
 
     let mut r_min_y = RectU16::of(2, 0, 4, 2);
-    assert_eq!(try_checked_resize_assign(&mut r_min_y, u16::MAX), None);
+    assert_eq!(try_checked_resize_assign(&mut r_min_y, MAX), None);
     assert_eq!(r_min_y, RectU16::of(2, 0, 4, 2));
 
-    let mut r_max_x = RectU16::of(u16::MAX - 2, u16::MAX - 4, u16::MAX, u16::MAX - 2);
-    assert_eq!(try_checked_resize_assign(&mut r_max_x, u16::MAX), None);
-    assert_eq!(r_max_x, RectU16::of(u16::MAX - 2, u16::MAX - 4, u16::MAX, u16::MAX - 2));
+    let mut r_max_x = RectU16::of(MAX - 2, MAX - 4, MAX, MAX - 2);
+    assert_eq!(try_checked_resize_assign(&mut r_max_x, MAX), None);
+    assert_eq!(r_max_x, RectU16::of(MAX - 2, MAX - 4, MAX, MAX - 2));
 
-    let mut r_max_y = RectU16::of(u16::MAX - 4, u16::MAX - 2, u16::MAX - 2, u16::MAX);
-    assert_eq!(try_checked_resize_assign(&mut r_max_y, u16::MAX), None);
-    assert_eq!(r_max_y, RectU16::of(u16::MAX - 4, u16::MAX - 2, u16::MAX - 2, u16::MAX));
+    let mut r_max_y = RectU16::of(MAX - 4, MAX - 2, MAX - 2, MAX);
+    assert_eq!(try_checked_resize_assign(&mut r_max_y, MAX), None);
+    assert_eq!(r_max_y, RectU16::of(MAX - 4, MAX - 2, MAX - 2, MAX));
 }
 
 #[test]
 fn big_rect_limits_out_of_bounds() {
-    let mut r_odd_1 = RectU16::of(0, 0, u16::MAX - 1, u16::MAX - 1);
-    assert_eq!(try_checked_resize_assign(&mut r_odd_1, u16::MAX), Some(()));
-    assert_eq!(r_odd_1, RectU16::of(0, 0, u16::MAX - 1, u16::MAX - 1));
+    let mut r_odd_1 = RectU16::of(0, 0, MAX - 1, MAX - 1);
+    assert_eq!(try_checked_resize_assign(&mut r_odd_1, MAX), Some(()));
+    assert_eq!(r_odd_1, RectU16::of(0, 0, MAX - 1, MAX - 1));
 
-    let mut r_odd_1 = RectU16::of(1, 1, u16::MAX, u16::MAX);
-    assert_eq!(try_checked_resize_assign(&mut r_odd_1, u16::MAX), Some(()));
-    assert_eq!(r_odd_1, RectU16::of(1, 1, u16::MAX, u16::MAX));
+    let mut r_odd_1 = RectU16::of(1, 1, MAX, MAX);
+    assert_eq!(try_checked_resize_assign(&mut r_odd_1, MAX), Some(()));
+    assert_eq!(r_odd_1, RectU16::of(1, 1, MAX, MAX));
 
     let mut r_even = RectU16::largest();
-    assert_eq!(try_checked_resize_assign(&mut r_even, u16::MAX), Some(()));
-    assert_eq!(r_even, RectU16::of(0, 0, u16::MAX - 1, u16::MAX - 1));
+    assert_eq!(try_checked_resize_assign(&mut r_even, MAX), Some(()));
+    assert_eq!(r_even, RectU16::of(0, 0, MAX - 1, MAX - 1));
 }

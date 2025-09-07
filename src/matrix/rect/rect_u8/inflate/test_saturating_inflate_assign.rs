@@ -1,6 +1,8 @@
 use super::saturating_inflate_assign;
 use crate::matrix::rect::rect_u8::RectU8;
 
+const MAX: u8 = u8::MAX;
+
 #[test]
 fn min_bounds() {
     let mut r = RectU8::of(7, 2, 17, 13);
@@ -24,21 +26,21 @@ fn min_bounds() {
 
 #[test]
 fn max_bounds() {
-    let mut r = RectU8::of(u8::MAX - 33, u8::MAX - 17, u8::MAX - 5, u8::MAX - 3);
+    let mut r = RectU8::of(MAX - 33, MAX - 17, MAX - 5, MAX - 3);
     saturating_inflate_assign(&mut r);
-    assert_eq!(r, RectU8::of(u8::MAX - 34, u8::MAX - 18, u8::MAX - 4, u8::MAX - 2));
+    assert_eq!(r, RectU8::of(MAX - 34, MAX - 18, MAX - 4, MAX - 2));
     saturating_inflate_assign(&mut r);
-    assert_eq!(r, RectU8::of(u8::MAX - 35, u8::MAX - 19, u8::MAX - 3, u8::MAX - 1));
+    assert_eq!(r, RectU8::of(MAX - 35, MAX - 19, MAX - 3, MAX - 1));
     saturating_inflate_assign(&mut r);
-    assert_eq!(r, RectU8::of(u8::MAX - 36, u8::MAX - 20, u8::MAX - 2, u8::MAX));
+    assert_eq!(r, RectU8::of(MAX - 36, MAX - 20, MAX - 2, MAX));
     saturating_inflate_assign(&mut r);
-    assert_eq!(r, RectU8::of(u8::MAX - 37, u8::MAX - 22, u8::MAX - 1, u8::MAX));
+    assert_eq!(r, RectU8::of(MAX - 37, MAX - 22, MAX - 1, MAX));
     saturating_inflate_assign(&mut r);
-    assert_eq!(r, RectU8::of(u8::MAX - 38, u8::MAX - 24, u8::MAX, u8::MAX));
+    assert_eq!(r, RectU8::of(MAX - 38, MAX - 24, MAX, MAX));
     saturating_inflate_assign(&mut r);
-    assert_eq!(r, RectU8::of(u8::MAX - 40, u8::MAX - 26, u8::MAX, u8::MAX));
+    assert_eq!(r, RectU8::of(MAX - 40, MAX - 26, MAX, MAX));
     saturating_inflate_assign(&mut r);
-    assert_eq!(r, RectU8::of(u8::MAX - 42, u8::MAX - 28, u8::MAX, u8::MAX));
+    assert_eq!(r, RectU8::of(MAX - 42, MAX - 28, MAX, MAX));
     saturating_inflate_assign(&mut r);
-    assert_eq!(r, RectU8::of(u8::MAX - 44, u8::MAX - 30, u8::MAX, u8::MAX));
+    assert_eq!(r, RectU8::of(MAX - 44, MAX - 30, MAX, MAX));
 }

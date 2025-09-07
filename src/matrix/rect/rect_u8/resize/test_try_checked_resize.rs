@@ -1,6 +1,8 @@
 use super::try_checked_resize;
 use crate::matrix::rect::rect_u8::RectU8;
 
+const MAX: u8 = u8::MAX;
+
 #[test]
 fn odd() {
     assert_eq!(try_checked_resize(&RectU8::of(5, 5, 15, 15), 9), Some(RectU8::of(6, 6, 14, 14)));
@@ -31,29 +33,29 @@ fn small_size() {
 fn same_size() {
     assert_eq!(try_checked_resize(&RectU8::of(0, 0, 2, 2), 3), Some(RectU8::of(0, 0, 2, 2)));
     assert_eq!(try_checked_resize(&RectU8::of(0, 0, 3, 3), 4), Some(RectU8::of(0, 0, 3, 3)));
-    assert_eq!(try_checked_resize(&RectU8::of(u8::MAX - 2, u8::MAX - 2, u8::MAX, u8::MAX), 3), Some(RectU8::of(u8::MAX - 2, u8::MAX - 2, u8::MAX, u8::MAX)));
-    assert_eq!(try_checked_resize(&RectU8::of(u8::MAX - 3, u8::MAX - 3, u8::MAX, u8::MAX), 4), Some(RectU8::of(u8::MAX - 3, u8::MAX - 3, u8::MAX, u8::MAX)));
+    assert_eq!(try_checked_resize(&RectU8::of(MAX - 2, MAX - 2, MAX, MAX), 3), Some(RectU8::of(MAX - 2, MAX - 2, MAX, MAX)));
+    assert_eq!(try_checked_resize(&RectU8::of(MAX - 3, MAX - 3, MAX, MAX), 4), Some(RectU8::of(MAX - 3, MAX - 3, MAX, MAX)));
 }
 
 #[test]
 fn out_of_bounds() {
     assert_eq!(try_checked_resize(&RectU8::of(0, 2, 2, 4), 5), None);
     assert_eq!(try_checked_resize(&RectU8::of(2, 0, 4, 2), 5), None);
-    assert_eq!(try_checked_resize(&RectU8::of(u8::MAX - 2, u8::MAX - 4, u8::MAX, u8::MAX - 2), 5), None);
-    assert_eq!(try_checked_resize(&RectU8::of(u8::MAX - 4, u8::MAX - 2, u8::MAX - 2, u8::MAX), 5), None);
+    assert_eq!(try_checked_resize(&RectU8::of(MAX - 2, MAX - 4, MAX, MAX - 2), 5), None);
+    assert_eq!(try_checked_resize(&RectU8::of(MAX - 4, MAX - 2, MAX - 2, MAX), 5), None);
 }
 
 #[test]
 fn small_rect_limits_out_of_bounds() {
-    assert_eq!(try_checked_resize(&RectU8::of(0, 2, 2, 4), u8::MAX), None);
-    assert_eq!(try_checked_resize(&RectU8::of(2, 0, 4, 2), u8::MAX), None);
-    assert_eq!(try_checked_resize(&RectU8::of(u8::MAX - 2, u8::MAX - 4, u8::MAX, u8::MAX - 2), u8::MAX), None);
-    assert_eq!(try_checked_resize(&RectU8::of(u8::MAX - 4, u8::MAX - 2, u8::MAX - 2, u8::MAX), u8::MAX), None);
+    assert_eq!(try_checked_resize(&RectU8::of(0, 2, 2, 4), MAX), None);
+    assert_eq!(try_checked_resize(&RectU8::of(2, 0, 4, 2), MAX), None);
+    assert_eq!(try_checked_resize(&RectU8::of(MAX - 2, MAX - 4, MAX, MAX - 2), MAX), None);
+    assert_eq!(try_checked_resize(&RectU8::of(MAX - 4, MAX - 2, MAX - 2, MAX), MAX), None);
 }
 
 #[test]
 fn big_rect_limits_out_of_bounds() {
-    assert_eq!(try_checked_resize(&RectU8::of(0, 0, u8::MAX - 1, u8::MAX - 1), u8::MAX), Some(RectU8::of(0, 0, u8::MAX - 1, u8::MAX - 1)));
-    assert_eq!(try_checked_resize(&RectU8::of(1, 1, u8::MAX, u8::MAX), u8::MAX), Some(RectU8::of(1, 1, u8::MAX, u8::MAX)));
-    assert_eq!(try_checked_resize(&RectU8::largest(), u8::MAX), Some(RectU8::of(0, 0, u8::MAX - 1, u8::MAX - 1)));
+    assert_eq!(try_checked_resize(&RectU8::of(0, 0, MAX - 1, MAX - 1), MAX), Some(RectU8::of(0, 0, MAX - 1, MAX - 1)));
+    assert_eq!(try_checked_resize(&RectU8::of(1, 1, MAX, MAX), MAX), Some(RectU8::of(1, 1, MAX, MAX)));
+    assert_eq!(try_checked_resize(&RectU8::largest(), MAX), Some(RectU8::of(0, 0, MAX - 1, MAX - 1)));
 }

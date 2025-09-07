@@ -9,39 +9,41 @@ mod tests {
     use super::contains_rect;
     use crate::cartesian::rect::rect_u8::RectU8;
 
+    const MAX: u8 = u8::MAX;
+
     #[test]
-    fn contains_rect_inside() {
-        let r = RectU8::of(1, 1, u8::MAX - 1, u8::MAX - 1);
-        assert!(contains_rect(&r, &RectU8::of(2, 2, u8::MAX - 2, u8::MAX - 2)));
-        assert!(contains_rect(&r, &RectU8::of(3, 3, u8::MAX - 3, u8::MAX - 3)));
-        assert!(contains_rect(&r, &RectU8::of(10, 10, u8::MAX - 10, u8::MAX - 10)));
+    fn inside() {
+        let r = RectU8::of(1, 1, MAX - 1, MAX - 1);
+        assert!(contains_rect(&r, &RectU8::of(2, 2, MAX - 2, MAX - 2)));
+        assert!(contains_rect(&r, &RectU8::of(3, 3, MAX - 3, MAX - 3)));
+        assert!(contains_rect(&r, &RectU8::of(10, 10, MAX - 10, MAX - 10)));
     }
 
     #[test]
-    fn contains_rect_borders() {
-        let r = RectU8::of(1, 1, u8::MAX - 1, u8::MAX - 1);
-        assert!(contains_rect(&r, &RectU8::of(1, 1, u8::MAX - 1, u8::MAX - 1)));
+    fn borders() {
+        let r = RectU8::of(1, 1, MAX - 1, MAX - 1);
+        assert!(contains_rect(&r, &RectU8::of(1, 1, MAX - 1, MAX - 1)));
 
-        assert!(contains_rect(&r, &RectU8::of(2, 1, u8::MAX - 1, u8::MAX - 1)));
-        assert!(contains_rect(&r, &RectU8::of(1, 2, u8::MAX - 1, u8::MAX - 1)));
-        assert!(contains_rect(&r, &RectU8::of(1, 1, u8::MAX - 2, u8::MAX - 1)));
-        assert!(contains_rect(&r, &RectU8::of(1, 1, u8::MAX - 1, u8::MAX - 2)));
+        assert!(contains_rect(&r, &RectU8::of(2, 1, MAX - 1, MAX - 1)));
+        assert!(contains_rect(&r, &RectU8::of(1, 2, MAX - 1, MAX - 1)));
+        assert!(contains_rect(&r, &RectU8::of(1, 1, MAX - 2, MAX - 1)));
+        assert!(contains_rect(&r, &RectU8::of(1, 1, MAX - 1, MAX - 2)));
 
-        assert!(contains_rect(&r, &RectU8::of(1, 1, u8::MAX - 2, u8::MAX - 2)));
-        assert!(contains_rect(&r, &RectU8::of(2, 2, u8::MAX - 1, u8::MAX - 1)));
+        assert!(contains_rect(&r, &RectU8::of(1, 1, MAX - 2, MAX - 2)));
+        assert!(contains_rect(&r, &RectU8::of(2, 2, MAX - 1, MAX - 1)));
     }
 
     #[test]
-    fn contains_rect_outside() {
-        let r = RectU8::of(1, 1, u8::MAX - 1, u8::MAX - 1);
+    fn outside() {
+        let r = RectU8::of(1, 1, MAX - 1, MAX - 1);
         assert!(!contains_rect(&r, &RectU8::largest()));
 
-        assert!(!contains_rect(&r, &RectU8::of(0, 1, u8::MAX - 1, u8::MAX - 1)));
-        assert!(!contains_rect(&r, &RectU8::of(1, 0, u8::MAX - 1, u8::MAX - 1)));
-        assert!(!contains_rect(&r, &RectU8::of(1, 1, u8::MAX, u8::MAX - 1)));
-        assert!(!contains_rect(&r, &RectU8::of(1, 1, u8::MAX - 1, u8::MAX)));
+        assert!(!contains_rect(&r, &RectU8::of(0, 1, MAX - 1, MAX - 1)));
+        assert!(!contains_rect(&r, &RectU8::of(1, 0, MAX - 1, MAX - 1)));
+        assert!(!contains_rect(&r, &RectU8::of(1, 1, MAX, MAX - 1)));
+        assert!(!contains_rect(&r, &RectU8::of(1, 1, MAX - 1, MAX)));
 
-        assert!(!contains_rect(&r, &RectU8::of(1, 1, u8::MAX, u8::MAX)));
-        assert!(!contains_rect(&r, &RectU8::of(0, 0, u8::MAX - 1, u8::MAX - 1)));
+        assert!(!contains_rect(&r, &RectU8::of(1, 1, MAX, MAX)));
+        assert!(!contains_rect(&r, &RectU8::of(0, 0, MAX - 1, MAX - 1)));
     }
 }

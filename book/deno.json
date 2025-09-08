@@ -1,0 +1,7 @@
+{
+    "fmt": {
+        "include": ["src/"],
+        "lineWidth": 100,
+        "indentWidth": 8
+    }
+}

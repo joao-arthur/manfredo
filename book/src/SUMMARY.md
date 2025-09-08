@@ -1,12 +1,13 @@
 # Summary
 
+- [Introduction](./introduction.md)
+
 - [Cartesian](./cartesian/cartesian.md)
-    - [Point](./cartesian/point.md)
-    - [Rect](./cartesian/rect.md)
+    - [Cartesian Point](./cartesian/point.md)
+    - [Cartesian Rect](./cartesian/rect.md)
 
 - [Matrix](./matrix/matrix.md)
-    - [Point](./matrix/point.md)
-    - [Rect](./matrix/rect.md)
-
+    - [Matrix Point](./matrix/point.md)
+    - [Matrix Rect](./matrix/rect.md)
 
 - [Transform](./transform.md)

@@ -1,6 +1,7 @@
 # Matrix Plane
 
-Represents space using a **finite grid of discrete cells**, described by **row** and **column** indices in *2D*, where `(0, 0)` corresponds to the **top-left**.
+Represents space using a **finite grid of discrete cells**, described by **row** and **column**
+indices in _2D_, where `(0, 0)` corresponds to the **top-left**.
 
 Each element is accessed as `(row, col)`, both being **non-negative integers**.
 

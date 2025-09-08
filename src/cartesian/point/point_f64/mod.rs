@@ -2,7 +2,7 @@ use super::point_f32::PointF32;
 
 mod add;
 
-pub use add::{checked_add, checked_add_assign, saturating_add, saturating_add_assign, try_checked_add, try_checked_add_assign, wrapping_add, wrapping_add_assign};
+pub use self::add::{checked_add, checked_add_assign, saturating_add, saturating_add_assign, try_checked_add, try_checked_add_assign, wrapping_add, wrapping_add_assign};
 
 pub const MIN: f64 = -9_007_199_254_740_992.0;
 pub const MAX: f64 = 9_007_199_254_740_991.0;

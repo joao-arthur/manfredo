@@ -9,19 +9,19 @@ mod inflate;
 mod resize;
 mod translate;
 
-pub use add::{checked_add, checked_add_assign, saturating_add, saturating_add_assign, try_checked_add, try_checked_add_assign, wrapping_add, wrapping_add_assign};
-pub use contains_point::contains_point;
-pub use contains_rect::contains_rect;
-pub use deflate::{assign_deflate, deflate, try_assign_deflate, try_deflate};
-pub use inflate::{
+pub use self::add::{checked_add, checked_add_assign, saturating_add, saturating_add_assign, try_checked_add, try_checked_add_assign, wrapping_add, wrapping_add_assign};
+pub use self::contains_point::contains_point;
+pub use self::contains_rect::contains_rect;
+pub use self::deflate::{assign_deflate, deflate, try_assign_deflate, try_deflate};
+pub use self::inflate::{
     checked_inflate, checked_inflate_assign, saturating_inflate, saturating_inflate_assign, try_checked_inflate, try_checked_inflate_assign, try_saturating_inflate, try_saturating_inflate_assign,
     wrapping_inflate, wrapping_inflate_assign,
 };
-pub use resize::{
+pub use self::resize::{
     checked_resize, checked_resize_assign, saturating_resize, saturating_resize_assign, try_checked_resize, try_checked_resize_assign, try_saturating_resize, try_saturating_resize_assign,
     try_wrapping_resize, try_wrapping_resize_assign, wrapping_resize, wrapping_resize_assign,
 };
-pub use translate::{
+pub use self::translate::{
     checked_translate, checked_translate_assign, saturating_translate, saturating_translate_assign, try_checked_translate, try_checked_translate_assign, wrapping_translate, wrapping_translate_assign,
 };
 

@@ -3,7 +3,7 @@ pub const MAX: f32 = 16_777_215.0;
 
 mod add;
 
-pub use add::{checked_add, checked_add_assign, saturating_add, saturating_add_assign, try_checked_add, try_checked_add_assign, wrapping_add, wrapping_add_assign};
+pub use self::add::{checked_add, checked_add_assign, saturating_add, saturating_add_assign, try_checked_add, try_checked_add_assign, wrapping_add, wrapping_add_assign};
 
 #[derive(PartialEq, Debug, Clone)]
 pub struct PointF32 {

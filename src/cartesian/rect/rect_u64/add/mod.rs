@@ -1,6 +1,6 @@
-use crate::cartesian::rect::{rect_i64::Rect as RectI, rect_u64::Rect};
+use crate::cartesian::rect::{rect_i64, rect_u64::Rect};
 
-pub fn try_checked_add_assign(r: &mut Rect, delta: &RectI) -> Option<()> {
+pub fn try_checked_add_assign(r: &mut Rect, delta: &rect_i64::Rect) -> Option<()> {
     let min_x = r.min.x.checked_add_signed(delta.min.x)?;
     let min_y = r.min.y.checked_add_signed(delta.min.y)?;
     let max_x = r.max.x.checked_add_signed(delta.max.x)?;
@@ -12,7 +12,7 @@ pub fn try_checked_add_assign(r: &mut Rect, delta: &RectI) -> Option<()> {
     Some(())
 }
 
-pub fn try_checked_add(r: &Rect, delta: &RectI) -> Option<Rect> {
+pub fn try_checked_add(r: &Rect, delta: &rect_i64::Rect) -> Option<Rect> {
     let min_x = r.min.x.checked_add_signed(delta.min.x)?;
     let min_y = r.min.y.checked_add_signed(delta.min.y)?;
     let max_x = r.max.x.checked_add_signed(delta.max.x)?;
@@ -20,22 +20,22 @@ pub fn try_checked_add(r: &Rect, delta: &RectI) -> Option<Rect> {
     Some(Rect::of(min_x, min_y, max_x, max_y))
 }
 
-pub fn checked_add_assign(r: &mut Rect, delta: &RectI) {
+pub fn checked_add_assign(r: &mut Rect, delta: &rect_i64::Rect) {
     try_checked_add_assign(r, delta).unwrap()
 }
 
-pub fn checked_add(r: &Rect, delta: &RectI) -> Rect {
+pub fn checked_add(r: &Rect, delta: &rect_i64::Rect) -> Rect {
     try_checked_add(r, delta).unwrap()
 }
 
-pub fn saturating_add_assign(r: &mut Rect, delta: &RectI) {
+pub fn saturating_add_assign(r: &mut Rect, delta: &rect_i64::Rect) {
     r.min.x = r.min.x.saturating_add_signed(delta.min.x);
     r.min.y = r.min.y.saturating_add_signed(delta.min.y);
     r.max.x = r.max.x.saturating_add_signed(delta.max.x);
     r.max.y = r.max.y.saturating_add_signed(delta.max.y);
 }
 
-pub fn saturating_add(r: &Rect, delta: &RectI) -> Rect {
+pub fn saturating_add(r: &Rect, delta: &rect_i64::Rect) -> Rect {
     let min_x = r.min.x.saturating_add_signed(delta.min.x);
     let min_y = r.min.y.saturating_add_signed(delta.min.y);
     let max_x = r.max.x.saturating_add_signed(delta.max.x);
@@ -43,14 +43,14 @@ pub fn saturating_add(r: &Rect, delta: &RectI) -> Rect {
     Rect::of(min_x, min_y, max_x, max_y)
 }
 
-pub fn wrapping_add_assign(r: &mut Rect, delta: &RectI) {
+pub fn wrapping_add_assign(r: &mut Rect, delta: &rect_i64::Rect) {
     r.min.x = r.min.x.wrapping_add_signed(delta.min.x);
     r.min.y = r.min.y.wrapping_add_signed(delta.min.y);
     r.max.x = r.max.x.wrapping_add_signed(delta.max.x);
     r.max.y = r.max.y.wrapping_add_signed(delta.max.y);
 }
 
-pub fn wrapping_add(r: &Rect, delta: &RectI) -> Rect {
+pub fn wrapping_add(r: &Rect, delta: &rect_i64::Rect) -> Rect {
     let min_x = r.min.x.wrapping_add_signed(delta.min.x);
     let min_y = r.min.y.wrapping_add_signed(delta.min.y);
     let max_x = r.max.x.wrapping_add_signed(delta.max.x);

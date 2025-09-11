@@ -1,5 +1,5 @@
 use crate::cartesian::{
-    point::point_u32::PointU32,
+    point::point_u32::Point,
     rect::rect_u32::{Rect, delta_x, delta_y},
 };
 
@@ -22,7 +22,7 @@ pub fn try_deflate(r: &Rect) -> Option<Rect> {
     let min_y = r.min.y + 1;
     let max_x = r.max.x - 1;
     let max_y = r.max.y - 1;
-    Some(Rect { min: PointU32 { x: min_x, y: min_y }, max: PointU32 { x: max_x, y: max_y } })
+    Some(Rect { min: Point { x: min_x, y: min_y }, max: Point { x: max_x, y: max_y } })
 }
 
 pub fn assign_deflate(r: &mut Rect) {

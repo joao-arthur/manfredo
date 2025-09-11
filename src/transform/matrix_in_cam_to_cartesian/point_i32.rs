@@ -1,5 +1,5 @@
 type CartesianPoint = crate::cartesian::point::point_i32::PointI32;
-type MatrixPoint = crate::matrix::point::point_u32::PointU32;
+type MatrixPoint = crate::matrix::point::point_u32::Point;
 type Cam = crate::matrix::rect::rect_u32::Rect;
 
 pub fn matrix_in_cam_to_cartesian(point: &MatrixPoint, cam: &Cam) -> CartesianPoint {

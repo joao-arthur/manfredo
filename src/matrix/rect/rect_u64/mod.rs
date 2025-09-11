@@ -30,25 +30,25 @@ pub use self::translate::{
 
 #[derive(Eq, PartialEq, Debug, Clone)]
 pub struct Rect {
-    pub min: point_u64::PointU64,
-    pub max: point_u64::PointU64,
+    pub min: point_u64::Point,
+    pub max: point_u64::Point,
 }
 
 impl Rect {
     pub fn of(row1: u64, col1: u64, row2: u64, col2: u64) -> Self {
-        Rect { min: point_u64::PointU64::of(row1, col1), max: point_u64::PointU64::of(row2, col2) }
+        Rect { min: point_u64::Point::of(row1, col1), max: point_u64::Point::of(row2, col2) }
     }
 
     pub fn largest() -> Self {
-        Rect { min: point_u64::PointU64::min(), max: point_u64::PointU64::max() }
+        Rect { min: point_u64::Point::min(), max: point_u64::Point::max() }
     }
 
     pub fn min() -> Self {
-        Rect { min: point_u64::PointU64::min(), max: point_u64::PointU64::min() }
+        Rect { min: point_u64::Point::min(), max: point_u64::Point::min() }
     }
 
     pub fn max() -> Self {
-        Rect { min: point_u64::PointU64::max(), max: point_u64::PointU64::max() }
+        Rect { min: point_u64::Point::max(), max: point_u64::Point::max() }
     }
 
     pub fn iter_row(&self) -> RangeInclusive<u64> {
@@ -62,19 +62,19 @@ impl Rect {
 
 impl From<rect_u8::Rect> for Rect {
     fn from(r: rect_u8::Rect) -> Self {
-        Rect { min: point_u64::PointU64::of(r.min.row.into(), r.min.col.into()), max: point_u64::PointU64::of(r.max.row.into(), r.max.col.into()) }
+        Rect { min: point_u64::Point::of(r.min.row.into(), r.min.col.into()), max: point_u64::Point::of(r.max.row.into(), r.max.col.into()) }
     }
 }
 
 impl From<rect_u16::Rect> for Rect {
     fn from(r: rect_u16::Rect) -> Self {
-        Rect { min: point_u64::PointU64::of(r.min.row.into(), r.min.col.into()), max: point_u64::PointU64::of(r.max.row.into(), r.max.col.into()) }
+        Rect { min: point_u64::Point::of(r.min.row.into(), r.min.col.into()), max: point_u64::Point::of(r.max.row.into(), r.max.col.into()) }
     }
 }
 
 impl From<rect_u32::Rect> for Rect {
     fn from(r: rect_u32::Rect) -> Self {
-        Rect { min: point_u64::PointU64::of(r.min.row.into(), r.min.col.into()), max: point_u64::PointU64::of(r.max.row.into(), r.max.col.into()) }
+        Rect { min: point_u64::Point::of(r.min.row.into(), r.min.col.into()), max: point_u64::Point::of(r.max.row.into(), r.max.col.into()) }
     }
 }
 
@@ -112,16 +112,16 @@ pub fn max_len(r: &Rect) -> u64 {
 mod tests {
     use super::{Rect, delta_col, delta_row, len_col, len_row, max_delta, max_len};
     use crate::matrix::{
-        point::point_u64::PointU64,
+        point::point_u64::Point,
         rect::{rect_u8, rect_u16, rect_u32},
     };
 
     #[test]
     fn rect_u64() {
-        assert_eq!(Rect::largest(), Rect { min: PointU64 { row: 0, col: 0 }, max: PointU64 { row: u64::MAX, col: u64::MAX } });
-        assert_eq!(Rect::min(), Rect { min: PointU64 { row: 0, col: 0 }, max: PointU64 { row: 0, col: 0 } });
-        assert_eq!(Rect::max(), Rect { min: PointU64 { row: u64::MAX, col: u64::MAX }, max: PointU64 { row: u64::MAX, col: u64::MAX } });
-        assert_eq!(Rect::of(4096, 8192, 16384, 32768), Rect { min: PointU64 { row: 4096, col: 8192 }, max: PointU64 { row: 16384, col: 32768 } });
+        assert_eq!(Rect::largest(), Rect { min: Point { row: 0, col: 0 }, max: Point { row: u64::MAX, col: u64::MAX } });
+        assert_eq!(Rect::min(), Rect { min: Point { row: 0, col: 0 }, max: Point { row: 0, col: 0 } });
+        assert_eq!(Rect::max(), Rect { min: Point { row: u64::MAX, col: u64::MAX }, max: Point { row: u64::MAX, col: u64::MAX } });
+        assert_eq!(Rect::of(4096, 8192, 16384, 32768), Rect { min: Point { row: 4096, col: 8192 }, max: Point { row: 16384, col: 32768 } });
     }
 
     #[test]
@@ -132,9 +132,9 @@ mod tests {
 
     #[test]
     fn from() {
-        assert_eq!(Rect::from(rect_u8::Rect::largest()), Rect { min: PointU64 { row: 0, col: 0 }, max: PointU64 { row: u8::MAX.into(), col: u8::MAX.into() } });
-        assert_eq!(Rect::from(rect_u16::Rect::largest()), Rect { min: PointU64 { row: 0, col: 0 }, max: PointU64 { row: u16::MAX.into(), col: u16::MAX.into() } });
-        assert_eq!(Rect::from(rect_u32::Rect::largest()), Rect { min: PointU64 { row: 0, col: 0 }, max: PointU64 { row: u32::MAX.into(), col: u32::MAX.into() } });
+        assert_eq!(Rect::from(rect_u8::Rect::largest()), Rect { min: Point { row: 0, col: 0 }, max: Point { row: u8::MAX.into(), col: u8::MAX.into() } });
+        assert_eq!(Rect::from(rect_u16::Rect::largest()), Rect { min: Point { row: 0, col: 0 }, max: Point { row: u16::MAX.into(), col: u16::MAX.into() } });
+        assert_eq!(Rect::from(rect_u32::Rect::largest()), Rect { min: Point { row: 0, col: 0 }, max: Point { row: u32::MAX.into(), col: u32::MAX.into() } });
     }
 
     #[test]

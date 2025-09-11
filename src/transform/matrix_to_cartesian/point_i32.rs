@@ -1,5 +1,5 @@
 type CartesianPoint = crate::cartesian::point::point_i32::PointI32;
-type MatrixPoint = crate::matrix::point::point_u32::PointU32;
+type MatrixPoint = crate::matrix::point::point_u32::Point;
 
 pub fn matrix_to_cartesian(point: &MatrixPoint) -> CartesianPoint {
     let x = i64::from(i32::MIN) + i64::from(point.col);

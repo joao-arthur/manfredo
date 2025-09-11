@@ -1,5 +1,5 @@
 use crate::cartesian::{
-    point::{point_i64::PointI64, point_u64::PointU64},
+    point::{point_i64::PointI64, point_u64::Point},
     rect::rect_u64::{Rect, delta_x, delta_y},
 };
 
@@ -20,7 +20,7 @@ pub fn try_checked_translate(r: &Rect, delta: &PointI64) -> Option<Rect> {
     let min_y = r.min.y.checked_add_signed(delta.y)?;
     let max_x = r.max.x.checked_add_signed(delta.x)?;
     let max_y = r.max.y.checked_add_signed(delta.y)?;
-    Some(Rect { min: PointU64 { x: min_x, y: min_y }, max: PointU64 { x: max_x, y: max_y } })
+    Some(Rect { min: Point { x: min_x, y: min_y }, max: Point { x: max_x, y: max_y } })
 }
 
 pub fn checked_translate_assign(r: &mut Rect, delta: &PointI64) {
@@ -59,7 +59,7 @@ pub fn saturating_translate(r: &Rect, delta: &PointI64) -> Rect {
     let min_y = clamped_y as u64;
     let max_x = min_x + dx;
     let max_y = min_y + dy;
-    Rect { min: PointU64 { x: min_x, y: min_y }, max: PointU64 { x: max_x, y: max_y } }
+    Rect { min: Point { x: min_x, y: min_y }, max: Point { x: max_x, y: max_y } }
 }
 
 pub fn wrapping_translate_assign(r: &mut Rect, delta: &PointI64) {
@@ -82,7 +82,7 @@ pub fn wrapping_translate(r: &Rect, delta: &PointI64) -> Rect {
     let min_y = r.min.y.wrapping_add_signed(delta.y);
     let max_x = min_x.wrapping_add(dx);
     let max_y = min_y.wrapping_add(dy);
-    Rect { min: PointU64 { x: min_x, y: min_y }, max: PointU64 { x: max_x, y: max_y } }
+    Rect { min: Point { x: min_x, y: min_y }, max: Point { x: max_x, y: max_y } }
 }
 
 #[cfg(test)]

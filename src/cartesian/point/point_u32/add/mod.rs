@@ -1,6 +1,6 @@
-use crate::cartesian::point::{point_i32::PointI32 as PointI, point_u32::PointU32};
+use crate::cartesian::point::{point_i32::PointI32 as PointI, point_u32::Point};
 
-pub fn try_checked_add_assign(p: &mut PointU32, delta: &PointI) -> Option<()> {
+pub fn try_checked_add_assign(p: &mut Point, delta: &PointI) -> Option<()> {
     let x = p.x.checked_add_signed(delta.x)?;
     let y = p.y.checked_add_signed(delta.y)?;
     p.x = x;
@@ -8,40 +8,40 @@ pub fn try_checked_add_assign(p: &mut PointU32, delta: &PointI) -> Option<()> {
     Some(())
 }
 
-pub fn try_checked_add(p: &PointU32, delta: &PointI) -> Option<PointU32> {
+pub fn try_checked_add(p: &Point, delta: &PointI) -> Option<Point> {
     let x = p.x.checked_add_signed(delta.x)?;
     let y = p.y.checked_add_signed(delta.y)?;
-    Some(PointU32 { x, y })
+    Some(Point { x, y })
 }
 
-pub fn checked_add_assign(p: &mut PointU32, delta: &PointI) {
+pub fn checked_add_assign(p: &mut Point, delta: &PointI) {
     try_checked_add_assign(p, delta).unwrap()
 }
 
-pub fn checked_add(p: &PointU32, delta: &PointI) -> PointU32 {
+pub fn checked_add(p: &Point, delta: &PointI) -> Point {
     try_checked_add(p, delta).unwrap()
 }
 
-pub fn saturating_add_assign(p: &mut PointU32, delta: &PointI) {
+pub fn saturating_add_assign(p: &mut Point, delta: &PointI) {
     p.x = p.x.saturating_add_signed(delta.x);
     p.y = p.y.saturating_add_signed(delta.y);
 }
 
-pub fn saturating_add(p: &PointU32, delta: &PointI) -> PointU32 {
+pub fn saturating_add(p: &Point, delta: &PointI) -> Point {
     let x = p.x.saturating_add_signed(delta.x);
     let y = p.y.saturating_add_signed(delta.y);
-    PointU32 { x, y }
+    Point { x, y }
 }
 
-pub fn wrapping_add_assign(p: &mut PointU32, delta: &PointI) {
+pub fn wrapping_add_assign(p: &mut Point, delta: &PointI) {
     p.x = p.x.wrapping_add_signed(delta.x);
     p.y = p.y.wrapping_add_signed(delta.y);
 }
 
-pub fn wrapping_add(p: &PointU32, delta: &PointI) -> PointU32 {
+pub fn wrapping_add(p: &Point, delta: &PointI) -> Point {
     let x = p.x.wrapping_add_signed(delta.x);
     let y = p.y.wrapping_add_signed(delta.y);
-    PointU32 { x, y }
+    Point { x, y }
 }
 
 #[cfg(test)]

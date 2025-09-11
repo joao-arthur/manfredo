@@ -1,5 +1,5 @@
 use crate::matrix::{
-    point::{point_i16::PointI16, point_u16::PointU16},
+    point::{point_i16::PointI16, point_u16::Point},
     rect::rect_u16::{Rect, delta_col, delta_row},
 };
 
@@ -20,7 +20,7 @@ pub fn try_checked_translate(r: &Rect, delta: &PointI16) -> Option<Rect> {
     let min_col = r.min.col.checked_add_signed(delta.col)?;
     let max_row = r.max.row.checked_add_signed(delta.row)?;
     let max_col = r.max.col.checked_add_signed(delta.col)?;
-    Some(Rect { min: PointU16 { row: min_row, col: min_col }, max: PointU16 { row: max_row, col: max_col } })
+    Some(Rect { min: Point { row: min_row, col: min_col }, max: Point { row: max_row, col: max_col } })
 }
 
 pub fn checked_translate_assign(r: &mut Rect, delta: &PointI16) {
@@ -59,7 +59,7 @@ pub fn saturating_translate(r: &Rect, delta: &PointI16) -> Rect {
     let min_col = clamped_col as u16;
     let max_row = min_row + d_row;
     let max_col = min_col + d_col;
-    Rect { min: PointU16 { row: min_row, col: min_col }, max: PointU16 { row: max_row, col: max_col } }
+    Rect { min: Point { row: min_row, col: min_col }, max: Point { row: max_row, col: max_col } }
 }
 
 pub fn wrapping_translate_assign(r: &mut Rect, delta: &PointI16) {
@@ -82,7 +82,7 @@ pub fn wrapping_translate(r: &Rect, delta: &PointI16) -> Rect {
     let min_col = r.min.col.wrapping_add_signed(delta.col);
     let max_row = min_row.wrapping_add(d_row);
     let max_col = min_col.wrapping_add(d_col);
-    Rect { min: PointU16 { row: min_row, col: min_col }, max: PointU16 { row: max_row, col: max_col } }
+    Rect { min: Point { row: min_row, col: min_col }, max: Point { row: max_row, col: max_col } }
 }
 
 #[cfg(test)]

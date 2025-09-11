@@ -50,8 +50,8 @@ pub fn delta_col(p1: &PointI32, p2: &PointI32) -> u32 {
     (i64::from(p2.col) - i64::from(p1.col)).unsigned_abs() as u32
 }
 
-pub fn delta(p1: &PointI32, p2: &PointI32) -> point_u32::PointU32 {
-    point_u32::PointU32 { row: delta_row(p1, p2), col: delta_col(p1, p2) }
+pub fn delta(p1: &PointI32, p2: &PointI32) -> point_u32::Point {
+    point_u32::Point { row: delta_row(p1, p2), col: delta_col(p1, p2) }
 }
 
 #[cfg(test)]
@@ -95,39 +95,39 @@ mod tests {
 
     #[test]
     fn test_delta() {
-        assert_eq!(delta(&PointI32::of(0, 0), &PointI32::of(0, 0)), point_u32::PointU32::min());
-        assert_eq!(delta(&PointI32::min(), &PointI32::max()), point_u32::PointU32::max());
+        assert_eq!(delta(&PointI32::of(0, 0), &PointI32::of(0, 0)), point_u32::Point::min());
+        assert_eq!(delta(&PointI32::min(), &PointI32::max()), point_u32::Point::max());
     }
 
     #[test]
     fn delta_min() {
         let p = PointI32::min();
-        assert_eq!(delta(&p, &PointI32::min()), point_u32::PointU32::min());
-        assert_eq!(delta(&p, &PointI32::of(i32::MIN, i32::MIN + 1)), point_u32::PointU32::of(0, 1));
-        assert_eq!(delta(&p, &PointI32::of(i32::MIN, i32::MIN + 2)), point_u32::PointU32::of(0, 2));
+        assert_eq!(delta(&p, &PointI32::min()), point_u32::Point::min());
+        assert_eq!(delta(&p, &PointI32::of(i32::MIN, i32::MIN + 1)), point_u32::Point::of(0, 1));
+        assert_eq!(delta(&p, &PointI32::of(i32::MIN, i32::MIN + 2)), point_u32::Point::of(0, 2));
 
-        assert_eq!(delta(&p, &PointI32::of(i32::MIN + 1, i32::MIN)), point_u32::PointU32::of(1, 0));
-        assert_eq!(delta(&p, &PointI32::of(i32::MIN + 1, i32::MIN + 1)), point_u32::PointU32::of(1, 1));
-        assert_eq!(delta(&p, &PointI32::of(i32::MIN + 1, i32::MIN + 2)), point_u32::PointU32::of(1, 2));
+        assert_eq!(delta(&p, &PointI32::of(i32::MIN + 1, i32::MIN)), point_u32::Point::of(1, 0));
+        assert_eq!(delta(&p, &PointI32::of(i32::MIN + 1, i32::MIN + 1)), point_u32::Point::of(1, 1));
+        assert_eq!(delta(&p, &PointI32::of(i32::MIN + 1, i32::MIN + 2)), point_u32::Point::of(1, 2));
 
-        assert_eq!(delta(&p, &PointI32::of(i32::MIN + 2, i32::MIN)), point_u32::PointU32::of(2, 0));
-        assert_eq!(delta(&p, &PointI32::of(i32::MIN + 2, i32::MIN + 1)), point_u32::PointU32::of(2, 1));
-        assert_eq!(delta(&p, &PointI32::of(i32::MIN + 2, i32::MIN + 2)), point_u32::PointU32::of(2, 2));
+        assert_eq!(delta(&p, &PointI32::of(i32::MIN + 2, i32::MIN)), point_u32::Point::of(2, 0));
+        assert_eq!(delta(&p, &PointI32::of(i32::MIN + 2, i32::MIN + 1)), point_u32::Point::of(2, 1));
+        assert_eq!(delta(&p, &PointI32::of(i32::MIN + 2, i32::MIN + 2)), point_u32::Point::of(2, 2));
     }
 
     #[test]
     fn delta_max() {
         let p = PointI32::of(i32::MAX - 2, i32::MAX - 2);
-        assert_eq!(delta(&p, &PointI32::of(i32::MAX - 2, i32::MAX - 2)), point_u32::PointU32::min());
-        assert_eq!(delta(&p, &PointI32::of(i32::MAX - 2, i32::MAX - 1)), point_u32::PointU32::of(0, 1));
-        assert_eq!(delta(&p, &PointI32::of(i32::MAX - 2, i32::MAX)), point_u32::PointU32::of(0, 2));
+        assert_eq!(delta(&p, &PointI32::of(i32::MAX - 2, i32::MAX - 2)), point_u32::Point::min());
+        assert_eq!(delta(&p, &PointI32::of(i32::MAX - 2, i32::MAX - 1)), point_u32::Point::of(0, 1));
+        assert_eq!(delta(&p, &PointI32::of(i32::MAX - 2, i32::MAX)), point_u32::Point::of(0, 2));
 
-        assert_eq!(delta(&p, &PointI32::of(i32::MAX - 1, i32::MAX - 2)), point_u32::PointU32::of(1, 0));
-        assert_eq!(delta(&p, &PointI32::of(i32::MAX - 1, i32::MAX - 1)), point_u32::PointU32::of(1, 1));
-        assert_eq!(delta(&p, &PointI32::of(i32::MAX - 1, i32::MAX)), point_u32::PointU32::of(1, 2));
+        assert_eq!(delta(&p, &PointI32::of(i32::MAX - 1, i32::MAX - 2)), point_u32::Point::of(1, 0));
+        assert_eq!(delta(&p, &PointI32::of(i32::MAX - 1, i32::MAX - 1)), point_u32::Point::of(1, 1));
+        assert_eq!(delta(&p, &PointI32::of(i32::MAX - 1, i32::MAX)), point_u32::Point::of(1, 2));
 
-        assert_eq!(delta(&p, &PointI32::of(i32::MAX, i32::MAX - 2)), point_u32::PointU32::of(2, 0));
-        assert_eq!(delta(&p, &PointI32::of(i32::MAX, i32::MAX - 1)), point_u32::PointU32::of(2, 1));
-        assert_eq!(delta(&p, &PointI32::max()), point_u32::PointU32::of(2, 2));
+        assert_eq!(delta(&p, &PointI32::of(i32::MAX, i32::MAX - 2)), point_u32::Point::of(2, 0));
+        assert_eq!(delta(&p, &PointI32::of(i32::MAX, i32::MAX - 1)), point_u32::Point::of(2, 1));
+        assert_eq!(delta(&p, &PointI32::max()), point_u32::Point::of(2, 2));
     }
 }

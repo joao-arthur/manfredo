@@ -1,5 +1,5 @@
-type CartesianPoint = crate::cartesian::point::point_u32::PointU32;
-type MatrixPoint = crate::matrix::point::point_u32::PointU32;
+type CartesianPoint = crate::cartesian::point::point_u32::Point;
+type MatrixPoint = crate::matrix::point::point_u32::Point;
 
 pub fn matrix_to_cartesian(point: &MatrixPoint) -> CartesianPoint {
     CartesianPoint { x: point.col, y: u32::MAX - point.row }

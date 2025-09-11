@@ -1,11 +1,11 @@
 use super::checked_add_assign;
-use crate::cartesian::point::{point_i64::PointI64 as PointI, point_u64::PointU64};
+use crate::cartesian::point::{point_i64::PointI64 as PointI, point_u64::Point};
 
 #[test]
 fn test() {
-    let mut p = PointU64::min();
+    let mut p = Point::min();
     checked_add_assign(&mut p, &PointI::of(10, 13));
-    assert_eq!(p, PointU64::of(10, 13));
+    assert_eq!(p, Point::of(10, 13));
     checked_add_assign(&mut p, &PointI::of(-5, -3));
-    assert_eq!(p, PointU64::of(5, 10));
+    assert_eq!(p, Point::of(5, 10));
 }

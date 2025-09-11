@@ -1,6 +1,6 @@
-use crate::matrix::point::{point_i64::PointI64 as PointI, point_u64::PointU64};
+use crate::matrix::point::{point_i64::PointI64 as PointI, point_u64::Point};
 
-pub fn try_checked_add_assign(p: &mut PointU64, delta: &PointI) -> Option<()> {
+pub fn try_checked_add_assign(p: &mut Point, delta: &PointI) -> Option<()> {
     let row = p.row.checked_add_signed(delta.row)?;
     let col = p.col.checked_add_signed(delta.col)?;
     p.row = row;
@@ -8,40 +8,40 @@ pub fn try_checked_add_assign(p: &mut PointU64, delta: &PointI) -> Option<()> {
     Some(())
 }
 
-pub fn try_checked_add(p: &PointU64, delta: &PointI) -> Option<PointU64> {
+pub fn try_checked_add(p: &Point, delta: &PointI) -> Option<Point> {
     let row = p.row.checked_add_signed(delta.row)?;
     let col = p.col.checked_add_signed(delta.col)?;
-    Some(PointU64 { row, col })
+    Some(Point { row, col })
 }
 
-pub fn checked_add_assign(p: &mut PointU64, delta: &PointI) {
+pub fn checked_add_assign(p: &mut Point, delta: &PointI) {
     try_checked_add_assign(p, delta).unwrap()
 }
 
-pub fn checked_add(p: &PointU64, delta: &PointI) -> PointU64 {
+pub fn checked_add(p: &Point, delta: &PointI) -> Point {
     try_checked_add(p, delta).unwrap()
 }
 
-pub fn saturating_add_assign(p: &mut PointU64, delta: &PointI) {
+pub fn saturating_add_assign(p: &mut Point, delta: &PointI) {
     p.row = p.row.saturating_add_signed(delta.row);
     p.col = p.col.saturating_add_signed(delta.col);
 }
 
-pub fn saturating_add(p: &PointU64, delta: &PointI) -> PointU64 {
+pub fn saturating_add(p: &Point, delta: &PointI) -> Point {
     let row = p.row.saturating_add_signed(delta.row);
     let col = p.col.saturating_add_signed(delta.col);
-    PointU64 { row, col }
+    Point { row, col }
 }
 
-pub fn wrapping_add_assign(p: &mut PointU64, delta: &PointI) {
+pub fn wrapping_add_assign(p: &mut Point, delta: &PointI) {
     p.row = p.row.wrapping_add_signed(delta.row);
     p.col = p.col.wrapping_add_signed(delta.col);
 }
 
-pub fn wrapping_add(p: &PointU64, delta: &PointI) -> PointU64 {
+pub fn wrapping_add(p: &Point, delta: &PointI) -> Point {
     let row = p.row.wrapping_add_signed(delta.row);
     let col = p.col.wrapping_add_signed(delta.col);
-    PointU64 { row, col }
+    Point { row, col }
 }
 
 #[cfg(test)]

@@ -1,28 +1,28 @@
 use super::wrapping_add;
-use crate::cartesian::point::{point_i8::PointI8 as PointI, point_u8::PointU8};
+use crate::cartesian::point::{point_i8::PointI8 as PointI, point_u8::Point};
 
 const MAX: u8 = u8::MAX;
 
 #[test]
 fn test() {
-    assert_eq!(wrapping_add(&PointU8::min(), &PointI::of(10, 13)), PointU8::of(10, 13));
-    assert_eq!(wrapping_add(&PointU8::of(10, 10), &PointI::of(-5, -3)), PointU8::of(5, 7));
+    assert_eq!(wrapping_add(&Point::min(), &PointI::of(10, 13)), Point::of(10, 13));
+    assert_eq!(wrapping_add(&Point::of(10, 10), &PointI::of(-5, -3)), Point::of(5, 7));
 }
 
 #[test]
 fn to_bounds() {
-    assert_eq!(wrapping_add(&PointU8::of(2, 5), &PointI::of(-2, -5)), PointU8::min());
-    assert_eq!(wrapping_add(&PointU8::of(MAX - 2, MAX - 5), &PointI::of(2, 5)), PointU8::max());
+    assert_eq!(wrapping_add(&Point::of(2, 5), &PointI::of(-2, -5)), Point::min());
+    assert_eq!(wrapping_add(&Point::of(MAX - 2, MAX - 5), &PointI::of(2, 5)), Point::max());
 }
 
 #[test]
 fn out_of_bounds() {
-    assert_eq!(wrapping_add(&PointU8::of(2, 5), &PointI::of(-10, -10)), PointU8::of(MAX - 7, MAX - 4));
-    assert_eq!(wrapping_add(&PointU8::of(MAX - 2, MAX - 5), &PointI::of(10, 10)), PointU8::of(7, 4));
+    assert_eq!(wrapping_add(&Point::of(2, 5), &PointI::of(-10, -10)), Point::of(MAX - 7, MAX - 4));
+    assert_eq!(wrapping_add(&Point::of(MAX - 2, MAX - 5), &PointI::of(10, 10)), Point::of(7, 4));
 }
 
 #[test]
 fn limits_out_of_bounds() {
-    assert_eq!(wrapping_add(&PointU8::of(1, 1), &PointI::min()), PointU8::of(129, 129));
-    assert_eq!(wrapping_add(&PointU8::of(MAX - 1, MAX - 1), &PointI::max()), PointU8::of(125, 125));
+    assert_eq!(wrapping_add(&Point::of(1, 1), &PointI::min()), Point::of(129, 129));
+    assert_eq!(wrapping_add(&Point::of(MAX - 1, MAX - 1), &PointI::max()), Point::of(125, 125));
 }

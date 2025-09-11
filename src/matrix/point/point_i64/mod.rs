@@ -56,8 +56,8 @@ pub fn delta_col(p1: &PointI64, p2: &PointI64) -> u64 {
     (i128::from(p2.col) - i128::from(p1.col)).unsigned_abs() as u64
 }
 
-pub fn delta(p1: &PointI64, p2: &PointI64) -> point_u64::PointU64 {
-    point_u64::PointU64 { row: delta_row(p1, p2), col: delta_col(p1, p2) }
+pub fn delta(p1: &PointI64, p2: &PointI64) -> point_u64::Point {
+    point_u64::Point { row: delta_row(p1, p2), col: delta_col(p1, p2) }
 }
 
 #[cfg(test)]
@@ -103,39 +103,39 @@ mod tests {
 
     #[test]
     fn test_delta() {
-        assert_eq!(delta(&PointI64::of(0, 0), &PointI64::of(0, 0)), point_u64::PointU64::min());
-        assert_eq!(delta(&PointI64::min(), &PointI64::max()), point_u64::PointU64::max());
+        assert_eq!(delta(&PointI64::of(0, 0), &PointI64::of(0, 0)), point_u64::Point::min());
+        assert_eq!(delta(&PointI64::min(), &PointI64::max()), point_u64::Point::max());
     }
 
     #[test]
     fn delta_min() {
         let p = PointI64::min();
-        assert_eq!(delta(&p, &PointI64::min()), point_u64::PointU64::min());
-        assert_eq!(delta(&p, &PointI64::of(i64::MIN, i64::MIN + 1)), point_u64::PointU64::of(0, 1));
-        assert_eq!(delta(&p, &PointI64::of(i64::MIN, i64::MIN + 2)), point_u64::PointU64::of(0, 2));
+        assert_eq!(delta(&p, &PointI64::min()), point_u64::Point::min());
+        assert_eq!(delta(&p, &PointI64::of(i64::MIN, i64::MIN + 1)), point_u64::Point::of(0, 1));
+        assert_eq!(delta(&p, &PointI64::of(i64::MIN, i64::MIN + 2)), point_u64::Point::of(0, 2));
 
-        assert_eq!(delta(&p, &PointI64::of(i64::MIN + 1, i64::MIN)), point_u64::PointU64::of(1, 0));
-        assert_eq!(delta(&p, &PointI64::of(i64::MIN + 1, i64::MIN + 1)), point_u64::PointU64::of(1, 1));
-        assert_eq!(delta(&p, &PointI64::of(i64::MIN + 1, i64::MIN + 2)), point_u64::PointU64::of(1, 2));
+        assert_eq!(delta(&p, &PointI64::of(i64::MIN + 1, i64::MIN)), point_u64::Point::of(1, 0));
+        assert_eq!(delta(&p, &PointI64::of(i64::MIN + 1, i64::MIN + 1)), point_u64::Point::of(1, 1));
+        assert_eq!(delta(&p, &PointI64::of(i64::MIN + 1, i64::MIN + 2)), point_u64::Point::of(1, 2));
 
-        assert_eq!(delta(&p, &PointI64::of(i64::MIN + 2, i64::MIN)), point_u64::PointU64::of(2, 0));
-        assert_eq!(delta(&p, &PointI64::of(i64::MIN + 2, i64::MIN + 1)), point_u64::PointU64::of(2, 1));
-        assert_eq!(delta(&p, &PointI64::of(i64::MIN + 2, i64::MIN + 2)), point_u64::PointU64::of(2, 2));
+        assert_eq!(delta(&p, &PointI64::of(i64::MIN + 2, i64::MIN)), point_u64::Point::of(2, 0));
+        assert_eq!(delta(&p, &PointI64::of(i64::MIN + 2, i64::MIN + 1)), point_u64::Point::of(2, 1));
+        assert_eq!(delta(&p, &PointI64::of(i64::MIN + 2, i64::MIN + 2)), point_u64::Point::of(2, 2));
     }
 
     #[test]
     fn delta_max() {
         let p = PointI64::of(i64::MAX - 2, i64::MAX - 2);
-        assert_eq!(delta(&p, &PointI64::of(i64::MAX - 2, i64::MAX - 2)), point_u64::PointU64::min());
-        assert_eq!(delta(&p, &PointI64::of(i64::MAX - 2, i64::MAX - 1)), point_u64::PointU64::of(0, 1));
-        assert_eq!(delta(&p, &PointI64::of(i64::MAX - 2, i64::MAX)), point_u64::PointU64::of(0, 2));
+        assert_eq!(delta(&p, &PointI64::of(i64::MAX - 2, i64::MAX - 2)), point_u64::Point::min());
+        assert_eq!(delta(&p, &PointI64::of(i64::MAX - 2, i64::MAX - 1)), point_u64::Point::of(0, 1));
+        assert_eq!(delta(&p, &PointI64::of(i64::MAX - 2, i64::MAX)), point_u64::Point::of(0, 2));
 
-        assert_eq!(delta(&p, &PointI64::of(i64::MAX - 1, i64::MAX - 2)), point_u64::PointU64::of(1, 0));
-        assert_eq!(delta(&p, &PointI64::of(i64::MAX - 1, i64::MAX - 1)), point_u64::PointU64::of(1, 1));
-        assert_eq!(delta(&p, &PointI64::of(i64::MAX - 1, i64::MAX)), point_u64::PointU64::of(1, 2));
+        assert_eq!(delta(&p, &PointI64::of(i64::MAX - 1, i64::MAX - 2)), point_u64::Point::of(1, 0));
+        assert_eq!(delta(&p, &PointI64::of(i64::MAX - 1, i64::MAX - 1)), point_u64::Point::of(1, 1));
+        assert_eq!(delta(&p, &PointI64::of(i64::MAX - 1, i64::MAX)), point_u64::Point::of(1, 2));
 
-        assert_eq!(delta(&p, &PointI64::of(i64::MAX, i64::MAX - 2)), point_u64::PointU64::of(2, 0));
-        assert_eq!(delta(&p, &PointI64::of(i64::MAX, i64::MAX - 1)), point_u64::PointU64::of(2, 1));
-        assert_eq!(delta(&p, &PointI64::max()), point_u64::PointU64::of(2, 2));
+        assert_eq!(delta(&p, &PointI64::of(i64::MAX, i64::MAX - 2)), point_u64::Point::of(2, 0));
+        assert_eq!(delta(&p, &PointI64::of(i64::MAX, i64::MAX - 1)), point_u64::Point::of(2, 1));
+        assert_eq!(delta(&p, &PointI64::max()), point_u64::Point::of(2, 2));
     }
 }

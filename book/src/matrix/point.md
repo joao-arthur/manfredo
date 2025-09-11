@@ -6,10 +6,10 @@
 
 ### Unsigned
 
-- PointU8
-- PointU16
-- PointU32
-- PointU64
+- Point
+- Point
+- Point
+- Point
 
 ### Signed
 

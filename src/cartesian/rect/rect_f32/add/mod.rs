@@ -1,5 +1,5 @@
 use crate::cartesian::{
-    point::point_f32::{MAX, MIN, PointF32},
+    point::point_f32::{MAX, MIN, Point},
     rect::rect_f32::Rect,
 };
 
@@ -22,7 +22,7 @@ pub fn try_checked_add(r: &Rect, delta: &Rect) -> Option<Rect> {
     let min_y = r.min.y + delta.min.y;
     let max_x = r.max.x + delta.max.x;
     let max_y = r.max.y + delta.max.y;
-    Some(Rect { min: PointF32 { x: min_x, y: min_y }, max: PointF32 { x: max_x, y: max_y } })
+    Some(Rect { min: Point { x: min_x, y: min_y }, max: Point { x: max_x, y: max_y } })
 }
 
 pub fn checked_add_assign(r: &mut Rect, delta: &Rect) {
@@ -45,7 +45,7 @@ pub fn saturating_add(r: &Rect, delta: &Rect) -> Rect {
     let min_y = (r.min.y + delta.min.y).clamp(MIN, MAX);
     let max_x = (r.max.x + delta.max.x).clamp(MIN, MAX);
     let max_y = (r.max.y + delta.max.y).clamp(MIN, MAX);
-    Rect { min: PointF32 { x: min_x, y: min_y }, max: PointF32 { x: max_x, y: max_y } }
+    Rect { min: Point { x: min_x, y: min_y }, max: Point { x: max_x, y: max_y } }
 }
 
 pub fn wrapping_add_assign(r: &mut Rect, delta: &Rect) {
@@ -144,7 +144,7 @@ pub fn wrapping_add(r: &Rect, delta: &Rect) -> Rect {
     } else {
         max_y += delta.max.y;
     }
-    Rect { min: PointF32 { x: min_x, y: min_y }, max: PointF32 { x: max_x, y: max_y } }
+    Rect { min: Point { x: min_x, y: min_y }, max: Point { x: max_x, y: max_y } }
 }
 
 #[cfg(test)]

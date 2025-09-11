@@ -24,8 +24,8 @@ pub use self::translate::{
 
 #[derive(PartialEq, Debug, Clone)]
 pub struct Rect {
-    pub min: point_f64::PointF64,
-    pub max: point_f64::PointF64,
+    pub min: point_f64::Point,
+    pub max: point_f64::Point,
 }
 
 pub struct RectF64Iterator {
@@ -59,19 +59,19 @@ impl DoubleEndedIterator for RectF64Iterator {
 
 impl Rect {
     pub fn of(x1: f64, y1: f64, x2: f64, y2: f64) -> Self {
-        Rect { min: point_f64::PointF64 { x: x1, y: y1 }, max: point_f64::PointF64 { x: x2, y: y2 } }
+        Rect { min: point_f64::Point { x: x1, y: y1 }, max: point_f64::Point { x: x2, y: y2 } }
     }
 
     pub fn largest() -> Self {
-        Rect { min: point_f64::PointF64::min(), max: point_f64::PointF64::max() }
+        Rect { min: point_f64::Point::min(), max: point_f64::Point::max() }
     }
 
     pub fn min() -> Self {
-        Rect { min: point_f64::PointF64::min(), max: point_f64::PointF64::min() }
+        Rect { min: point_f64::Point::min(), max: point_f64::Point::min() }
     }
 
     pub fn max() -> Self {
-        Rect { min: point_f64::PointF64::max(), max: point_f64::PointF64::max() }
+        Rect { min: point_f64::Point::max(), max: point_f64::Point::max() }
     }
 
     pub fn iter_x(&self) -> RectF64Iterator {
@@ -85,7 +85,7 @@ impl Rect {
 
 impl From<rect_f32::Rect> for Rect {
     fn from(r: rect_f32::Rect) -> Self {
-        Rect { min: point_f64::PointF64::of(r.min.x.into(), r.min.y.into()), max: point_f64::PointF64::of(r.max.x.into(), r.max.y.into()) }
+        Rect { min: point_f64::Point::of(r.min.x.into(), r.min.y.into()), max: point_f64::Point::of(r.max.x.into(), r.max.y.into()) }
     }
 }
 
@@ -125,17 +125,17 @@ mod tests {
     use crate::cartesian::{
         point::{
             point_f32,
-            point_f64::{MAX, MIN, PointF64},
+            point_f64::{MAX, MIN, Point},
         },
         rect::rect_f32,
     };
 
     #[test]
     fn rect_f64() {
-        assert_eq!(Rect::largest(), Rect { min: PointF64 { x: MIN, y: MIN }, max: PointF64 { x: MAX, y: MAX } });
-        assert_eq!(Rect::min(), Rect { min: PointF64 { x: MIN, y: MIN }, max: PointF64 { x: MIN, y: MIN } });
-        assert_eq!(Rect::max(), Rect { min: PointF64 { x: MAX, y: MAX }, max: PointF64 { x: MAX, y: MAX } });
-        assert_eq!(Rect::of(MIN, -0.0, 0.0, MAX), Rect { min: PointF64 { x: MIN, y: -0.0 }, max: PointF64 { x: 0.0, y: MAX } });
+        assert_eq!(Rect::largest(), Rect { min: Point { x: MIN, y: MIN }, max: Point { x: MAX, y: MAX } });
+        assert_eq!(Rect::min(), Rect { min: Point { x: MIN, y: MIN }, max: Point { x: MIN, y: MIN } });
+        assert_eq!(Rect::max(), Rect { min: Point { x: MAX, y: MAX }, max: Point { x: MAX, y: MAX } });
+        assert_eq!(Rect::of(MIN, -0.0, 0.0, MAX), Rect { min: Point { x: MIN, y: -0.0 }, max: Point { x: 0.0, y: MAX } });
     }
 
     #[test]
@@ -148,7 +148,7 @@ mod tests {
     fn from() {
         assert_eq!(
             Rect::from(rect_f32::Rect::largest()),
-            Rect { min: PointF64 { x: point_f32::MIN.into(), y: point_f32::MIN.into() }, max: PointF64 { x: point_f32::MAX.into(), y: point_f32::MAX.into() } }
+            Rect { min: Point { x: point_f32::MIN.into(), y: point_f32::MIN.into() }, max: Point { x: point_f32::MAX.into(), y: point_f32::MAX.into() } }
         );
     }
 

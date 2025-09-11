@@ -1,5 +1,5 @@
 use crate::cartesian::{
-    point::point_f64::{MAX, MIN, PointF64},
+    point::point_f64::{MAX, MIN, Point},
     rect::rect_f64::Rect,
 };
 
@@ -22,7 +22,7 @@ pub fn try_checked_inflate(r: &Rect) -> Option<Rect> {
     let min_y = r.min.y - 1.0;
     let max_x = r.max.x + 1.0;
     let max_y = r.max.y + 1.0;
-    Some(Rect { min: PointF64 { x: min_x, y: min_y }, max: PointF64 { x: max_x, y: max_y } })
+    Some(Rect { min: Point { x: min_x, y: min_y }, max: Point { x: max_x, y: max_y } })
 }
 
 pub fn checked_inflate_assign(r: &mut Rect) {
@@ -68,7 +68,7 @@ pub fn try_saturating_inflate(r: &Rect) -> Option<Rect> {
     let min_y = (r.min.y - min_y_modifier).max(MIN);
     let max_x = (r.max.x + max_x_modifier).min(MAX);
     let max_y = (r.max.y + max_y_modifier).min(MAX);
-    Some(Rect { min: PointF64 { x: min_x, y: min_y }, max: PointF64 { x: max_x, y: max_y } })
+    Some(Rect { min: Point { x: min_x, y: min_y }, max: Point { x: max_x, y: max_y } })
 }
 
 pub fn saturating_inflate_assign(r: &mut Rect) {

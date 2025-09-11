@@ -22,5 +22,5 @@
 
 ### Float-point
 
-- PointF32
-- PointF64
+- Point
+- Point

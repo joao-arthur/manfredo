@@ -24,8 +24,8 @@ pub use self::translate::{
 
 #[derive(PartialEq, Debug, Clone)]
 pub struct Rect {
-    pub min: point_f32::PointF32,
-    pub max: point_f32::PointF32,
+    pub min: point_f32::Point,
+    pub max: point_f32::Point,
 }
 
 pub struct RectF32Iterator {
@@ -59,27 +59,27 @@ impl DoubleEndedIterator for RectF32Iterator {
 
 impl Rect {
     pub fn of(x1: f32, y1: f32, x2: f32, y2: f32) -> Self {
-        Rect { min: point_f32::PointF32 { x: x1, y: y1 }, max: point_f32::PointF32 { x: x2, y: y2 } }
+        Rect { min: point_f32::Point { x: x1, y: y1 }, max: point_f32::Point { x: x2, y: y2 } }
     }
 
     pub fn largest() -> Self {
-        Rect { min: point_f32::PointF32::min(), max: point_f32::PointF32::max() }
+        Rect { min: point_f32::Point::min(), max: point_f32::Point::max() }
     }
 
     pub fn largest_min() -> Self {
-        Rect { min: point_f32::PointF32::min(), max: point_f32::PointF32::of(0.0, 0.0) }
+        Rect { min: point_f32::Point::min(), max: point_f32::Point::of(0.0, 0.0) }
     }
 
     pub fn largest_max() -> Self {
-        Rect { min: point_f32::PointF32::of(0.0, 0.0), max: point_f32::PointF32::max() }
+        Rect { min: point_f32::Point::of(0.0, 0.0), max: point_f32::Point::max() }
     }
 
     pub fn min() -> Self {
-        Rect { min: point_f32::PointF32::min(), max: point_f32::PointF32::min() }
+        Rect { min: point_f32::Point::min(), max: point_f32::Point::min() }
     }
 
     pub fn max() -> Self {
-        Rect { min: point_f32::PointF32::max(), max: point_f32::PointF32::max() }
+        Rect { min: point_f32::Point::max(), max: point_f32::Point::max() }
     }
 
     pub fn iter_x(&self) -> RectF32Iterator {
@@ -124,16 +124,16 @@ pub fn max_len(r: &Rect) -> f32 {
 #[cfg(test)]
 mod tests {
     use super::{Rect, delta_x, delta_y, len_x, len_y, max_delta, max_len};
-    use crate::cartesian::point::point_f32::{MAX, MIN, PointF32};
+    use crate::cartesian::point::point_f32::{MAX, MIN, Point};
 
     #[test]
     fn rect_f32() {
-        assert_eq!(Rect::largest(), Rect { min: PointF32 { x: MIN, y: MIN }, max: PointF32 { x: MAX, y: MAX } });
-        assert_eq!(Rect::largest_min(), Rect { min: PointF32 { x: MIN, y: MIN }, max: PointF32 { x: 0.0, y: 0.0 } });
-        assert_eq!(Rect::largest_max(), Rect { min: PointF32 { x: 0.0, y: 0.0 }, max: PointF32 { x: MAX, y: MAX } });
-        assert_eq!(Rect::min(), Rect { min: PointF32 { x: MIN, y: MIN }, max: PointF32 { x: MIN, y: MIN } });
-        assert_eq!(Rect::max(), Rect { min: PointF32 { x: MAX, y: MAX }, max: PointF32 { x: MAX, y: MAX } });
-        assert_eq!(Rect::of(MIN, -0.0, 0.0, MAX), Rect { min: PointF32 { x: MIN, y: -0.0 }, max: PointF32 { x: 0.0, y: MAX } });
+        assert_eq!(Rect::largest(), Rect { min: Point { x: MIN, y: MIN }, max: Point { x: MAX, y: MAX } });
+        assert_eq!(Rect::largest_min(), Rect { min: Point { x: MIN, y: MIN }, max: Point { x: 0.0, y: 0.0 } });
+        assert_eq!(Rect::largest_max(), Rect { min: Point { x: 0.0, y: 0.0 }, max: Point { x: MAX, y: MAX } });
+        assert_eq!(Rect::min(), Rect { min: Point { x: MIN, y: MIN }, max: Point { x: MIN, y: MIN } });
+        assert_eq!(Rect::max(), Rect { min: Point { x: MAX, y: MAX }, max: Point { x: MAX, y: MAX } });
+        assert_eq!(Rect::of(MIN, -0.0, 0.0, MAX), Rect { min: Point { x: MIN, y: -0.0 }, max: Point { x: 0.0, y: MAX } });
     }
 
     #[test]

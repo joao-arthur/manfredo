@@ -1,5 +1,5 @@
 use crate::cartesian::{
-    point::point_f64::{MAX, MIN, PointF64},
+    point::point_f64::{MAX, MIN, Point},
     rect::rect_f64::{Rect, delta_x, delta_y},
 };
 
@@ -42,7 +42,7 @@ pub fn try_checked_resize(r: &Rect, size: f64) -> Option<Rect> {
     if (size - 1.0) > MAX - min_x || (size - 1.0) > MAX - min_y {
         return None;
     }
-    Some(Rect { min: PointF64 { x: min_x, y: min_y }, max: PointF64 { x: max_x, y: max_y } })
+    Some(Rect { min: Point { x: min_x, y: min_y }, max: Point { x: max_x, y: max_y } })
 }
 
 pub fn checked_resize_assign(r: &mut Rect, size: f64) {
@@ -84,7 +84,7 @@ pub fn try_saturating_resize(r: &Rect, size: f64) -> Option<Rect> {
     let min_y = temp_min_y.clamp(MIN, MAX - size + 1.0);
     let max_x = min_x + size - 1.0;
     let max_y = min_y + size - 1.0;
-    Some(Rect { min: PointF64 { x: min_x, y: min_y }, max: PointF64 { x: max_x, y: max_y } })
+    Some(Rect { min: Point { x: min_x, y: min_y }, max: Point { x: max_x, y: max_y } })
 }
 
 pub fn saturating_resize_assign(r: &mut Rect, size: f64) {

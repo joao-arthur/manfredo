@@ -1,6 +1,6 @@
-use crate::cartesian::point::point_f64::{MAX, MIN, PointF64};
+use crate::cartesian::point::point_f64::{MAX, MIN, Point};
 
-pub fn try_checked_add_assign(p: &mut PointF64, delta: &PointF64) -> Option<()> {
+pub fn try_checked_add_assign(p: &mut Point, delta: &Point) -> Option<()> {
     let x = p.x + delta.x;
     let y = p.y + delta.y;
     if !(MIN..=MAX).contains(&x) || !(MIN..=MAX).contains(&y) {
@@ -11,37 +11,37 @@ pub fn try_checked_add_assign(p: &mut PointF64, delta: &PointF64) -> Option<()> 
     Some(())
 }
 
-pub fn try_checked_add(p: &PointF64, delta: &PointF64) -> Option<PointF64> {
+pub fn try_checked_add(p: &Point, delta: &Point) -> Option<Point> {
     let x = p.x + delta.x;
     let y = p.y + delta.y;
     if !(MIN..=MAX).contains(&x) || !(MIN..=MAX).contains(&y) {
         return None;
     }
-    Some(PointF64 { x, y })
+    Some(Point { x, y })
 }
 
-pub fn checked_add_assign(p: &mut PointF64, delta: &PointF64) {
+pub fn checked_add_assign(p: &mut Point, delta: &Point) {
     try_checked_add_assign(p, delta).unwrap()
 }
 
-pub fn checked_add(p: &PointF64, delta: &PointF64) -> PointF64 {
+pub fn checked_add(p: &Point, delta: &Point) -> Point {
     try_checked_add(p, delta).unwrap()
 }
 
-pub fn saturating_add_assign(p: &mut PointF64, delta: &PointF64) {
+pub fn saturating_add_assign(p: &mut Point, delta: &Point) {
     let temp_x = p.x + delta.x;
     let temp_y = p.y + delta.y;
     p.x = temp_x.clamp(MIN, MAX);
     p.y = temp_y.clamp(MIN, MAX);
 }
 
-pub fn saturating_add(p: &PointF64, delta: &PointF64) -> PointF64 {
+pub fn saturating_add(p: &Point, delta: &Point) -> Point {
     let temp_x = p.x + delta.x;
     let temp_y = p.y + delta.y;
-    PointF64::of(temp_x.clamp(MIN, MAX), temp_y.clamp(MIN, MAX))
+    Point::of(temp_x.clamp(MIN, MAX), temp_y.clamp(MIN, MAX))
 }
 
-pub fn wrapping_add_assign(p: &mut PointF64, delta: &PointF64) {
+pub fn wrapping_add_assign(p: &mut Point, delta: &Point) {
     if p.x + delta.x > MAX {
         let diff_min_x = MAX - p.x;
         let delta_x_adjusted = delta.x - diff_min_x - 1.0;
@@ -66,7 +66,7 @@ pub fn wrapping_add_assign(p: &mut PointF64, delta: &PointF64) {
     }
 }
 
-pub fn wrapping_add(p: &PointF64, delta: &PointF64) -> PointF64 {
+pub fn wrapping_add(p: &Point, delta: &Point) -> Point {
     let mut x = p.x;
     let mut y = p.y;
     if x + delta.x > MAX {
@@ -91,7 +91,7 @@ pub fn wrapping_add(p: &PointF64, delta: &PointF64) -> PointF64 {
     } else {
         y += delta.y;
     }
-    PointF64 { x, y }
+    Point { x, y }
 }
 
 #[cfg(test)]

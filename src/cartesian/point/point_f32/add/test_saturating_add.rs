@@ -1,26 +1,26 @@
 use super::saturating_add;
-use crate::cartesian::point::point_f32::{MAX, MIN, PointF32};
+use crate::cartesian::point::point_f32::{MAX, MIN, Point};
 
 #[test]
 fn test() {
-    assert_eq!(saturating_add(&PointF32::of(0.0, 0.0), &PointF32::of(10.0, 13.0)), PointF32::of(10.0, 13.0));
-    assert_eq!(saturating_add(&PointF32::of(10.0, 10.0), &PointF32::of(-5.0, -3.0)), PointF32::of(5.0, 7.0));
+    assert_eq!(saturating_add(&Point::of(0.0, 0.0), &Point::of(10.0, 13.0)), Point::of(10.0, 13.0));
+    assert_eq!(saturating_add(&Point::of(10.0, 10.0), &Point::of(-5.0, -3.0)), Point::of(5.0, 7.0));
 }
 
 #[test]
 fn to_bounds() {
-    assert_eq!(saturating_add(&PointF32::of(MIN + 2.0, MIN + 5.0), &PointF32::of(-2.0, -5.0)), PointF32::min());
-    assert_eq!(saturating_add(&PointF32::of(MAX - 2.0, MAX - 5.0), &PointF32::of(2.0, 5.0)), PointF32::max());
+    assert_eq!(saturating_add(&Point::of(MIN + 2.0, MIN + 5.0), &Point::of(-2.0, -5.0)), Point::min());
+    assert_eq!(saturating_add(&Point::of(MAX - 2.0, MAX - 5.0), &Point::of(2.0, 5.0)), Point::max());
 }
 
 #[test]
 fn out_of_bounds() {
-    assert_eq!(saturating_add(&PointF32::of(MIN + 2.0, MIN + 5.0), &PointF32::of(-10.0, -10.0)), PointF32::min());
-    assert_eq!(saturating_add(&PointF32::of(MAX - 2.0, MAX - 5.0), &PointF32::of(10.0, 10.0)), PointF32::max());
+    assert_eq!(saturating_add(&Point::of(MIN + 2.0, MIN + 5.0), &Point::of(-10.0, -10.0)), Point::min());
+    assert_eq!(saturating_add(&Point::of(MAX - 2.0, MAX - 5.0), &Point::of(10.0, 10.0)), Point::max());
 }
 
 #[test]
 fn limits_out_of_bounds() {
-    assert_eq!(saturating_add(&PointF32::of(MIN + 1.0, MIN + 1.0), &PointF32::min()), PointF32::min());
-    assert_eq!(saturating_add(&PointF32::of(MAX - 1.0, MAX - 1.0), &PointF32::max()), PointF32::max());
+    assert_eq!(saturating_add(&Point::of(MIN + 1.0, MIN + 1.0), &Point::min()), Point::min());
+    assert_eq!(saturating_add(&Point::of(MAX - 1.0, MAX - 1.0), &Point::max()), Point::max());
 }

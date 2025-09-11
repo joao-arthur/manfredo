@@ -1,5 +1,5 @@
 use crate::cartesian::{
-    point::point_f64::PointF64,
+    point::point_f64::Point,
     rect::rect_f64::{Rect, delta_x, delta_y},
 };
 
@@ -22,7 +22,7 @@ pub fn try_deflate(r: &Rect) -> Option<Rect> {
     let min_y = r.min.y + 1.0;
     let max_x = r.max.x - 1.0;
     let max_y = r.max.y - 1.0;
-    Some(Rect { min: PointF64 { x: min_x, y: min_y }, max: PointF64 { x: max_x, y: max_y } })
+    Some(Rect { min: Point { x: min_x, y: min_y }, max: Point { x: max_x, y: max_y } })
 }
 
 pub fn assign_deflate(r: &mut Rect) {

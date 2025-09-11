@@ -1,8 +1,8 @@
 use super::checked_add;
-use crate::cartesian::point::point_i32::PointI32;
+use crate::cartesian::point::point_i32::Point;
 
 #[test]
 fn test() {
-    assert_eq!(checked_add(&PointI32::of(0, 0), &PointI32::of(10, 13)), PointI32::of(10, 13));
-    assert_eq!(checked_add(&PointI32::of(10, 13), &PointI32::of(-5, -3)), PointI32::of(5, 10));
+    assert_eq!(checked_add(&Point::of(0, 0), &Point::of(10, 13)), Point::of(10, 13));
+    assert_eq!(checked_add(&Point::of(10, 13), &Point::of(-5, -3)), Point::of(5, 10));
 }

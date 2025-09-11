@@ -27,25 +27,25 @@ pub use self::translate::{
 
 #[derive(Eq, PartialEq, Debug, Clone)]
 pub struct Rect {
-    pub min: point_i16::PointI16,
-    pub max: point_i16::PointI16,
+    pub min: point_i16::Point,
+    pub max: point_i16::Point,
 }
 
 impl Rect {
     pub fn of(x1: i16, y1: i16, x2: i16, y2: i16) -> Self {
-        Rect { min: point_i16::PointI16::of(x1, y1), max: point_i16::PointI16::of(x2, y2) }
+        Rect { min: point_i16::Point::of(x1, y1), max: point_i16::Point::of(x2, y2) }
     }
 
     pub fn largest() -> Self {
-        Rect { min: point_i16::PointI16::min(), max: point_i16::PointI16::max() }
+        Rect { min: point_i16::Point::min(), max: point_i16::Point::max() }
     }
 
     pub fn min() -> Self {
-        Rect { min: point_i16::PointI16::min(), max: point_i16::PointI16::min() }
+        Rect { min: point_i16::Point::min(), max: point_i16::Point::min() }
     }
 
     pub fn max() -> Self {
-        Rect { min: point_i16::PointI16::max(), max: point_i16::PointI16::max() }
+        Rect { min: point_i16::Point::max(), max: point_i16::Point::max() }
     }
 
     pub fn iter_x(&self) -> RangeInclusive<i16> {
@@ -59,7 +59,7 @@ impl Rect {
 
 impl From<rect_i8::Rect> for Rect {
     fn from(r: rect_i8::Rect) -> Self {
-        Rect { min: point_i16::PointI16::of(r.min.x.into(), r.min.y.into()), max: point_i16::PointI16::of(r.max.x.into(), r.max.y.into()) }
+        Rect { min: point_i16::Point::of(r.min.x.into(), r.min.y.into()), max: point_i16::Point::of(r.max.x.into(), r.max.y.into()) }
     }
 }
 
@@ -96,14 +96,14 @@ pub fn max_len(r: &Rect) -> u16 {
 #[cfg(test)]
 mod tests {
     use super::{Rect, delta_x, delta_y, len_x, len_y, max_delta, max_len};
-    use crate::cartesian::{point::point_i16::PointI16, rect::rect_i8};
+    use crate::cartesian::{point::point_i16::Point, rect::rect_i8};
 
     #[test]
     fn rect_i16() {
-        assert_eq!(Rect::largest(), Rect { min: PointI16 { x: i16::MIN, y: i16::MIN }, max: PointI16 { x: i16::MAX, y: i16::MAX } });
-        assert_eq!(Rect::min(), Rect { min: PointI16 { x: i16::MIN, y: i16::MIN }, max: PointI16 { x: i16::MIN, y: i16::MIN } });
-        assert_eq!(Rect::max(), Rect { min: PointI16 { x: i16::MAX, y: i16::MAX }, max: PointI16 { x: i16::MAX, y: i16::MAX } });
-        assert_eq!(Rect::of(i16::MIN, -1, 1, i16::MAX), Rect { min: PointI16 { x: i16::MIN, y: -1 }, max: PointI16 { x: 1, y: i16::MAX } });
+        assert_eq!(Rect::largest(), Rect { min: Point { x: i16::MIN, y: i16::MIN }, max: Point { x: i16::MAX, y: i16::MAX } });
+        assert_eq!(Rect::min(), Rect { min: Point { x: i16::MIN, y: i16::MIN }, max: Point { x: i16::MIN, y: i16::MIN } });
+        assert_eq!(Rect::max(), Rect { min: Point { x: i16::MAX, y: i16::MAX }, max: Point { x: i16::MAX, y: i16::MAX } });
+        assert_eq!(Rect::of(i16::MIN, -1, 1, i16::MAX), Rect { min: Point { x: i16::MIN, y: -1 }, max: Point { x: 1, y: i16::MAX } });
     }
 
     #[test]
@@ -114,7 +114,7 @@ mod tests {
 
     #[test]
     fn from() {
-        assert_eq!(Rect::from(rect_i8::Rect::largest()), Rect { min: PointI16 { x: i8::MIN.into(), y: i8::MIN.into() }, max: PointI16 { x: i8::MAX.into(), y: i8::MAX.into() } });
+        assert_eq!(Rect::from(rect_i8::Rect::largest()), Rect { min: Point { x: i8::MIN.into(), y: i8::MIN.into() }, max: Point { x: i8::MAX.into(), y: i8::MAX.into() } });
     }
 
     #[test]

@@ -1,4 +1,4 @@
-use crate::cartesian::{point::point_i64::PointI64, rect::rect_i64::Rect};
+use crate::cartesian::rect::rect_i64::Rect;
 
 pub fn try_checked_add_assign(r: &mut Rect, delta: &Rect) -> Option<()> {
     let min_x = r.min.x.checked_add(delta.min.x)?;
@@ -17,7 +17,7 @@ pub fn try_checked_add(r: &Rect, delta: &Rect) -> Option<Rect> {
     let min_y = r.min.y.checked_add(delta.min.y)?;
     let max_x = r.max.x.checked_add(delta.max.x)?;
     let max_y = r.max.y.checked_add(delta.max.y)?;
-    Some(Rect { min: PointI64 { x: min_x, y: min_y }, max: PointI64 { x: max_x, y: max_y } })
+    Some(Rect::of(min_x, min_y, max_x, max_y))
 }
 
 pub fn checked_add_assign(r: &mut Rect, delta: &Rect) {
@@ -40,7 +40,7 @@ pub fn saturating_add(r: &Rect, delta: &Rect) -> Rect {
     let min_y = r.min.y.saturating_add(delta.min.y);
     let max_x = r.max.x.saturating_add(delta.max.x);
     let max_y = r.max.y.saturating_add(delta.max.y);
-    Rect { min: PointI64 { x: min_x, y: min_y }, max: PointI64 { x: max_x, y: max_y } }
+    Rect::of(min_x, min_y, max_x, max_y)
 }
 
 pub fn wrapping_add_assign(r: &mut Rect, delta: &Rect) {
@@ -55,7 +55,7 @@ pub fn wrapping_add(r: &Rect, delta: &Rect) -> Rect {
     let min_y = r.min.y.wrapping_add(delta.min.y);
     let max_x = r.max.x.wrapping_add(delta.max.x);
     let max_y = r.max.y.wrapping_add(delta.max.y);
-    Rect { min: PointI64 { x: min_x, y: min_y }, max: PointI64 { x: max_x, y: max_y } }
+    Rect::of(min_x, min_y, max_x, max_y)
 }
 
 #[cfg(test)]

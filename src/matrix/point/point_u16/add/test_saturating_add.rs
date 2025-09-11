@@ -1,5 +1,5 @@
 use super::saturating_add;
-use crate::matrix::point::{point_i16::PointI16 as PointI, point_u16::Point};
+use crate::matrix::point::{point_i16::Point as PointI, point_u16::Point};
 
 const MAX: u16 = u16::MAX;
 

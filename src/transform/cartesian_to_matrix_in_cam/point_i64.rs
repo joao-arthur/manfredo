@@ -1,4 +1,4 @@
-type CartesianPoint = crate::cartesian::point::point_i64::PointI64;
+type CartesianPoint = crate::cartesian::point::point_i64::Point;
 type MatrixPoint = crate::matrix::point::point_u64::Point;
 type Cam = crate::matrix::rect::rect_u64::Rect;
 

@@ -1,7 +1,4 @@
-use crate::matrix::{
-    point::point_i64::PointI64,
-    rect::rect_i64::{Rect, delta_col, delta_row},
-};
+use crate::matrix::rect::rect_i64::{Rect, delta_col, delta_row};
 
 pub fn try_checked_resize_assign(r: &mut Rect, size: u64) -> Option<()> {
     if size < 3 {
@@ -34,7 +31,7 @@ pub fn try_checked_resize(r: &Rect, size: u64) -> Option<Rect> {
     let min_col = i64::try_from(temp_min_col).ok()?;
     let max_row = min_row.checked_add_unsigned(size - 1)?;
     let max_col = min_col.checked_add_unsigned(size - 1)?;
-    Some(Rect { min: PointI64 { row: min_row, col: min_col }, max: PointI64 { row: max_row, col: max_col } })
+    Some(Rect::of(min_row, min_col, max_row, max_col))
 }
 
 pub fn checked_resize_assign(r: &mut Rect, size: u64) {
@@ -76,7 +73,7 @@ pub fn try_saturating_resize(r: &Rect, size: u64) -> Option<Rect> {
     let min_col = clamped_min_col as i64;
     let max_row = (clamped_min_row + i128::from(size) - 1) as i64;
     let max_col = (clamped_min_col + i128::from(size) - 1) as i64;
-    Some(Rect { min: PointI64 { row: min_row, col: min_col }, max: PointI64 { row: max_row, col: max_col } })
+    Some(Rect::of(min_row, min_col, max_row, max_col))
 }
 
 pub fn saturating_resize_assign(r: &mut Rect, size: u64) {
@@ -118,7 +115,7 @@ pub fn try_wrapping_resize(r: &Rect, size: u64) -> Option<Rect> {
     let min_col = temp_min_col as i64;
     let max_row = min_row.wrapping_add_unsigned(size - 1);
     let max_col = min_col.wrapping_add_unsigned(size - 1);
-    Some(Rect { min: PointI64 { row: min_row, col: min_col }, max: PointI64 { row: max_row, col: max_col } })
+    Some(Rect::of(min_row, min_col, max_row, max_col))
 }
 
 pub fn wrapping_resize_assign(r: &mut Rect, size: u64) {

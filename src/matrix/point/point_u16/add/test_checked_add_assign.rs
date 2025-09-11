@@ -1,5 +1,5 @@
 use super::checked_add_assign;
-use crate::matrix::point::{point_i16::PointI16 as PointI, point_u16::Point};
+use crate::matrix::point::{point_i16::Point as PointI, point_u16::Point};
 
 #[test]
 fn test() {

@@ -1,4 +1,4 @@
-use crate::matrix::{point::point_i32::PointI32, rect::rect_i32::Rect};
+use crate::matrix::{point::point_i32::Point, rect::rect_i32::Rect};
 
 pub fn try_checked_add_assign(r: &mut Rect, delta: &Rect) -> Option<()> {
     let min_row = r.min.row.checked_add(delta.min.row)?;
@@ -17,7 +17,7 @@ pub fn try_checked_add(r: &Rect, delta: &Rect) -> Option<Rect> {
     let min_col = r.min.col.checked_add(delta.min.col)?;
     let max_row = r.max.row.checked_add(delta.max.row)?;
     let max_col = r.max.col.checked_add(delta.max.col)?;
-    Some(Rect { min: PointI32 { row: min_row, col: min_col }, max: PointI32 { row: max_row, col: max_col } })
+    Some(Rect { min: Point { row: min_row, col: min_col }, max: Point { row: max_row, col: max_col } })
 }
 
 pub fn checked_add_assign(r: &mut Rect, delta: &Rect) {
@@ -40,7 +40,7 @@ pub fn saturating_add(r: &Rect, delta: &Rect) -> Rect {
     let min_col = r.min.col.saturating_add(delta.min.col);
     let max_row = r.max.row.saturating_add(delta.max.row);
     let max_col = r.max.col.saturating_add(delta.max.col);
-    Rect { min: PointI32 { row: min_row, col: min_col }, max: PointI32 { row: max_row, col: max_col } }
+    Rect { min: Point { row: min_row, col: min_col }, max: Point { row: max_row, col: max_col } }
 }
 
 pub fn wrapping_add_assign(r: &mut Rect, delta: &Rect) {
@@ -55,7 +55,7 @@ pub fn wrapping_add(r: &Rect, delta: &Rect) -> Rect {
     let min_col = r.min.col.wrapping_add(delta.min.col);
     let max_row = r.max.row.wrapping_add(delta.max.row);
     let max_col = r.max.col.wrapping_add(delta.max.col);
-    Rect { min: PointI32 { row: min_row, col: min_col }, max: PointI32 { row: max_row, col: max_col } }
+    Rect { min: Point { row: min_row, col: min_col }, max: Point { row: max_row, col: max_col } }
 }
 
 #[cfg(test)]

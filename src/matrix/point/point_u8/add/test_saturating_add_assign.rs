@@ -1,5 +1,5 @@
 use super::saturating_add_assign;
-use crate::matrix::point::{point_i8::PointI8 as PointI, point_u8::Point};
+use crate::matrix::point::{point_i8::Point as PointI, point_u8::Point};
 
 const MAX: u8 = u8::MAX;
 

@@ -1,5 +1,5 @@
 use crate::matrix::{
-    point::point_i8::PointI8,
+    point::point_i8::Point,
     rect::rect_i8::{Rect, delta_col, delta_row},
 };
 
@@ -22,7 +22,7 @@ pub fn try_deflate(r: &Rect) -> Option<Rect> {
     let min_col = r.min.col + 1;
     let max_row = r.max.row - 1;
     let max_col = r.max.col - 1;
-    Some(Rect { min: PointI8 { row: min_row, col: min_col }, max: PointI8 { row: max_row, col: max_col } })
+    Some(Rect { min: Point { row: min_row, col: min_col }, max: Point { row: max_row, col: max_col } })
 }
 
 pub fn assign_deflate(r: &mut Rect) {

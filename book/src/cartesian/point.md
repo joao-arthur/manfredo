@@ -15,10 +15,10 @@
 
 ### Signed
 
-- PointI8
-- PointI16
-- PointI32
-- PointI64
+- Point
+- Point
+- Point
+- Point
 
 ### Float-point
 

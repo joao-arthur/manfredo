@@ -1,5 +1,5 @@
 use super::checked_add;
-use crate::cartesian::point::{point_i32::PointI32 as PointI, point_u32::Point};
+use crate::cartesian::point::{point_i32::Point as PointI, point_u32::Point};
 
 #[test]
 fn test() {

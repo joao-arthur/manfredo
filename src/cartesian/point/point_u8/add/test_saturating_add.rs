@@ -1,5 +1,5 @@
 use super::saturating_add;
-use crate::cartesian::point::{point_i8::PointI8 as PointI, point_u8::Point};
+use crate::cartesian::point::{point_i8::Point as PointI, point_u8::Point};
 
 const MAX: u8 = u8::MAX;
 

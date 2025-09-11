@@ -1,4 +1,4 @@
-use crate::cartesian::point::{point_i8::PointI8 as PointI, point_u8::Point};
+use crate::cartesian::point::{point_i8::Point as PointI, point_u8::Point};
 
 pub fn try_checked_add_assign(p: &mut Point, delta: &PointI) -> Option<()> {
     let x = p.x.checked_add_signed(delta.x)?;

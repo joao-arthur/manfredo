@@ -1,7 +1,4 @@
-use crate::matrix::{
-    point::point_u32::Point,
-    rect::rect_u32::{Rect, delta_col, delta_row},
-};
+use crate::matrix::rect::rect_u32::{Rect, delta_col, delta_row};
 
 pub fn try_checked_resize_assign(r: &mut Rect, size: u32) -> Option<()> {
     if size < 3 {
@@ -34,7 +31,7 @@ pub fn try_checked_resize(r: &Rect, size: u32) -> Option<Rect> {
     let min_col = u32::try_from(temp_min_col).ok()?;
     let max_row = min_row.checked_add(size - 1)?;
     let max_col = min_col.checked_add(size - 1)?;
-    Some(Rect { min: Point { row: min_row, col: min_col }, max: Point { row: max_row, col: max_col } })
+    Some(Rect::of(min_row, min_col, max_row, max_col))
 }
 
 pub fn checked_resize_assign(r: &mut Rect, size: u32) {
@@ -76,7 +73,7 @@ pub fn try_saturating_resize(r: &Rect, size: u32) -> Option<Rect> {
     let min_col = clamped_min_col as u32;
     let max_row = (clamped_min_row + i64::from(size) - 1) as u32;
     let max_col = (clamped_min_col + i64::from(size) - 1) as u32;
-    Some(Rect { min: Point { row: min_row, col: min_col }, max: Point { row: max_row, col: max_col } })
+    Some(Rect::of(min_row, min_col, max_row, max_col))
 }
 
 pub fn saturating_resize_assign(r: &mut Rect, size: u32) {
@@ -118,7 +115,7 @@ pub fn try_wrapping_resize(r: &Rect, size: u32) -> Option<Rect> {
     let min_col = temp_min_col as u32;
     let max_row = min_row.wrapping_add(size - 1);
     let max_col = min_col.wrapping_add(size - 1);
-    Some(Rect { min: Point { row: min_row, col: min_col }, max: Point { row: max_row, col: max_col } })
+    Some(Rect::of(min_row, min_col, max_row, max_col))
 }
 
 pub fn wrapping_resize_assign(r: &mut Rect, size: u32) {

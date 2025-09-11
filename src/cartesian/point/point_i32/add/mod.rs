@@ -1,6 +1,6 @@
-use crate::cartesian::point::point_i32::PointI32;
+use crate::cartesian::point::point_i32::Point;
 
-pub fn try_checked_add_assign(p: &mut PointI32, delta: &PointI32) -> Option<()> {
+pub fn try_checked_add_assign(p: &mut Point, delta: &Point) -> Option<()> {
     let x = p.x.checked_add(delta.x)?;
     let y = p.y.checked_add(delta.y)?;
     p.x = x;
@@ -8,40 +8,40 @@ pub fn try_checked_add_assign(p: &mut PointI32, delta: &PointI32) -> Option<()> 
     Some(())
 }
 
-pub fn try_checked_add(p: &PointI32, delta: &PointI32) -> Option<PointI32> {
+pub fn try_checked_add(p: &Point, delta: &Point) -> Option<Point> {
     let x = p.x.checked_add(delta.x)?;
     let y = p.y.checked_add(delta.y)?;
-    Some(PointI32 { x, y })
+    Some(Point { x, y })
 }
 
-pub fn checked_add_assign(p: &mut PointI32, delta: &PointI32) {
+pub fn checked_add_assign(p: &mut Point, delta: &Point) {
     try_checked_add_assign(p, delta).unwrap()
 }
 
-pub fn checked_add(p: &PointI32, delta: &PointI32) -> PointI32 {
+pub fn checked_add(p: &Point, delta: &Point) -> Point {
     try_checked_add(p, delta).unwrap()
 }
 
-pub fn saturating_add_assign(p: &mut PointI32, delta: &PointI32) {
+pub fn saturating_add_assign(p: &mut Point, delta: &Point) {
     p.x = p.x.saturating_add(delta.x);
     p.y = p.y.saturating_add(delta.y);
 }
 
-pub fn saturating_add(p: &PointI32, delta: &PointI32) -> PointI32 {
+pub fn saturating_add(p: &Point, delta: &Point) -> Point {
     let x = p.x.saturating_add(delta.x);
     let y = p.y.saturating_add(delta.y);
-    PointI32 { x, y }
+    Point { x, y }
 }
 
-pub fn wrapping_add_assign(p: &mut PointI32, delta: &PointI32) {
+pub fn wrapping_add_assign(p: &mut Point, delta: &Point) {
     p.x = p.x.wrapping_add(delta.x);
     p.y = p.y.wrapping_add(delta.y);
 }
 
-pub fn wrapping_add(p: &PointI32, delta: &PointI32) -> PointI32 {
+pub fn wrapping_add(p: &Point, delta: &Point) -> Point {
     let x = p.x.wrapping_add(delta.x);
     let y = p.y.wrapping_add(delta.y);
-    PointI32 { x, y }
+    Point { x, y }
 }
 
 #[cfg(test)]

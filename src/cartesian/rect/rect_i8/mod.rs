@@ -27,25 +27,25 @@ pub use self::translate::{
 
 #[derive(Eq, PartialEq, Debug, Clone)]
 pub struct Rect {
-    pub min: point_i8::PointI8,
-    pub max: point_i8::PointI8,
+    pub min: point_i8::Point,
+    pub max: point_i8::Point,
 }
 
 impl Rect {
     pub fn of(x1: i8, y1: i8, x2: i8, y2: i8) -> Self {
-        Rect { min: point_i8::PointI8::of(x1, y1), max: point_i8::PointI8::of(x2, y2) }
+        Rect { min: point_i8::Point::of(x1, y1), max: point_i8::Point::of(x2, y2) }
     }
 
     pub fn largest() -> Self {
-        Rect { min: point_i8::PointI8::min(), max: point_i8::PointI8::max() }
+        Rect { min: point_i8::Point::min(), max: point_i8::Point::max() }
     }
 
     pub fn min() -> Self {
-        Rect { min: point_i8::PointI8::min(), max: point_i8::PointI8::min() }
+        Rect { min: point_i8::Point::min(), max: point_i8::Point::min() }
     }
 
     pub fn max() -> Self {
-        Rect { min: point_i8::PointI8::max(), max: point_i8::PointI8::max() }
+        Rect { min: point_i8::Point::max(), max: point_i8::Point::max() }
     }
 
     pub fn iter_x(&self) -> RangeInclusive<i8> {
@@ -90,14 +90,14 @@ pub fn max_len(r: &Rect) -> u8 {
 #[cfg(test)]
 mod tests {
     use super::{Rect, delta_x, delta_y, len_x, len_y, max_delta, max_len};
-    use crate::cartesian::point::point_i8::PointI8;
+    use crate::cartesian::point::point_i8::Point;
 
     #[test]
     fn rect_i8() {
-        assert_eq!(Rect::largest(), Rect { min: PointI8 { x: i8::MIN, y: i8::MIN }, max: PointI8 { x: i8::MAX, y: i8::MAX } });
-        assert_eq!(Rect::min(), Rect { min: PointI8 { x: i8::MIN, y: i8::MIN }, max: PointI8 { x: i8::MIN, y: i8::MIN } });
-        assert_eq!(Rect::max(), Rect { min: PointI8 { x: i8::MAX, y: i8::MAX }, max: PointI8 { x: i8::MAX, y: i8::MAX } });
-        assert_eq!(Rect::of(i8::MIN, -1, 1, i8::MAX), Rect { min: PointI8 { x: i8::MIN, y: -1 }, max: PointI8 { x: 1, y: i8::MAX } });
+        assert_eq!(Rect::largest(), Rect { min: Point { x: i8::MIN, y: i8::MIN }, max: Point { x: i8::MAX, y: i8::MAX } });
+        assert_eq!(Rect::min(), Rect { min: Point { x: i8::MIN, y: i8::MIN }, max: Point { x: i8::MIN, y: i8::MIN } });
+        assert_eq!(Rect::max(), Rect { min: Point { x: i8::MAX, y: i8::MAX }, max: Point { x: i8::MAX, y: i8::MAX } });
+        assert_eq!(Rect::of(i8::MIN, -1, 1, i8::MAX), Rect { min: Point { x: i8::MIN, y: -1 }, max: Point { x: 1, y: i8::MAX } });
     }
 
     #[test]

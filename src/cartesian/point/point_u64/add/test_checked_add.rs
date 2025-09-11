@@ -1,5 +1,5 @@
 use super::checked_add;
-use crate::cartesian::point::{point_i64::PointI64 as PointI, point_u64::Point};
+use crate::cartesian::point::{point_i64::Point as PointI, point_u64::Point};
 
 #[test]
 fn test() {

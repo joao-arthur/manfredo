@@ -1,5 +1,5 @@
 use crate::cartesian::{
-    point::point_i32::PointI32,
+    point::point_i32::Point,
     rect::rect_i32::{Rect, delta_x, delta_y},
 };
 
@@ -34,7 +34,7 @@ pub fn try_checked_resize(r: &Rect, size: u32) -> Option<Rect> {
     let min_y = i32::try_from(temp_min_y).ok()?;
     let max_x = min_x.checked_add_unsigned(size - 1)?;
     let max_y = min_y.checked_add_unsigned(size - 1)?;
-    Some(Rect { min: PointI32 { x: min_x, y: min_y }, max: PointI32 { x: max_x, y: max_y } })
+    Some(Rect { min: Point { x: min_x, y: min_y }, max: Point { x: max_x, y: max_y } })
 }
 
 pub fn checked_resize_assign(r: &mut Rect, size: u32) {
@@ -76,7 +76,7 @@ pub fn try_saturating_resize(r: &Rect, size: u32) -> Option<Rect> {
     let min_y = clamped_min_y as i32;
     let max_x = (clamped_min_x + i64::from(size) - 1) as i32;
     let max_y = (clamped_min_y + i64::from(size) - 1) as i32;
-    Some(Rect { min: PointI32 { x: min_x, y: min_y }, max: PointI32 { x: max_x, y: max_y } })
+    Some(Rect { min: Point { x: min_x, y: min_y }, max: Point { x: max_x, y: max_y } })
 }
 
 pub fn saturating_resize_assign(r: &mut Rect, size: u32) {
@@ -118,7 +118,7 @@ pub fn try_wrapping_resize(r: &Rect, size: u32) -> Option<Rect> {
     let min_y = temp_min_y as i32;
     let max_x = min_x.wrapping_add_unsigned(size - 1);
     let max_y = min_y.wrapping_add_unsigned(size - 1);
-    Some(Rect { min: PointI32 { x: min_x, y: min_y }, max: PointI32 { x: max_x, y: max_y } })
+    Some(Rect { min: Point { x: min_x, y: min_y }, max: Point { x: max_x, y: max_y } })
 }
 
 pub fn wrapping_resize_assign(r: &mut Rect, size: u32) {

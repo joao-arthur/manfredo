@@ -1,4 +1,4 @@
-type CartesianPoint = crate::cartesian::point::point_i8::PointI8;
+type CartesianPoint = crate::cartesian::point::point_i8::Point;
 type MatrixPoint = crate::matrix::point::point_u8::Point;
 
 pub fn matrix_to_cartesian(point: &MatrixPoint) -> CartesianPoint {

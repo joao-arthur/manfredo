@@ -1,20 +1,20 @@
 use super::checked_resize;
-use crate::cartesian::rect::rect_i32::RectI32;
+use crate::cartesian::rect::rect_i32::Rect;
 
 #[test]
 fn odd() {
-    assert_eq!(checked_resize(&RectI32::of(-5, -5, 5, 5), 9), RectI32::of(-4, -4, 4, 4));
-    assert_eq!(checked_resize(&RectI32::of(-4, -4, 4, 4), 7), RectI32::of(-3, -3, 3, 3));
-    assert_eq!(checked_resize(&RectI32::of(-3, -3, 3, 3), 5), RectI32::of(-2, -2, 2, 2));
-    assert_eq!(checked_resize(&RectI32::of(-2, -2, 2, 2), 3), RectI32::of(-1, -1, 1, 1));
-    assert_eq!(checked_resize(&RectI32::of(-1, -1, 1, 1), 9), RectI32::of(-4, -4, 4, 4));
+    assert_eq!(checked_resize(&Rect::of(-5, -5, 5, 5), 9), Rect::of(-4, -4, 4, 4));
+    assert_eq!(checked_resize(&Rect::of(-4, -4, 4, 4), 7), Rect::of(-3, -3, 3, 3));
+    assert_eq!(checked_resize(&Rect::of(-3, -3, 3, 3), 5), Rect::of(-2, -2, 2, 2));
+    assert_eq!(checked_resize(&Rect::of(-2, -2, 2, 2), 3), Rect::of(-1, -1, 1, 1));
+    assert_eq!(checked_resize(&Rect::of(-1, -1, 1, 1), 9), Rect::of(-4, -4, 4, 4));
 }
 
 #[test]
 fn even() {
-    assert_eq!(checked_resize(&RectI32::of(-5, -5, 4, 4), 10), RectI32::of(-5, -5, 4, 4));
-    assert_eq!(checked_resize(&RectI32::of(-5, -5, 4, 4), 8), RectI32::of(-4, -4, 3, 3));
-    assert_eq!(checked_resize(&RectI32::of(-4, -4, 3, 3), 6), RectI32::of(-3, -3, 2, 2));
-    assert_eq!(checked_resize(&RectI32::of(-3, -3, 2, 2), 4), RectI32::of(-2, -2, 1, 1));
-    assert_eq!(checked_resize(&RectI32::of(-2, -2, 1, 1), 8), RectI32::of(-4, -4, 3, 3));
+    assert_eq!(checked_resize(&Rect::of(-5, -5, 4, 4), 10), Rect::of(-5, -5, 4, 4));
+    assert_eq!(checked_resize(&Rect::of(-5, -5, 4, 4), 8), Rect::of(-4, -4, 3, 3));
+    assert_eq!(checked_resize(&Rect::of(-4, -4, 3, 3), 6), Rect::of(-3, -3, 2, 2));
+    assert_eq!(checked_resize(&Rect::of(-3, -3, 2, 2), 4), Rect::of(-2, -2, 1, 1));
+    assert_eq!(checked_resize(&Rect::of(-2, -2, 1, 1), 8), Rect::of(-4, -4, 3, 3));
 }

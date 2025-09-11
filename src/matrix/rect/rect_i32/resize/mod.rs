@@ -1,9 +1,9 @@
 use crate::matrix::{
-    point::point_i32::PointI32,
-    rect::rect_i32::{RectI32, delta_col, delta_row},
+    point::point_i32::Point,
+    rect::rect_i32::{Rect, delta_col, delta_row},
 };
 
-pub fn try_checked_resize_assign(r: &mut RectI32, size: u32) -> Option<()> {
+pub fn try_checked_resize_assign(r: &mut Rect, size: u32) -> Option<()> {
     if size < 3 {
         return None;
     }
@@ -22,7 +22,7 @@ pub fn try_checked_resize_assign(r: &mut RectI32, size: u32) -> Option<()> {
     Some(())
 }
 
-pub fn try_checked_resize(r: &RectI32, size: u32) -> Option<RectI32> {
+pub fn try_checked_resize(r: &Rect, size: u32) -> Option<Rect> {
     if size < 3 {
         return None;
     }
@@ -34,18 +34,18 @@ pub fn try_checked_resize(r: &RectI32, size: u32) -> Option<RectI32> {
     let min_col = i32::try_from(temp_min_col).ok()?;
     let max_row = min_row.checked_add_unsigned(size - 1)?;
     let max_col = min_col.checked_add_unsigned(size - 1)?;
-    Some(RectI32 { min: PointI32 { row: min_row, col: min_col }, max: PointI32 { row: max_row, col: max_col } })
+    Some(Rect { min: Point { row: min_row, col: min_col }, max: Point { row: max_row, col: max_col } })
 }
 
-pub fn checked_resize_assign(r: &mut RectI32, size: u32) {
+pub fn checked_resize_assign(r: &mut Rect, size: u32) {
     try_checked_resize_assign(r, size).unwrap()
 }
 
-pub fn checked_resize(r: &RectI32, size: u32) -> RectI32 {
+pub fn checked_resize(r: &Rect, size: u32) -> Rect {
     try_checked_resize(r, size).unwrap()
 }
 
-pub fn try_saturating_resize_assign(r: &mut RectI32, size: u32) -> Option<()> {
+pub fn try_saturating_resize_assign(r: &mut Rect, size: u32) -> Option<()> {
     if size < 3 {
         return None;
     }
@@ -62,7 +62,7 @@ pub fn try_saturating_resize_assign(r: &mut RectI32, size: u32) -> Option<()> {
     Some(())
 }
 
-pub fn try_saturating_resize(r: &RectI32, size: u32) -> Option<RectI32> {
+pub fn try_saturating_resize(r: &Rect, size: u32) -> Option<Rect> {
     if size < 3 {
         return None;
     }
@@ -76,18 +76,18 @@ pub fn try_saturating_resize(r: &RectI32, size: u32) -> Option<RectI32> {
     let min_col = clamped_min_col as i32;
     let max_row = (clamped_min_row + i64::from(size) - 1) as i32;
     let max_col = (clamped_min_col + i64::from(size) - 1) as i32;
-    Some(RectI32 { min: PointI32 { row: min_row, col: min_col }, max: PointI32 { row: max_row, col: max_col } })
+    Some(Rect { min: Point { row: min_row, col: min_col }, max: Point { row: max_row, col: max_col } })
 }
 
-pub fn saturating_resize_assign(r: &mut RectI32, size: u32) {
+pub fn saturating_resize_assign(r: &mut Rect, size: u32) {
     try_saturating_resize_assign(r, size).unwrap()
 }
 
-pub fn saturating_resize(r: &RectI32, size: u32) -> RectI32 {
+pub fn saturating_resize(r: &Rect, size: u32) -> Rect {
     try_saturating_resize(r, size).unwrap()
 }
 
-pub fn try_wrapping_resize_assign(r: &mut RectI32, size: u32) -> Option<()> {
+pub fn try_wrapping_resize_assign(r: &mut Rect, size: u32) -> Option<()> {
     if size < 3 {
         return None;
     }
@@ -106,7 +106,7 @@ pub fn try_wrapping_resize_assign(r: &mut RectI32, size: u32) -> Option<()> {
     Some(())
 }
 
-pub fn try_wrapping_resize(r: &RectI32, size: u32) -> Option<RectI32> {
+pub fn try_wrapping_resize(r: &Rect, size: u32) -> Option<Rect> {
     if size < 3 {
         return None;
     }
@@ -118,14 +118,14 @@ pub fn try_wrapping_resize(r: &RectI32, size: u32) -> Option<RectI32> {
     let min_col = temp_min_col as i32;
     let max_row = min_row.wrapping_add_unsigned(size - 1);
     let max_col = min_col.wrapping_add_unsigned(size - 1);
-    Some(RectI32 { min: PointI32 { row: min_row, col: min_col }, max: PointI32 { row: max_row, col: max_col } })
+    Some(Rect { min: Point { row: min_row, col: min_col }, max: Point { row: max_row, col: max_col } })
 }
 
-pub fn wrapping_resize_assign(r: &mut RectI32, size: u32) {
+pub fn wrapping_resize_assign(r: &mut Rect, size: u32) {
     try_wrapping_resize_assign(r, size).unwrap()
 }
 
-pub fn wrapping_resize(r: &RectI32, size: u32) -> RectI32 {
+pub fn wrapping_resize(r: &Rect, size: u32) -> Rect {
     try_wrapping_resize(r, size).unwrap()
 }
 

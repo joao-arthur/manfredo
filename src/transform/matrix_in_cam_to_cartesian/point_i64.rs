@@ -1,6 +1,6 @@
-type CartesianPoint = crate::cartesian::point::point_i64::PointI64;
-type MatrixPoint = crate::matrix::point::point_u64::PointU64;
-type Cam = crate::matrix::rect::rect_u64::RectU64;
+type CartesianPoint = crate::cartesian::point::point_i64::Point;
+type MatrixPoint = crate::matrix::point::point_u64::Point;
+type Cam = crate::matrix::rect::rect_u64::Rect;
 
 pub fn matrix_in_cam_to_cartesian(point: &MatrixPoint, cam: &Cam) -> CartesianPoint {
     let x = i128::from(i64::MIN) + i128::from(point.col) - i128::from(cam.min.col);

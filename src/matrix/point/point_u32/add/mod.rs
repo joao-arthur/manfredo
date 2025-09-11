@@ -1,6 +1,6 @@
-use crate::matrix::point::{point_i32::PointI32, point_u32::PointU32};
+use crate::matrix::point::{point_i32, point_u32::Point};
 
-pub fn try_checked_add_assign(p: &mut PointU32, delta: &PointI32) -> Option<()> {
+pub fn try_checked_add_assign(p: &mut Point, delta: &point_i32::Point) -> Option<()> {
     let row = p.row.checked_add_signed(delta.row)?;
     let col = p.col.checked_add_signed(delta.col)?;
     p.row = row;
@@ -8,40 +8,40 @@ pub fn try_checked_add_assign(p: &mut PointU32, delta: &PointI32) -> Option<()> 
     Some(())
 }
 
-pub fn try_checked_add(p: &PointU32, delta: &PointI32) -> Option<PointU32> {
+pub fn try_checked_add(p: &Point, delta: &point_i32::Point) -> Option<Point> {
     let row = p.row.checked_add_signed(delta.row)?;
     let col = p.col.checked_add_signed(delta.col)?;
-    Some(PointU32 { row, col })
+    Some(Point { row, col })
 }
 
-pub fn checked_add_assign(p: &mut PointU32, delta: &PointI32) {
+pub fn checked_add_assign(p: &mut Point, delta: &point_i32::Point) {
     try_checked_add_assign(p, delta).unwrap()
 }
 
-pub fn checked_add(p: &PointU32, delta: &PointI32) -> PointU32 {
+pub fn checked_add(p: &Point, delta: &point_i32::Point) -> Point {
     try_checked_add(p, delta).unwrap()
 }
 
-pub fn saturating_add_assign(p: &mut PointU32, delta: &PointI32) {
+pub fn saturating_add_assign(p: &mut Point, delta: &point_i32::Point) {
     p.row = p.row.saturating_add_signed(delta.row);
     p.col = p.col.saturating_add_signed(delta.col);
 }
 
-pub fn saturating_add(p: &PointU32, delta: &PointI32) -> PointU32 {
+pub fn saturating_add(p: &Point, delta: &point_i32::Point) -> Point {
     let row = p.row.saturating_add_signed(delta.row);
     let col = p.col.saturating_add_signed(delta.col);
-    PointU32 { row, col }
+    Point { row, col }
 }
 
-pub fn wrapping_add_assign(p: &mut PointU32, delta: &PointI32) {
+pub fn wrapping_add_assign(p: &mut Point, delta: &point_i32::Point) {
     p.row = p.row.wrapping_add_signed(delta.row);
     p.col = p.col.wrapping_add_signed(delta.col);
 }
 
-pub fn wrapping_add(p: &PointU32, delta: &PointI32) -> PointU32 {
+pub fn wrapping_add(p: &Point, delta: &point_i32::Point) -> Point {
     let row = p.row.wrapping_add_signed(delta.row);
     let col = p.col.wrapping_add_signed(delta.col);
-    PointU32 { row, col }
+    Point { row, col }
 }
 
 #[cfg(test)]

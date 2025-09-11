@@ -52,8 +52,8 @@ functions**.
 For example, the following code:
 
 ```rust
-let a = RectI32::of(-20, -10, 10, 20);
-let b = RectI32::of(-20, -10, 10, 20);
+let a = Rect::of(-20, -10, 10, 20);
+let b = Rect::of(-20, -10, 10, 20);
 let c = a + b;
 let d = a + b;
 let e = a + b;
@@ -67,8 +67,8 @@ This kind of code, altough providing a good developer experience, hide two probl
 For this reason, Manfredo exposes this operation instead as:
 
 ```rust
-let mut a = RectI32::of(-20, -10, 10, 20);
-let b = RectI32::of(-20, -10, 10, 20);
+let mut a = Rect::of(-20, -10, 10, 20);
+let b = Rect::of(-20, -10, 10, 20);
 let c = try_checked_add(&a, &b);
 let d = saturating_add(&a, &b);
 let e = wrapping_add_assign(&mut a, &b);

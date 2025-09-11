@@ -1,9 +1,9 @@
 use crate::cartesian::{
-    point::{point_i16::PointI16, point_u16::PointU16},
-    rect::rect_u16::{RectU16, delta_x, delta_y},
+    point::point_i16::Point,
+    rect::rect_u16::{Rect, delta_x, delta_y},
 };
 
-pub fn try_checked_translate_assign(r: &mut RectU16, delta: &PointI16) -> Option<()> {
+pub fn try_checked_translate_assign(r: &mut Rect, delta: &Point) -> Option<()> {
     let min_x = r.min.x.checked_add_signed(delta.x)?;
     let min_y = r.min.y.checked_add_signed(delta.y)?;
     let max_x = r.max.x.checked_add_signed(delta.x)?;
@@ -15,23 +15,23 @@ pub fn try_checked_translate_assign(r: &mut RectU16, delta: &PointI16) -> Option
     Some(())
 }
 
-pub fn try_checked_translate(r: &RectU16, delta: &PointI16) -> Option<RectU16> {
+pub fn try_checked_translate(r: &Rect, delta: &Point) -> Option<Rect> {
     let min_x = r.min.x.checked_add_signed(delta.x)?;
     let min_y = r.min.y.checked_add_signed(delta.y)?;
     let max_x = r.max.x.checked_add_signed(delta.x)?;
     let max_y = r.max.y.checked_add_signed(delta.y)?;
-    Some(RectU16 { min: PointU16 { x: min_x, y: min_y }, max: PointU16 { x: max_x, y: max_y } })
+    Some(Rect::of(min_x, min_y, max_x, max_y))
 }
 
-pub fn checked_translate_assign(r: &mut RectU16, delta: &PointI16) {
+pub fn checked_translate_assign(r: &mut Rect, delta: &Point) {
     try_checked_translate_assign(r, delta).unwrap()
 }
 
-pub fn checked_translate(r: &RectU16, delta: &PointI16) -> RectU16 {
+pub fn checked_translate(r: &Rect, delta: &Point) -> Rect {
     try_checked_translate(r, delta).unwrap()
 }
 
-pub fn saturating_translate_assign(r: &mut RectU16, delta: &PointI16) {
+pub fn saturating_translate_assign(r: &mut Rect, delta: &Point) {
     let dx = delta_x(r);
     let dy = delta_y(r);
     let temp_min_x = i32::from(r.min.x) + i32::from(delta.x);
@@ -48,7 +48,7 @@ pub fn saturating_translate_assign(r: &mut RectU16, delta: &PointI16) {
     r.max.y = max_y;
 }
 
-pub fn saturating_translate(r: &RectU16, delta: &PointI16) -> RectU16 {
+pub fn saturating_translate(r: &Rect, delta: &Point) -> Rect {
     let dx = delta_x(r);
     let dy = delta_y(r);
     let temp_min_x = i32::from(r.min.x) + i32::from(delta.x);
@@ -59,10 +59,10 @@ pub fn saturating_translate(r: &RectU16, delta: &PointI16) -> RectU16 {
     let min_y = clamped_y as u16;
     let max_x = min_x + dx;
     let max_y = min_y + dy;
-    RectU16 { min: PointU16 { x: min_x, y: min_y }, max: PointU16 { x: max_x, y: max_y } }
+    Rect::of(min_x, min_y, max_x, max_y)
 }
 
-pub fn wrapping_translate_assign(r: &mut RectU16, delta: &PointI16) {
+pub fn wrapping_translate_assign(r: &mut Rect, delta: &Point) {
     let dx = delta_x(r);
     let dy = delta_y(r);
     let min_x = r.min.x.wrapping_add_signed(delta.x);
@@ -75,14 +75,14 @@ pub fn wrapping_translate_assign(r: &mut RectU16, delta: &PointI16) {
     r.max.y = max_y;
 }
 
-pub fn wrapping_translate(r: &RectU16, delta: &PointI16) -> RectU16 {
+pub fn wrapping_translate(r: &Rect, delta: &Point) -> Rect {
     let dx = delta_x(r);
     let dy = delta_y(r);
     let min_x = r.min.x.wrapping_add_signed(delta.x);
     let min_y = r.min.y.wrapping_add_signed(delta.y);
     let max_x = min_x.wrapping_add(dx);
     let max_y = min_y.wrapping_add(dy);
-    RectU16 { min: PointU16 { x: min_x, y: min_y }, max: PointU16 { x: max_x, y: max_y } }
+    Rect::of(min_x, min_y, max_x, max_y)
 }
 
 #[cfg(test)]

@@ -1,9 +1,9 @@
 use crate::cartesian::{
-    point::point_f64::{MAX, MIN, PointF64},
-    rect::rect_f64::RectF64,
+    point::point_f64::{MAX, MIN},
+    rect::rect_f64::Rect,
 };
 
-pub fn try_checked_inflate_assign(r: &mut RectF64) -> Option<()> {
+pub fn try_checked_inflate_assign(r: &mut Rect) -> Option<()> {
     if r.min.x == MIN || r.min.y == MIN || r.max.x == MAX || r.max.y == MAX {
         return None;
     }
@@ -14,7 +14,7 @@ pub fn try_checked_inflate_assign(r: &mut RectF64) -> Option<()> {
     Some(())
 }
 
-pub fn try_checked_inflate(r: &RectF64) -> Option<RectF64> {
+pub fn try_checked_inflate(r: &Rect) -> Option<Rect> {
     if r.min.x == MIN || r.min.y == MIN || r.max.x == MAX || r.max.y == MAX {
         return None;
     }
@@ -22,18 +22,18 @@ pub fn try_checked_inflate(r: &RectF64) -> Option<RectF64> {
     let min_y = r.min.y - 1.0;
     let max_x = r.max.x + 1.0;
     let max_y = r.max.y + 1.0;
-    Some(RectF64 { min: PointF64 { x: min_x, y: min_y }, max: PointF64 { x: max_x, y: max_y } })
+    Some(Rect::of(min_x, min_y, max_x, max_y))
 }
 
-pub fn checked_inflate_assign(r: &mut RectF64) {
+pub fn checked_inflate_assign(r: &mut Rect) {
     try_checked_inflate_assign(r).unwrap()
 }
 
-pub fn checked_inflate(r: &RectF64) -> RectF64 {
+pub fn checked_inflate(r: &Rect) -> Rect {
     try_checked_inflate(r).unwrap()
 }
 
-pub fn try_saturating_inflate_assign(r: &mut RectF64) -> Option<()> {
+pub fn try_saturating_inflate_assign(r: &mut Rect) -> Option<()> {
     let is_min_x = r.min.x == MIN;
     let is_min_y = r.min.y == MIN;
     let is_max_x = r.max.x == MAX;
@@ -52,7 +52,7 @@ pub fn try_saturating_inflate_assign(r: &mut RectF64) -> Option<()> {
     Some(())
 }
 
-pub fn try_saturating_inflate(r: &RectF64) -> Option<RectF64> {
+pub fn try_saturating_inflate(r: &Rect) -> Option<Rect> {
     let is_min_x = r.min.x == MIN;
     let is_min_y = r.min.y == MIN;
     let is_max_x = r.max.x == MAX;
@@ -68,14 +68,14 @@ pub fn try_saturating_inflate(r: &RectF64) -> Option<RectF64> {
     let min_y = (r.min.y - min_y_modifier).max(MIN);
     let max_x = (r.max.x + max_x_modifier).min(MAX);
     let max_y = (r.max.y + max_y_modifier).min(MAX);
-    Some(RectF64 { min: PointF64 { x: min_x, y: min_y }, max: PointF64 { x: max_x, y: max_y } })
+    Some(Rect::of(min_x, min_y, max_x, max_y))
 }
 
-pub fn saturating_inflate_assign(r: &mut RectF64) {
+pub fn saturating_inflate_assign(r: &mut Rect) {
     try_saturating_inflate_assign(r).unwrap()
 }
 
-pub fn saturating_inflate(r: &RectF64) -> RectF64 {
+pub fn saturating_inflate(r: &Rect) -> Rect {
     try_saturating_inflate(r).unwrap()
 }
 

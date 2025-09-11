@@ -1,6 +1,6 @@
-use crate::cartesian::{point::point_i16::PointI16, rect::rect_i16::RectI16};
+use crate::cartesian::{point::point_i16::Point, rect::rect_i16::Rect};
 
-pub fn try_checked_add_assign(r: &mut RectI16, delta: &RectI16) -> Option<()> {
+pub fn try_checked_add_assign(r: &mut Rect, delta: &Rect) -> Option<()> {
     let min_x = r.min.x.checked_add(delta.min.x)?;
     let min_y = r.min.y.checked_add(delta.min.y)?;
     let max_x = r.max.x.checked_add(delta.max.x)?;
@@ -12,50 +12,50 @@ pub fn try_checked_add_assign(r: &mut RectI16, delta: &RectI16) -> Option<()> {
     Some(())
 }
 
-pub fn try_checked_add(r: &RectI16, delta: &RectI16) -> Option<RectI16> {
+pub fn try_checked_add(r: &Rect, delta: &Rect) -> Option<Rect> {
     let min_x = r.min.x.checked_add(delta.min.x)?;
     let min_y = r.min.y.checked_add(delta.min.y)?;
     let max_x = r.max.x.checked_add(delta.max.x)?;
     let max_y = r.max.y.checked_add(delta.max.y)?;
-    Some(RectI16 { min: PointI16 { x: min_x, y: min_y }, max: PointI16 { x: max_x, y: max_y } })
+    Some(Rect { min: Point { x: min_x, y: min_y }, max: Point { x: max_x, y: max_y } })
 }
 
-pub fn checked_add_assign(r: &mut RectI16, delta: &RectI16) {
+pub fn checked_add_assign(r: &mut Rect, delta: &Rect) {
     try_checked_add_assign(r, delta).unwrap()
 }
 
-pub fn checked_add(r: &RectI16, delta: &RectI16) -> RectI16 {
+pub fn checked_add(r: &Rect, delta: &Rect) -> Rect {
     try_checked_add(r, delta).unwrap()
 }
 
-pub fn saturating_add_assign(r: &mut RectI16, delta: &RectI16) {
+pub fn saturating_add_assign(r: &mut Rect, delta: &Rect) {
     r.min.x = r.min.x.saturating_add(delta.min.x);
     r.min.y = r.min.y.saturating_add(delta.min.y);
     r.max.x = r.max.x.saturating_add(delta.max.x);
     r.max.y = r.max.y.saturating_add(delta.max.y);
 }
 
-pub fn saturating_add(r: &RectI16, delta: &RectI16) -> RectI16 {
+pub fn saturating_add(r: &Rect, delta: &Rect) -> Rect {
     let min_x = r.min.x.saturating_add(delta.min.x);
     let min_y = r.min.y.saturating_add(delta.min.y);
     let max_x = r.max.x.saturating_add(delta.max.x);
     let max_y = r.max.y.saturating_add(delta.max.y);
-    RectI16 { min: PointI16 { x: min_x, y: min_y }, max: PointI16 { x: max_x, y: max_y } }
+    Rect { min: Point { x: min_x, y: min_y }, max: Point { x: max_x, y: max_y } }
 }
 
-pub fn wrapping_add_assign(r: &mut RectI16, delta: &RectI16) {
+pub fn wrapping_add_assign(r: &mut Rect, delta: &Rect) {
     r.min.x = r.min.x.wrapping_add(delta.min.x);
     r.min.y = r.min.y.wrapping_add(delta.min.y);
     r.max.x = r.max.x.wrapping_add(delta.max.x);
     r.max.y = r.max.y.wrapping_add(delta.max.y);
 }
 
-pub fn wrapping_add(r: &RectI16, delta: &RectI16) -> RectI16 {
+pub fn wrapping_add(r: &Rect, delta: &Rect) -> Rect {
     let min_x = r.min.x.wrapping_add(delta.min.x);
     let min_y = r.min.y.wrapping_add(delta.min.y);
     let max_x = r.max.x.wrapping_add(delta.max.x);
     let max_y = r.max.y.wrapping_add(delta.max.y);
-    RectI16 { min: PointI16 { x: min_x, y: min_y }, max: PointI16 { x: max_x, y: max_y } }
+    Rect { min: Point { x: min_x, y: min_y }, max: Point { x: max_x, y: max_y } }
 }
 
 #[cfg(test)]

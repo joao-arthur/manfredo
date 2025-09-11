@@ -1,11 +1,11 @@
 use super::checked_add_assign;
-use crate::matrix::rect::{rect_i32::RectI32, rect_u32::RectU32};
+use crate::matrix::rect::{rect_i32::Rect as RectI, rect_u32::Rect};
 
 #[test]
 fn test() {
-    let mut r = RectU32::of(0, 0, 12, 10);
-    checked_add_assign(&mut r, &RectI32::of(5, 4, 3, 2));
-    assert_eq!(r, RectU32::of(5, 4, 15, 12));
-    checked_add_assign(&mut r, &RectI32::of(-4, -3, -2, -1));
-    assert_eq!(r, RectU32::of(1, 1, 13, 11));
+    let mut r = Rect::of(0, 0, 12, 10);
+    checked_add_assign(&mut r, &RectI::of(5, 4, 3, 2));
+    assert_eq!(r, Rect::of(5, 4, 15, 12));
+    checked_add_assign(&mut r, &RectI::of(-4, -3, -2, -1));
+    assert_eq!(r, Rect::of(1, 1, 13, 11));
 }

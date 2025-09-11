@@ -1,9 +1,6 @@
-use crate::cartesian::{
-    point::point_u8::PointU8,
-    rect::rect_u8::{RectU8, delta_x, delta_y},
-};
+use crate::cartesian::rect::rect_u8::{Rect, delta_x, delta_y};
 
-pub fn try_checked_resize_assign(r: &mut RectU8, size: u8) -> Option<()> {
+pub fn try_checked_resize_assign(r: &mut Rect, size: u8) -> Option<()> {
     if size < 3 {
         return None;
     }
@@ -22,7 +19,7 @@ pub fn try_checked_resize_assign(r: &mut RectU8, size: u8) -> Option<()> {
     Some(())
 }
 
-pub fn try_checked_resize(r: &RectU8, size: u8) -> Option<RectU8> {
+pub fn try_checked_resize(r: &Rect, size: u8) -> Option<Rect> {
     if size < 3 {
         return None;
     }
@@ -34,18 +31,18 @@ pub fn try_checked_resize(r: &RectU8, size: u8) -> Option<RectU8> {
     let min_y = u8::try_from(temp_min_y).ok()?;
     let max_x = min_x.checked_add(size - 1)?;
     let max_y = min_y.checked_add(size - 1)?;
-    Some(RectU8 { min: PointU8 { x: min_x, y: min_y }, max: PointU8 { x: max_x, y: max_y } })
+    Some(Rect::of(min_x, min_y, max_x, max_y))
 }
 
-pub fn checked_resize_assign(r: &mut RectU8, size: u8) {
+pub fn checked_resize_assign(r: &mut Rect, size: u8) {
     try_checked_resize_assign(r, size).unwrap()
 }
 
-pub fn checked_resize(r: &RectU8, size: u8) -> RectU8 {
+pub fn checked_resize(r: &Rect, size: u8) -> Rect {
     try_checked_resize(r, size).unwrap()
 }
 
-pub fn try_saturating_resize_assign(r: &mut RectU8, size: u8) -> Option<()> {
+pub fn try_saturating_resize_assign(r: &mut Rect, size: u8) -> Option<()> {
     if size < 3 {
         return None;
     }
@@ -62,7 +59,7 @@ pub fn try_saturating_resize_assign(r: &mut RectU8, size: u8) -> Option<()> {
     Some(())
 }
 
-pub fn try_saturating_resize(r: &RectU8, size: u8) -> Option<RectU8> {
+pub fn try_saturating_resize(r: &Rect, size: u8) -> Option<Rect> {
     if size < 3 {
         return None;
     }
@@ -76,18 +73,18 @@ pub fn try_saturating_resize(r: &RectU8, size: u8) -> Option<RectU8> {
     let min_y = clamped_min_y as u8;
     let max_x = (clamped_min_x + i16::from(size) - 1) as u8;
     let max_y = (clamped_min_y + i16::from(size) - 1) as u8;
-    Some(RectU8 { min: PointU8 { x: min_x, y: min_y }, max: PointU8 { x: max_x, y: max_y } })
+    Some(Rect::of(min_x, min_y, max_x, max_y))
 }
 
-pub fn saturating_resize_assign(r: &mut RectU8, size: u8) {
+pub fn saturating_resize_assign(r: &mut Rect, size: u8) {
     try_saturating_resize_assign(r, size).unwrap()
 }
 
-pub fn saturating_resize(r: &RectU8, size: u8) -> RectU8 {
+pub fn saturating_resize(r: &Rect, size: u8) -> Rect {
     try_saturating_resize(r, size).unwrap()
 }
 
-pub fn try_wrapping_resize_assign(r: &mut RectU8, size: u8) -> Option<()> {
+pub fn try_wrapping_resize_assign(r: &mut Rect, size: u8) -> Option<()> {
     if size < 3 {
         return None;
     }
@@ -106,7 +103,7 @@ pub fn try_wrapping_resize_assign(r: &mut RectU8, size: u8) -> Option<()> {
     Some(())
 }
 
-pub fn try_wrapping_resize(r: &RectU8, size: u8) -> Option<RectU8> {
+pub fn try_wrapping_resize(r: &Rect, size: u8) -> Option<Rect> {
     if size < 3 {
         return None;
     }
@@ -118,14 +115,14 @@ pub fn try_wrapping_resize(r: &RectU8, size: u8) -> Option<RectU8> {
     let min_y = temp_min_y as u8;
     let max_x = min_x.wrapping_add(size - 1);
     let max_y = min_y.wrapping_add(size - 1);
-    Some(RectU8 { min: PointU8 { x: min_x, y: min_y }, max: PointU8 { x: max_x, y: max_y } })
+    Some(Rect::of(min_x, min_y, max_x, max_y))
 }
 
-pub fn wrapping_resize_assign(r: &mut RectU8, size: u8) {
+pub fn wrapping_resize_assign(r: &mut Rect, size: u8) {
     try_wrapping_resize_assign(r, size).unwrap()
 }
 
-pub fn wrapping_resize(r: &RectU8, size: u8) -> RectU8 {
+pub fn wrapping_resize(r: &Rect, size: u8) -> Rect {
     try_wrapping_resize(r, size).unwrap()
 }
 

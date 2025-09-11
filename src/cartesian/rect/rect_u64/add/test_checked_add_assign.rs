@@ -1,11 +1,11 @@
 use super::checked_add_assign;
-use crate::cartesian::rect::{rect_i64::RectI64, rect_u64::RectU64};
+use crate::cartesian::rect::{rect_i64::Rect as RectI, rect_u64::Rect};
 
 #[test]
 fn test() {
-    let mut r = RectU64::of(0, 0, 12, 10);
-    checked_add_assign(&mut r, &RectI64::of(5, 4, 3, 2));
-    assert_eq!(r, RectU64::of(5, 4, 15, 12));
-    checked_add_assign(&mut r, &RectI64::of(-4, -3, -2, -1));
-    assert_eq!(r, RectU64::of(1, 1, 13, 11));
+    let mut r = Rect::of(0, 0, 12, 10);
+    checked_add_assign(&mut r, &RectI::of(5, 4, 3, 2));
+    assert_eq!(r, Rect::of(5, 4, 15, 12));
+    checked_add_assign(&mut r, &RectI::of(-4, -3, -2, -1));
+    assert_eq!(r, Rect::of(1, 1, 13, 11));
 }

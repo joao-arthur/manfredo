@@ -13,16 +13,16 @@
 
 ### Unsigned
 
-- RectU8
-- RectU16
-- RectU32
-- RectU64
+- Rect
+- Rect
+- Rect
+- Rect
 
 ### Signed
 
 > Consider using **[Cartesian Rect](../cartesian/rect.md) instead**
 
-- RectI8
-- RectI16
-- RectI32
-- RectI64
+- Rect
+- Rect
+- Rect
+- Rect

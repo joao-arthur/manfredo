@@ -15,19 +15,19 @@
 
 > Consider using **[Matrix Rect](../matrix/rect.md) instead**
 
-- RectU8
-- RectU16
-- RectU32
-- RectU64
+- Rect
+- Rect
+- Rect
+- Rect
 
 ### Signed
 
-- RectI8
-- RectI16
-- RectI32
-- RectI64
+- Rect
+- Rect
+- Rect
+- Rect
 
 ### Float-point
 
-- RectF32
-- RectF64
+- Rect
+- Rect

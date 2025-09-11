@@ -1,9 +1,9 @@
 use crate::matrix::{
-    point::point_i16::PointI16,
-    rect::rect_i16::{RectI16, delta_col, delta_row},
+    point::point_i16::Point,
+    rect::rect_i16::{Rect, delta_col, delta_row},
 };
 
-pub fn try_checked_resize_assign(r: &mut RectI16, size: u16) -> Option<()> {
+pub fn try_checked_resize_assign(r: &mut Rect, size: u16) -> Option<()> {
     if size < 3 {
         return None;
     }
@@ -22,7 +22,7 @@ pub fn try_checked_resize_assign(r: &mut RectI16, size: u16) -> Option<()> {
     Some(())
 }
 
-pub fn try_checked_resize(r: &RectI16, size: u16) -> Option<RectI16> {
+pub fn try_checked_resize(r: &Rect, size: u16) -> Option<Rect> {
     if size < 3 {
         return None;
     }
@@ -34,18 +34,18 @@ pub fn try_checked_resize(r: &RectI16, size: u16) -> Option<RectI16> {
     let min_col = i16::try_from(temp_min_col).ok()?;
     let max_row = min_row.checked_add_unsigned(size - 1)?;
     let max_col = min_col.checked_add_unsigned(size - 1)?;
-    Some(RectI16 { min: PointI16 { row: min_row, col: min_col }, max: PointI16 { row: max_row, col: max_col } })
+    Some(Rect { min: Point { row: min_row, col: min_col }, max: Point { row: max_row, col: max_col } })
 }
 
-pub fn checked_resize_assign(r: &mut RectI16, size: u16) {
+pub fn checked_resize_assign(r: &mut Rect, size: u16) {
     try_checked_resize_assign(r, size).unwrap()
 }
 
-pub fn checked_resize(r: &RectI16, size: u16) -> RectI16 {
+pub fn checked_resize(r: &Rect, size: u16) -> Rect {
     try_checked_resize(r, size).unwrap()
 }
 
-pub fn try_saturating_resize_assign(r: &mut RectI16, size: u16) -> Option<()> {
+pub fn try_saturating_resize_assign(r: &mut Rect, size: u16) -> Option<()> {
     if size < 3 {
         return None;
     }
@@ -62,7 +62,7 @@ pub fn try_saturating_resize_assign(r: &mut RectI16, size: u16) -> Option<()> {
     Some(())
 }
 
-pub fn try_saturating_resize(r: &RectI16, size: u16) -> Option<RectI16> {
+pub fn try_saturating_resize(r: &Rect, size: u16) -> Option<Rect> {
     if size < 3 {
         return None;
     }
@@ -76,18 +76,18 @@ pub fn try_saturating_resize(r: &RectI16, size: u16) -> Option<RectI16> {
     let min_col = clamped_min_col as i16;
     let max_row = (clamped_min_row + i32::from(size) - 1) as i16;
     let max_col = (clamped_min_col + i32::from(size) - 1) as i16;
-    Some(RectI16 { min: PointI16 { row: min_row, col: min_col }, max: PointI16 { row: max_row, col: max_col } })
+    Some(Rect { min: Point { row: min_row, col: min_col }, max: Point { row: max_row, col: max_col } })
 }
 
-pub fn saturating_resize_assign(r: &mut RectI16, size: u16) {
+pub fn saturating_resize_assign(r: &mut Rect, size: u16) {
     try_saturating_resize_assign(r, size).unwrap()
 }
 
-pub fn saturating_resize(r: &RectI16, size: u16) -> RectI16 {
+pub fn saturating_resize(r: &Rect, size: u16) -> Rect {
     try_saturating_resize(r, size).unwrap()
 }
 
-pub fn try_wrapping_resize_assign(r: &mut RectI16, size: u16) -> Option<()> {
+pub fn try_wrapping_resize_assign(r: &mut Rect, size: u16) -> Option<()> {
     if size < 3 {
         return None;
     }
@@ -106,7 +106,7 @@ pub fn try_wrapping_resize_assign(r: &mut RectI16, size: u16) -> Option<()> {
     Some(())
 }
 
-pub fn try_wrapping_resize(r: &RectI16, size: u16) -> Option<RectI16> {
+pub fn try_wrapping_resize(r: &Rect, size: u16) -> Option<Rect> {
     if size < 3 {
         return None;
     }
@@ -118,14 +118,14 @@ pub fn try_wrapping_resize(r: &RectI16, size: u16) -> Option<RectI16> {
     let min_col = temp_min_col as i16;
     let max_row = min_row.wrapping_add_unsigned(size - 1);
     let max_col = min_col.wrapping_add_unsigned(size - 1);
-    Some(RectI16 { min: PointI16 { row: min_row, col: min_col }, max: PointI16 { row: max_row, col: max_col } })
+    Some(Rect { min: Point { row: min_row, col: min_col }, max: Point { row: max_row, col: max_col } })
 }
 
-pub fn wrapping_resize_assign(r: &mut RectI16, size: u16) {
+pub fn wrapping_resize_assign(r: &mut Rect, size: u16) {
     try_wrapping_resize_assign(r, size).unwrap()
 }
 
-pub fn wrapping_resize(r: &RectI16, size: u16) -> RectI16 {
+pub fn wrapping_resize(r: &Rect, size: u16) -> Rect {
     try_wrapping_resize(r, size).unwrap()
 }
 

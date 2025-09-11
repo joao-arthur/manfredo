@@ -1,11 +1,11 @@
 use super::checked_add_assign;
-use crate::cartesian::point::point_i32::PointI32;
+use crate::cartesian::point::point_i32::Point;
 
 #[test]
 fn test() {
-    let mut p = PointI32::of(0, 0);
-    checked_add_assign(&mut p, &PointI32::of(10, 13));
-    assert_eq!(p, PointI32::of(10, 13));
-    checked_add_assign(&mut p, &PointI32::of(-25, -30));
-    assert_eq!(p, PointI32::of(-15, -17));
+    let mut p = Point::of(0, 0);
+    checked_add_assign(&mut p, &Point::of(10, 13));
+    assert_eq!(p, Point::of(10, 13));
+    checked_add_assign(&mut p, &Point::of(-25, -30));
+    assert_eq!(p, Point::of(-15, -17));
 }

@@ -8,19 +8,19 @@
 
 > Consider using **[Matrix Point](../matrix/point.md) instead**
 
-- PointU8
-- PointU16
-- PointU32
-- PointU64
+- Point
+- Point
+- Point
+- Point
 
 ### Signed
 
-- PointI8
-- PointI16
-- PointI32
-- PointI64
+- Point
+- Point
+- Point
+- Point
 
 ### Float-point
 
-- PointF32
-- PointF64
+- Point
+- Point

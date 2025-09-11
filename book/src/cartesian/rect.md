@@ -22,8 +22,8 @@
 
 ### Signed
 
-- RectI8
-- RectI16
+- Rect
+- Rect
 - RectI32
 - RectI64
 

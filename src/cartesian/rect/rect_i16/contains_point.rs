@@ -1,20 +1,20 @@
-use crate::cartesian::{point::point_i16::PointI16, rect::rect_i16::RectI16};
+use crate::cartesian::{point::point_i16::PointI16, rect::rect_i16::Rect};
 
-pub fn contains_point(r: &RectI16, p: &PointI16) -> bool {
+pub fn contains_point(r: &Rect, p: &PointI16) -> bool {
     p.x >= r.min.x && p.x <= r.max.x && p.y >= r.min.y && p.y <= r.max.y
 }
 
 #[cfg(test)]
 mod tests {
     use super::contains_point;
-    use crate::cartesian::{point::point_i16::PointI16, rect::rect_i16::RectI16};
+    use crate::cartesian::{point::point_i16::PointI16, rect::rect_i16::Rect};
 
     const MIN: i16 = i16::MIN;
     const MAX: i16 = i16::MAX;
 
     #[test]
     fn inside_borders() {
-        let r = RectI16::of(MIN + 1, MIN + 1, MAX - 1, MAX - 1);
+        let r = Rect::of(MIN + 1, MIN + 1, MAX - 1, MAX - 1);
         assert!(contains_point(&r, &PointI16::of(MIN + 1, MIN + 1)));
         assert!(contains_point(&r, &PointI16::of(MIN + 1, MAX - 1)));
         assert!(contains_point(&r, &PointI16::of(MAX - 1, MIN + 1)));
@@ -23,7 +23,7 @@ mod tests {
 
     #[test]
     fn outside_borders() {
-        let r = RectI16::of(MIN + 1, MIN + 1, MAX - 1, MAX - 1);
+        let r = Rect::of(MIN + 1, MIN + 1, MAX - 1, MAX - 1);
         assert!(!contains_point(&r, &PointI16::min()));
         assert!(!contains_point(&r, &PointI16::of(MIN + 1, MIN)));
         assert!(!contains_point(&r, &PointI16::of(MIN, MIN + 1)));
@@ -43,7 +43,7 @@ mod tests {
 
     #[test]
     fn inside() {
-        let r = RectI16::of(MIN + 1, MIN + 1, MAX - 1, MAX - 1);
+        let r = Rect::of(MIN + 1, MIN + 1, MAX - 1, MAX - 1);
         assert!(contains_point(&r, &PointI16::of(MIN + 10, MIN + 10)));
         assert!(contains_point(&r, &PointI16::of(MAX - 10, MIN + 10)));
         assert!(contains_point(&r, &PointI16::of(MIN + 10, MAX - 10)));

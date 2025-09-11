@@ -1,6 +1,6 @@
 use crate::matrix::{
     point::point_i64,
-    rect::{rect_i8::RectI8, rect_i16::RectI16, rect_i32::RectI32},
+    rect::{rect_i8, rect_i16, rect_i32::RectI32},
 };
 use std::ops::RangeInclusive;
 
@@ -60,14 +60,14 @@ impl RectI64 {
     }
 }
 
-impl From<RectI8> for RectI64 {
-    fn from(r: RectI8) -> Self {
+impl From<rect_i8::Rect> for RectI64 {
+    fn from(r: rect_i8::Rect) -> Self {
         RectI64 { min: point_i64::PointI64::of(r.min.row.into(), r.min.col.into()), max: point_i64::PointI64::of(r.max.row.into(), r.max.col.into()) }
     }
 }
 
-impl From<RectI16> for RectI64 {
-    fn from(r: RectI16) -> Self {
+impl From<rect_i16::Rect> for RectI64 {
+    fn from(r: rect_i16::Rect) -> Self {
         RectI64 { min: point_i64::PointI64::of(r.min.row.into(), r.min.col.into()), max: point_i64::PointI64::of(r.max.row.into(), r.max.col.into()) }
     }
 }
@@ -113,7 +113,7 @@ mod tests {
     use super::{RectI64, delta_col, delta_row, len_col, len_row, max_delta, max_len};
     use crate::matrix::{
         point::point_i64::PointI64,
-        rect::{rect_i8::RectI8, rect_i16::RectI16, rect_i32::RectI32},
+        rect::{rect_i8, rect_i16, rect_i32::RectI32},
     };
 
     #[test]
@@ -132,8 +132,8 @@ mod tests {
 
     #[test]
     fn from() {
-        assert_eq!(RectI64::from(RectI8::largest()), RectI64 { min: PointI64 { row: i8::MIN.into(), col: i8::MIN.into() }, max: PointI64 { row: i8::MAX.into(), col: i8::MAX.into() } });
-        assert_eq!(RectI64::from(RectI16::largest()), RectI64 { min: PointI64 { row: i16::MIN.into(), col: i16::MIN.into() }, max: PointI64 { row: i16::MAX.into(), col: i16::MAX.into() } });
+        assert_eq!(RectI64::from(rect_i8::Rect::largest()), RectI64 { min: PointI64 { row: i8::MIN.into(), col: i8::MIN.into() }, max: PointI64 { row: i8::MAX.into(), col: i8::MAX.into() } });
+        assert_eq!(RectI64::from(rect_i16::Rect::largest()), RectI64 { min: PointI64 { row: i16::MIN.into(), col: i16::MIN.into() }, max: PointI64 { row: i16::MAX.into(), col: i16::MAX.into() } });
         assert_eq!(RectI64::from(RectI32::largest()), RectI64 { min: PointI64 { row: i32::MIN.into(), col: i32::MIN.into() }, max: PointI64 { row: i32::MAX.into(), col: i32::MAX.into() } });
     }
 

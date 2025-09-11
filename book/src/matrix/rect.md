@@ -22,7 +22,7 @@
 
 > Consider using **[Cartesian Rect](../cartesian/rect.md) instead**
 
-- RectI8
-- RectI16
+- Rect
+- Rect
 - RectI32
 - RectI64

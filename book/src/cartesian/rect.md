@@ -30,4 +30,4 @@
 ### Float-point
 
 - Rect
-- RectF64
+- Rect

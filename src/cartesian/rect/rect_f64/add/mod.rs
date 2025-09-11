@@ -1,9 +1,9 @@
 use crate::cartesian::{
     point::point_f64::{MAX, MIN, PointF64},
-    rect::rect_f64::RectF64,
+    rect::rect_f64::Rect,
 };
 
-pub fn try_checked_add_assign(r: &mut RectF64, delta: &RectF64) -> Option<()> {
+pub fn try_checked_add_assign(r: &mut Rect, delta: &Rect) -> Option<()> {
     if delta.min.x < MIN - r.min.x || delta.min.y < MIN - r.min.y || delta.max.x > MAX - r.max.x || delta.max.y > MAX - r.max.y {
         return None;
     }
@@ -14,7 +14,7 @@ pub fn try_checked_add_assign(r: &mut RectF64, delta: &RectF64) -> Option<()> {
     Some(())
 }
 
-pub fn try_checked_add(r: &RectF64, delta: &RectF64) -> Option<RectF64> {
+pub fn try_checked_add(r: &Rect, delta: &Rect) -> Option<Rect> {
     if delta.min.x < MIN - r.min.x || delta.min.y < MIN - r.min.y || delta.max.x > MAX - r.max.x || delta.max.y > MAX - r.max.y {
         return None;
     }
@@ -22,33 +22,33 @@ pub fn try_checked_add(r: &RectF64, delta: &RectF64) -> Option<RectF64> {
     let min_y = r.min.y + delta.min.y;
     let max_x = r.max.x + delta.max.x;
     let max_y = r.max.y + delta.max.y;
-    Some(RectF64 { min: PointF64 { x: min_x, y: min_y }, max: PointF64 { x: max_x, y: max_y } })
+    Some(Rect { min: PointF64 { x: min_x, y: min_y }, max: PointF64 { x: max_x, y: max_y } })
 }
 
-pub fn checked_add_assign(r: &mut RectF64, delta: &RectF64) {
+pub fn checked_add_assign(r: &mut Rect, delta: &Rect) {
     try_checked_add_assign(r, delta).unwrap()
 }
 
-pub fn checked_add(r: &RectF64, delta: &RectF64) -> RectF64 {
+pub fn checked_add(r: &Rect, delta: &Rect) -> Rect {
     try_checked_add(r, delta).unwrap()
 }
 
-pub fn saturating_add_assign(r: &mut RectF64, delta: &RectF64) {
+pub fn saturating_add_assign(r: &mut Rect, delta: &Rect) {
     r.min.x = (r.min.x + delta.min.x).clamp(MIN, MAX);
     r.min.y = (r.min.y + delta.min.y).clamp(MIN, MAX);
     r.max.x = (r.max.x + delta.max.x).clamp(MIN, MAX);
     r.max.y = (r.max.y + delta.max.y).clamp(MIN, MAX);
 }
 
-pub fn saturating_add(r: &RectF64, delta: &RectF64) -> RectF64 {
+pub fn saturating_add(r: &Rect, delta: &Rect) -> Rect {
     let min_x = (r.min.x + delta.min.x).clamp(MIN, MAX);
     let min_y = (r.min.y + delta.min.y).clamp(MIN, MAX);
     let max_x = (r.max.x + delta.max.x).clamp(MIN, MAX);
     let max_y = (r.max.y + delta.max.y).clamp(MIN, MAX);
-    RectF64 { min: PointF64 { x: min_x, y: min_y }, max: PointF64 { x: max_x, y: max_y } }
+    Rect { min: PointF64 { x: min_x, y: min_y }, max: PointF64 { x: max_x, y: max_y } }
 }
 
-pub fn wrapping_add_assign(r: &mut RectF64, delta: &RectF64) {
+pub fn wrapping_add_assign(r: &mut Rect, delta: &Rect) {
     if delta.min.x > 0.0 && MAX - r.min.x < delta.min.x {
         let diff = MAX - r.min.x;
         let delta_adjusted = delta.min.x - diff - 1.0;
@@ -95,7 +95,7 @@ pub fn wrapping_add_assign(r: &mut RectF64, delta: &RectF64) {
     }
 }
 
-pub fn wrapping_add(r: &RectF64, delta: &RectF64) -> RectF64 {
+pub fn wrapping_add(r: &Rect, delta: &Rect) -> Rect {
     let mut min_x = r.min.x;
     let mut min_y = r.min.y;
     let mut max_x = r.max.x;
@@ -144,7 +144,7 @@ pub fn wrapping_add(r: &RectF64, delta: &RectF64) -> RectF64 {
     } else {
         max_y += delta.max.y;
     }
-    RectF64 { min: PointF64 { x: min_x, y: min_y }, max: PointF64 { x: max_x, y: max_y } }
+    Rect { min: PointF64 { x: min_x, y: min_y }, max: PointF64 { x: max_x, y: max_y } }
 }
 
 #[cfg(test)]

@@ -59,7 +59,7 @@ impl Rect {
 
 impl From<rect_u8::Rect> for Rect {
     fn from(r: rect_u8::Rect) -> Self {
-        Rect { min: point_u16::Point::of(r.min.row.into(), r.min.col.into()), max: point_u16::Point::of(r.max.row.into(), r.max.col.into()) }
+        Rect { min: point_u16::Point::from(r.min), max: point_u16::Point::from(r.max) }
     }
 }
 

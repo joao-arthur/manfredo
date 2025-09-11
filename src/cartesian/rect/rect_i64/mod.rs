@@ -62,19 +62,19 @@ impl Rect {
 
 impl From<rect_i8::Rect> for Rect {
     fn from(r: rect_i8::Rect) -> Self {
-        Rect { min: point_i64::Point::of(r.min.x.into(), r.min.y.into()), max: point_i64::Point::of(r.max.x.into(), r.max.y.into()) }
+        Rect { min: point_i64::Point::from(r.min), max: point_i64::Point::from(r.max) }
     }
 }
 
 impl From<rect_i16::Rect> for Rect {
     fn from(r: rect_i16::Rect) -> Self {
-        Rect { min: point_i64::Point::of(r.min.x.into(), r.min.y.into()), max: point_i64::Point::of(r.max.x.into(), r.max.y.into()) }
+        Rect { min: point_i64::Point::from(r.min), max: point_i64::Point::from(r.max) }
     }
 }
 
 impl From<rect_i32::Rect> for Rect {
     fn from(r: rect_i32::Rect) -> Self {
-        Rect { min: point_i64::Point::of(r.min.x.into(), r.min.y.into()), max: point_i64::Point::of(r.max.x.into(), r.max.y.into()) }
+        Rect { min: point_i64::Point::from(r.min), max: point_i64::Point::from(r.max) }
     }
 }
 

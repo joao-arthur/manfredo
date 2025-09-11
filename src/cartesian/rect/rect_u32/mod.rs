@@ -62,13 +62,13 @@ impl Rect {
 
 impl From<rect_u8::Rect> for Rect {
     fn from(r: rect_u8::Rect) -> Self {
-        Rect { min: point_u32::Point::of(r.min.x.into(), r.min.y.into()), max: point_u32::Point::of(r.max.x.into(), r.max.y.into()) }
+        Rect { min: point_u32::Point::from(r.min), max: point_u32::Point::from(r.max) }
     }
 }
 
 impl From<rect_u16::Rect> for Rect {
     fn from(r: rect_u16::Rect) -> Self {
-        Rect { min: point_u32::Point::of(r.min.x.into(), r.min.y.into()), max: point_u32::Point::of(r.max.x.into(), r.max.y.into()) }
+        Rect { min: point_u32::Point::from(r.min), max: point_u32::Point::from(r.max) }
     }
 }
 

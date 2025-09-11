@@ -1,9 +1,9 @@
 use crate::matrix::{
     point::point_i32::PointI32,
-    rect::rect_i32::{RectI32, delta_col, delta_row},
+    rect::rect_i32::{Rect, delta_col, delta_row},
 };
 
-pub fn try_checked_translate_assign(r: &mut RectI32, delta: &PointI32) -> Option<()> {
+pub fn try_checked_translate_assign(r: &mut Rect, delta: &PointI32) -> Option<()> {
     let min_row = r.min.row.checked_add(delta.row)?;
     let min_col = r.min.col.checked_add(delta.col)?;
     let max_row = r.max.row.checked_add(delta.row)?;
@@ -15,23 +15,23 @@ pub fn try_checked_translate_assign(r: &mut RectI32, delta: &PointI32) -> Option
     Some(())
 }
 
-pub fn try_checked_translate(r: &RectI32, delta: &PointI32) -> Option<RectI32> {
+pub fn try_checked_translate(r: &Rect, delta: &PointI32) -> Option<Rect> {
     let min_row = r.min.row.checked_add(delta.row)?;
     let min_col = r.min.col.checked_add(delta.col)?;
     let max_row = r.max.row.checked_add(delta.row)?;
     let max_col = r.max.col.checked_add(delta.col)?;
-    Some(RectI32 { min: PointI32 { row: min_row, col: min_col }, max: PointI32 { row: max_row, col: max_col } })
+    Some(Rect { min: PointI32 { row: min_row, col: min_col }, max: PointI32 { row: max_row, col: max_col } })
 }
 
-pub fn checked_translate_assign(r: &mut RectI32, delta: &PointI32) {
+pub fn checked_translate_assign(r: &mut Rect, delta: &PointI32) {
     try_checked_translate_assign(r, delta).unwrap()
 }
 
-pub fn checked_translate(r: &RectI32, delta: &PointI32) -> RectI32 {
+pub fn checked_translate(r: &Rect, delta: &PointI32) -> Rect {
     try_checked_translate(r, delta).unwrap()
 }
 
-pub fn saturating_translate_assign(r: &mut RectI32, delta: &PointI32) {
+pub fn saturating_translate_assign(r: &mut Rect, delta: &PointI32) {
     let d_row = delta_row(r);
     let d_col = delta_col(r);
     let temp_min_row = i64::from(r.min.row) + i64::from(delta.row);
@@ -44,7 +44,7 @@ pub fn saturating_translate_assign(r: &mut RectI32, delta: &PointI32) {
     r.max.col = (min_col + i64::from(d_col)) as i32;
 }
 
-pub fn saturating_translate(r: &RectI32, delta: &PointI32) -> RectI32 {
+pub fn saturating_translate(r: &Rect, delta: &PointI32) -> Rect {
     let d_row = delta_row(r);
     let d_col = delta_col(r);
     let temp_min_row = i64::from(r.min.row) + i64::from(delta.row);
@@ -53,10 +53,10 @@ pub fn saturating_translate(r: &RectI32, delta: &PointI32) -> RectI32 {
     let min_col = temp_min_col.clamp(i64::from(i32::MIN), i64::from(i32::MAX) - i64::from(d_col));
     let max_row = min_row + i64::from(d_row);
     let max_col = min_col + i64::from(d_col);
-    RectI32 { min: PointI32 { row: min_row as i32, col: min_col as i32 }, max: PointI32 { row: max_row as i32, col: max_col as i32 } }
+    Rect { min: PointI32 { row: min_row as i32, col: min_col as i32 }, max: PointI32 { row: max_row as i32, col: max_col as i32 } }
 }
 
-pub fn wrapping_translate_assign(r: &mut RectI32, delta: &PointI32) {
+pub fn wrapping_translate_assign(r: &mut Rect, delta: &PointI32) {
     let d_row = delta_row(r);
     let d_col = delta_col(r);
     let min_row = r.min.row.wrapping_add(delta.row);
@@ -69,14 +69,14 @@ pub fn wrapping_translate_assign(r: &mut RectI32, delta: &PointI32) {
     r.max.col = max_col;
 }
 
-pub fn wrapping_translate(r: &RectI32, delta: &PointI32) -> RectI32 {
+pub fn wrapping_translate(r: &Rect, delta: &PointI32) -> Rect {
     let d_row = delta_row(r);
     let d_col = delta_col(r);
     let min_row = r.min.row.wrapping_add(delta.row);
     let min_col = r.min.col.wrapping_add(delta.col);
     let max_row = min_row.wrapping_add_unsigned(d_row);
     let max_col = min_col.wrapping_add_unsigned(d_col);
-    RectI32 { min: PointI32 { row: min_row, col: min_col }, max: PointI32 { row: max_row, col: max_col } }
+    Rect { min: PointI32 { row: min_row, col: min_col }, max: PointI32 { row: max_row, col: max_col } }
 }
 
 #[cfg(test)]

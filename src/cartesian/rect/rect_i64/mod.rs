@@ -1,6 +1,6 @@
 use crate::cartesian::{
     point::point_i64,
-    rect::{rect_i8, rect_i16, rect_i32::RectI32},
+    rect::{rect_i8, rect_i16, rect_i32},
 };
 use std::ops::RangeInclusive;
 
@@ -72,8 +72,8 @@ impl From<rect_i16::Rect> for RectI64 {
     }
 }
 
-impl From<RectI32> for RectI64 {
-    fn from(r: RectI32) -> Self {
+impl From<rect_i32::Rect> for RectI64 {
+    fn from(r: rect_i32::Rect) -> Self {
         RectI64 { min: point_i64::PointI64::of(r.min.x.into(), r.min.y.into()), max: point_i64::PointI64::of(r.max.x.into(), r.max.y.into()) }
     }
 }
@@ -113,7 +113,7 @@ mod tests {
     use super::{RectI64, delta_x, delta_y, len_x, len_y, max_delta, max_len};
     use crate::cartesian::{
         point::point_i64::PointI64,
-        rect::{rect_i8, rect_i16, rect_i32::RectI32},
+        rect::{rect_i8, rect_i16, rect_i32},
     };
 
     #[test]
@@ -134,7 +134,7 @@ mod tests {
     fn from() {
         assert_eq!(RectI64::from(rect_i8::Rect::largest()), RectI64 { min: PointI64 { x: i8::MIN.into(), y: i8::MIN.into() }, max: PointI64 { x: i8::MAX.into(), y: i8::MAX.into() } });
         assert_eq!(RectI64::from(rect_i16::Rect::largest()), RectI64 { min: PointI64 { x: i16::MIN.into(), y: i16::MIN.into() }, max: PointI64 { x: i16::MAX.into(), y: i16::MAX.into() } });
-        assert_eq!(RectI64::from(RectI32::largest()), RectI64 { min: PointI64 { x: i32::MIN.into(), y: i32::MIN.into() }, max: PointI64 { x: i32::MAX.into(), y: i32::MAX.into() } });
+        assert_eq!(RectI64::from(rect_i32::Rect::largest()), RectI64 { min: PointI64 { x: i32::MIN.into(), y: i32::MIN.into() }, max: PointI64 { x: i32::MAX.into(), y: i32::MAX.into() } });
     }
 
     #[test]

@@ -24,7 +24,7 @@
 
 - Rect
 - Rect
-- RectI32
+- Rect
 - RectI64
 
 ### Float-point

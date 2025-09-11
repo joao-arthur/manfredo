@@ -24,5 +24,5 @@
 
 - Rect
 - Rect
-- RectI32
+- Rect
 - RectI64

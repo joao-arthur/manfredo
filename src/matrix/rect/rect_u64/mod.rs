@@ -1,6 +1,6 @@
 use crate::matrix::{
     point::point_u64,
-    rect::{rect_u8::RectU8, rect_u16::RectU16, rect_u32::RectU32},
+    rect::{rect_u8, rect_u16, rect_u32},
 };
 use std::ops::RangeInclusive;
 
@@ -60,20 +60,20 @@ impl Rect {
     }
 }
 
-impl From<RectU8> for Rect {
-    fn from(r: RectU8) -> Self {
+impl From<rect_u8::RectU8> for Rect {
+    fn from(r: rect_u8::RectU8) -> Self {
         Rect { min: point_u64::PointU64::of(r.min.row.into(), r.min.col.into()), max: point_u64::PointU64::of(r.max.row.into(), r.max.col.into()) }
     }
 }
 
-impl From<RectU16> for Rect {
-    fn from(r: RectU16) -> Self {
+impl From<rect_u16::RectU16> for Rect {
+    fn from(r: rect_u16::RectU16) -> Self {
         Rect { min: point_u64::PointU64::of(r.min.row.into(), r.min.col.into()), max: point_u64::PointU64::of(r.max.row.into(), r.max.col.into()) }
     }
 }
 
-impl From<RectU32> for Rect {
-    fn from(r: RectU32) -> Self {
+impl From<rect_u32::RectU32> for Rect {
+    fn from(r: rect_u32::RectU32) -> Self {
         Rect { min: point_u64::PointU64::of(r.min.row.into(), r.min.col.into()), max: point_u64::PointU64::of(r.max.row.into(), r.max.col.into()) }
     }
 }

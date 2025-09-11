@@ -1,4 +1,4 @@
-use crate::matrix::{point::point_u16, rect::rect_u8::RectU8};
+use crate::matrix::{point::point_u16, rect::rect_u8};
 use std::ops::RangeInclusive;
 
 mod add;
@@ -57,8 +57,8 @@ impl RectU16 {
     }
 }
 
-impl From<RectU8> for RectU16 {
-    fn from(r: RectU8) -> Self {
+impl From<rect_u8::RectU8> for RectU16 {
+    fn from(r: rect_u8::RectU8) -> Self {
         RectU16 { min: point_u16::PointU16::of(r.min.row.into(), r.min.col.into()), max: point_u16::PointU16::of(r.max.row.into(), r.max.col.into()) }
     }
 }

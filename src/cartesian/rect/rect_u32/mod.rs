@@ -1,6 +1,6 @@
 use crate::cartesian::{
     point::point_u32,
-    rect::{rect_u8::RectU8, rect_u16::RectU16},
+    rect::{rect_u8, rect_u16},
 };
 use std::ops::RangeInclusive;
 
@@ -60,14 +60,14 @@ impl RectU32 {
     }
 }
 
-impl From<RectU8> for RectU32 {
-    fn from(r: RectU8) -> Self {
+impl From<rect_u8::RectU8> for RectU32 {
+    fn from(r: rect_u8::RectU8) -> Self {
         RectU32 { min: point_u32::PointU32::of(r.min.x.into(), r.min.y.into()), max: point_u32::PointU32::of(r.max.x.into(), r.max.y.into()) }
     }
 }
 
-impl From<RectU16> for RectU32 {
-    fn from(r: RectU16) -> Self {
+impl From<rect_u16::RectU16> for RectU32 {
+    fn from(r: rect_u16::RectU16) -> Self {
         RectU32 { min: point_u32::PointU32::of(r.min.x.into(), r.min.y.into()), max: point_u32::PointU32::of(r.max.x.into(), r.max.y.into()) }
     }
 }

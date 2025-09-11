@@ -1,9 +1,9 @@
 use crate::matrix::{
     point::point_u16::PointU16,
-    rect::{rect_i16::Rect, rect_u16::RectU16},
+    rect::{rect_i16::Rect as RectI, rect_u16::RectU16},
 };
 
-pub fn try_checked_add_assign(r: &mut RectU16, delta: &Rect) -> Option<()> {
+pub fn try_checked_add_assign(r: &mut RectU16, delta: &RectI) -> Option<()> {
     let min_row = r.min.row.checked_add_signed(delta.min.row)?;
     let min_col = r.min.col.checked_add_signed(delta.min.col)?;
     let max_row = r.max.row.checked_add_signed(delta.max.row)?;
@@ -15,7 +15,7 @@ pub fn try_checked_add_assign(r: &mut RectU16, delta: &Rect) -> Option<()> {
     Some(())
 }
 
-pub fn try_checked_add(r: &RectU16, delta: &Rect) -> Option<RectU16> {
+pub fn try_checked_add(r: &RectU16, delta: &RectI) -> Option<RectU16> {
     let min_row = r.min.row.checked_add_signed(delta.min.row)?;
     let min_col = r.min.col.checked_add_signed(delta.min.col)?;
     let max_row = r.max.row.checked_add_signed(delta.max.row)?;
@@ -23,22 +23,22 @@ pub fn try_checked_add(r: &RectU16, delta: &Rect) -> Option<RectU16> {
     Some(RectU16 { min: PointU16 { row: min_row, col: min_col }, max: PointU16 { row: max_row, col: max_col } })
 }
 
-pub fn checked_add_assign(r: &mut RectU16, delta: &Rect) {
+pub fn checked_add_assign(r: &mut RectU16, delta: &RectI) {
     try_checked_add_assign(r, delta).unwrap()
 }
 
-pub fn checked_add(r: &RectU16, delta: &Rect) -> RectU16 {
+pub fn checked_add(r: &RectU16, delta: &RectI) -> RectU16 {
     try_checked_add(r, delta).unwrap()
 }
 
-pub fn saturating_add_assign(r: &mut RectU16, delta: &Rect) {
+pub fn saturating_add_assign(r: &mut RectU16, delta: &RectI) {
     r.min.row = r.min.row.saturating_add_signed(delta.min.row);
     r.min.col = r.min.col.saturating_add_signed(delta.min.col);
     r.max.row = r.max.row.saturating_add_signed(delta.max.row);
     r.max.col = r.max.col.saturating_add_signed(delta.max.col);
 }
 
-pub fn saturating_add(r: &RectU16, delta: &Rect) -> RectU16 {
+pub fn saturating_add(r: &RectU16, delta: &RectI) -> RectU16 {
     let min_row = r.min.row.saturating_add_signed(delta.min.row);
     let min_col = r.min.col.saturating_add_signed(delta.min.col);
     let max_row = r.max.row.saturating_add_signed(delta.max.row);
@@ -46,14 +46,14 @@ pub fn saturating_add(r: &RectU16, delta: &Rect) -> RectU16 {
     RectU16 { min: PointU16 { row: min_row, col: min_col }, max: PointU16 { row: max_row, col: max_col } }
 }
 
-pub fn wrapping_add_assign(r: &mut RectU16, delta: &Rect) {
+pub fn wrapping_add_assign(r: &mut RectU16, delta: &RectI) {
     r.min.row = r.min.row.wrapping_add_signed(delta.min.row);
     r.min.col = r.min.col.wrapping_add_signed(delta.min.col);
     r.max.row = r.max.row.wrapping_add_signed(delta.max.row);
     r.max.col = r.max.col.wrapping_add_signed(delta.max.col);
 }
 
-pub fn wrapping_add(r: &RectU16, delta: &Rect) -> RectU16 {
+pub fn wrapping_add(r: &RectU16, delta: &RectI) -> RectU16 {
     let min_row = r.min.row.wrapping_add_signed(delta.min.row);
     let min_col = r.min.col.wrapping_add_signed(delta.min.col);
     let max_row = r.max.row.wrapping_add_signed(delta.max.row);

@@ -29,5 +29,5 @@
 
 ### Float-point
 
-- RectF32
+- Rect
 - RectF64

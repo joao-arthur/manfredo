@@ -1,4 +1,4 @@
-use crate::cartesian::{point::point_f64, rect::rect_f32::RectF32};
+use crate::cartesian::{point::point_f64, rect::rect_f32};
 
 mod add;
 mod contains_point;
@@ -83,8 +83,8 @@ impl RectF64 {
     }
 }
 
-impl From<RectF32> for RectF64 {
-    fn from(r: RectF32) -> Self {
+impl From<rect_f32::Rect> for RectF64 {
+    fn from(r: rect_f32::Rect) -> Self {
         RectF64 { min: point_f64::PointF64::of(r.min.x.into(), r.min.y.into()), max: point_f64::PointF64::of(r.max.x.into(), r.max.y.into()) }
     }
 }
@@ -127,7 +127,7 @@ mod tests {
             point_f32,
             point_f64::{MAX, MIN, PointF64},
         },
-        rect::rect_f32::RectF32,
+        rect::rect_f32::Rect,
     };
 
     #[test]
@@ -147,7 +147,7 @@ mod tests {
     #[test]
     fn from() {
         assert_eq!(
-            RectF64::from(RectF32::largest()),
+            RectF64::from(Rect::largest()),
             RectF64 { min: PointF64 { x: point_f32::MIN.into(), y: point_f32::MIN.into() }, max: PointF64 { x: point_f32::MAX.into(), y: point_f32::MAX.into() } }
         );
     }

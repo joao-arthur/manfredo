@@ -1,6 +1,6 @@
-use crate::cartesian::{point::point_u8::PointU8, rect::rect_u8::RectU8};
+use crate::cartesian::{point::point_u8::PointU8, rect::rect_u8::Rect};
 
-pub fn try_checked_inflate_assign(r: &mut RectU8) -> Option<()> {
+pub fn try_checked_inflate_assign(r: &mut Rect) -> Option<()> {
     let min_x = r.min.x.checked_sub(1)?;
     let min_y = r.min.y.checked_sub(1)?;
     let max_x = r.max.x.checked_add(1)?;
@@ -12,23 +12,23 @@ pub fn try_checked_inflate_assign(r: &mut RectU8) -> Option<()> {
     Some(())
 }
 
-pub fn try_checked_inflate(r: &RectU8) -> Option<RectU8> {
+pub fn try_checked_inflate(r: &Rect) -> Option<Rect> {
     let min_x = r.min.x.checked_sub(1)?;
     let min_y = r.min.y.checked_sub(1)?;
     let max_x = r.max.x.checked_add(1)?;
     let max_y = r.max.y.checked_add(1)?;
-    Some(RectU8 { min: PointU8 { x: min_x, y: min_y }, max: PointU8 { x: max_x, y: max_y } })
+    Some(Rect { min: PointU8 { x: min_x, y: min_y }, max: PointU8 { x: max_x, y: max_y } })
 }
 
-pub fn checked_inflate_assign(r: &mut RectU8) {
+pub fn checked_inflate_assign(r: &mut Rect) {
     try_checked_inflate_assign(r).unwrap()
 }
 
-pub fn checked_inflate(r: &RectU8) -> RectU8 {
+pub fn checked_inflate(r: &Rect) -> Rect {
     try_checked_inflate(r).unwrap()
 }
 
-pub fn try_saturating_inflate_assign(r: &mut RectU8) -> Option<()> {
+pub fn try_saturating_inflate_assign(r: &mut Rect) -> Option<()> {
     let is_min_x = r.min.x == 0;
     let is_min_y = r.min.y == 0;
     let is_max_x = r.max.x == u8::MAX;
@@ -47,7 +47,7 @@ pub fn try_saturating_inflate_assign(r: &mut RectU8) -> Option<()> {
     Some(())
 }
 
-pub fn try_saturating_inflate(r: &RectU8) -> Option<RectU8> {
+pub fn try_saturating_inflate(r: &Rect) -> Option<Rect> {
     let is_min_x = r.min.x == 0;
     let is_min_y = r.min.y == 0;
     let is_max_x = r.max.x == u8::MAX;
@@ -63,18 +63,18 @@ pub fn try_saturating_inflate(r: &RectU8) -> Option<RectU8> {
     let min_y = r.min.y.saturating_sub(min_y_modifier);
     let max_x = r.max.x.saturating_add(max_x_modifier);
     let max_y = r.max.y.saturating_add(max_y_modifier);
-    Some(RectU8 { min: PointU8 { x: min_x, y: min_y }, max: PointU8 { x: max_x, y: max_y } })
+    Some(Rect { min: PointU8 { x: min_x, y: min_y }, max: PointU8 { x: max_x, y: max_y } })
 }
 
-pub fn saturating_inflate_assign(r: &mut RectU8) {
+pub fn saturating_inflate_assign(r: &mut Rect) {
     try_saturating_inflate_assign(r).unwrap()
 }
 
-pub fn saturating_inflate(r: &RectU8) -> RectU8 {
+pub fn saturating_inflate(r: &Rect) -> Rect {
     try_saturating_inflate(r).unwrap()
 }
 
-pub fn wrapping_inflate_assign(r: &mut RectU8) {
+pub fn wrapping_inflate_assign(r: &mut Rect) {
     let min_x = r.min.x.wrapping_sub(1);
     let min_y = r.min.y.wrapping_sub(1);
     let max_x = r.max.x.wrapping_add(1);
@@ -85,12 +85,12 @@ pub fn wrapping_inflate_assign(r: &mut RectU8) {
     r.max.y = max_y;
 }
 
-pub fn wrapping_inflate(r: &RectU8) -> RectU8 {
+pub fn wrapping_inflate(r: &Rect) -> Rect {
     let min_x = r.min.x.wrapping_sub(1);
     let min_y = r.min.y.wrapping_sub(1);
     let max_x = r.max.x.wrapping_add(1);
     let max_y = r.max.y.wrapping_add(1);
-    RectU8 { min: PointU8 { x: min_x, y: min_y }, max: PointU8 { x: max_x, y: max_y } }
+    Rect { min: PointU8 { x: min_x, y: min_y }, max: PointU8 { x: max_x, y: max_y } }
 }
 
 #[cfg(test)]

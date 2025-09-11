@@ -13,7 +13,7 @@
 
 ### Unsigned
 
-- RectU8
+- Rect
 - Rect
 - Rect
 - Rect

@@ -57,8 +57,8 @@ impl Rect {
     }
 }
 
-impl From<rect_u8::RectU8> for Rect {
-    fn from(r: rect_u8::RectU8) -> Self {
+impl From<rect_u8::Rect> for Rect {
+    fn from(r: rect_u8::Rect) -> Self {
         Rect { min: point_u16::PointU16::of(r.min.row.into(), r.min.col.into()), max: point_u16::PointU16::of(r.max.row.into(), r.max.col.into()) }
     }
 }
@@ -114,7 +114,7 @@ mod tests {
 
     #[test]
     fn from() {
-        assert_eq!(Rect::from(rect_u8::RectU8::largest()), Rect { min: PointU16 { row: 0, col: 0 }, max: PointU16 { row: u8::MAX.into(), col: u8::MAX.into() } });
+        assert_eq!(Rect::from(rect_u8::Rect::largest()), Rect { min: PointU16 { row: 0, col: 0 }, max: PointU16 { row: u8::MAX.into(), col: u8::MAX.into() } });
     }
 
     #[test]

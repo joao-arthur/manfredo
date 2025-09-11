@@ -18,7 +18,7 @@
 - RectU8
 - RectU16
 - RectU32
-- RectU64
+- Rect
 
 ### Signed
 

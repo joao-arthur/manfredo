@@ -1,6 +1,6 @@
-use crate::matrix::{point::point_u64::PointU64, rect::rect_u64::RectU64};
+use crate::matrix::{point::point_u64::PointU64, rect::rect_u64::Rect};
 
-pub fn try_checked_inflate_assign(r: &mut RectU64) -> Option<()> {
+pub fn try_checked_inflate_assign(r: &mut Rect) -> Option<()> {
     let min_row = r.min.row.checked_sub(1)?;
     let min_col = r.min.col.checked_sub(1)?;
     let max_row = r.max.row.checked_add(1)?;
@@ -12,23 +12,23 @@ pub fn try_checked_inflate_assign(r: &mut RectU64) -> Option<()> {
     Some(())
 }
 
-pub fn try_checked_inflate(r: &RectU64) -> Option<RectU64> {
+pub fn try_checked_inflate(r: &Rect) -> Option<Rect> {
     let min_row = r.min.row.checked_sub(1)?;
     let min_col = r.min.col.checked_sub(1)?;
     let max_row = r.max.row.checked_add(1)?;
     let max_col = r.max.col.checked_add(1)?;
-    Some(RectU64 { min: PointU64 { row: min_row, col: min_col }, max: PointU64 { row: max_row, col: max_col } })
+    Some(Rect { min: PointU64 { row: min_row, col: min_col }, max: PointU64 { row: max_row, col: max_col } })
 }
 
-pub fn checked_inflate_assign(r: &mut RectU64) {
+pub fn checked_inflate_assign(r: &mut Rect) {
     try_checked_inflate_assign(r).unwrap()
 }
 
-pub fn checked_inflate(r: &RectU64) -> RectU64 {
+pub fn checked_inflate(r: &Rect) -> Rect {
     try_checked_inflate(r).unwrap()
 }
 
-pub fn try_saturating_inflate_assign(r: &mut RectU64) -> Option<()> {
+pub fn try_saturating_inflate_assign(r: &mut Rect) -> Option<()> {
     let is_min_row = r.min.row == 0;
     let is_min_col = r.min.col == 0;
     let is_max_row = r.max.row == u64::MAX;
@@ -47,7 +47,7 @@ pub fn try_saturating_inflate_assign(r: &mut RectU64) -> Option<()> {
     Some(())
 }
 
-pub fn try_saturating_inflate(r: &RectU64) -> Option<RectU64> {
+pub fn try_saturating_inflate(r: &Rect) -> Option<Rect> {
     let is_min_row = r.min.row == 0;
     let is_min_col = r.min.col == 0;
     let is_max_row = r.max.row == u64::MAX;
@@ -63,18 +63,18 @@ pub fn try_saturating_inflate(r: &RectU64) -> Option<RectU64> {
     let min_col = r.min.col.saturating_sub(min_col_modifier);
     let max_row = r.max.row.saturating_add(max_row_modifier);
     let max_col = r.max.col.saturating_add(max_col_modifier);
-    Some(RectU64 { min: PointU64 { row: min_row, col: min_col }, max: PointU64 { row: max_row, col: max_col } })
+    Some(Rect { min: PointU64 { row: min_row, col: min_col }, max: PointU64 { row: max_row, col: max_col } })
 }
 
-pub fn saturating_inflate_assign(r: &mut RectU64) {
+pub fn saturating_inflate_assign(r: &mut Rect) {
     try_saturating_inflate_assign(r).unwrap()
 }
 
-pub fn saturating_inflate(r: &RectU64) -> RectU64 {
+pub fn saturating_inflate(r: &Rect) -> Rect {
     try_saturating_inflate(r).unwrap()
 }
 
-pub fn wrapping_inflate_assign(r: &mut RectU64) {
+pub fn wrapping_inflate_assign(r: &mut Rect) {
     let min_row = r.min.row.wrapping_sub(1);
     let min_col = r.min.col.wrapping_sub(1);
     let max_row = r.max.row.wrapping_add(1);
@@ -85,12 +85,12 @@ pub fn wrapping_inflate_assign(r: &mut RectU64) {
     r.max.col = max_col;
 }
 
-pub fn wrapping_inflate(r: &RectU64) -> RectU64 {
+pub fn wrapping_inflate(r: &Rect) -> Rect {
     let min_row = r.min.row.wrapping_sub(1);
     let min_col = r.min.col.wrapping_sub(1);
     let max_row = r.max.row.wrapping_add(1);
     let max_col = r.max.col.wrapping_add(1);
-    RectU64 { min: PointU64 { row: min_row, col: min_col }, max: PointU64 { row: max_row, col: max_col } }
+    Rect { min: PointU64 { row: min_row, col: min_col }, max: PointU64 { row: max_row, col: max_col } }
 }
 
 #[cfg(test)]

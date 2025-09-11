@@ -96,7 +96,7 @@ pub fn max_len(r: &RectU16) -> u16 {
 #[cfg(test)]
 mod tests {
     use super::{RectU16, delta_x, delta_y, len_x, len_y, max_delta, max_len};
-    use crate::cartesian::{point::point_u16::PointU16, rect::rect_u8::RectU8};
+    use crate::cartesian::{point::point_u16::PointU16, rect::rect_u8};
 
     #[test]
     fn rect_u16() {
@@ -114,7 +114,7 @@ mod tests {
 
     #[test]
     fn from() {
-        assert_eq!(RectU16::from(RectU8::largest()), RectU16 { min: PointU16 { x: 0, y: 0 }, max: PointU16 { x: u8::MAX.into(), y: u8::MAX.into() } });
+        assert_eq!(RectU16::from(rect_u8::RectU8::largest()), RectU16 { min: PointU16 { x: 0, y: 0 }, max: PointU16 { x: u8::MAX.into(), y: u8::MAX.into() } });
     }
 
     #[test]

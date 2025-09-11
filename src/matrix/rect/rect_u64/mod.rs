@@ -72,8 +72,8 @@ impl From<rect_u16::RectU16> for Rect {
     }
 }
 
-impl From<rect_u32::RectU32> for Rect {
-    fn from(r: rect_u32::RectU32) -> Self {
+impl From<rect_u32::Rect> for Rect {
+    fn from(r: rect_u32::Rect) -> Self {
         Rect { min: point_u64::PointU64::of(r.min.row.into(), r.min.col.into()), max: point_u64::PointU64::of(r.max.row.into(), r.max.col.into()) }
     }
 }
@@ -113,7 +113,7 @@ mod tests {
     use super::{Rect, delta_col, delta_row, len_col, len_row, max_delta, max_len};
     use crate::matrix::{
         point::point_u64::PointU64,
-        rect::{rect_u8::RectU8, rect_u16::RectU16, rect_u32::RectU32},
+        rect::{rect_u8, rect_u16, rect_u32},
     };
 
     #[test]
@@ -132,9 +132,9 @@ mod tests {
 
     #[test]
     fn from() {
-        assert_eq!(Rect::from(RectU8::largest()), Rect { min: PointU64 { row: 0, col: 0 }, max: PointU64 { row: u8::MAX.into(), col: u8::MAX.into() } });
-        assert_eq!(Rect::from(RectU16::largest()), Rect { min: PointU64 { row: 0, col: 0 }, max: PointU64 { row: u16::MAX.into(), col: u16::MAX.into() } });
-        assert_eq!(Rect::from(RectU32::largest()), Rect { min: PointU64 { row: 0, col: 0 }, max: PointU64 { row: u32::MAX.into(), col: u32::MAX.into() } });
+        assert_eq!(Rect::from(rect_u8::RectU8::largest()), Rect { min: PointU64 { row: 0, col: 0 }, max: PointU64 { row: u8::MAX.into(), col: u8::MAX.into() } });
+        assert_eq!(Rect::from(rect_u16::RectU16::largest()), Rect { min: PointU64 { row: 0, col: 0 }, max: PointU64 { row: u16::MAX.into(), col: u16::MAX.into() } });
+        assert_eq!(Rect::from(rect_u32::Rect::largest()), Rect { min: PointU64 { row: 0, col: 0 }, max: PointU64 { row: u32::MAX.into(), col: u32::MAX.into() } });
     }
 
     #[test]

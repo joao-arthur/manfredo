@@ -96,7 +96,7 @@ pub fn max_len(r: &RectU16) -> u16 {
 #[cfg(test)]
 mod tests {
     use super::{RectU16, delta_col, delta_row, len_col, len_row, max_delta, max_len};
-    use crate::matrix::{point::point_u16::PointU16, rect::rect_u8::RectU8};
+    use crate::matrix::{point::point_u16::PointU16, rect::rect_u8};
 
     #[test]
     fn rect_u16() {
@@ -114,7 +114,7 @@ mod tests {
 
     #[test]
     fn from() {
-        assert_eq!(RectU16::from(RectU8::largest()), RectU16 { min: PointU16 { row: 0, col: 0 }, max: PointU16 { row: u8::MAX.into(), col: u8::MAX.into() } });
+        assert_eq!(RectU16::from(rect_u8::RectU8::largest()), RectU16 { min: PointU16 { row: 0, col: 0 }, max: PointU16 { row: u8::MAX.into(), col: u8::MAX.into() } });
     }
 
     #[test]

@@ -72,8 +72,8 @@ impl From<rect_u16::RectU16> for Rect {
     }
 }
 
-impl From<rect_u32::RectU32> for Rect {
-    fn from(r: rect_u32::RectU32) -> Self {
+impl From<rect_u32::Rect> for Rect {
+    fn from(r: rect_u32::Rect) -> Self {
         Rect { min: point_u64::PointU64::of(r.min.x.into(), r.min.y.into()), max: point_u64::PointU64::of(r.max.x.into(), r.max.y.into()) }
     }
 }
@@ -113,7 +113,7 @@ mod tests {
     use super::{Rect, delta_x, delta_y, len_x, len_y, max_delta, max_len};
     use crate::cartesian::{
         point::point_u64::PointU64,
-        rect::{rect_u8::RectU8, rect_u16::RectU16, rect_u32::RectU32},
+        rect::{rect_u8, rect_u16, rect_u32},
     };
 
     #[test]
@@ -132,9 +132,9 @@ mod tests {
 
     #[test]
     fn from() {
-        assert_eq!(Rect::from(RectU8::largest()), Rect { min: PointU64 { x: 0, y: 0 }, max: PointU64 { x: u8::MAX.into(), y: u8::MAX.into() } });
-        assert_eq!(Rect::from(RectU16::largest()), Rect { min: PointU64 { x: 0, y: 0 }, max: PointU64 { x: u16::MAX.into(), y: u16::MAX.into() } });
-        assert_eq!(Rect::from(RectU32::largest()), Rect { min: PointU64 { x: 0, y: 0 }, max: PointU64 { x: u32::MAX.into(), y: u32::MAX.into() } });
+        assert_eq!(Rect::from(rect_u8::RectU8::largest()), Rect { min: PointU64 { x: 0, y: 0 }, max: PointU64 { x: u8::MAX.into(), y: u8::MAX.into() } });
+        assert_eq!(Rect::from(rect_u16::RectU16::largest()), Rect { min: PointU64 { x: 0, y: 0 }, max: PointU64 { x: u16::MAX.into(), y: u16::MAX.into() } });
+        assert_eq!(Rect::from(rect_u32::Rect::largest()), Rect { min: PointU64 { x: 0, y: 0 }, max: PointU64 { x: u32::MAX.into(), y: u32::MAX.into() } });
     }
 
     #[test]

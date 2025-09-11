@@ -1,4 +1,4 @@
-use super::point_u8::PointU8;
+use super::point_u8;
 
 mod add;
 
@@ -24,8 +24,8 @@ impl PointU16 {
     }
 }
 
-impl From<PointU8> for PointU16 {
-    fn from(p: PointU8) -> Self {
+impl From<point_u8::PointU8> for PointU16 {
+    fn from(p: point_u8::PointU8) -> Self {
         PointU16 { x: p.x.into(), y: p.y.into() }
     }
 }
@@ -51,7 +51,7 @@ pub fn delta(p1: &PointU16, p2: &PointU16) -> PointU16 {
 #[cfg(test)]
 mod tests {
     use super::{PointU16, delta, delta_x, delta_y};
-    use crate::cartesian::point::point_u8::PointU8;
+    use crate::cartesian::point::point_u8;
 
     #[test]
     fn point_u16() {
@@ -62,8 +62,8 @@ mod tests {
 
     #[test]
     fn from() {
-        assert_eq!(PointU16::from(PointU8::min()), PointU16 { x: u8::MIN.into(), y: u8::MIN.into() });
-        assert_eq!(PointU16::from(PointU8::max()), PointU16 { x: u8::MAX.into(), y: u8::MAX.into() });
+        assert_eq!(PointU16::from(point_u8::PointU8::min()), PointU16 { x: u8::MIN.into(), y: u8::MIN.into() });
+        assert_eq!(PointU16::from(point_u8::PointU8::max()), PointU16 { x: u8::MAX.into(), y: u8::MAX.into() });
     }
 
     #[test]

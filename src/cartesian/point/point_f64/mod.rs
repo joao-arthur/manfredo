@@ -1,4 +1,4 @@
-use super::point_f32::PointF32;
+use super::point_f32;
 
 mod add;
 
@@ -27,8 +27,8 @@ impl PointF64 {
     }
 }
 
-impl From<PointF32> for PointF64 {
-    fn from(p: PointF32) -> Self {
+impl From<point_f32::PointF32> for PointF64 {
+    fn from(p: point_f32::PointF32) -> Self {
         PointF64 { x: p.x.into(), y: p.y.into() }
     }
 }
@@ -54,7 +54,7 @@ pub fn delta(p1: &PointF64, p2: &PointF64) -> PointF64 {
 #[cfg(test)]
 mod tests {
     use super::{MAX, MIN, PointF64, delta, delta_x, delta_y};
-    use crate::cartesian::point::point_f32::PointF32;
+    use crate::cartesian::point::point_f32;
 
     #[test]
     fn point_f64() {
@@ -65,8 +65,8 @@ mod tests {
 
     #[test]
     fn from() {
-        assert_eq!(PointF64::from(PointF32::min()), PointF64 { x: -16777216.0, y: -16777216.0 });
-        assert_eq!(PointF64::from(PointF32::max()), PointF64 { x: 16777215.0, y: 16777215.0 });
+        assert_eq!(PointF64::from(point_f32::PointF32::min()), PointF64 { x: -16777216.0, y: -16777216.0 });
+        assert_eq!(PointF64::from(point_f32::PointF32::max()), PointF64 { x: 16777215.0, y: 16777215.0 });
     }
 
     #[test]

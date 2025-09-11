@@ -1,4 +1,4 @@
-use super::{point_u8::PointU8, point_u16::PointU16};
+use super::{point_u8, point_u16};
 
 mod add;
 
@@ -24,14 +24,14 @@ impl PointU32 {
     }
 }
 
-impl From<PointU8> for PointU32 {
-    fn from(p: PointU8) -> Self {
+impl From<point_u8::PointU8> for PointU32 {
+    fn from(p: point_u8::PointU8) -> Self {
         PointU32 { row: p.row.into(), col: p.col.into() }
     }
 }
 
-impl From<PointU16> for PointU32 {
-    fn from(p: PointU16) -> Self {
+impl From<point_u16::PointU16> for PointU32 {
+    fn from(p: point_u16::PointU16) -> Self {
         PointU32 { row: p.row.into(), col: p.col.into() }
     }
 }
@@ -57,7 +57,7 @@ pub fn delta(p1: &PointU32, p2: &PointU32) -> PointU32 {
 #[cfg(test)]
 mod tests {
     use super::{PointU32, delta, delta_col, delta_row};
-    use crate::matrix::point::{point_u8::PointU8, point_u16::PointU16};
+    use crate::matrix::point::{point_u8, point_u16};
 
     #[test]
     fn point_u32() {
@@ -68,10 +68,10 @@ mod tests {
 
     #[test]
     fn from() {
-        assert_eq!(PointU32::from(PointU8::min()), PointU32 { row: u8::MIN.into(), col: u8::MIN.into() });
-        assert_eq!(PointU32::from(PointU8::max()), PointU32 { row: u8::MAX.into(), col: u8::MAX.into() });
-        assert_eq!(PointU32::from(PointU16::min()), PointU32 { row: u16::MIN.into(), col: u16::MIN.into() });
-        assert_eq!(PointU32::from(PointU16::max()), PointU32 { row: u16::MAX.into(), col: u16::MAX.into() });
+        assert_eq!(PointU32::from(point_u8::PointU8::min()), PointU32 { row: u8::MIN.into(), col: u8::MIN.into() });
+        assert_eq!(PointU32::from(point_u8::PointU8::max()), PointU32 { row: u8::MAX.into(), col: u8::MAX.into() });
+        assert_eq!(PointU32::from(point_u16::PointU16::min()), PointU32 { row: u16::MIN.into(), col: u16::MIN.into() });
+        assert_eq!(PointU32::from(point_u16::PointU16::max()), PointU32 { row: u16::MAX.into(), col: u16::MAX.into() });
     }
 
     #[test]

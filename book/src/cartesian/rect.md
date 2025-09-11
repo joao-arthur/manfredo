@@ -16,7 +16,7 @@
 > Consider using **[Matrix Rect](../matrix/rect.md) instead**
 
 - RectU8
-- RectU16
+- Rect
 - Rect
 - Rect
 

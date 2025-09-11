@@ -14,7 +14,7 @@
 ### Unsigned
 
 - RectU8
-- RectU16
+- Rect
 - Rect
 - Rect
 

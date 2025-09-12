@@ -3,6 +3,9 @@
 > Manfredo do Carmo (1928 - 2018) was a Brazilian mathematician known for his work in differential
 > geometry.
 
+[![CI](https://github.com/joao-arthur/manfredo/actions/workflows/ci.yaml/badge.svg)](https://github.com/joao-arthur/manfredo/actions/workflows/ci.yaml)
+[![codecov](https://codecov.io/github/joao-arthur/manfredo/branch/main/graph/badge.svg?token=9FI5PDDFB3)](https://codecov.io/github/joao-arthur/manfredo)
+
 Manfredo is a **free sofware and open-source (FLOSS)** geometry library. It is designed around the
 philosophy of:
 

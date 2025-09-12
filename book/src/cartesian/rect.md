@@ -15,19 +15,19 @@
 
 > Consider using **[Matrix Rect](../matrix/rect.md) instead**
 
-- Rect
-- Rect
-- Rect
-- Rect
+- rect_u8::Rect
+- rect_u16::Rect
+- rect_u32::Rect
+- rect_u64::Rect
 
 ### Signed
 
-- Rect
-- Rect
-- Rect
-- Rect
+- rect_i8::Rect
+- rect_i16::Rect
+- rect_i32::Rect
+- rect_i64::Rect
 
 ### Float-point
 
-- Rect
-- Rect
+- rect_f32::Rect
+- rect_f64::Rect

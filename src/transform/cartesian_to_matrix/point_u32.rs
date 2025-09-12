@@ -1,33 +1,33 @@
-type CartesianPoint = crate::cartesian::point::point_u32::Point;
-type MatrixPoint = crate::matrix::point::point_u32::Point;
+type Cartesian = crate::cartesian::point::point_u32::Point;
+type Matrix = crate::matrix::point::point_u32::Point;
 
-pub fn cartesian_to_matrix(point: &CartesianPoint) -> MatrixPoint {
-    MatrixPoint { row: u32::MAX - point.y, col: point.x }
+pub fn cartesian_to_matrix(point: &Cartesian) -> Matrix {
+    Matrix { row: u32::MAX - point.y, col: point.x }
 }
 
 #[cfg(test)]
 mod tests {
-    use super::{CartesianPoint, MatrixPoint, cartesian_to_matrix};
+    use super::{Cartesian, Matrix, cartesian_to_matrix};
 
     #[test]
     fn bounds() {
-        assert_eq!(cartesian_to_matrix(&CartesianPoint::of(0, 0)), MatrixPoint::of(u32::MAX, 0));
-        assert_eq!(cartesian_to_matrix(&CartesianPoint::of(u32::MAX, 0)), MatrixPoint::max());
-        assert_eq!(cartesian_to_matrix(&CartesianPoint::of(0, u32::MAX)), MatrixPoint::of(0, 0));
-        assert_eq!(cartesian_to_matrix(&CartesianPoint::max()), MatrixPoint::of(0, u32::MAX));
+        assert_eq!(cartesian_to_matrix(&Cartesian::of(0, 0)), Matrix::of(u32::MAX, 0));
+        assert_eq!(cartesian_to_matrix(&Cartesian::of(u32::MAX, 0)), Matrix::max());
+        assert_eq!(cartesian_to_matrix(&Cartesian::of(0, u32::MAX)), Matrix::of(0, 0));
+        assert_eq!(cartesian_to_matrix(&Cartesian::max()), Matrix::of(0, u32::MAX));
     }
 
     #[test]
     fn sequence_min() {
-        assert_eq!(cartesian_to_matrix(&CartesianPoint::of(1, 1)), MatrixPoint::of(u32::MAX - 1, 1));
-        assert_eq!(cartesian_to_matrix(&CartesianPoint::of(2, 2)), MatrixPoint::of(u32::MAX - 2, 2));
-        assert_eq!(cartesian_to_matrix(&CartesianPoint::of(3, 3)), MatrixPoint::of(u32::MAX - 3, 3));
+        assert_eq!(cartesian_to_matrix(&Cartesian::of(1, 1)), Matrix::of(u32::MAX - 1, 1));
+        assert_eq!(cartesian_to_matrix(&Cartesian::of(2, 2)), Matrix::of(u32::MAX - 2, 2));
+        assert_eq!(cartesian_to_matrix(&Cartesian::of(3, 3)), Matrix::of(u32::MAX - 3, 3));
     }
 
     #[test]
     fn sequence_max() {
-        assert_eq!(cartesian_to_matrix(&CartesianPoint::of(u32::MAX - 1, u32::MAX - 1)), MatrixPoint::of(1, u32::MAX - 1));
-        assert_eq!(cartesian_to_matrix(&CartesianPoint::of(u32::MAX - 2, u32::MAX - 2)), MatrixPoint::of(2, u32::MAX - 2));
-        assert_eq!(cartesian_to_matrix(&CartesianPoint::of(u32::MAX - 3, u32::MAX - 3)), MatrixPoint::of(3, u32::MAX - 3));
+        assert_eq!(cartesian_to_matrix(&Cartesian::of(u32::MAX - 1, u32::MAX - 1)), Matrix::of(1, u32::MAX - 1));
+        assert_eq!(cartesian_to_matrix(&Cartesian::of(u32::MAX - 2, u32::MAX - 2)), Matrix::of(2, u32::MAX - 2));
+        assert_eq!(cartesian_to_matrix(&Cartesian::of(u32::MAX - 3, u32::MAX - 3)), Matrix::of(3, u32::MAX - 3));
     }
 }

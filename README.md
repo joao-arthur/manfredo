@@ -4,7 +4,7 @@
 > geometry.
 
 [![CI](https://github.com/joao-arthur/manfredo/actions/workflows/ci.yaml/badge.svg)](https://github.com/joao-arthur/manfredo/actions/workflows/ci.yaml)
-[![codecov](https://codecov.io/github/joao-arthur/manfredo/branch/main/graph/badge.svg?token=9FI5PDDFB3)](https://codecov.io/github/joao-arthur/manfredo)
+[![codecov](https://codecov.io/gh/joao-arthur/manfredo/graph/badge.svg?token=D1ZDT1FBZM)](https://codecov.io/gh/joao-arthur/manfredo)
 
 Manfredo is a **free sofware and open-source (FLOSS)** geometry library. It is designed around the
 philosophy of:

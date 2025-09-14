@@ -1,5 +1,5 @@
 use super::try_checked_add_assign;
-use crate::cartesian::point::point_i32::Point;
+use crate::cartesian::d2::point::point_i32::Point;
 
 const MIN: i32 = i32::MIN;
 const MAX: i32 = i32::MAX;

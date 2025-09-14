@@ -1,5 +1,5 @@
 use super::try_wrapping_resize_assign;
-use crate::matrix::rect::rect_i64::Rect;
+use crate::matrix::d2::rect::rect_i64::Rect;
 
 const MIN: i64 = i64::MIN;
 const MAX: i64 = i64::MAX;

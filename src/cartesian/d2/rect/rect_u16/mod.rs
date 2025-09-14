@@ -1,4 +1,4 @@
-use crate::cartesian::{point::point_u16, rect::rect_u8};
+use crate::cartesian::d2::{point::point_u16, rect::rect_u8};
 use std::ops::RangeInclusive;
 
 mod add;
@@ -96,7 +96,7 @@ pub fn max_len(r: &Rect) -> u16 {
 #[cfg(test)]
 mod tests {
     use super::{Rect, delta_x, delta_y, len_x, len_y, max_delta, max_len};
-    use crate::cartesian::{point::point_u16::Point, rect::rect_u8};
+    use crate::cartesian::d2::{point::point_u16::Point, rect::rect_u8};
 
     #[test]
     fn rect_u16() {

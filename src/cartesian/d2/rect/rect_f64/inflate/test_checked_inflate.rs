@@ -1,5 +1,5 @@
 use super::checked_inflate;
-use crate::cartesian::{
+use crate::cartesian::d2::{
     point::point_f64::{MAX, MIN},
     rect::rect_f64::Rect,
 };

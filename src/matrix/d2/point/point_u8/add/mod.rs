@@ -1,4 +1,4 @@
-use crate::matrix::point::{point_i8, point_u8::Point};
+use crate::matrix::d2::point::{point_i8, point_u8::Point};
 
 pub fn try_checked_add_assign(p: &mut Point, delta: &point_i8::Point) -> Option<()> {
     let row = p.row.checked_add_signed(delta.row)?;

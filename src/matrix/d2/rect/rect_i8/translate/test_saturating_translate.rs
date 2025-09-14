@@ -1,5 +1,5 @@
 use super::saturating_translate;
-use crate::matrix::{point::point_i8::Point, rect::rect_i8::Rect};
+use crate::matrix::d2::{point::point_i8::Point, rect::rect_i8::Rect};
 
 const MIN: i8 = i8::MIN;
 const MAX: i8 = i8::MAX;

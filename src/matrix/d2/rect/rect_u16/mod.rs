@@ -1,4 +1,4 @@
-use crate::matrix::{point::point_u16, rect::rect_u8};
+use crate::matrix::d2::{point::point_u16, rect::rect_u8};
 use std::ops::RangeInclusive;
 
 mod add;
@@ -96,7 +96,7 @@ pub fn max_len(r: &Rect) -> u16 {
 #[cfg(test)]
 mod tests {
     use super::{Rect, delta_col, delta_row, len_col, len_row, max_delta, max_len};
-    use crate::matrix::{point::point_u16::Point, rect::rect_u8};
+    use crate::matrix::d2::{point::point_u16::Point, rect::rect_u8};
 
     #[test]
     fn rect_u16() {

@@ -1,4 +1,4 @@
-use crate::cartesian::rect::rect_i64::Rect;
+use crate::cartesian::d2::rect::rect_i64::Rect;
 
 pub fn try_checked_add_assign(r: &mut Rect, delta: &Rect) -> Option<()> {
     let min_x = r.min.x.checked_add(delta.min.x)?;

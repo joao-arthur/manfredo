@@ -1,5 +1,5 @@
 use super::try_checked_translate_assign;
-use crate::cartesian::{point::point_i16::Point, rect::rect_u16::Rect};
+use crate::cartesian::d2::{point::point_i16::Point, rect::rect_u16::Rect};
 
 const MAX: u16 = u16::MAX;
 

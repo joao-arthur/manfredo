@@ -63,7 +63,7 @@ pub fn delta(p1: &Point, p2: &Point) -> Point {
 #[cfg(test)]
 mod tests {
     use super::{Point, delta, delta_x, delta_y};
-    use crate::cartesian::point::{point_u8, point_u16, point_u32};
+    use crate::cartesian::d2::point::{point_u8, point_u16, point_u32};
 
     #[test]
     fn point_u64() {

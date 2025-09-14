@@ -1,4 +1,4 @@
-use crate::matrix::rect::rect_u8::Rect;
+use crate::matrix::d2::rect::rect_u8::Rect;
 
 pub fn contains_rect(outer: &Rect, r: &Rect) -> bool {
     r.min.row >= outer.min.row && r.max.row <= outer.max.row && r.min.col >= outer.min.col && r.max.col <= outer.max.col
@@ -7,7 +7,7 @@ pub fn contains_rect(outer: &Rect, r: &Rect) -> bool {
 #[cfg(test)]
 mod tests {
     use super::contains_rect;
-    use crate::matrix::rect::rect_u8::Rect;
+    use crate::matrix::d2::rect::rect_u8::Rect;
 
     const MAX: u8 = u8::MAX;
 

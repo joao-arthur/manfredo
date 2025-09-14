@@ -1,4 +1,4 @@
-use crate::cartesian::rect::rect_u8::{Rect, delta_x, delta_y};
+use crate::cartesian::d2::rect::rect_u8::{Rect, delta_x, delta_y};
 
 pub fn try_checked_resize_assign(r: &mut Rect, size: u8) -> Option<()> {
     if size < 3 {

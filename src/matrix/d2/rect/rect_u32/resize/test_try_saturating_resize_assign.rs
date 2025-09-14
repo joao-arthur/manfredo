@@ -1,5 +1,5 @@
 use super::try_saturating_resize_assign;
-use crate::matrix::rect::rect_u32::Rect;
+use crate::matrix::d2::rect::rect_u32::Rect;
 
 const MAX: u32 = u32::MAX;
 

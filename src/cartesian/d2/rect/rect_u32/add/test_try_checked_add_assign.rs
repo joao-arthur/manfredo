@@ -1,5 +1,5 @@
 use super::try_checked_add_assign;
-use crate::cartesian::rect::{rect_i32::Rect as RectI, rect_u32::Rect};
+use crate::cartesian::d2::rect::{rect_i32::Rect as RectI, rect_u32::Rect};
 
 const MAX: u32 = u32::MAX;
 

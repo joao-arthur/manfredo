@@ -1,4 +1,4 @@
-use crate::cartesian::point::point_f32;
+use crate::cartesian::d2::point::point_f32;
 
 mod add;
 mod contains_point;
@@ -124,7 +124,7 @@ pub fn max_len(r: &Rect) -> f32 {
 #[cfg(test)]
 mod tests {
     use super::{Rect, delta_x, delta_y, len_x, len_y, max_delta, max_len};
-    use crate::cartesian::point::point_f32::{MAX, MIN, Point};
+    use crate::cartesian::d2::point::point_f32::{MAX, MIN, Point};
 
     #[test]
     fn rect_f32() {

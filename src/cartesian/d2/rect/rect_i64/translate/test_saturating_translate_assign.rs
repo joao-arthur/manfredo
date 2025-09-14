@@ -1,5 +1,5 @@
 use super::saturating_translate_assign;
-use crate::cartesian::{point::point_i64::Point, rect::rect_i64::Rect};
+use crate::cartesian::d2::{point::point_i64::Point, rect::rect_i64::Rect};
 
 const MIN: i64 = i64::MIN;
 const MAX: i64 = i64::MAX;

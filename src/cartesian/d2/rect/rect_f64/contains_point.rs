@@ -1,4 +1,4 @@
-use crate::cartesian::{point::point_f64::Point, rect::rect_f64::Rect};
+use crate::cartesian::d2::{point::point_f64::Point, rect::rect_f64::Rect};
 
 pub fn contains_point(r: &Rect, p: &Point) -> bool {
     p.x >= r.min.x && p.x <= r.max.x && p.y >= r.min.y && p.y <= r.max.y
@@ -7,7 +7,7 @@ pub fn contains_point(r: &Rect, p: &Point) -> bool {
 #[cfg(test)]
 mod tests {
     use super::contains_point;
-    use crate::cartesian::{
+    use crate::cartesian::d2::{
         point::point_f64::{MAX, MIN, Point},
         rect::rect_f64::Rect,
     };

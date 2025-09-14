@@ -1,4 +1,4 @@
-use crate::cartesian::rect::rect_i32::Rect;
+use crate::cartesian::d2::rect::rect_i32::Rect;
 
 pub fn contains_rect(outer: &Rect, r: &Rect) -> bool {
     r.min.x >= outer.min.x && r.max.x <= outer.max.x && r.min.y >= outer.min.y && r.max.y <= outer.max.y
@@ -7,7 +7,7 @@ pub fn contains_rect(outer: &Rect, r: &Rect) -> bool {
 #[cfg(test)]
 mod tests {
     use super::contains_rect;
-    use crate::cartesian::rect::rect_i32::Rect;
+    use crate::cartesian::d2::rect::rect_i32::Rect;
 
     const MIN: i32 = i32::MIN;
     const MAX: i32 = i32::MAX;

@@ -1,5 +1,5 @@
 use super::checked_translate;
-use crate::cartesian::{point::point_i8::Point, rect::rect_u8::Rect};
+use crate::cartesian::d2::{point::point_i8::Point, rect::rect_u8::Rect};
 
 #[test]
 fn test() {

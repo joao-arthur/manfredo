@@ -1,5 +1,5 @@
 use super::wrapping_add;
-use crate::cartesian::point::point_f32::{MAX, MIN, Point};
+use crate::cartesian::d2::point::point_f32::{MAX, MIN, Point};
 
 #[test]
 fn test() {

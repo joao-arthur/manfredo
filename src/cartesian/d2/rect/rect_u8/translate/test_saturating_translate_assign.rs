@@ -1,5 +1,5 @@
 use super::saturating_translate_assign;
-use crate::cartesian::{point::point_i8::Point, rect::rect_u8::Rect};
+use crate::cartesian::d2::{point::point_i8::Point, rect::rect_u8::Rect};
 
 const MAX: u8 = u8::MAX;
 

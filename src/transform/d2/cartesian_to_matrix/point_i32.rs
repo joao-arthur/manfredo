@@ -1,5 +1,5 @@
-type Cartesian = crate::cartesian::point::point_i32::Point;
-type Matrix = crate::matrix::point::point_u32::Point;
+type Cartesian = crate::cartesian::d2::point::point_i32::Point;
+type Matrix = crate::matrix::d2::point::point_u32::Point;
 
 pub fn cartesian_to_matrix(point: &Cartesian) -> Matrix {
     let row = i64::from(i32::MAX) - i64::from(point.y);

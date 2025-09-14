@@ -1,5 +1,5 @@
 use super::try_checked_translate_assign;
-use crate::cartesian::{
+use crate::cartesian::d2::{
     point::point_f64::{MAX, MIN, Point},
     rect::rect_f64::Rect,
 };

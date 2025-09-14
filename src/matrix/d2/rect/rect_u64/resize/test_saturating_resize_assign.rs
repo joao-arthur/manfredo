@@ -1,5 +1,5 @@
 use super::saturating_resize_assign;
-use crate::matrix::rect::rect_u64::Rect;
+use crate::matrix::d2::rect::rect_u64::Rect;
 
 #[test]
 fn odd() {

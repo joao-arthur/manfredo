@@ -1,4 +1,4 @@
-use crate::cartesian::{point::point_i8::Point, rect::rect_i8::Rect};
+use crate::cartesian::d2::{point::point_i8::Point, rect::rect_i8::Rect};
 
 pub fn try_checked_inflate_assign(r: &mut Rect) -> Option<()> {
     let min_x = r.min.x.checked_sub(1)?;

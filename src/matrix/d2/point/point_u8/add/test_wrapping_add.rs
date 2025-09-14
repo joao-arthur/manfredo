@@ -1,5 +1,5 @@
 use super::wrapping_add;
-use crate::matrix::point::{point_i8::Point as PointI, point_u8::Point};
+use crate::matrix::d2::point::{point_i8::Point as PointI, point_u8::Point};
 
 const MAX: u8 = u8::MAX;
 

@@ -1,5 +1,5 @@
 use super::try_wrapping_resize;
-use crate::cartesian::rect::rect_u32::Rect;
+use crate::cartesian::d2::rect::rect_u32::Rect;
 
 const MAX: u32 = u32::MAX;
 

@@ -1,5 +1,5 @@
 use super::checked_add;
-use crate::cartesian::rect::rect_i64::Rect;
+use crate::cartesian::d2::rect::rect_i64::Rect;
 
 #[test]
 fn test() {

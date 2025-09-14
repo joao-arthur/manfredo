@@ -1,5 +1,5 @@
 use super::try_checked_add;
-use crate::cartesian::rect::rect_i32::Rect;
+use crate::cartesian::d2::rect::rect_i32::Rect;
 
 const MIN: i32 = i32::MIN;
 const MAX: i32 = i32::MAX;

@@ -1,5 +1,5 @@
 use super::saturating_add_assign;
-use crate::cartesian::rect::{rect_i16::Rect as RectI, rect_u16::Rect};
+use crate::cartesian::d2::rect::{rect_i16::Rect as RectI, rect_u16::Rect};
 
 const MAX: u16 = u16::MAX;
 

@@ -1,4 +1,4 @@
-use crate::matrix::{
+use crate::matrix::d2::{
     point::point_i8::Point,
     rect::rect_u8::{Rect, delta_col, delta_row},
 };

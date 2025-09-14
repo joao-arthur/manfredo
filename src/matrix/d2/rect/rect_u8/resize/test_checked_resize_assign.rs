@@ -1,5 +1,5 @@
 use super::checked_resize_assign;
-use crate::matrix::rect::rect_u8::Rect;
+use crate::matrix::d2::rect::rect_u8::Rect;
 
 #[test]
 fn odd() {

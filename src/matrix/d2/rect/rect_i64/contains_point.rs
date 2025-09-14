@@ -1,4 +1,4 @@
-use crate::matrix::{point::point_i64::Point, rect::rect_i64::Rect};
+use crate::matrix::d2::{point::point_i64::Point, rect::rect_i64::Rect};
 
 pub fn contains_point(r: &Rect, p: &Point) -> bool {
     p.row >= r.min.row && p.row <= r.max.row && p.col >= r.min.col && p.col <= r.max.col
@@ -7,7 +7,7 @@ pub fn contains_point(r: &Rect, p: &Point) -> bool {
 #[cfg(test)]
 mod tests {
     use super::contains_point;
-    use crate::matrix::{point::point_i64::Point, rect::rect_i64::Rect};
+    use crate::matrix::d2::{point::point_i64::Point, rect::rect_i64::Rect};
 
     const MIN: i64 = i64::MIN;
     const MAX: i64 = i64::MAX;

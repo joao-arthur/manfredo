@@ -1,5 +1,5 @@
 use super::wrapping_translate;
-use crate::matrix::{point::point_i64::Point, rect::rect_u64::Rect};
+use crate::matrix::d2::{point::point_i64::Point, rect::rect_u64::Rect};
 
 const MAX: u64 = u64::MAX;
 

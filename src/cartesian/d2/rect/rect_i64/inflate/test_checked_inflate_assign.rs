@@ -1,5 +1,5 @@
 use super::checked_inflate_assign;
-use crate::cartesian::rect::rect_i64::Rect;
+use crate::cartesian::d2::rect::rect_i64::Rect;
 
 const MIN: i64 = i64::MIN;
 const MAX: i64 = i64::MAX;

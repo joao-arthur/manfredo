@@ -1,4 +1,4 @@
-use crate::cartesian::rect::{rect_i8, rect_u8::Rect};
+use crate::cartesian::d2::rect::{rect_i8, rect_u8::Rect};
 
 pub fn try_checked_add_assign(r: &mut Rect, delta: &rect_i8::Rect) -> Option<()> {
     let min_x = r.min.x.checked_add_signed(delta.min.x)?;

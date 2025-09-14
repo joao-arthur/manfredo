@@ -1,4 +1,4 @@
-use crate::cartesian::{
+use crate::cartesian::d2::{
     point::point_i8::Point,
     rect::rect_i8::{Rect, delta_x, delta_y},
 };
@@ -36,7 +36,7 @@ pub fn deflate(r: &Rect) -> Rect {
 #[cfg(test)]
 mod tests {
     use super::{deflate, deflate_assign, try_deflate, try_deflate_assign};
-    use crate::cartesian::rect::rect_i8::Rect;
+    use crate::cartesian::d2::rect::rect_i8::Rect;
 
     #[test]
     fn try_deflate_assign_odd() {

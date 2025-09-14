@@ -1,4 +1,4 @@
-use crate::cartesian::{
+use crate::cartesian::d2::{
     point::point_i16::Point,
     rect::rect_i16::{Rect, delta_x, delta_y},
 };

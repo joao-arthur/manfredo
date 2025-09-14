@@ -1,5 +1,5 @@
 use super::checked_add;
-use crate::cartesian::point::point_f32::Point;
+use crate::cartesian::d2::point::point_f32::Point;
 
 #[test]
 fn test() {

@@ -1,5 +1,5 @@
 use super::wrapping_translate_assign;
-use crate::matrix::{point::point_i32::Point, rect::rect_u32::Rect};
+use crate::matrix::d2::{point::point_i32::Point, rect::rect_u32::Rect};
 
 const MAX: u32 = u32::MAX;
 

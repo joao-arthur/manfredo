@@ -1,5 +1,5 @@
 use super::checked_inflate;
-use crate::matrix::rect::rect_u16::Rect;
+use crate::matrix::d2::rect::rect_u16::Rect;
 
 const MAX: u16 = u16::MAX;
 

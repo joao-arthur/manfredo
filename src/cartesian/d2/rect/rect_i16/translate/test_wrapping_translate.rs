@@ -1,5 +1,5 @@
 use super::wrapping_translate;
-use crate::cartesian::{point::point_i16::Point, rect::rect_i16::Rect};
+use crate::cartesian::d2::{point::point_i16::Point, rect::rect_i16::Rect};
 
 const MIN: i16 = i16::MIN;
 const MAX: i16 = i16::MAX;

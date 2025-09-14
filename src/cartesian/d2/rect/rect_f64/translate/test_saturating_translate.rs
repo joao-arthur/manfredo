@@ -1,5 +1,5 @@
 use super::saturating_translate;
-use crate::cartesian::{
+use crate::cartesian::d2::{
     point::point_f64::{MAX, MIN, Point},
     rect::rect_f64::Rect,
 };

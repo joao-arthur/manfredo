@@ -1,5 +1,5 @@
 use super::try_checked_add;
-use crate::cartesian::point::point_i64::Point;
+use crate::cartesian::d2::point::point_i64::Point;
 
 const MIN: i64 = i64::MIN;
 const MAX: i64 = i64::MAX;

@@ -1,5 +1,5 @@
 use super::checked_translate_assign;
-use crate::matrix::{point::point_i8::Point, rect::rect_u8::Rect};
+use crate::matrix::d2::{point::point_i8::Point, rect::rect_u8::Rect};
 
 #[test]
 fn test() {

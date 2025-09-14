@@ -1,5 +1,5 @@
 use super::saturating_inflate;
-use crate::matrix::rect::rect_u64::Rect;
+use crate::matrix::d2::rect::rect_u64::Rect;
 
 const MAX: u64 = u64::MAX;
 

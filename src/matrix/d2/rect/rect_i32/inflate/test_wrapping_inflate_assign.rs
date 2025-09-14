@@ -1,5 +1,5 @@
 use super::wrapping_inflate_assign;
-use crate::matrix::rect::rect_i32::Rect;
+use crate::matrix::d2::rect::rect_i32::Rect;
 
 const MIN: i32 = i32::MIN;
 const MAX: i32 = i32::MAX;

@@ -1,4 +1,4 @@
-use crate::cartesian::{
+use crate::cartesian::d2::{
     point::point_i64,
     rect::{rect_i8, rect_i16, rect_i32},
 };
@@ -111,7 +111,7 @@ pub fn max_len(r: &Rect) -> u64 {
 #[cfg(test)]
 mod tests {
     use super::{Rect, delta_x, delta_y, len_x, len_y, max_delta, max_len};
-    use crate::cartesian::{
+    use crate::cartesian::d2::{
         point::point_i64::Point,
         rect::{rect_i8, rect_i16, rect_i32},
     };

@@ -1,5 +1,5 @@
 use super::saturating_add;
-use crate::matrix::rect::rect_i16::Rect;
+use crate::matrix::d2::rect::rect_i16::Rect;
 
 const MIN: i16 = i16::MIN;
 const MAX: i16 = i16::MAX;

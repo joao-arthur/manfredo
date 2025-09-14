@@ -1,5 +1,5 @@
 use super::try_checked_translate_assign;
-use crate::matrix::{point::point_i32::Point, rect::rect_i32::Rect};
+use crate::matrix::d2::{point::point_i32::Point, rect::rect_i32::Rect};
 
 const MIN: i32 = i32::MIN;
 const MAX: i32 = i32::MAX;

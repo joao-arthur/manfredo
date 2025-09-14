@@ -1,4 +1,4 @@
-use crate::matrix::rect::rect_i64::{Rect, delta_col, delta_row};
+use crate::matrix::d2::rect::rect_i64::{Rect, delta_col, delta_row};
 
 pub fn try_deflate_assign(r: &mut Rect) -> Option<()> {
     if delta_row(r) < 3 || delta_col(r) < 3 {
@@ -33,7 +33,7 @@ pub fn deflate(r: &Rect) -> Rect {
 #[cfg(test)]
 mod tests {
     use super::{deflate, deflate_assign, try_deflate, try_deflate_assign};
-    use crate::matrix::rect::rect_i64::Rect;
+    use crate::matrix::d2::rect::rect_i64::Rect;
 
     #[test]
     fn try_deflate_assign_odd() {

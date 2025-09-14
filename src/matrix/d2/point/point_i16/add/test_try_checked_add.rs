@@ -1,5 +1,5 @@
 use super::try_checked_add;
-use crate::matrix::point::point_i16::Point;
+use crate::matrix::d2::point::point_i16::Point;
 
 const MIN: i16 = i16::MIN;
 const MAX: i16 = i16::MAX;

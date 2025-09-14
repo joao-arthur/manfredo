@@ -1,5 +1,5 @@
 use super::saturating_add_assign;
-use crate::matrix::point::point_i64::Point;
+use crate::matrix::d2::point::point_i64::Point;
 
 const MIN: i64 = i64::MIN;
 const MAX: i64 = i64::MAX;

@@ -1,4 +1,4 @@
-use crate::cartesian::rect::rect_f64::{Rect, delta_x, delta_y};
+use crate::cartesian::d2::rect::rect_f64::{Rect, delta_x, delta_y};
 
 pub fn try_deflate_assign(r: &mut Rect) -> Option<()> {
     if delta_x(r) < 3.0 || delta_y(r) < 3.0 {
@@ -33,7 +33,7 @@ pub fn deflate(r: &Rect) -> Rect {
 #[cfg(test)]
 mod tests {
     use super::{deflate, deflate_assign, try_deflate, try_deflate_assign};
-    use crate::cartesian::rect::rect_f64::Rect;
+    use crate::cartesian::d2::rect::rect_f64::Rect;
 
     #[test]
     fn try_deflate_assign_odd() {

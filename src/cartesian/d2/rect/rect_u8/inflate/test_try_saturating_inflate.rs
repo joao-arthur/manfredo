@@ -1,5 +1,5 @@
 use super::try_saturating_inflate;
-use crate::cartesian::rect::rect_u8::Rect;
+use crate::cartesian::d2::rect::rect_u8::Rect;
 
 const MAX: u8 = u8::MAX;
 

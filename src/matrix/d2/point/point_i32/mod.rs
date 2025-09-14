@@ -57,7 +57,7 @@ pub fn delta(p1: &Point, p2: &Point) -> point_u32::Point {
 #[cfg(test)]
 mod tests {
     use super::{Point, delta, delta_col, delta_row};
-    use crate::matrix::point::{point_i8, point_i16, point_u32};
+    use crate::matrix::d2::point::{point_i8, point_i16, point_u32};
 
     #[test]
     fn point_i32() {

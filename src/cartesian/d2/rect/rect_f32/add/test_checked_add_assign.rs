@@ -1,5 +1,5 @@
 use super::checked_add_assign;
-use crate::cartesian::rect::rect_f32::Rect;
+use crate::cartesian::d2::rect::rect_f32::Rect;
 
 #[test]
 fn test() {

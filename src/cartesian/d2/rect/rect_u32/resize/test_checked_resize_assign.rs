@@ -1,5 +1,5 @@
 use super::checked_resize_assign;
-use crate::cartesian::rect::rect_u32::Rect;
+use crate::cartesian::d2::rect::rect_u32::Rect;
 
 #[test]
 fn odd() {

@@ -1,4 +1,4 @@
-use crate::matrix::{
+use crate::matrix::d2::{
     point::point_u64,
     rect::{rect_u8, rect_u16, rect_u32},
 };
@@ -111,7 +111,7 @@ pub fn max_len(r: &Rect) -> u64 {
 #[cfg(test)]
 mod tests {
     use super::{Rect, delta_col, delta_row, len_col, len_row, max_delta, max_len};
-    use crate::matrix::{
+    use crate::matrix::d2::{
         point::point_u64::Point,
         rect::{rect_u8, rect_u16, rect_u32},
     };

@@ -1,5 +1,5 @@
 use super::saturating_add_assign;
-use crate::cartesian::point::point_i16::Point;
+use crate::cartesian::d2::point::point_i16::Point;
 
 const MIN: i16 = i16::MIN;
 const MAX: i16 = i16::MAX;

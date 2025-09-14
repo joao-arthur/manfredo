@@ -1,5 +1,5 @@
 use super::checked_add;
-use crate::matrix::point::{point_i32::Point as PointI, point_u32::Point};
+use crate::matrix::d2::point::{point_i32::Point as PointI, point_u32::Point};
 
 #[test]
 fn test() {

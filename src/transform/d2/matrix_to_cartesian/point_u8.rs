@@ -1,5 +1,5 @@
-type Cartesian = crate::cartesian::point::point_u8::Point;
-type Matrix = crate::matrix::point::point_u8::Point;
+type Cartesian = crate::cartesian::d2::point::point_u8::Point;
+type Matrix = crate::matrix::d2::point::point_u8::Point;
 
 pub fn matrix_to_cartesian(point: &Matrix) -> Cartesian {
     Cartesian { x: point.col, y: u8::MAX - point.row }

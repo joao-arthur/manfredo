@@ -35,7 +35,7 @@ pub fn deflate(r: &Rect) -> Rect {
 
 #[cfg(test)]
 mod tests {
-    use super::{deflate_assign, deflate, try_deflate_assign, try_deflate};
+    use super::{deflate, deflate_assign, try_deflate, try_deflate_assign};
     use crate::matrix::rect::rect_i8::Rect;
 
     #[test]

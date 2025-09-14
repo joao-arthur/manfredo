@@ -32,7 +32,7 @@ pub fn deflate(r: &Rect) -> Rect {
 
 #[cfg(test)]
 mod tests {
-    use super::{deflate_assign, deflate, try_deflate_assign, try_deflate};
+    use super::{deflate, deflate_assign, try_deflate, try_deflate_assign};
     use crate::cartesian::rect::rect_u64::Rect;
 
     #[test]

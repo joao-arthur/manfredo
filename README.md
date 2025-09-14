@@ -77,11 +77,11 @@ let d = rect_i32::saturating_add(&a, &b);
 let e = rect_i32::wrapping_add_assign(&mut a, &b);
 ```
 
-## Roadmap
+## 🚧 Roadmap
 
 - 3D geometry
 - Polar plane
 
-## License
+## 📜 License
 
 [GNU AGPLv3](./LICENSE)

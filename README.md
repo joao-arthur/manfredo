@@ -16,6 +16,13 @@ philosophy of:
 
 Currently, Manfredo only supports **2D geometry**.
 
+## 📦️ Install
+
+```toml
+[dependencies]
+manfredo = { git = "https://github.com/joao-arthur/manfredo", rev = "ed9fc12740a051c0c98d6278c5109b45d0679e58" }
+```
+
 ## Data Structures
 
 - **Cartesian plane** suited for continuous or signed coordinate spaces

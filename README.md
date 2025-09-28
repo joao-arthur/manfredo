@@ -86,7 +86,18 @@ let e = rect_i32::wrapping_add_assign(&mut a, &b);
 
 ## 🚧 Roadmap
 
-- 3D geometry
+- 2D Geometry
+  - [ ] `Rect`
+      - [ ] Area
+  - [ ] `Line`
+  - [ ] `Circle`
+    - [ ] Area
+  - [ ] `Point`
+    - [ ] Distance
+- 3D Geometry
+  - [ ] `Sphere`
+  - [ ] `Cuboid`
+  - [ ] `Line`
 - Polar plane
 
 ## 📜 License

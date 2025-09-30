@@ -5,6 +5,7 @@ mod add;
 mod contains_point;
 mod contains_rect;
 mod deflate;
+mod delta;
 mod inflate;
 mod resize;
 mod translate;
@@ -13,6 +14,7 @@ pub use self::add::{checked_add, checked_add_assign, saturating_add, saturating_
 pub use self::contains_point::contains_point;
 pub use self::contains_rect::contains_rect;
 pub use self::deflate::{deflate, deflate_assign, try_deflate, try_deflate_assign};
+pub use self::delta::{delta_col, delta_row, max_delta};
 pub use self::inflate::{
     checked_inflate, checked_inflate_assign, saturating_inflate, saturating_inflate_assign, try_checked_inflate, try_checked_inflate_assign, try_saturating_inflate, try_saturating_inflate_assign,
     wrapping_inflate, wrapping_inflate_assign,
@@ -63,18 +65,6 @@ impl std::fmt::Display for Rect {
     }
 }
 
-pub fn delta_row(r: &Rect) -> u8 {
-    point_u8::delta_row(&r.min, &r.max)
-}
-
-pub fn delta_col(r: &Rect) -> u8 {
-    point_u8::delta_col(&r.min, &r.max)
-}
-
-pub fn max_delta(r: &Rect) -> u8 {
-    std::cmp::max(delta_row(r), delta_col(r))
-}
-
 pub fn len_row(r: &Rect) -> u8 {
     delta_row(r) + 1
 }
@@ -89,7 +79,7 @@ pub fn max_len(r: &Rect) -> u8 {
 
 #[cfg(test)]
 mod tests {
-    use super::{Rect, delta_col, delta_row, len_col, len_row, max_delta, max_len};
+    use super::{Rect, len_col, len_row, max_len};
     use crate::matrix::d2::point::point_u8::Point;
 
     #[test]
@@ -132,45 +122,6 @@ mod tests {
         assert_eq!(Rect::of(3, 6, 4, 7).iter_col().rev().collect::<Vec<u8>>(), [7, 6]);
         assert_eq!(Rect::of(3, 6, 4, 6).iter_col().rev().collect::<Vec<u8>>(), [6]);
         assert_eq!(Rect::of(3, 6, 4, 5).iter_col().rev().collect::<Vec<u8>>(), []);
-    }
-
-    #[test]
-    fn test_delta_row() {
-        assert_eq!(delta_row(&Rect::of(0, 0, 0, 0)), 0);
-        assert_eq!(delta_row(&Rect::of(0, 0, u8::MAX, 0)), u8::MAX);
-    }
-
-    #[test]
-    fn test_delta_col() {
-        assert_eq!(delta_col(&Rect::of(0, 0, 0, 0)), 0);
-        assert_eq!(delta_col(&Rect::of(0, 0, 0, u8::MAX)), u8::MAX);
-    }
-
-    #[test]
-    fn test_max_delta() {
-        assert_eq!(max_delta(&Rect::of(0, 5, 10, 10)), 10);
-        assert_eq!(max_delta(&Rect::of(5, 0, 9, 9)), 9);
-    }
-
-    #[test]
-    fn max_delta_0() {
-        assert_eq!(max_delta(&Rect::of(0, 0, 0, 0)), 0);
-        assert_eq!(max_delta(&Rect::of(1, 1, 1, 1)), 0);
-        assert_eq!(max_delta(&Rect::of(5, 10, 5, 10)), 0);
-    }
-
-    #[test]
-    fn max_delta_1() {
-        assert_eq!(max_delta(&Rect::of(0, 0, 1, 1)), 1);
-        assert_eq!(max_delta(&Rect::of(5, 5, 6, 6)), 1);
-        assert_eq!(max_delta(&Rect::of(0, 0, 0, 1)), 1);
-        assert_eq!(max_delta(&Rect::of(5, 9, 5, 10)), 1);
-    }
-
-    #[test]
-    fn max_delta_bounds() {
-        assert_eq!(max_delta(&Rect::of(0, 0, u8::MAX, u8::MAX - 1)), u8::MAX);
-        assert_eq!(max_delta(&Rect::of(0, 0, u8::MAX - 1, u8::MAX)), u8::MAX);
     }
 
     #[test]

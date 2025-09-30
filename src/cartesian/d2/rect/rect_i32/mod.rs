@@ -8,6 +8,7 @@ mod add;
 mod contains_point;
 mod contains_rect;
 mod deflate;
+mod delta;
 mod inflate;
 mod resize;
 mod translate;
@@ -16,6 +17,7 @@ pub use self::add::{checked_add, checked_add_assign, saturating_add, saturating_
 pub use self::contains_point::contains_point;
 pub use self::contains_rect::contains_rect;
 pub use self::deflate::{deflate, deflate_assign, try_deflate, try_deflate_assign};
+pub use self::delta::{delta_x, delta_y, max_delta};
 pub use self::inflate::{
     checked_inflate, checked_inflate_assign, saturating_inflate, saturating_inflate_assign, try_checked_inflate, try_checked_inflate_assign, try_saturating_inflate, try_saturating_inflate_assign,
     wrapping_inflate, wrapping_inflate_assign,
@@ -78,18 +80,6 @@ impl std::fmt::Display for Rect {
     }
 }
 
-pub fn delta_x(r: &Rect) -> u32 {
-    point_i32::delta_x(&r.min, &r.max)
-}
-
-pub fn delta_y(r: &Rect) -> u32 {
-    point_i32::delta_y(&r.min, &r.max)
-}
-
-pub fn max_delta(r: &Rect) -> u32 {
-    std::cmp::max(delta_x(r), delta_y(r))
-}
-
 pub fn len_x(r: &Rect) -> u32 {
     delta_x(r) + 1
 }
@@ -104,7 +94,7 @@ pub fn max_len(r: &Rect) -> u32 {
 
 #[cfg(test)]
 mod tests {
-    use super::{Rect, delta_x, delta_y, len_x, len_y, max_delta, max_len};
+    use super::{Rect, len_x, len_y, max_len};
     use crate::cartesian::d2::{
         point::point_i32::Point,
         rect::{rect_i8, rect_i16},
@@ -156,50 +146,6 @@ mod tests {
         assert_eq!(Rect::of(-6, -8, -4, -7).iter_y().rev().collect::<Vec<i32>>(), [-7, -8]);
         assert_eq!(Rect::of(-6, -8, -4, -8).iter_y().rev().collect::<Vec<i32>>(), [-8]);
         assert_eq!(Rect::of(-6, -8, -4, -9).iter_y().rev().collect::<Vec<i32>>(), []);
-    }
-
-    #[test]
-    fn test_delta_x() {
-        assert_eq!(delta_x(&Rect::of(0, i32::MIN, 0, i32::MAX)), 0);
-        assert_eq!(delta_x(&Rect::of(i32::MIN, 0, i32::MAX, 0)), u32::MAX);
-    }
-
-    #[test]
-    fn test_delta_y() {
-        assert_eq!(delta_y(&Rect::of(i32::MIN, 0, i32::MAX, 0)), 0);
-        assert_eq!(delta_y(&Rect::of(0, i32::MIN, 0, i32::MAX)), u32::MAX);
-    }
-
-    #[test]
-    fn test_max_delta() {
-        assert_eq!(max_delta(&Rect::of(0, 5, 10, 10)), 10);
-        assert_eq!(max_delta(&Rect::of(-10, -10, -5, 0)), 10);
-        assert_eq!(max_delta(&Rect::of(-5, 0, 5, 5)), 10);
-    }
-
-    #[test]
-    fn max_delta_0() {
-        assert_eq!(max_delta(&Rect::of(0, 0, 0, 0)), 0);
-        assert_eq!(max_delta(&Rect::of(1, 1, 1, 1)), 0);
-        assert_eq!(max_delta(&Rect::of(-1, -1, -1, -1)), 0);
-        assert_eq!(max_delta(&Rect::of(5, 10, 5, 10)), 0);
-    }
-
-    #[test]
-    fn max_delta_1() {
-        assert_eq!(max_delta(&Rect::of(0, 0, 1, 1)), 1);
-        assert_eq!(max_delta(&Rect::of(5, 5, 6, 6)), 1);
-        assert_eq!(max_delta(&Rect::of(-6, -6, -5, -5)), 1);
-        assert_eq!(max_delta(&Rect::of(0, 0, 0, 1)), 1);
-        assert_eq!(max_delta(&Rect::of(5, 9, 5, 10)), 1);
-    }
-
-    #[test]
-    fn max_delta_bounds() {
-        assert_eq!(max_delta(&Rect::of(i32::MIN + 1, i32::MIN, i32::MAX, i32::MAX)), u32::MAX);
-        assert_eq!(max_delta(&Rect::of(i32::MIN, i32::MIN + 1, i32::MAX, i32::MAX)), u32::MAX);
-        assert_eq!(max_delta(&Rect::of(i32::MIN, i32::MIN, i32::MAX - 1, i32::MAX)), u32::MAX);
-        assert_eq!(max_delta(&Rect::of(i32::MIN, i32::MIN, i32::MAX, i32::MAX - 1)), u32::MAX);
     }
 
     #[test]

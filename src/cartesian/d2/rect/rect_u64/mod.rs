@@ -10,6 +10,7 @@ mod contains_rect;
 mod deflate;
 mod delta;
 mod inflate;
+mod len;
 mod resize;
 mod translate;
 
@@ -22,6 +23,7 @@ pub use self::inflate::{
     checked_inflate, checked_inflate_assign, saturating_inflate, saturating_inflate_assign, try_checked_inflate, try_checked_inflate_assign, try_saturating_inflate, try_saturating_inflate_assign,
     wrapping_inflate, wrapping_inflate_assign,
 };
+pub use self::len::{len_x, len_y, max_len};
 pub use self::resize::{
     checked_resize, checked_resize_assign, saturating_resize, saturating_resize_assign, try_checked_resize, try_checked_resize_assign, try_saturating_resize, try_saturating_resize_assign,
     try_wrapping_resize, try_wrapping_resize_assign, wrapping_resize, wrapping_resize_assign,
@@ -86,21 +88,9 @@ impl std::fmt::Display for Rect {
     }
 }
 
-pub fn len_x(r: &Rect) -> u64 {
-    delta_x(r) + 1
-}
-
-pub fn len_y(r: &Rect) -> u64 {
-    delta_y(r) + 1
-}
-
-pub fn max_len(r: &Rect) -> u64 {
-    std::cmp::max(len_x(r), len_y(r))
-}
-
 #[cfg(test)]
 mod tests {
-    use super::{Rect, len_x, len_y, max_len};
+    use super::Rect;
     use crate::cartesian::d2::{
         point::point_u64::Point,
         rect::{rect_u8, rect_u16, rect_u32},
@@ -153,46 +143,5 @@ mod tests {
         assert_eq!(Rect::of(3, 6, 4, 7).iter_y().rev().collect::<Vec<u64>>(), [7, 6]);
         assert_eq!(Rect::of(3, 6, 4, 6).iter_y().rev().collect::<Vec<u64>>(), [6]);
         assert_eq!(Rect::of(3, 6, 4, 5).iter_y().rev().collect::<Vec<u64>>(), []);
-    }
-
-    #[test]
-    fn test_len_x() {
-        assert_eq!(len_x(&Rect::of(0, 0, 0, 0)), 1);
-        assert_eq!(len_x(&Rect::of(0, 0, u64::MAX - 1, 0)), u64::MAX);
-    }
-
-    #[test]
-    fn test_len_y() {
-        assert_eq!(len_y(&Rect::of(0, 0, 0, 0)), 1);
-        assert_eq!(len_y(&Rect::of(0, 0, 0, u64::MAX - 1)), u64::MAX);
-    }
-
-    #[test]
-    fn test_max_len() {
-        assert_eq!(max_len(&Rect::of(0, 5, 10, 10)), 11);
-        assert_eq!(max_len(&Rect::of(5, 0, 9, 9)), 10);
-    }
-
-    #[test]
-    fn max_len_1() {
-        assert_eq!(max_len(&Rect::of(0, 0, 0, 0)), 1);
-        assert_eq!(max_len(&Rect::of(1, 1, 1, 1)), 1);
-        assert_eq!(max_len(&Rect::of(5, 10, 5, 10)), 1);
-    }
-
-    #[test]
-    fn max_len_2() {
-        assert_eq!(max_len(&Rect::of(0, 0, 1, 1)), 2);
-        assert_eq!(max_len(&Rect::of(5, 5, 6, 6)), 2);
-        assert_eq!(max_len(&Rect::of(0, 0, 0, 1)), 2);
-        assert_eq!(max_len(&Rect::of(5, 9, 5, 10)), 2);
-    }
-
-    #[test]
-    fn max_len_bounds() {
-        assert_eq!(max_len(&Rect::of(1, 0, u64::MAX - 1, u64::MAX - 1)), u64::MAX);
-        assert_eq!(max_len(&Rect::of(0, 1, u64::MAX - 1, u64::MAX - 1)), u64::MAX);
-        assert_eq!(max_len(&Rect::of(0, 0, u64::MAX - 2, u64::MAX - 1)), u64::MAX);
-        assert_eq!(max_len(&Rect::of(0, 0, u64::MAX - 1, u64::MAX - 2)), u64::MAX);
     }
 }

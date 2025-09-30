@@ -10,6 +10,7 @@ mod contains_rect;
 mod deflate;
 mod delta;
 mod inflate;
+mod len;
 mod resize;
 mod translate;
 
@@ -22,6 +23,7 @@ pub use self::inflate::{
     checked_inflate, checked_inflate_assign, saturating_inflate, saturating_inflate_assign, try_checked_inflate, try_checked_inflate_assign, try_saturating_inflate, try_saturating_inflate_assign,
     wrapping_inflate, wrapping_inflate_assign,
 };
+pub use self::len::{len_x, len_y, max_len};
 pub use self::resize::{
     checked_resize, checked_resize_assign, saturating_resize, saturating_resize_assign, try_checked_resize, try_checked_resize_assign, try_saturating_resize, try_saturating_resize_assign,
     try_wrapping_resize, try_wrapping_resize_assign, wrapping_resize, wrapping_resize_assign,
@@ -80,21 +82,9 @@ impl std::fmt::Display for Rect {
     }
 }
 
-pub fn len_x(r: &Rect) -> u32 {
-    delta_x(r) + 1
-}
-
-pub fn len_y(r: &Rect) -> u32 {
-    delta_y(r) + 1
-}
-
-pub fn max_len(r: &Rect) -> u32 {
-    std::cmp::max(len_x(r), len_y(r))
-}
-
 #[cfg(test)]
 mod tests {
-    use super::{Rect, len_x, len_y, max_len};
+    use super::Rect;
     use crate::cartesian::d2::{
         point::point_i32::Point,
         rect::{rect_i8, rect_i16},
@@ -146,49 +136,5 @@ mod tests {
         assert_eq!(Rect::of(-6, -8, -4, -7).iter_y().rev().collect::<Vec<i32>>(), [-7, -8]);
         assert_eq!(Rect::of(-6, -8, -4, -8).iter_y().rev().collect::<Vec<i32>>(), [-8]);
         assert_eq!(Rect::of(-6, -8, -4, -9).iter_y().rev().collect::<Vec<i32>>(), []);
-    }
-
-    #[test]
-    fn test_len_x() {
-        assert_eq!(len_x(&Rect::of(0, i32::MIN, 0, i32::MAX)), 1);
-        assert_eq!(len_x(&Rect::of(i32::MIN, 0, i32::MAX - 1, 0)), u32::MAX);
-    }
-
-    #[test]
-    fn test_len_y() {
-        assert_eq!(len_y(&Rect::of(i32::MIN, 0, i32::MAX, 0)), 1);
-        assert_eq!(len_y(&Rect::of(0, i32::MIN, 0, i32::MAX - 1)), u32::MAX);
-    }
-
-    #[test]
-    fn test_max_len() {
-        assert_eq!(max_len(&Rect::of(0, 5, 10, 10)), 11);
-        assert_eq!(max_len(&Rect::of(-10, -10, -5, 0)), 11);
-        assert_eq!(max_len(&Rect::of(-5, 0, 5, 5)), 11);
-    }
-
-    #[test]
-    fn max_len_1() {
-        assert_eq!(max_len(&Rect::of(0, 0, 0, 0)), 1);
-        assert_eq!(max_len(&Rect::of(1, 1, 1, 1)), 1);
-        assert_eq!(max_len(&Rect::of(-1, -1, -1, -1)), 1);
-        assert_eq!(max_len(&Rect::of(5, 10, 5, 10)), 1);
-    }
-
-    #[test]
-    fn max_len_2() {
-        assert_eq!(max_len(&Rect::of(0, 0, 1, 1)), 2);
-        assert_eq!(max_len(&Rect::of(5, 5, 6, 6)), 2);
-        assert_eq!(max_len(&Rect::of(-6, -6, -5, -5)), 2);
-        assert_eq!(max_len(&Rect::of(0, 0, 0, 1)), 2);
-        assert_eq!(max_len(&Rect::of(5, 9, 5, 10)), 2);
-    }
-
-    #[test]
-    fn max_len_bounds() {
-        assert_eq!(max_len(&Rect::of(i32::MIN + 1, i32::MIN, i32::MAX - 1, i32::MAX - 1)), u32::MAX);
-        assert_eq!(max_len(&Rect::of(i32::MIN, i32::MIN + 1, i32::MAX - 1, i32::MAX - 1)), u32::MAX);
-        assert_eq!(max_len(&Rect::of(i32::MIN, i32::MIN, i32::MAX - 2, i32::MAX - 1)), u32::MAX);
-        assert_eq!(max_len(&Rect::of(i32::MIN, i32::MIN, i32::MAX - 1, i32::MAX - 2)), u32::MAX);
     }
 }

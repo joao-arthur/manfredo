@@ -88,18 +88,6 @@ let e = rect_i32::wrapping_add_assign(&mut a, &b);
 
 - 2D Geometry
   - [ ] `Rect`
-      - delta_x
-      delta y
-      delta max
-
-      len x
-      len y
-      len max
-
-
-      revisar testes delta e len
-
-
       - [ ] Area
   - [ ] `Line`
   - [ ] `Circle`

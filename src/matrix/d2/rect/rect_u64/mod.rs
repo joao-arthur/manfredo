@@ -18,12 +18,12 @@ pub use self::add::{checked_add, checked_add_assign, saturating_add, saturating_
 pub use self::contains_point::contains_point;
 pub use self::contains_rect::contains_rect;
 pub use self::deflate::{deflate, deflate_assign, try_deflate, try_deflate_assign};
-pub use self::delta::{delta_col, delta_row, max_delta};
+pub use self::delta::{delta_col, delta_max, delta_row};
 pub use self::inflate::{
     checked_inflate, checked_inflate_assign, saturating_inflate, saturating_inflate_assign, try_checked_inflate, try_checked_inflate_assign, try_saturating_inflate, try_saturating_inflate_assign,
     wrapping_inflate, wrapping_inflate_assign,
 };
-pub use self::len::{len_col, len_row, max_len};
+pub use self::len::{len_col, len_max, len_row};
 pub use self::resize::{
     checked_resize, checked_resize_assign, saturating_resize, saturating_resize_assign, try_checked_resize, try_checked_resize_assign, try_saturating_resize, try_saturating_resize_assign,
     try_wrapping_resize, try_wrapping_resize_assign, wrapping_resize, wrapping_resize_assign,

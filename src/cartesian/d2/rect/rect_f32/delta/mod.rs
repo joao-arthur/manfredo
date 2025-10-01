@@ -8,13 +8,13 @@ pub fn delta_y(r: &Rect) -> f32 {
     point_f32::delta_y(&r.min, &r.max)
 }
 
-pub fn max_delta(r: &Rect) -> f32 {
+pub fn delta_max(r: &Rect) -> f32 {
     delta_x(r).max(delta_y(r))
 }
 
 #[cfg(test)]
 mod tests {
-    use super::{delta_x, delta_y, max_delta};
+    use super::{delta_max, delta_x, delta_y};
     use crate::cartesian::d2::{
         point::point_f32::{MAX, MIN},
         rect::rect_f32::Rect,
@@ -37,34 +37,34 @@ mod tests {
     }
 
     #[test]
-    fn test_max_delta() {
-        assert_eq!(max_delta(&Rect::of(0.0, 5.0, 10.0, 10.0)), 10.0);
-        assert_eq!(max_delta(&Rect::of(-10.0, -10.0, -5.0, 0.0)), 10.0);
-        assert_eq!(max_delta(&Rect::of(-5.0, 0.0, 5.0, 5.0)), 10.0);
+    fn test_delta_max() {
+        assert_eq!(delta_max(&Rect::of(0.0, 5.0, 10.0, 10.0)), 10.0);
+        assert_eq!(delta_max(&Rect::of(-10.0, -10.0, -5.0, 0.0)), 10.0);
+        assert_eq!(delta_max(&Rect::of(-5.0, 0.0, 5.0, 5.0)), 10.0);
     }
 
     #[test]
-    fn max_delta_0() {
-        assert_eq!(max_delta(&Rect::of(0.0, 0.0, 0.0, 0.0)), 0.0);
-        assert_eq!(max_delta(&Rect::of(1.0, 1.0, 1.0, 1.0)), 0.0);
-        assert_eq!(max_delta(&Rect::of(-1.0, -1.0, -1.0, -1.0)), 0.0);
-        assert_eq!(max_delta(&Rect::of(5.0, 10.0, 5.0, 10.0)), 0.0);
+    fn delta_max_0() {
+        assert_eq!(delta_max(&Rect::of(0.0, 0.0, 0.0, 0.0)), 0.0);
+        assert_eq!(delta_max(&Rect::of(1.0, 1.0, 1.0, 1.0)), 0.0);
+        assert_eq!(delta_max(&Rect::of(-1.0, -1.0, -1.0, -1.0)), 0.0);
+        assert_eq!(delta_max(&Rect::of(5.0, 10.0, 5.0, 10.0)), 0.0);
     }
 
     #[test]
-    fn max_delta_1() {
-        assert_eq!(max_delta(&Rect::of(0.0, 0.0, 1.0, 1.0)), 1.0);
-        assert_eq!(max_delta(&Rect::of(5.0, 5.0, 6.0, 6.0)), 1.0);
-        assert_eq!(max_delta(&Rect::of(-6.0, -6.0, -5.0, -5.0)), 1.0);
-        assert_eq!(max_delta(&Rect::of(0.0, 0.0, 0.0, 1.0)), 1.0);
-        assert_eq!(max_delta(&Rect::of(5.0, 9.0, 5.0, 10.0)), 1.0);
+    fn delta_max_1() {
+        assert_eq!(delta_max(&Rect::of(0.0, 0.0, 1.0, 1.0)), 1.0);
+        assert_eq!(delta_max(&Rect::of(5.0, 5.0, 6.0, 6.0)), 1.0);
+        assert_eq!(delta_max(&Rect::of(-6.0, -6.0, -5.0, -5.0)), 1.0);
+        assert_eq!(delta_max(&Rect::of(0.0, 0.0, 0.0, 1.0)), 1.0);
+        assert_eq!(delta_max(&Rect::of(5.0, 9.0, 5.0, 10.0)), 1.0);
     }
 
     #[test]
-    fn max_delta_bounds() {
-        assert_eq!(max_delta(&Rect::of(MIN + 1.0, MIN + 2.0, 0.0, 0.0)), MAX);
-        assert_eq!(max_delta(&Rect::of(MIN + 2.0, MIN + 1.0, 0.0, 0.0)), MAX);
-        assert_eq!(max_delta(&Rect::of(0.0, 0.0, MAX - 1.0, MAX)), MAX);
-        assert_eq!(max_delta(&Rect::of(0.0, 0.0, MAX, MAX - 1.0)), MAX);
+    fn delta_max_bounds() {
+        assert_eq!(delta_max(&Rect::of(MIN + 1.0, MIN + 2.0, 0.0, 0.0)), MAX);
+        assert_eq!(delta_max(&Rect::of(MIN + 2.0, MIN + 1.0, 0.0, 0.0)), MAX);
+        assert_eq!(delta_max(&Rect::of(0.0, 0.0, MAX - 1.0, MAX)), MAX);
+        assert_eq!(delta_max(&Rect::of(0.0, 0.0, MAX, MAX - 1.0)), MAX);
     }
 }

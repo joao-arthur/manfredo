@@ -1,4 +1,4 @@
-use crate::cartesian::d2::point::point_f64::{MAX, MIN, Point};
+use crate::cartesian::d2::point::point_f64::Point;
 
 pub fn delta_x(p1: &Point, p2: &Point) -> f64 {
     p2.x - p1.x
@@ -15,7 +15,7 @@ pub fn delta(p1: &Point, p2: &Point) -> Point {
 #[cfg(test)]
 mod tests {
     use super::{delta, delta_x, delta_y};
-    use crate::cartesian::d2::point::point_f64::{MAX, MIN, Point};
+    use crate::cartesian::d2::point::point_f64::{MAX, Point};
 
     #[test]
     fn test_delta_x() {

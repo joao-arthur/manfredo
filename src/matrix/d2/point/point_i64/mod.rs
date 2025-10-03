@@ -1,4 +1,4 @@
-use super::{point_i8, point_i16, point_i32, point_u64};
+use super::{point_i8, point_i16, point_i32};
 
 mod add;
 mod delta;
@@ -53,7 +53,7 @@ impl std::fmt::Display for Point {
 #[cfg(test)]
 mod tests {
     use super::Point;
-    use crate::matrix::d2::point::{point_i8, point_i16, point_i32, point_u64};
+    use crate::matrix::d2::point::{point_i8, point_i16, point_i32};
 
     #[test]
     fn point_i64() {

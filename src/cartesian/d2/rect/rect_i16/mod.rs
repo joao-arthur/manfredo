@@ -63,15 +63,15 @@ impl Rect {
     }
 }
 
-impl From<rect_i8::Rect> for Rect {
-    fn from(r: rect_i8::Rect) -> Self {
-        Rect { min: point_i16::Point::from(r.min), max: point_i16::Point::from(r.max) }
-    }
-}
-
 impl std::fmt::Display for Rect {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "({}, {})", self.min, self.max)
+    }
+}
+
+impl From<rect_i8::Rect> for Rect {
+    fn from(r: rect_i8::Rect) -> Self {
+        Rect { min: point_i16::Point::from(r.min), max: point_i16::Point::from(r.max) }
     }
 }
 
@@ -80,18 +80,21 @@ mod tests {
     use super::Rect;
     use crate::cartesian::d2::{point::point_i16::Point, rect::rect_i8};
 
+    const MIN: i16 = i16::MIN;
+    const MAX: i16 = i16::MAX;
+
     #[test]
     fn rect() {
-        assert_eq!(Rect::largest(), Rect { min: Point { x: i16::MIN, y: i16::MIN }, max: Point { x: i16::MAX, y: i16::MAX } });
-        assert_eq!(Rect::min(), Rect { min: Point { x: i16::MIN, y: i16::MIN }, max: Point { x: i16::MIN, y: i16::MIN } });
-        assert_eq!(Rect::max(), Rect { min: Point { x: i16::MAX, y: i16::MAX }, max: Point { x: i16::MAX, y: i16::MAX } });
-        assert_eq!(Rect::of(i16::MIN, -1, 1, i16::MAX), Rect { min: Point { x: i16::MIN, y: -1 }, max: Point { x: 1, y: i16::MAX } });
+        assert_eq!(Rect::largest(), Rect { min: Point { x: MIN, y: MIN }, max: Point { x: MAX, y: MAX } });
+        assert_eq!(Rect::min(), Rect { min: Point { x: MIN, y: MIN }, max: Point { x: MIN, y: MIN } });
+        assert_eq!(Rect::max(), Rect { min: Point { x: MAX, y: MAX }, max: Point { x: MAX, y: MAX } });
+        assert_eq!(Rect::of(MIN, -1, 1, MAX), Rect { min: Point { x: MIN, y: -1 }, max: Point { x: 1, y: MAX } });
     }
 
     #[test]
     fn to_string() {
         assert_eq!(Rect::largest().to_string(), "((-32768, -32768), (32767, 32767))");
-        assert_eq!(Rect::of(i16::MIN, -0, 0, i16::MAX).to_string(), "((-32768, 0), (0, 32767))");
+        assert_eq!(Rect::of(MIN, -0, 0, MAX).to_string(), "((-32768, 0), (0, 32767))");
     }
 
     #[test]

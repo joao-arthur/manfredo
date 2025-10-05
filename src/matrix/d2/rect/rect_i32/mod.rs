@@ -66,6 +66,12 @@ impl Rect {
     }
 }
 
+impl std::fmt::Display for Rect {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "({}, {})", self.min, self.max)
+    }
+}
+
 impl From<rect_i8::Rect> for Rect {
     fn from(r: rect_i8::Rect) -> Self {
         Rect { min: point_i32::Point::from(r.min), max: point_i32::Point::from(r.max) }
@@ -78,12 +84,6 @@ impl From<rect_i16::Rect> for Rect {
     }
 }
 
-impl std::fmt::Display for Rect {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "({}, {})", self.min, self.max)
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::Rect;
@@ -92,18 +92,21 @@ mod tests {
         rect::{rect_i8, rect_i16},
     };
 
+    const MIN: i32 = i32::MIN;
+    const MAX: i32 = i32::MAX;
+
     #[test]
     fn rect() {
-        assert_eq!(Rect::largest(), Rect { min: Point { row: i32::MIN, col: i32::MIN }, max: Point { row: i32::MAX, col: i32::MAX } });
-        assert_eq!(Rect::min(), Rect { min: Point { row: i32::MIN, col: i32::MIN }, max: Point { row: i32::MIN, col: i32::MIN } });
-        assert_eq!(Rect::max(), Rect { min: Point { row: i32::MAX, col: i32::MAX }, max: Point { row: i32::MAX, col: i32::MAX } });
-        assert_eq!(Rect::of(i32::MIN, -1, 1, i32::MAX), Rect { min: Point { row: i32::MIN, col: -1 }, max: Point { row: 1, col: i32::MAX } });
+        assert_eq!(Rect::largest(), Rect { min: Point { row: MIN, col: MIN }, max: Point { row: MAX, col: MAX } });
+        assert_eq!(Rect::min(), Rect { min: Point { row: MIN, col: MIN }, max: Point { row: MIN, col: MIN } });
+        assert_eq!(Rect::max(), Rect { min: Point { row: MAX, col: MAX }, max: Point { row: MAX, col: MAX } });
+        assert_eq!(Rect::of(MIN, -1, 1, MAX), Rect { min: Point { row: MIN, col: -1 }, max: Point { row: 1, col: MAX } });
     }
 
     #[test]
     fn to_string() {
         assert_eq!(Rect::largest().to_string(), "((-2147483648, -2147483648), (2147483647, 2147483647))");
-        assert_eq!(Rect::of(i32::MIN, -0, 0, i32::MAX).to_string(), "((-2147483648, 0), (0, 2147483647))");
+        assert_eq!(Rect::of(MIN, -0, 0, MAX).to_string(), "((-2147483648, 0), (0, 2147483647))");
     }
 
     #[test]

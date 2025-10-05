@@ -26,6 +26,12 @@ impl Point {
     }
 }
 
+impl std::fmt::Display for Point {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "({}, {})", self.row, self.col)
+    }
+}
+
 impl From<point_u8::Point> for Point {
     fn from(p: point_u8::Point) -> Self {
         Point { row: p.row.into(), col: p.col.into() }
@@ -35,12 +41,6 @@ impl From<point_u8::Point> for Point {
 impl From<point_u16::Point> for Point {
     fn from(p: point_u16::Point) -> Self {
         Point { row: p.row.into(), col: p.col.into() }
-    }
-}
-
-impl std::fmt::Display for Point {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "({}, {})", self.row, self.col)
     }
 }
 

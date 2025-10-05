@@ -74,18 +74,20 @@ mod tests {
     use super::Rect;
     use crate::matrix::d2::point::point_u8::Point;
 
+    const MAX: u8 = u8::MAX;
+
     #[test]
     fn rect() {
-        assert_eq!(Rect::largest(), Rect { min: Point { row: 0, col: 0 }, max: Point { row: u8::MAX, col: u8::MAX } });
+        assert_eq!(Rect::largest(), Rect { min: Point { row: 0, col: 0 }, max: Point { row: MAX, col: MAX } });
         assert_eq!(Rect::min(), Rect { min: Point { row: 0, col: 0 }, max: Point { row: 0, col: 0 } });
-        assert_eq!(Rect::max(), Rect { min: Point { row: u8::MAX, col: u8::MAX }, max: Point { row: u8::MAX, col: u8::MAX } });
+        assert_eq!(Rect::max(), Rect { min: Point { row: MAX, col: MAX }, max: Point { row: MAX, col: MAX } });
         assert_eq!(Rect::of(0, 2, 4, 8), Rect { min: Point { row: 0, col: 2 }, max: Point { row: 4, col: 8 } });
     }
 
     #[test]
     fn to_string() {
+        assert_eq!(Rect::largest().to_string(), "((0, 0), (255, 255))");
         assert_eq!(Rect::of(0, 2, 4, 8).to_string(), "((0, 2), (4, 8))");
-        assert_eq!(Rect::of(u8::MAX, 0, 0, u8::MAX).to_string(), "((255, 0), (0, 255))");
     }
 
     #[test]

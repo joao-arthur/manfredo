@@ -74,18 +74,21 @@ mod tests {
     use super::Rect;
     use crate::matrix::d2::point::point_i8::Point;
 
+    const MIN: i8 = i8::MIN;
+    const MAX: i8 = i8::MAX;
+
     #[test]
     fn rect() {
-        assert_eq!(Rect::largest(), Rect { min: Point { row: i8::MIN, col: i8::MIN }, max: Point { row: i8::MAX, col: i8::MAX } });
-        assert_eq!(Rect::min(), Rect { min: Point { row: i8::MIN, col: i8::MIN }, max: Point { row: i8::MIN, col: i8::MIN } });
-        assert_eq!(Rect::max(), Rect { min: Point { row: i8::MAX, col: i8::MAX }, max: Point { row: i8::MAX, col: i8::MAX } });
-        assert_eq!(Rect::of(i8::MIN, -1, 1, i8::MAX), Rect { min: Point { row: i8::MIN, col: -1 }, max: Point { row: 1, col: i8::MAX } });
+        assert_eq!(Rect::largest(), Rect { min: Point { row: MIN, col: MIN }, max: Point { row: MAX, col: MAX } });
+        assert_eq!(Rect::min(), Rect { min: Point { row: MIN, col: MIN }, max: Point { row: MIN, col: MIN } });
+        assert_eq!(Rect::max(), Rect { min: Point { row: MAX, col: MAX }, max: Point { row: MAX, col: MAX } });
+        assert_eq!(Rect::of(MIN, -1, 1, MAX), Rect { min: Point { row: MIN, col: -1 }, max: Point { row: 1, col: MAX } });
     }
 
     #[test]
     fn to_string() {
         assert_eq!(Rect::largest().to_string(), "((-128, -128), (127, 127))");
-        assert_eq!(Rect::of(i8::MIN, -0, 0, i8::MAX).to_string(), "((-128, 0), (0, 127))");
+        assert_eq!(Rect::of(MIN, -0, 0, MAX).to_string(), "((-128, 0), (0, 127))");
     }
 
     #[test]

@@ -74,11 +74,13 @@ mod tests {
     use super::Rect;
     use crate::cartesian::d2::point::point_u8::Point;
 
+    const MAX: u8 = u8::MAX;
+
     #[test]
     fn rect() {
-        assert_eq!(Rect::largest(), Rect { min: Point { x: 0, y: 0 }, max: Point { x: u8::MAX, y: u8::MAX } });
+        assert_eq!(Rect::largest(), Rect { min: Point { x: 0, y: 0 }, max: Point { x: MAX, y: MAX } });
         assert_eq!(Rect::min(), Rect { min: Point { x: 0, y: 0 }, max: Point { x: 0, y: 0 } });
-        assert_eq!(Rect::max(), Rect { min: Point { x: u8::MAX, y: u8::MAX }, max: Point { x: u8::MAX, y: u8::MAX } });
+        assert_eq!(Rect::max(), Rect { min: Point { x: MAX, y: MAX }, max: Point { x: MAX, y: MAX } });
         assert_eq!(Rect::of(0, 2, 4, 8), Rect { min: Point { x: 0, y: 2 }, max: Point { x: 4, y: 8 } });
     }
 

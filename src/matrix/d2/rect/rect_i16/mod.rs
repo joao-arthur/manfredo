@@ -63,15 +63,15 @@ impl Rect {
     }
 }
 
-impl From<rect_i8::Rect> for Rect {
-    fn from(r: rect_i8::Rect) -> Self {
-        Rect { min: point_i16::Point::from(r.min), max: point_i16::Point::from(r.max) }
-    }
-}
-
 impl std::fmt::Display for Rect {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "({}, {})", self.min, self.max)
+    }
+}
+
+impl From<rect_i8::Rect> for Rect {
+    fn from(r: rect_i8::Rect) -> Self {
+        Rect { min: point_i16::Point::from(r.min), max: point_i16::Point::from(r.max) }
     }
 }
 
@@ -80,18 +80,21 @@ mod tests {
     use super::Rect;
     use crate::matrix::d2::{point::point_i16::Point, rect::rect_i8};
 
+    const MIN: i16 = i16::MIN;
+    const MAX: i16 = i16::MAX;
+
     #[test]
     fn rect() {
-        assert_eq!(Rect::largest(), Rect { min: Point { row: i16::MIN, col: i16::MIN }, max: Point { row: i16::MAX, col: i16::MAX } });
-        assert_eq!(Rect::min(), Rect { min: Point { row: i16::MIN, col: i16::MIN }, max: Point { row: i16::MIN, col: i16::MIN } });
-        assert_eq!(Rect::max(), Rect { min: Point { row: i16::MAX, col: i16::MAX }, max: Point { row: i16::MAX, col: i16::MAX } });
-        assert_eq!(Rect::of(i16::MIN, -1, 1, i16::MAX), Rect { min: Point { row: i16::MIN, col: -1 }, max: Point { row: 1, col: i16::MAX } });
+        assert_eq!(Rect::largest(), Rect { min: Point { row: MIN, col: MIN }, max: Point { row: MAX, col: MAX } });
+        assert_eq!(Rect::min(), Rect { min: Point { row: MIN, col: MIN }, max: Point { row: MIN, col: MIN } });
+        assert_eq!(Rect::max(), Rect { min: Point { row: MAX, col: MAX }, max: Point { row: MAX, col: MAX } });
+        assert_eq!(Rect::of(MIN, -1, 1, MAX), Rect { min: Point { row: MIN, col: -1 }, max: Point { row: 1, col: MAX } });
     }
 
     #[test]
     fn to_string() {
         assert_eq!(Rect::largest().to_string(), "((-32768, -32768), (32767, 32767))");
-        assert_eq!(Rect::of(i16::MIN, -0, 0, i16::MAX).to_string(), "((-32768, 0), (0, 32767))");
+        assert_eq!(Rect::of(MIN, -0, 0, MAX).to_string(), "((-32768, 0), (0, 32767))");
     }
 
     #[test]

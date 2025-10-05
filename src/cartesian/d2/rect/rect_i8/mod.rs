@@ -74,18 +74,21 @@ mod tests {
     use super::Rect;
     use crate::cartesian::d2::point::point_i8::Point;
 
+    const MIN: i8 = i8::MIN;
+    const MAX: i8 = i8::MAX;
+
     #[test]
     fn rect() {
-        assert_eq!(Rect::largest(), Rect { min: Point { x: i8::MIN, y: i8::MIN }, max: Point { x: i8::MAX, y: i8::MAX } });
-        assert_eq!(Rect::min(), Rect { min: Point { x: i8::MIN, y: i8::MIN }, max: Point { x: i8::MIN, y: i8::MIN } });
-        assert_eq!(Rect::max(), Rect { min: Point { x: i8::MAX, y: i8::MAX }, max: Point { x: i8::MAX, y: i8::MAX } });
-        assert_eq!(Rect::of(i8::MIN, -1, 1, i8::MAX), Rect { min: Point { x: i8::MIN, y: -1 }, max: Point { x: 1, y: i8::MAX } });
+        assert_eq!(Rect::largest(), Rect { min: Point { x: MIN, y: MIN }, max: Point { x: MAX, y: MAX } });
+        assert_eq!(Rect::min(), Rect { min: Point { x: MIN, y: MIN }, max: Point { x: MIN, y: MIN } });
+        assert_eq!(Rect::max(), Rect { min: Point { x: MAX, y: MAX }, max: Point { x: MAX, y: MAX } });
+        assert_eq!(Rect::of(MIN, -1, 1, MAX), Rect { min: Point { x: MIN, y: -1 }, max: Point { x: 1, y: MAX } });
     }
 
     #[test]
     fn to_string() {
         assert_eq!(Rect::largest().to_string(), "((-128, -128), (127, 127))");
-        assert_eq!(Rect::of(i8::MIN, -0, 0, i8::MAX).to_string(), "((-128, 0), (0, 127))");
+        assert_eq!(Rect::of(MIN, -0, 0, MAX).to_string(), "((-128, 0), (0, 127))");
     }
 
     #[test]

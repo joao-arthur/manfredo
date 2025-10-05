@@ -87,9 +87,6 @@ let e = rect_i32::wrapping_add_assign(&mut a, &b);
 ## 🚧 Roadmap
 
 - 2D Geometry
-  - [ ] `Rect`
-      - [ ] Area
-  - [ ] `Line`
   - [ ] `Circle`
     - [ ] Area
   - [ ] `Point`

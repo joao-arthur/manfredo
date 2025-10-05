@@ -66,6 +66,12 @@ impl Rect {
     }
 }
 
+impl std::fmt::Display for Rect {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "({}, {})", self.min, self.max)
+    }
+}
+
 impl From<rect_i8::Rect> for Rect {
     fn from(r: rect_i8::Rect) -> Self {
         Rect { min: point_i64::Point::from(r.min), max: point_i64::Point::from(r.max) }
@@ -84,12 +90,6 @@ impl From<rect_i32::Rect> for Rect {
     }
 }
 
-impl std::fmt::Display for Rect {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "({}, {})", self.min, self.max)
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::Rect;
@@ -98,18 +98,21 @@ mod tests {
         rect::{rect_i8, rect_i16, rect_i32},
     };
 
+    const MIN: i64 = i64::MIN;
+    const MAX: i64 = i64::MAX;
+
     #[test]
     fn rect() {
-        assert_eq!(Rect::largest(), Rect { min: Point { row: i64::MIN, col: i64::MIN }, max: Point { row: i64::MAX, col: i64::MAX } });
-        assert_eq!(Rect::min(), Rect { min: Point { row: i64::MIN, col: i64::MIN }, max: Point { row: i64::MIN, col: i64::MIN } });
-        assert_eq!(Rect::max(), Rect { min: Point { row: i64::MAX, col: i64::MAX }, max: Point { row: i64::MAX, col: i64::MAX } });
-        assert_eq!(Rect::of(i64::MIN, -1, 1, i64::MAX), Rect { min: Point { row: i64::MIN, col: -1 }, max: Point { row: 1, col: i64::MAX } });
+        assert_eq!(Rect::largest(), Rect { min: Point { row: MIN, col: MIN }, max: Point { row: MAX, col: MAX } });
+        assert_eq!(Rect::min(), Rect { min: Point { row: MIN, col: MIN }, max: Point { row: MIN, col: MIN } });
+        assert_eq!(Rect::max(), Rect { min: Point { row: MAX, col: MAX }, max: Point { row: MAX, col: MAX } });
+        assert_eq!(Rect::of(MIN, -1, 1, MAX), Rect { min: Point { row: MIN, col: -1 }, max: Point { row: 1, col: MAX } });
     }
 
     #[test]
     fn to_string() {
         assert_eq!(Rect::largest().to_string(), "((-9223372036854775808, -9223372036854775808), (9223372036854775807, 9223372036854775807))");
-        assert_eq!(Rect::of(i64::MIN, -0, 0, i64::MAX).to_string(), "((-9223372036854775808, 0), (0, 9223372036854775807))");
+        assert_eq!(Rect::of(MIN, -0, 0, MAX).to_string(), "((-9223372036854775808, 0), (0, 9223372036854775807))");
     }
 
     #[test]

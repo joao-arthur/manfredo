@@ -97,15 +97,15 @@ impl Rect {
     }
 }
 
-impl From<rect_f32::Rect> for Rect {
-    fn from(r: rect_f32::Rect) -> Self {
-        Rect { min: point_f64::Point::from(r.min), max: point_f64::Point::from(r.max) }
-    }
-}
-
 impl std::fmt::Display for Rect {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "({}, {})", self.min, self.max)
+    }
+}
+
+impl From<rect_f32::Rect> for Rect {
+    fn from(r: rect_f32::Rect) -> Self {
+        Rect { min: point_f64::Point::from(r.min), max: point_f64::Point::from(r.max) }
     }
 }
 

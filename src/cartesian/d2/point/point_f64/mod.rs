@@ -29,15 +29,15 @@ impl Point {
     }
 }
 
-impl From<point_f32::Point> for Point {
-    fn from(p: point_f32::Point) -> Self {
-        Point { x: p.x.into(), y: p.y.into() }
-    }
-}
-
 impl std::fmt::Display for Point {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "({}, {})", self.x, self.y)
+    }
+}
+
+impl From<point_f32::Point> for Point {
+    fn from(p: point_f32::Point) -> Self {
+        Point { x: p.x.into(), y: p.y.into() }
     }
 }
 

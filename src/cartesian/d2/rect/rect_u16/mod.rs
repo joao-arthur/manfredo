@@ -63,15 +63,15 @@ impl Rect {
     }
 }
 
-impl From<rect_u8::Rect> for Rect {
-    fn from(r: rect_u8::Rect) -> Self {
-        Rect { min: point_u16::Point::from(r.min), max: point_u16::Point::from(r.max) }
-    }
-}
-
 impl std::fmt::Display for Rect {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "({}, {})", self.min, self.max)
+    }
+}
+
+impl From<rect_u8::Rect> for Rect {
+    fn from(r: rect_u8::Rect) -> Self {
+        Rect { min: point_u16::Point::from(r.min), max: point_u16::Point::from(r.max) }
     }
 }
 
@@ -80,18 +80,20 @@ mod tests {
     use super::Rect;
     use crate::cartesian::d2::{point::point_u16::Point, rect::rect_u8};
 
+    const MAX: u16 = u16::MAX;
+
     #[test]
     fn rect() {
-        assert_eq!(Rect::largest(), Rect { min: Point { x: 0, y: 0 }, max: Point { x: u16::MAX, y: u16::MAX } });
+        assert_eq!(Rect::largest(), Rect { min: Point { x: 0, y: 0 }, max: Point { x: MAX, y: MAX } });
         assert_eq!(Rect::min(), Rect { min: Point { x: 0, y: 0 }, max: Point { x: 0, y: 0 } });
-        assert_eq!(Rect::max(), Rect { min: Point { x: u16::MAX, y: u16::MAX }, max: Point { x: u16::MAX, y: u16::MAX } });
+        assert_eq!(Rect::max(), Rect { min: Point { x: MAX, y: MAX }, max: Point { x: MAX, y: MAX } });
         assert_eq!(Rect::of(16, 32, 16, 32), Rect { min: Point { x: 16, y: 32 }, max: Point { x: 16, y: 32 } });
     }
 
     #[test]
     fn to_string() {
+        assert_eq!(Rect::largest().to_string(), "((0, 0), (65535, 65535))");
         assert_eq!(Rect::of(16, 32, 16, 32).to_string(), "((16, 32), (16, 32))");
-        assert_eq!(Rect::of(u16::MAX, 0, 0, u16::MAX).to_string(), "((65535, 0), (0, 65535))");
     }
 
     #[test]

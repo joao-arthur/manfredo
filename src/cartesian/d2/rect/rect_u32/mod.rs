@@ -66,6 +66,12 @@ impl Rect {
     }
 }
 
+impl std::fmt::Display for Rect {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "({}, {})", self.min, self.max)
+    }
+}
+
 impl From<rect_u8::Rect> for Rect {
     fn from(r: rect_u8::Rect) -> Self {
         Rect { min: point_u32::Point::from(r.min), max: point_u32::Point::from(r.max) }
@@ -78,12 +84,6 @@ impl From<rect_u16::Rect> for Rect {
     }
 }
 
-impl std::fmt::Display for Rect {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "({}, {})", self.min, self.max)
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::Rect;
@@ -92,18 +92,20 @@ mod tests {
         rect::{rect_u8, rect_u16},
     };
 
+    const MAX: u32 = u32::MAX;
+
     #[test]
     fn rect() {
-        assert_eq!(Rect::largest(), Rect { min: Point { x: 0, y: 0 }, max: Point { x: u32::MAX, y: u32::MAX } });
+        assert_eq!(Rect::largest(), Rect { min: Point { x: 0, y: 0 }, max: Point { x: MAX, y: MAX } });
         assert_eq!(Rect::min(), Rect { min: Point { x: 0, y: 0 }, max: Point { x: 0, y: 0 } });
-        assert_eq!(Rect::max(), Rect { min: Point { x: u32::MAX, y: u32::MAX }, max: Point { x: u32::MAX, y: u32::MAX } });
+        assert_eq!(Rect::max(), Rect { min: Point { x: MAX, y: MAX }, max: Point { x: MAX, y: MAX } });
         assert_eq!(Rect::of(256, 512, 1024, 2048), Rect { min: Point { x: 256, y: 512 }, max: Point { x: 1024, y: 2048 } });
     }
 
     #[test]
     fn to_string() {
+        assert_eq!(Rect::largest().to_string(), "((0, 0), (4294967295, 4294967295))");
         assert_eq!(Rect::of(256, 512, 1024, 2048).to_string(), "((256, 512), (1024, 2048))");
-        assert_eq!(Rect::of(u32::MAX, 0, 0, u32::MAX).to_string(), "((4294967295, 0), (0, 4294967295))");
     }
 
     #[test]

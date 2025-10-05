@@ -1,6 +1,7 @@
 use crate::cartesian::d2::{point::point_f64, rect::rect_f32};
 
 mod add;
+mod area;
 mod contains_point;
 mod contains_rect;
 mod deflate;
@@ -11,6 +12,7 @@ mod resize;
 mod translate;
 
 pub use self::add::{checked_add, checked_add_assign, saturating_add, saturating_add_assign, try_checked_add, try_checked_add_assign, wrapping_add, wrapping_add_assign};
+pub use self::area::area;
 pub use self::contains_point::contains_point;
 pub use self::contains_rect::contains_rect;
 pub use self::deflate::{deflate, deflate_assign, try_deflate, try_deflate_assign};
@@ -70,6 +72,14 @@ impl Rect {
         Rect { min: point_f64::Point::min(), max: point_f64::Point::max() }
     }
 
+    pub fn largest_min() -> Self {
+        Rect { min: point_f64::Point::min(), max: point_f64::Point::of(0.0, 0.0) }
+    }
+
+    pub fn largest_max() -> Self {
+        Rect { min: point_f64::Point::of(0.0, 0.0), max: point_f64::Point::max() }
+    }
+
     pub fn min() -> Self {
         Rect { min: point_f64::Point::min(), max: point_f64::Point::min() }
     }
@@ -113,6 +123,8 @@ mod tests {
     #[test]
     fn rect() {
         assert_eq!(Rect::largest(), Rect { min: Point { x: MIN, y: MIN }, max: Point { x: MAX, y: MAX } });
+        assert_eq!(Rect::largest_min(), Rect { min: Point { x: MIN, y: MIN }, max: Point { x: 0.0, y: 0.0 } });
+        assert_eq!(Rect::largest_max(), Rect { min: Point { x: 0.0, y: 0.0 }, max: Point { x: MAX, y: MAX } });
         assert_eq!(Rect::min(), Rect { min: Point { x: MIN, y: MIN }, max: Point { x: MIN, y: MIN } });
         assert_eq!(Rect::max(), Rect { min: Point { x: MAX, y: MAX }, max: Point { x: MAX, y: MAX } });
         assert_eq!(Rect::of(MIN, -0.0, 0.0, MAX), Rect { min: Point { x: MIN, y: -0.0 }, max: Point { x: 0.0, y: MAX } });
@@ -121,6 +133,8 @@ mod tests {
     #[test]
     fn to_string() {
         assert_eq!(Rect::largest().to_string(), "((-9007199254740992, -9007199254740992), (9007199254740991, 9007199254740991))");
+        assert_eq!(Rect::largest_min().to_string(), "((-9007199254740992, -9007199254740992), (0, 0))");
+        assert_eq!(Rect::largest_max().to_string(), "((0, 0), (9007199254740991, 9007199254740991))");
         assert_eq!(Rect::of(MIN, -0.0, 0.0, MAX).to_string(), "((-9007199254740992, -0), (0, 9007199254740991))");
     }
 

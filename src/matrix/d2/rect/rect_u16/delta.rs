@@ -18,7 +18,7 @@ pub fn delta_max(r: &Rect) -> u16 {
 
 #[cfg(test)]
 mod tests {
-    use super::{delta_col, delta_min, delta_max, delta_row};
+    use super::{delta_col, delta_max, delta_min, delta_row};
     use crate::matrix::d2::rect::rect_u16::Rect;
 
     const MAX: u16 = u16::MAX;
@@ -40,7 +40,7 @@ mod tests {
         assert_eq!(delta_min(&Rect::of(0, 5, 10, 10)), 5);
         assert_eq!(delta_min(&Rect::of(5, 0, 9, 9)), 4);
     }
- 
+
     #[test]
     fn delta_min_0() {
         assert_eq!(delta_min(&Rect::of(4, 5, 5, 5)), 0);

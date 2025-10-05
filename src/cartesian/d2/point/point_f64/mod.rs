@@ -47,16 +47,10 @@ mod tests {
     use crate::cartesian::d2::point::point_f32;
 
     #[test]
-    fn point_f64() {
+    fn point() {
         assert_eq!(Point::of(MIN, MAX), Point { x: MIN, y: MAX });
         assert_eq!(Point::min(), Point { x: MIN, y: MIN });
         assert_eq!(Point::max(), Point { x: MAX, y: MAX });
-    }
-
-    #[test]
-    fn from() {
-        assert_eq!(Point::from(point_f32::Point::min()), Point { x: -16777216.0, y: -16777216.0 });
-        assert_eq!(Point::from(point_f32::Point::max()), Point { x: 16777215.0, y: 16777215.0 });
     }
 
     #[test]
@@ -64,5 +58,11 @@ mod tests {
         assert_eq!(Point::of(MIN, MAX).to_string(), "(-9007199254740992, 9007199254740991)");
         assert_eq!(Point::min().to_string(), "(-9007199254740992, -9007199254740992)");
         assert_eq!(Point::max().to_string(), "(9007199254740991, 9007199254740991)");
+    }
+
+    #[test]
+    fn from() {
+        assert_eq!(Point::from(point_f32::Point::min()), Point { x: -16777216.0, y: -16777216.0 });
+        assert_eq!(Point::from(point_f32::Point::max()), Point { x: 16777215.0, y: 16777215.0 });
     }
 }

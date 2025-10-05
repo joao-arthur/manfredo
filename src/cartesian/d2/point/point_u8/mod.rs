@@ -35,7 +35,7 @@ mod tests {
     use super::Point;
 
     #[test]
-    fn point_u8() {
+    fn point() {
         assert_eq!(Point::of(0, u8::MAX), Point { x: 0, y: u8::MAX });
         assert_eq!(Point::min(), Point { x: 0, y: 0 });
         assert_eq!(Point::max(), Point { x: u8::MAX, y: u8::MAX });

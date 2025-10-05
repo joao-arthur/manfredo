@@ -44,16 +44,10 @@ mod tests {
     use crate::matrix::d2::point::point_u8;
 
     #[test]
-    fn point_u16() {
+    fn point() {
         assert_eq!(Point::of(0, u16::MAX), Point { row: 0, col: u16::MAX });
         assert_eq!(Point::min(), Point { row: 0, col: 0 });
         assert_eq!(Point::max(), Point { row: u16::MAX, col: u16::MAX });
-    }
-
-    #[test]
-    fn from() {
-        assert_eq!(Point::from(point_u8::Point::min()), Point { row: u8::MIN.into(), col: u8::MIN.into() });
-        assert_eq!(Point::from(point_u8::Point::max()), Point { row: u8::MAX.into(), col: u8::MAX.into() });
     }
 
     #[test]
@@ -61,5 +55,11 @@ mod tests {
         assert_eq!(Point::of(0, u16::MAX).to_string(), "(0, 65535)");
         assert_eq!(Point::min().to_string(), "(0, 0)");
         assert_eq!(Point::max().to_string(), "(65535, 65535)");
+    }
+
+    #[test]
+    fn from() {
+        assert_eq!(Point::from(point_u8::Point::min()), Point { row: u8::MIN.into(), col: u8::MIN.into() });
+        assert_eq!(Point::from(point_u8::Point::max()), Point { row: u8::MAX.into(), col: u8::MAX.into() });
     }
 }

@@ -15,7 +15,7 @@ pub use self::add::{checked_add, checked_add_assign, saturating_add, saturating_
 pub use self::contains_point::contains_point;
 pub use self::contains_rect::contains_rect;
 pub use self::deflate::{deflate, deflate_assign, try_deflate, try_deflate_assign};
-pub use self::delta::{delta_col, delta_max, delta_row};
+pub use self::delta::{delta_col, delta_max, delta_min, delta_row};
 pub use self::inflate::{
     checked_inflate, checked_inflate_assign, saturating_inflate, saturating_inflate_assign, try_checked_inflate, try_checked_inflate_assign, try_saturating_inflate, try_saturating_inflate_assign,
     wrapping_inflate, wrapping_inflate_assign,
@@ -79,7 +79,7 @@ mod tests {
     use crate::matrix::d2::{point::point_i16::Point, rect::rect_i8};
 
     #[test]
-    fn rect_i16() {
+    fn rect() {
         assert_eq!(Rect::largest(), Rect { min: Point { row: i16::MIN, col: i16::MIN }, max: Point { row: i16::MAX, col: i16::MAX } });
         assert_eq!(Rect::min(), Rect { min: Point { row: i16::MIN, col: i16::MIN }, max: Point { row: i16::MIN, col: i16::MIN } });
         assert_eq!(Rect::max(), Rect { min: Point { row: i16::MAX, col: i16::MAX }, max: Point { row: i16::MAX, col: i16::MAX } });

@@ -38,10 +38,14 @@ mod tests {
     use super::{MAX, MIN, Point};
 
     #[test]
-    fn point_f32() {
+    fn point() {
         assert_eq!(Point::of(MIN, MAX), Point { x: MIN, y: MAX });
         assert_eq!(Point::min(), Point { x: MIN, y: MIN });
         assert_eq!(Point::max(), Point { x: MAX, y: MAX });
+    }
+
+    #[test]
+    fn to_string() {
         assert_eq!(Point::of(MIN, MAX).to_string(), "(-16777216, 16777215)");
         assert_eq!(Point::min().to_string(), "(-16777216, -16777216)");
         assert_eq!(Point::max().to_string(), "(16777215, 16777215)");

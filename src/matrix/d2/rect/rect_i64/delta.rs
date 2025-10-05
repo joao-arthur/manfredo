@@ -18,7 +18,7 @@ pub fn delta_max(r: &Rect) -> u64 {
 
 #[cfg(test)]
 mod tests {
-    use super::{delta_col, delta_min, delta_max, delta_row};
+    use super::{delta_col, delta_max, delta_min, delta_row};
     use crate::matrix::d2::rect::rect_i64::Rect;
 
     const MIN: i64 = i64::MIN;

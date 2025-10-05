@@ -44,16 +44,10 @@ mod tests {
     use crate::cartesian::d2::point::point_i8;
 
     #[test]
-    fn point_i16() {
+    fn point() {
         assert_eq!(Point::of(i16::MIN, i16::MAX), Point { x: i16::MIN, y: i16::MAX });
         assert_eq!(Point::min(), Point { x: i16::MIN, y: i16::MIN });
         assert_eq!(Point::max(), Point { x: i16::MAX, y: i16::MAX });
-    }
-
-    #[test]
-    fn from() {
-        assert_eq!(Point::from(point_i8::Point::min()), Point { x: i8::MIN.into(), y: i8::MIN.into() });
-        assert_eq!(Point::from(point_i8::Point::max()), Point { x: i8::MAX.into(), y: i8::MAX.into() });
     }
 
     #[test]
@@ -61,5 +55,11 @@ mod tests {
         assert_eq!(Point::of(i16::MIN, i16::MAX).to_string(), "(-32768, 32767)");
         assert_eq!(Point::min().to_string(), "(-32768, -32768)");
         assert_eq!(Point::max().to_string(), "(32767, 32767)");
+    }
+
+    #[test]
+    fn from() {
+        assert_eq!(Point::from(point_i8::Point::min()), Point { x: i8::MIN.into(), y: i8::MIN.into() });
+        assert_eq!(Point::from(point_i8::Point::max()), Point { x: i8::MAX.into(), y: i8::MAX.into() });
     }
 }

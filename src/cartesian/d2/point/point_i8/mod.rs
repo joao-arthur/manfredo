@@ -35,10 +35,14 @@ mod tests {
     use super::Point;
 
     #[test]
-    fn point_i8() {
+    fn point() {
         assert_eq!(Point::of(i8::MIN, i8::MAX), Point { x: i8::MIN, y: i8::MAX });
         assert_eq!(Point::min(), Point { x: i8::MIN, y: i8::MIN });
         assert_eq!(Point::max(), Point { x: i8::MAX, y: i8::MAX });
+    }
+
+    #[test]
+    fn to_string() {
         assert_eq!(Point::of(i8::MIN, i8::MAX).to_string(), "(-128, 127)");
         assert_eq!(Point::min().to_string(), "(-128, -128)");
         assert_eq!(Point::max().to_string(), "(127, 127)");

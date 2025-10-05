@@ -56,10 +56,17 @@ mod tests {
     use crate::cartesian::d2::point::{point_u8, point_u16, point_u32};
 
     #[test]
-    fn point_u64() {
+    fn point() {
         assert_eq!(Point::of(0, u64::MAX), Point { x: 0, y: u64::MAX });
         assert_eq!(Point::min(), Point { x: 0, y: 0 });
         assert_eq!(Point::max(), Point { x: u64::MAX, y: u64::MAX });
+    }
+
+    #[test]
+    fn to_string() {
+        assert_eq!(Point::of(0, u64::MAX).to_string(), "(0, 18446744073709551615)");
+        assert_eq!(Point::min().to_string(), "(0, 0)");
+        assert_eq!(Point::max().to_string(), "(18446744073709551615, 18446744073709551615)");
     }
 
     #[test]
@@ -70,12 +77,5 @@ mod tests {
         assert_eq!(Point::from(point_u16::Point::max()), Point { x: u16::MAX.into(), y: u16::MAX.into() });
         assert_eq!(Point::from(point_u32::Point::min()), Point { x: u32::MIN.into(), y: u32::MIN.into() });
         assert_eq!(Point::from(point_u32::Point::max()), Point { x: u32::MAX.into(), y: u32::MAX.into() });
-    }
-
-    #[test]
-    fn to_string() {
-        assert_eq!(Point::of(0, u64::MAX).to_string(), "(0, 18446744073709551615)");
-        assert_eq!(Point::min().to_string(), "(0, 0)");
-        assert_eq!(Point::max().to_string(), "(18446744073709551615, 18446744073709551615)");
     }
 }

@@ -56,10 +56,17 @@ mod tests {
     use crate::matrix::d2::point::{point_i8, point_i16, point_i32};
 
     #[test]
-    fn point_i64() {
+    fn point() {
         assert_eq!(Point::of(i64::MIN, i64::MAX), Point { row: i64::MIN, col: i64::MAX });
         assert_eq!(Point::min(), Point { row: i64::MIN, col: i64::MIN });
         assert_eq!(Point::max(), Point { row: i64::MAX, col: i64::MAX });
+    }
+
+    #[test]
+    fn to_string() {
+        assert_eq!(Point::of(i64::MIN, i64::MAX).to_string(), "(-9223372036854775808, 9223372036854775807)");
+        assert_eq!(Point::min().to_string(), "(-9223372036854775808, -9223372036854775808)");
+        assert_eq!(Point::max().to_string(), "(9223372036854775807, 9223372036854775807)");
     }
 
     #[test]
@@ -70,12 +77,5 @@ mod tests {
         assert_eq!(Point::from(point_i16::Point::max()), Point { row: i16::MAX.into(), col: i16::MAX.into() });
         assert_eq!(Point::from(point_i32::Point::min()), Point { row: i32::MIN.into(), col: i32::MIN.into() });
         assert_eq!(Point::from(point_i32::Point::max()), Point { row: i32::MAX.into(), col: i32::MAX.into() });
-    }
-
-    #[test]
-    fn to_string() {
-        assert_eq!(Point::of(i64::MIN, i64::MAX).to_string(), "(-9223372036854775808, 9223372036854775807)");
-        assert_eq!(Point::min().to_string(), "(-9223372036854775808, -9223372036854775808)");
-        assert_eq!(Point::max().to_string(), "(9223372036854775807, 9223372036854775807)");
     }
 }

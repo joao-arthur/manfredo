@@ -40,7 +40,7 @@ mod tests {
         assert_eq!(delta_min(&Rect::of(0, 5, 10, 10)), 5);
         assert_eq!(delta_min(&Rect::of(5, 0, 9, 9)), 4);
     }
- 
+
     #[test]
     fn delta_min_0() {
         assert_eq!(delta_min(&Rect::of(4, 5, 5, 5)), 0);

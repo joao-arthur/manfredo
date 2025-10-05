@@ -43,20 +43,22 @@ mod tests {
  
     #[test]
     fn delta_min_0() {
-        assert_eq!(delta_min(&Rect::of(0, 0, 0, 1)), 0);
-        assert_eq!(delta_min(&Rect::of(1, 1, 2, 1)), 0);
-        assert_eq!(delta_min(&Rect::of(5, 10, 5, 10)), 0);
+        assert_eq!(delta_min(&Rect::of(4, 5, 5, 5)), 0);
+        assert_eq!(delta_min(&Rect::of(5, 4, 5, 5)), 0);
+        assert_eq!(delta_min(&Rect::of(5, 5, 6, 5)), 0);
+        assert_eq!(delta_min(&Rect::of(5, 5, 5, 6)), 0);
     }
 
     #[test]
     fn delta_min_1() {
-        assert_eq!(delta_min(&Rect::of(0, 0, 10, 1)), 1);
+        assert_eq!(delta_min(&Rect::of(0, 5, 6, 6)), 1);
+        assert_eq!(delta_min(&Rect::of(5, 0, 6, 6)), 1);
+        assert_eq!(delta_min(&Rect::of(5, 5, 10, 6)), 1);
         assert_eq!(delta_min(&Rect::of(5, 5, 6, 10)), 1);
     }
 
     #[test]
     fn delta_min_bounds() {
-        assert_eq!(delta_min(&Rect::of(0, 0, MAX, MAX)), MAX);
         assert_eq!(delta_min(&Rect::of(0, 0, MAX, MAX)), MAX);
     }
 
@@ -75,15 +77,17 @@ mod tests {
 
     #[test]
     fn delta_max_1() {
-        assert_eq!(delta_max(&Rect::of(0, 0, 1, 1)), 1);
-        assert_eq!(delta_max(&Rect::of(5, 5, 6, 6)), 1);
-        assert_eq!(delta_max(&Rect::of(0, 0, 0, 1)), 1);
-        assert_eq!(delta_max(&Rect::of(5, 9, 5, 10)), 1);
+        assert_eq!(delta_max(&Rect::of(4, 5, 5, 5)), 1);
+        assert_eq!(delta_max(&Rect::of(5, 4, 5, 5)), 1);
+        assert_eq!(delta_max(&Rect::of(5, 5, 6, 5)), 1);
+        assert_eq!(delta_max(&Rect::of(5, 5, 5, 6)), 1);
     }
 
     #[test]
     fn delta_max_bounds() {
-        assert_eq!(delta_max(&Rect::of(0, 0, MAX, MAX - 1)), MAX);
+        assert_eq!(delta_max(&Rect::of(1, 0, MAX, MAX)), MAX);
+        assert_eq!(delta_max(&Rect::of(0, 1, MAX, MAX)), MAX);
         assert_eq!(delta_max(&Rect::of(0, 0, MAX - 1, MAX)), MAX);
+        assert_eq!(delta_max(&Rect::of(0, 0, MAX, MAX - 1)), MAX);
     }
 }

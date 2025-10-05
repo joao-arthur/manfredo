@@ -37,15 +37,40 @@ mod tests {
     }
 
     #[test]
+    fn test_delta_min() {
+        assert_eq!(delta_min(&Rect::of(0, -5, 5, 5)), 5);
+        assert_eq!(delta_min(&Rect::of(-5, 0, 4, 4)), 4);
+    }
+
+    #[test]
+    fn delta_min_0() {
+        assert_eq!(delta_min(&Rect::of(-1, 0, 0, 0)), 0);
+        assert_eq!(delta_min(&Rect::of(0, -1, 0, 0)), 0);
+        assert_eq!(delta_min(&Rect::of(0, 0, 1, 0)), 0);
+        assert_eq!(delta_min(&Rect::of(0, 0, 0, 1)), 0);
+    }
+
+    #[test]
+    fn delta_min_1() {
+        assert_eq!(delta_min(&Rect::of(4, -5, 5, 5)), 1);
+        assert_eq!(delta_min(&Rect::of(-5, 4, 5, 5)), 1);
+        assert_eq!(delta_min(&Rect::of(-5, -5, -4, 5)), 1);
+        assert_eq!(delta_min(&Rect::of(-5, -5, 5, -4)), 1);
+    }
+
+    #[test]
+    fn delta_min_bounds() {
+        assert_eq!(delta_min(&Rect::of(MIN, MIN, MAX, MAX)), u16::MAX);
+    }
+
+    #[test]
     fn test_delta_max() {
-        assert_eq!(delta_max(&Rect::of(0, 5, 10, 10)), 10);
-        assert_eq!(delta_max(&Rect::of(-10, -10, -5, 0)), 10);
-        assert_eq!(delta_max(&Rect::of(-5, 0, 5, 5)), 10);
+        assert_eq!(delta_max(&Rect::of(0, -5, 5, 5)), 10);
+        assert_eq!(delta_max(&Rect::of(-5, 0, 4, 4)), 9);
     }
 
     #[test]
     fn delta_max_0() {
-        assert_eq!(delta_max(&Rect::of(0, 0, 0, 0)), 0);
         assert_eq!(delta_max(&Rect::of(1, 1, 1, 1)), 0);
         assert_eq!(delta_max(&Rect::of(-1, -1, -1, -1)), 0);
         assert_eq!(delta_max(&Rect::of(5, 10, 5, 10)), 0);
@@ -53,11 +78,10 @@ mod tests {
 
     #[test]
     fn delta_max_1() {
-        assert_eq!(delta_max(&Rect::of(0, 0, 1, 1)), 1);
-        assert_eq!(delta_max(&Rect::of(5, 5, 6, 6)), 1);
-        assert_eq!(delta_max(&Rect::of(-6, -6, -5, -5)), 1);
+        assert_eq!(delta_max(&Rect::of(-1, 0, 0, 0)), 1);
+        assert_eq!(delta_max(&Rect::of(0, -1, 0, 0)), 1);
+        assert_eq!(delta_max(&Rect::of(0, 0, 1, 0)), 1);
         assert_eq!(delta_max(&Rect::of(0, 0, 0, 1)), 1);
-        assert_eq!(delta_max(&Rect::of(5, 9, 5, 10)), 1);
     }
 
     #[test]

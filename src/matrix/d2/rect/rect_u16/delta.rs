@@ -8,25 +8,56 @@ pub fn delta_col(r: &Rect) -> u16 {
     point_u16::delta_col(&r.min, &r.max)
 }
 
+pub fn delta_min(r: &Rect) -> u16 {
+    std::cmp::min(delta_row(r), delta_col(r))
+}
+
 pub fn delta_max(r: &Rect) -> u16 {
     std::cmp::max(delta_row(r), delta_col(r))
 }
 
 #[cfg(test)]
 mod tests {
-    use super::{delta_col, delta_max, delta_row};
+    use super::{delta_col, delta_min, delta_max, delta_row};
     use crate::matrix::d2::rect::rect_u16::Rect;
+
+    const MAX: u16 = u16::MAX;
 
     #[test]
     fn test_delta_row() {
         assert_eq!(delta_row(&Rect::of(0, 0, 0, 0)), 0);
-        assert_eq!(delta_row(&Rect::of(0, 0, u16::MAX, 0)), u16::MAX);
+        assert_eq!(delta_row(&Rect::of(0, 0, MAX, 0)), MAX);
     }
 
     #[test]
     fn test_delta_col() {
         assert_eq!(delta_col(&Rect::of(0, 0, 0, 0)), 0);
-        assert_eq!(delta_col(&Rect::of(0, 0, 0, u16::MAX)), u16::MAX);
+        assert_eq!(delta_col(&Rect::of(0, 0, 0, MAX)), MAX);
+    }
+
+    #[test]
+    fn test_delta_min() {
+        assert_eq!(delta_min(&Rect::of(0, 5, 10, 10)), 5);
+        assert_eq!(delta_min(&Rect::of(5, 0, 9, 9)), 4);
+    }
+ 
+    #[test]
+    fn delta_min_0() {
+        assert_eq!(delta_min(&Rect::of(0, 0, 0, 1)), 0);
+        assert_eq!(delta_min(&Rect::of(1, 1, 2, 1)), 0);
+        assert_eq!(delta_min(&Rect::of(5, 10, 5, 10)), 0);
+    }
+
+    #[test]
+    fn delta_min_1() {
+        assert_eq!(delta_min(&Rect::of(0, 0, 10, 1)), 1);
+        assert_eq!(delta_min(&Rect::of(5, 5, 6, 10)), 1);
+    }
+
+    #[test]
+    fn delta_min_bounds() {
+        assert_eq!(delta_min(&Rect::of(0, 0, MAX, MAX)), MAX);
+        assert_eq!(delta_min(&Rect::of(0, 0, MAX, MAX)), MAX);
     }
 
     #[test]
@@ -52,7 +83,7 @@ mod tests {
 
     #[test]
     fn delta_max_bounds() {
-        assert_eq!(delta_max(&Rect::of(0, 0, u16::MAX, u16::MAX - 1)), u16::MAX);
-        assert_eq!(delta_max(&Rect::of(0, 0, u16::MAX - 1, u16::MAX)), u16::MAX);
+        assert_eq!(delta_max(&Rect::of(0, 0, MAX, MAX - 1)), MAX);
+        assert_eq!(delta_max(&Rect::of(0, 0, MAX - 1, MAX)), MAX);
     }
 }

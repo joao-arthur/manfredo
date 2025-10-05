@@ -8,25 +8,32 @@ pub fn delta_col(r: &Rect) -> u64 {
     point_i64::delta_col(&r.min, &r.max)
 }
 
+pub fn delta_min(r: &Rect) -> u64 {
+    std::cmp::min(delta_row(r), delta_col(r))
+}
+
 pub fn delta_max(r: &Rect) -> u64 {
     std::cmp::max(delta_row(r), delta_col(r))
 }
 
 #[cfg(test)]
 mod tests {
-    use super::{delta_col, delta_max, delta_row};
+    use super::{delta_col, delta_min, delta_max, delta_row};
     use crate::matrix::d2::rect::rect_i64::Rect;
+
+    const MIN: i64 = i64::MIN;
+    const MAX: i64 = i64::MAX;
 
     #[test]
     fn test_delta_row() {
-        assert_eq!(delta_row(&Rect::of(0, i64::MIN, 0, i64::MAX)), 0);
-        assert_eq!(delta_row(&Rect::of(i64::MIN, 0, i64::MAX, 0)), u64::MAX);
+        assert_eq!(delta_row(&Rect::of(0, MIN, 0, MAX)), 0);
+        assert_eq!(delta_row(&Rect::of(MIN, 0, MAX, 0)), u64::MAX);
     }
 
     #[test]
     fn test_delta_col() {
-        assert_eq!(delta_col(&Rect::of(i64::MIN, 0, i64::MAX, 0)), 0);
-        assert_eq!(delta_col(&Rect::of(0, i64::MIN, 0, i64::MAX)), u64::MAX);
+        assert_eq!(delta_col(&Rect::of(MIN, 0, MAX, 0)), 0);
+        assert_eq!(delta_col(&Rect::of(0, MIN, 0, MAX)), u64::MAX);
     }
 
     #[test]
@@ -55,9 +62,9 @@ mod tests {
 
     #[test]
     fn delta_max_bounds() {
-        assert_eq!(delta_max(&Rect::of(i64::MIN + 1, i64::MIN, i64::MAX, i64::MAX)), u64::MAX);
-        assert_eq!(delta_max(&Rect::of(i64::MIN, i64::MIN + 1, i64::MAX, i64::MAX)), u64::MAX);
-        assert_eq!(delta_max(&Rect::of(i64::MIN, i64::MIN, i64::MAX - 1, i64::MAX)), u64::MAX);
-        assert_eq!(delta_max(&Rect::of(i64::MIN, i64::MIN, i64::MAX, i64::MAX - 1)), u64::MAX);
+        assert_eq!(delta_max(&Rect::of(MIN + 1, MIN, MAX, MAX)), u64::MAX);
+        assert_eq!(delta_max(&Rect::of(MIN, MIN + 1, MAX, MAX)), u64::MAX);
+        assert_eq!(delta_max(&Rect::of(MIN, MIN, MAX - 1, MAX)), u64::MAX);
+        assert_eq!(delta_max(&Rect::of(MIN, MIN, MAX, MAX - 1)), u64::MAX);
     }
 }

@@ -8,25 +8,32 @@ pub fn delta_y(r: &Rect) -> u16 {
     point_i16::delta_y(&r.min, &r.max)
 }
 
+pub fn delta_min(r: &Rect) -> u16 {
+    std::cmp::min(delta_x(r), delta_y(r))
+}
+
 pub fn delta_max(r: &Rect) -> u16 {
     std::cmp::max(delta_x(r), delta_y(r))
 }
 
 #[cfg(test)]
 mod tests {
-    use super::{delta_max, delta_x, delta_y};
+    use super::{delta_max, delta_min, delta_x, delta_y};
     use crate::cartesian::d2::rect::rect_i16::Rect;
+
+    const MIN: i16 = i16::MIN;
+    const MAX: i16 = i16::MAX;
 
     #[test]
     fn test_delta_x() {
-        assert_eq!(delta_x(&Rect::of(0, i16::MIN, 0, i16::MAX)), 0);
-        assert_eq!(delta_x(&Rect::of(i16::MIN, 0, i16::MAX, 0)), u16::MAX);
+        assert_eq!(delta_x(&Rect::of(0, MIN, 0, MAX)), 0);
+        assert_eq!(delta_x(&Rect::of(MIN, 0, MAX, 0)), u16::MAX);
     }
 
     #[test]
     fn test_delta_y() {
-        assert_eq!(delta_y(&Rect::of(i16::MIN, 0, i16::MAX, 0)), 0);
-        assert_eq!(delta_y(&Rect::of(0, i16::MIN, 0, i16::MAX)), u16::MAX);
+        assert_eq!(delta_y(&Rect::of(MIN, 0, MAX, 0)), 0);
+        assert_eq!(delta_y(&Rect::of(0, MIN, 0, MAX)), u16::MAX);
     }
 
     #[test]
@@ -55,9 +62,9 @@ mod tests {
 
     #[test]
     fn delta_max_bounds() {
-        assert_eq!(delta_max(&Rect::of(i16::MIN + 1, i16::MIN, i16::MAX, i16::MAX)), u16::MAX);
-        assert_eq!(delta_max(&Rect::of(i16::MIN, i16::MIN + 1, i16::MAX, i16::MAX)), u16::MAX);
-        assert_eq!(delta_max(&Rect::of(i16::MIN, i16::MIN, i16::MAX - 1, i16::MAX)), u16::MAX);
-        assert_eq!(delta_max(&Rect::of(i16::MIN, i16::MIN, i16::MAX, i16::MAX - 1)), u16::MAX);
+        assert_eq!(delta_max(&Rect::of(MIN + 1, MIN, MAX, MAX)), u16::MAX);
+        assert_eq!(delta_max(&Rect::of(MIN, MIN + 1, MAX, MAX)), u16::MAX);
+        assert_eq!(delta_max(&Rect::of(MIN, MIN, MAX - 1, MAX)), u16::MAX);
+        assert_eq!(delta_max(&Rect::of(MIN, MIN, MAX, MAX - 1)), u16::MAX);
     }
 }

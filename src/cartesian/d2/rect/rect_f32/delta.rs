@@ -8,13 +8,17 @@ pub fn delta_y(r: &Rect) -> f32 {
     point_f32::delta_y(&r.min, &r.max)
 }
 
+pub fn delta_min(r: &Rect) -> f32 {
+    delta_x(r).min(delta_y(r))
+}
+
 pub fn delta_max(r: &Rect) -> f32 {
     delta_x(r).max(delta_y(r))
 }
 
 #[cfg(test)]
 mod tests {
-    use super::{delta_max, delta_x, delta_y};
+    use super::{delta_max, delta_min, delta_x, delta_y};
     use crate::cartesian::d2::{
         point::point_f32::{MAX, MIN},
         rect::rect_f32::Rect,

@@ -2,6 +2,7 @@ use crate::cartesian::d2::point::point_i8;
 use std::ops::RangeInclusive;
 
 mod add;
+mod area;
 mod contains_point;
 mod contains_rect;
 mod deflate;
@@ -12,6 +13,7 @@ mod resize;
 mod translate;
 
 pub use self::add::{checked_add, checked_add_assign, saturating_add, saturating_add_assign, try_checked_add, try_checked_add_assign, wrapping_add, wrapping_add_assign};
+pub use self::area::area;
 pub use self::contains_point::contains_point;
 pub use self::contains_rect::contains_rect;
 pub use self::deflate::{deflate, deflate_assign, try_deflate, try_deflate_assign};

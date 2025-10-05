@@ -17,16 +17,18 @@ mod tests {
     use super::{delta, delta_col, delta_row};
     use crate::matrix::d2::point::point_u16::Point;
 
+    const MAX: u16 = u16::MAX;
+
     #[test]
     fn test_delta_row() {
-        assert_eq!(delta_row(&Point::min(), &Point::of(0, u16::MAX)), 0);
-        assert_eq!(delta_row(&Point::min(), &Point::of(u16::MAX, 0)), u16::MAX);
+        assert_eq!(delta_row(&Point::min(), &Point::of(0, MAX)), 0);
+        assert_eq!(delta_row(&Point::min(), &Point::of(MAX, 0)), MAX);
     }
 
     #[test]
     fn test_delta_col() {
-        assert_eq!(delta_col(&Point::min(), &Point::of(u16::MAX, 0)), 0);
-        assert_eq!(delta_col(&Point::min(), &Point::of(0, u16::MAX)), u16::MAX);
+        assert_eq!(delta_col(&Point::min(), &Point::of(MAX, 0)), 0);
+        assert_eq!(delta_col(&Point::min(), &Point::of(0, MAX)), MAX);
     }
 
     #[test]
@@ -53,17 +55,17 @@ mod tests {
 
     #[test]
     fn delta_max() {
-        let p = Point::of(u16::MAX - 2, u16::MAX - 2);
-        assert_eq!(delta(&p, &Point::of(u16::MAX - 2, u16::MAX - 2)), Point::min());
-        assert_eq!(delta(&p, &Point::of(u16::MAX - 2, u16::MAX - 1)), Point::of(0, 1));
-        assert_eq!(delta(&p, &Point::of(u16::MAX - 2, u16::MAX)), Point::of(0, 2));
+        let p = Point::of(MAX - 2, MAX - 2);
+        assert_eq!(delta(&p, &Point::of(MAX - 2, MAX - 2)), Point::min());
+        assert_eq!(delta(&p, &Point::of(MAX - 2, MAX - 1)), Point::of(0, 1));
+        assert_eq!(delta(&p, &Point::of(MAX - 2, MAX)), Point::of(0, 2));
 
-        assert_eq!(delta(&p, &Point::of(u16::MAX - 1, u16::MAX - 2)), Point::of(1, 0));
-        assert_eq!(delta(&p, &Point::of(u16::MAX - 1, u16::MAX - 1)), Point::of(1, 1));
-        assert_eq!(delta(&p, &Point::of(u16::MAX - 1, u16::MAX)), Point::of(1, 2));
+        assert_eq!(delta(&p, &Point::of(MAX - 1, MAX - 2)), Point::of(1, 0));
+        assert_eq!(delta(&p, &Point::of(MAX - 1, MAX - 1)), Point::of(1, 1));
+        assert_eq!(delta(&p, &Point::of(MAX - 1, MAX)), Point::of(1, 2));
 
-        assert_eq!(delta(&p, &Point::of(u16::MAX, u16::MAX - 2)), Point::of(2, 0));
-        assert_eq!(delta(&p, &Point::of(u16::MAX, u16::MAX - 1)), Point::of(2, 1));
+        assert_eq!(delta(&p, &Point::of(MAX, MAX - 2)), Point::of(2, 0));
+        assert_eq!(delta(&p, &Point::of(MAX, MAX - 1)), Point::of(2, 1));
         assert_eq!(delta(&p, &Point::max()), Point::of(2, 2));
     }
 }

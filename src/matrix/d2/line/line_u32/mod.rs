@@ -57,10 +57,10 @@ mod tests {
 
     #[test]
     fn line() {
-        assert_eq!(Line::largest(), Line { min: Point { row:0, col:0 }, max: Point { row:MAX, col:MAX } });
-        assert_eq!(Line::min(), Line { min: Point { row:0, col:0 }, max: Point { row:0, col:0 } });
-        assert_eq!(Line::max(), Line { min: Point { row:MAX, col:MAX }, max: Point { row:MAX, col:MAX } });
-        assert_eq!(Line::of(256, 512, 1024, 2048), Line { min: Point { row:256, col:512 }, max: Point { row:1024, col:2048 } });
+        assert_eq!(Line::largest(), Line { min: Point { row: 0, col: 0 }, max: Point { row: MAX, col: MAX } });
+        assert_eq!(Line::min(), Line { min: Point { row: 0, col: 0 }, max: Point { row: 0, col: 0 } });
+        assert_eq!(Line::max(), Line { min: Point { row: MAX, col: MAX }, max: Point { row: MAX, col: MAX } });
+        assert_eq!(Line::of(256, 512, 1024, 2048), Line { min: Point { row: 256, col: 512 }, max: Point { row: 1024, col: 2048 } });
     }
 
     #[test]
@@ -71,7 +71,7 @@ mod tests {
 
     #[test]
     fn from() {
-        assert_eq!(Line::from(line_u8::Line::largest()), Line { min: Point { row:0, col:0 }, max: Point { row:u8::MAX.into(), col:u8::MAX.into() } });
-        assert_eq!(Line::from(line_u16::Line::largest()), Line { min: Point { row:0, col:0 }, max: Point { row:u16::MAX.into(), col:u16::MAX.into() } });
+        assert_eq!(Line::from(line_u8::Line::largest()), Line { min: Point { row: 0, col: 0 }, max: Point { row: u8::MAX.into(), col: u8::MAX.into() } });
+        assert_eq!(Line::from(line_u16::Line::largest()), Line { min: Point { row: 0, col: 0 }, max: Point { row: u16::MAX.into(), col: u16::MAX.into() } });
     }
 }

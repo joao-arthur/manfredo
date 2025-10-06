@@ -8,13 +8,21 @@ pub fn delta_y(p1: &Point, p2: &Point) -> u64 {
     p2.y - p1.y
 }
 
+pub fn delta_min(p1: &Point, p2: &Point) -> u64 {
+    std::cmp::min(delta_x(p1, p2), delta_y(p1, p2))
+}
+
+pub fn delta_max(p1: &Point, p2: &Point) -> u64 {
+    std::cmp::max(delta_x(p1, p2), delta_y(p1, p2))
+}
+
 pub fn delta(p1: &Point, p2: &Point) -> Point {
     Point { x: delta_x(p1, p2), y: delta_y(p1, p2) }
 }
 
 #[cfg(test)]
 mod tests {
-    use super::{delta, delta_x, delta_y};
+    use super::{delta, delta_max, delta_min, delta_x, delta_y};
     use crate::cartesian::d2::point::point_u64::Point;
 
     const MAX: u64 = u64::MAX;
@@ -32,13 +40,25 @@ mod tests {
     }
 
     #[test]
+    fn test_delta_min() {
+        assert_eq!(delta_min(&Point::of(0, 5), &Point::of(10, 10)), 5);
+        assert_eq!(delta_min(&Point::of(5, 0), &Point::of(9, 9)), 4);
+    }
+
+    #[test]
+    fn test_delta_max() {
+        assert_eq!(delta_max(&Point::of(0, 5), &Point::of(10, 10)), 10);
+        assert_eq!(delta_max(&Point::of(5, 0), &Point::of(9, 9)), 9);
+    }
+
+    #[test]
     fn test_delta() {
         assert_eq!(delta(&Point::min(), &Point::min()), Point::min());
         assert_eq!(delta(&Point::min(), &Point::max()), Point::max());
     }
 
     #[test]
-    fn delta_min() {
+    fn delta_from_min() {
         let p = Point::min();
         assert_eq!(delta(&p, &Point::min()), Point::min());
         assert_eq!(delta(&p, &Point::of(0, 1)), Point::of(0, 1));
@@ -54,7 +74,7 @@ mod tests {
     }
 
     #[test]
-    fn delta_max() {
+    fn delta_from_max() {
         let p = Point::of(MAX - 2, MAX - 2);
         assert_eq!(delta(&p, &Point::of(MAX - 2, MAX - 2)), Point::min());
         assert_eq!(delta(&p, &Point::of(MAX - 2, MAX - 1)), Point::of(0, 1));

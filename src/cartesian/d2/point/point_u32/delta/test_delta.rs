@@ -3,8 +3,6 @@ use crate::cartesian::d2::point::point_u32::Point;
 
 const MAX: u32 = u32::MAX;
 
-
-
 #[test]
 fn test_delta() {
     assert_eq!(delta(&Point::min(), &Point::min()), Point::min());

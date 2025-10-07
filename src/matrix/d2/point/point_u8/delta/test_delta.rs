@@ -3,7 +3,6 @@ use crate::matrix::d2::point::point_u8::Point;
 
 const MAX: u8 = u8::MAX;
 
-
 #[test]
 fn test_delta() {
     assert_eq!(delta(&Point::min(), &Point::min()), Point::min());

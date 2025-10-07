@@ -4,7 +4,6 @@ use crate::matrix::d2::point::{point_i32::Point, point_u32};
 const MIN: i32 = i32::MIN;
 const MAX: i32 = i32::MAX;
 
-
 #[test]
 fn test_delta() {
     assert_eq!(delta(&Point::of(0, 0), &Point::of(0, 0)), point_u32::Point::min());

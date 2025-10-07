@@ -1,5 +1,5 @@
 use super::delta_y;
-use crate::cartesian::d2::point::{point_i8::Point, point_u8};
+use crate::cartesian::d2::point::point_i8::Point;
 
 const MIN: i8 = i8::MIN;
 const MAX: i8 = i8::MAX;

@@ -1,5 +1,5 @@
 use super::delta_row;
-use crate::matrix::d2::point::{point_i16::Point, point_u16};
+use crate::matrix::d2::point::point_i16::Point;
 
 const MIN: i16 = i16::MIN;
 const MAX: i16 = i16::MAX;

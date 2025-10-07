@@ -1,7 +1,5 @@
-use super::{delta, delta_max, delta_min, delta_x, delta_y};
+use super::delta_max;
 use crate::cartesian::d2::point::point_u64::Point;
-
-const MAX: u64 = u64::MAX;
 
 #[test]
 fn test_delta_max() {

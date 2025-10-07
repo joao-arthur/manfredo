@@ -4,7 +4,7 @@ mod add;
 mod delta;
 
 pub use self::add::{checked_add, checked_add_assign, saturating_add, saturating_add_assign, try_checked_add, try_checked_add_assign, wrapping_add, wrapping_add_assign};
-pub use self::delta::{delta, delta_col, delta_row};
+pub use self::delta::{delta, delta_col, delta_max, delta_min, delta_row};
 
 #[derive(Eq, PartialEq, Debug, Clone, Hash)]
 pub struct Point {

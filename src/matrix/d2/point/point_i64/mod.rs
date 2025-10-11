@@ -2,9 +2,11 @@ use super::{point_i8, point_i16, point_i32};
 
 mod add;
 mod delta;
+mod distance;
 
 pub use self::add::{checked_add, checked_add_assign, saturating_add, saturating_add_assign, try_checked_add, try_checked_add_assign, wrapping_add, wrapping_add_assign};
 pub use self::delta::{delta, delta_col, delta_max, delta_min, delta_row};
+pub use self::distance::distance;
 
 #[derive(Eq, PartialEq, Debug, Clone, Hash)]
 pub struct Point {

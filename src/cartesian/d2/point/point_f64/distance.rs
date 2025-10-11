@@ -12,7 +12,7 @@ mod tests {
     use crate::cartesian::d2::point::point_f64::Point;
 
     #[test]
-    fn distance_delta_0() {
+    fn delta_0() {
         assert_eq!(distance(&Point::of(-1.0, -1.0), &Point::of(-1.0, -1.0)), 0.0);
         assert_eq!(distance(&Point::of(-1.0, 1.0), &Point::of(-1.0, 1.0)), 0.0);
         assert_eq!(distance(&Point::of(1.0, -1.0), &Point::of(1.0, -1.0)), 0.0);
@@ -20,19 +20,19 @@ mod tests {
     }
 
     #[test]
-    fn distance_delta_x() {
+    fn delta_x() {
         assert_eq!(distance(&Point::of(-10.0, 0.0), &Point::of(-10.0, 50.0)), 50.0);
         assert_eq!(distance(&Point::of(10.0, 100.0), &Point::of(10.0, 200.0)), 100.0);
     }
 
     #[test]
-    fn distance_delta_y() {
+    fn delta_y() {
         assert_eq!(distance(&Point::of(0.0, -10.0), &Point::of(50.0, -10.0)), 50.0);
         assert_eq!(distance(&Point::of(100.0, 10.0), &Point::of(200.0, 10.0)), 100.0);
     }
 
     #[test]
-    fn distance_pythagorean() {
+    fn pythagorean() {
         assert_eq!(distance(&Point::of(0.0, 0.0), &Point::of(3.0, 4.0)), 5.0);
         assert_eq!(distance(&Point::of(0.0, 0.0), &Point::of(30.0, 40.0)), 50.0);
         assert_eq!(distance(&Point::of(0.0, 0.0), &Point::of(300.0, 400.0)), 500.0);
@@ -45,7 +45,7 @@ mod tests {
     }
 
     #[test]
-    fn distance_square() {
+    fn square() {
         assert_eq!(distance(&Point::of(-50.0, -50.0), &Point::of(50.0, 50.0)), 141.4213562373095);
         assert_eq!(distance(&Point::of(-100.0, -100.0), &Point::of(100.0, 100.0)), 282.842712474619);
 

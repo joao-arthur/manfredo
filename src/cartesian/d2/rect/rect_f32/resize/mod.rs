@@ -1,7 +1,5 @@
-use crate::cartesian::d2::{
-    point::point_f32::{MAX, MIN},
-    rect::rect_f32::{Rect, delta_x, delta_y},
-};
+use super::{Rect, delta_x, delta_y};
+use crate::cartesian::d2::point::point_f32::{MAX, MIN};
 
 pub fn try_checked_resize_assign(r: &mut Rect, size: f32) -> Option<()> {
     if !(3.0..=MAX).contains(&size) {

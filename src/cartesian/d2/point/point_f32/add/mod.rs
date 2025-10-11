@@ -1,4 +1,4 @@
-use crate::cartesian::d2::point::point_f32::{MAX, MIN, Point};
+use super::{MAX, MIN, Point};
 
 pub fn try_checked_add_assign(p: &mut Point, delta: &Point) -> Option<()> {
     let x = p.x + delta.x;

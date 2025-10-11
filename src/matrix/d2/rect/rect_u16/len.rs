@@ -1,4 +1,4 @@
-use crate::matrix::d2::rect::rect_u16::{Rect, delta_col, delta_row};
+use super::{Rect, delta_col, delta_row};
 
 pub fn len_row(r: &Rect) -> u16 {
     delta_row(r) + 1

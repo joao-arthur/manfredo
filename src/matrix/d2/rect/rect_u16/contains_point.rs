@@ -1,4 +1,5 @@
-use crate::matrix::d2::{point::point_u16::Point, rect::rect_u16::Rect};
+use super::Rect;
+use crate::matrix::d2::point::point_u16::Point;
 
 pub fn contains_point(r: &Rect, p: &Point) -> bool {
     p.row >= r.min.row && p.row <= r.max.row && p.col >= r.min.col && p.col <= r.max.col

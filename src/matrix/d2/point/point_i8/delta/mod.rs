@@ -1,4 +1,5 @@
-use crate::matrix::d2::point::{point_i8::Point, point_u8};
+use super::Point;
+use crate::matrix::d2::point::point_u8;
 
 pub fn delta_row(p1: &Point, p2: &Point) -> u8 {
     (i16::from(p2.row) - i16::from(p1.row)).unsigned_abs() as u8

@@ -1,4 +1,4 @@
-use crate::cartesian::d2::point::point_u8::Point;
+use super::Point;
 
 pub fn delta_x(p1: &Point, p2: &Point) -> u8 {
     p2.x - p1.x

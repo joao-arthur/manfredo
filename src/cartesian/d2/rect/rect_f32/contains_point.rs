@@ -1,4 +1,5 @@
-use crate::cartesian::d2::{point::point_f32::Point, rect::rect_f32::Rect};
+use super::Rect;
+use crate::cartesian::d2::point::point_f32::Point;
 
 pub fn contains_point(r: &Rect, p: &Point) -> bool {
     p.x >= r.min.x && p.x <= r.max.x && p.y >= r.min.y && p.y <= r.max.y

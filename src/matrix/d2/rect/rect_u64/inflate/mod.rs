@@ -1,4 +1,4 @@
-use crate::matrix::d2::rect::rect_u64::Rect;
+use super::Rect;
 
 pub fn try_checked_inflate_assign(r: &mut Rect) -> Option<()> {
     let min_row = r.min.row.checked_sub(1)?;

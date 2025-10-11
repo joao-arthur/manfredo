@@ -1,4 +1,4 @@
-use crate::matrix::d2::rect::rect_u64::Rect;
+use super::Rect;
 
 pub fn contains_rect(outer: &Rect, r: &Rect) -> bool {
     r.min.row >= outer.min.row && r.max.row <= outer.max.row && r.min.col >= outer.min.col && r.max.col <= outer.max.col

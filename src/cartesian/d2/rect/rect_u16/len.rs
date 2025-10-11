@@ -1,4 +1,4 @@
-use crate::cartesian::d2::rect::rect_u16::{Rect, delta_x, delta_y};
+use super::{Rect, delta_x, delta_y};
 
 pub fn len_x(r: &Rect) -> u16 {
     delta_x(r) + 1

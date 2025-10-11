@@ -1,4 +1,4 @@
-use crate::cartesian::d2::rect::rect_u8::{Rect, delta_x, delta_y};
+use super::{Rect, delta_x, delta_y};
 
 pub fn try_deflate_assign(r: &mut Rect) -> Option<()> {
     if delta_x(r) < 3 || delta_y(r) < 3 {

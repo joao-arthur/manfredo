@@ -1,4 +1,5 @@
-use crate::matrix::d2::rect::{rect_i32, rect_u32::Rect};
+use super::Rect;
+use crate::matrix::d2::rect::rect_i32;
 
 pub fn try_checked_add_assign(r: &mut Rect, delta: &rect_i32::Rect) -> Option<()> {
     let min_row = r.min.row.checked_add_signed(delta.min.row)?;

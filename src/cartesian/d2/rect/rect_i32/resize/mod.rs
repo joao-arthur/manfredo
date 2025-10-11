@@ -1,7 +1,5 @@
-use crate::cartesian::d2::{
-    point::point_i32::Point,
-    rect::rect_i32::{Rect, delta_x, delta_y},
-};
+use super::{Rect, delta_x, delta_y};
+use crate::cartesian::d2::point::point_i32::Point;
 
 pub fn try_checked_resize_assign(r: &mut Rect, size: u32) -> Option<()> {
     if size < 3 {

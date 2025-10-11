@@ -1,7 +1,5 @@
-use crate::cartesian::d2::{
-    point::point_i32::Point,
-    rect::rect_i32::{Rect, delta_x, delta_y},
-};
+use super::{Rect, delta_x, delta_y};
+use crate::cartesian::d2::point::point_i32::Point;
 
 pub fn try_checked_translate_assign(r: &mut Rect, delta: &Point) -> Option<()> {
     let min_x = r.min.x.checked_add(delta.x)?;

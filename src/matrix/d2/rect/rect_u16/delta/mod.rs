@@ -1,4 +1,5 @@
-use crate::matrix::d2::{point::point_u16, rect::rect_u16::Rect};
+use super::Rect;
+use crate::matrix::d2::point::point_u16;
 
 pub fn delta_row(r: &Rect) -> u16 {
     point_u16::delta_row(&r.min, &r.max)

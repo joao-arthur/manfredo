@@ -1,4 +1,4 @@
-use crate::cartesian::d2::point::point_i64::Point;
+use super::Point;
 
 pub fn try_checked_add_assign(p: &mut Point, delta: &Point) -> Option<()> {
     let x = p.x.checked_add(delta.x)?;

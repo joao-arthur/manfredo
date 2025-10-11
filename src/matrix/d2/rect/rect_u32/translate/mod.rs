@@ -1,7 +1,5 @@
-use crate::matrix::d2::{
-    point::point_i32::Point,
-    rect::rect_u32::{Rect, delta_col, delta_row},
-};
+use super::{Rect, delta_col, delta_row};
+use crate::matrix::d2::point::point_i32::Point;
 
 pub fn try_checked_translate_assign(r: &mut Rect, delta: &Point) -> Option<()> {
     let min_row = r.min.row.checked_add_signed(delta.row)?;

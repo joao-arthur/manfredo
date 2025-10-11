@@ -1,4 +1,5 @@
-use crate::matrix::d2::{point::point_u64::delta, rect::rect_u64::Rect};
+use super::Rect;
+use crate::matrix::d2::point::point_u64::delta;
 
 pub fn area(r: &Rect) -> u128 {
     let d = delta(&r.min, &r.max);

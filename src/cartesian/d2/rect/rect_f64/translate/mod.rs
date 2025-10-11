@@ -1,7 +1,5 @@
-use crate::cartesian::d2::{
-    point::point_f64::{MAX, MIN, Point},
-    rect::rect_f64::{Rect, delta_x, delta_y},
-};
+use super::{Rect, delta_x, delta_y};
+use crate::cartesian::d2::point::point_f64::{MAX, MIN, Point};
 
 pub fn try_checked_translate_assign(r: &mut Rect, delta: &Point) -> Option<()> {
     if delta.x < MIN - r.min.x || delta.y < MIN - r.min.y || delta.x > MAX - r.max.x || delta.y > MAX - r.max.y {

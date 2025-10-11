@@ -1,4 +1,5 @@
-use crate::cartesian::d2::{point::point_i32, rect::rect_i32::Rect};
+use super::Rect;
+use crate::cartesian::d2::point::point_i32;
 
 pub fn delta_x(r: &Rect) -> u32 {
     point_i32::delta_x(&r.min, &r.max)

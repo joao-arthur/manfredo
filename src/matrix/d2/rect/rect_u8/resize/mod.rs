@@ -1,4 +1,4 @@
-use crate::matrix::d2::rect::rect_u8::{Rect, delta_col, delta_row};
+use super::{Rect, delta_col, delta_row};
 
 pub fn try_checked_resize_assign(r: &mut Rect, size: u8) -> Option<()> {
     if size < 3 {

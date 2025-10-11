@@ -1,7 +1,5 @@
-use crate::cartesian::d2::{
-    point::point_f64::{MAX, MIN},
-    rect::rect_f64::Rect,
-};
+use super::Rect;
+use crate::cartesian::d2::point::point_f64::{MAX, MIN};
 
 pub fn try_checked_add_assign(r: &mut Rect, delta: &Rect) -> Option<()> {
     if delta.min.x < MIN - r.min.x || delta.min.y < MIN - r.min.y || delta.max.x > MAX - r.max.x || delta.max.y > MAX - r.max.y {

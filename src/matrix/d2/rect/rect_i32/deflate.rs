@@ -1,7 +1,4 @@
-use crate::matrix::d2::{
-    point::point_i32::Point,
-    rect::rect_i32::{Rect, delta_col, delta_row},
-};
+use super::{Rect, delta_col, delta_row};
 
 pub fn try_deflate_assign(r: &mut Rect) -> Option<()> {
     if delta_row(r) < 3 || delta_col(r) < 3 {
@@ -22,7 +19,7 @@ pub fn try_deflate(r: &Rect) -> Option<Rect> {
     let min_col = r.min.col + 1;
     let max_row = r.max.row - 1;
     let max_col = r.max.col - 1;
-    Some(Rect { min: Point { row: min_row, col: min_col }, max: Point { row: max_row, col: max_col } })
+    Some(Rect::of(min_row, min_col, max_row, max_col))
 }
 
 pub fn deflate_assign(r: &mut Rect) {

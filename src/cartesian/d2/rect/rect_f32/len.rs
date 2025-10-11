@@ -1,7 +1,4 @@
-use crate::cartesian::d2::rect::rect_f32::{
-    Rect,
-    delta::{delta_x, delta_y},
-};
+use super::{Rect, delta_x, delta_y};
 
 pub fn len_x(r: &Rect) -> f32 {
     delta_x(r) + 1.0

@@ -1,4 +1,5 @@
-use crate::cartesian::d2::point::{point_i32::Point, point_u32};
+use super::Point;
+use crate::cartesian::d2::point::point_u32;
 
 pub fn delta_x(p1: &Point, p2: &Point) -> u32 {
     (i64::from(p2.x) - i64::from(p1.x)).unsigned_abs() as u32

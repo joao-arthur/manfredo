@@ -1,4 +1,4 @@
-use crate::matrix::d2::point::point_u32::Point;
+use super::Point;
 
 pub fn delta_row(p1: &Point, p2: &Point) -> u32 {
     p2.row - p1.row

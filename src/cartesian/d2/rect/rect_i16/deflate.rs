@@ -1,7 +1,4 @@
-use crate::cartesian::d2::{
-    point::point_i16::Point,
-    rect::rect_i16::{Rect, delta_x, delta_y},
-};
+use super::{Rect, delta_x, delta_y};
 
 pub fn try_deflate_assign(r: &mut Rect) -> Option<()> {
     if delta_x(r) < 3 || delta_y(r) < 3 {
@@ -22,7 +19,7 @@ pub fn try_deflate(r: &Rect) -> Option<Rect> {
     let min_y = r.min.y + 1;
     let max_x = r.max.x - 1;
     let max_y = r.max.y - 1;
-    Some(Rect { min: Point { x: min_x, y: min_y }, max: Point { x: max_x, y: max_y } })
+    Some(Rect::of(min_x, min_y, max_x, max_y))
 }
 
 pub fn deflate_assign(r: &mut Rect) {

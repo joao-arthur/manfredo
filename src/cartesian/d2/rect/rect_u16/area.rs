@@ -1,4 +1,5 @@
-use crate::cartesian::d2::{point::point_u16::delta, rect::rect_u16::Rect};
+use super::Rect;
+use crate::cartesian::d2::point::point_u16::delta;
 
 pub fn area(r: &Rect) -> u32 {
     let d = delta(&r.min, &r.max);

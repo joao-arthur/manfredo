@@ -1,4 +1,5 @@
-use crate::cartesian::d2::point::{point_i8::Point, point_u8};
+use super::Point;
+use crate::cartesian::d2::point::point_u8;
 
 pub fn delta_x(p1: &Point, p2: &Point) -> u8 {
     (i16::from(p2.x) - i16::from(p1.x)).unsigned_abs() as u8

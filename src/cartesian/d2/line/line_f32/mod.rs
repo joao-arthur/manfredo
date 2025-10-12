@@ -1,26 +1,26 @@
-use crate::cartesian::d2::point::point_f32;
+use crate::cartesian::d2::point::point_f32::Point;
 
 #[derive(PartialEq, Debug, Clone)]
 pub struct Line {
-    pub min: point_f32::Point,
-    pub max: point_f32::Point,
+    pub min: Point,
+    pub max: Point,
 }
 
 impl Line {
     pub fn of(x1: f32, y1: f32, x2: f32, y2: f32) -> Self {
-        Line { min: point_f32::Point { x: x1, y: y1 }, max: point_f32::Point { x: x2, y: y2 } }
+        Line { min: Point::of(x1, y1), max: Point::of(x2, y2) }
     }
 
     pub fn largest() -> Self {
-        Line { min: point_f32::Point::min(), max: point_f32::Point::max() }
+        Line { min: Point::min(), max: Point::max() }
     }
 
     pub fn min() -> Self {
-        Line { min: point_f32::Point::min(), max: point_f32::Point::min() }
+        Line { min: Point::min(), max: Point::min() }
     }
 
     pub fn max() -> Self {
-        Line { min: point_f32::Point::max(), max: point_f32::Point::max() }
+        Line { min: Point::max(), max: Point::max() }
     }
 }
 

@@ -46,10 +46,10 @@ mod tests {
 
     #[test]
     fn square() {
-        assert_eq!(distance(&Point::of(-50.0, -50.0), &Point::of(50.0, 50.0)), 141.4213562373095);
-        assert_eq!(distance(&Point::of(-100.0, -100.0), &Point::of(100.0, 100.0)), 282.842712474619);
+        assert_eq!(distance(&Point::of(-50.0, -50.0), &Point::of(50.0, 50.0)), 141.42136);
+        assert_eq!(distance(&Point::of(-100.0, -100.0), &Point::of(100.0, 100.0)), 282.8427);
 
-        assert_eq!(distance(&Point::of(0.0, 0.0), &Point::of(141.4213562373095, 141.4213562373095)), 200.0);
-        assert_eq!(distance(&Point::of(0.0, 0.0), &Point::of(282.842712474619, 282.842712474619)), 400.0);
+        assert_eq!(distance(&Point::of(0.0, 0.0), &Point::of(141.42136, 141.42136)), 200.0);
+        assert_eq!(distance(&Point::of(0.0, 0.0), &Point::of(282.8427, 282.8427)), 400.0);
     }
 }

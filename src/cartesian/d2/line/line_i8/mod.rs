@@ -1,26 +1,26 @@
-use crate::cartesian::d2::point::point_i8;
+use crate::cartesian::d2::point::point_i8::Point;
 
 #[derive(Eq, PartialEq, Debug, Clone)]
 pub struct Line {
-    pub min: point_i8::Point,
-    pub max: point_i8::Point,
+    pub min: Point,
+    pub max: Point,
 }
 
 impl Line {
     pub fn of(x1: i8, y1: i8, x2: i8, y2: i8) -> Self {
-        Line { min: point_i8::Point::of(x1, y1), max: point_i8::Point::of(x2, y2) }
+        Line { min: Point::of(x1, y1), max: Point::of(x2, y2) }
     }
 
     pub fn largest() -> Self {
-        Line { min: point_i8::Point::min(), max: point_i8::Point::max() }
+        Line { min: Point::min(), max: Point::max() }
     }
 
     pub fn min() -> Self {
-        Line { min: point_i8::Point::min(), max: point_i8::Point::min() }
+        Line { min: Point::min(), max: Point::min() }
     }
 
     pub fn max() -> Self {
-        Line { min: point_i8::Point::max(), max: point_i8::Point::max() }
+        Line { min: Point::max(), max: Point::max() }
     }
 }
 

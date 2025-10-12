@@ -9,9 +9,6 @@ mod tests {
     use super::delta;
     use crate::cartesian::d1::point::point_i16::Point;
 
-    const MIN: i16 = i16::MIN;
-    const MAX: i16 = i16::MAX;
-
     #[test]
     fn test_delta() {
         assert_eq!(delta(&Point::of(0), &Point::of(0)), 0);

@@ -1,26 +1,26 @@
-use crate::cartesian::d2::{line::line_u8, point::point_u16};
+use crate::cartesian::d2::{line::line_u8, point::point_u16::Point};
 
 #[derive(Eq, PartialEq, Debug, Clone)]
 pub struct Line {
-    pub min: point_u16::Point,
-    pub max: point_u16::Point,
+    pub min: Point,
+    pub max: Point,
 }
 
 impl Line {
     pub fn of(x1: u16, y1: u16, x2: u16, y2: u16) -> Self {
-        Line { min: point_u16::Point::of(x1, y1), max: point_u16::Point::of(x2, y2) }
+        Line { min: Point::of(x1, y1), max: Point::of(x2, y2) }
     }
 
     pub fn largest() -> Self {
-        Line { min: point_u16::Point::min(), max: point_u16::Point::max() }
+        Line { min: Point::min(), max: Point::max() }
     }
 
     pub fn min() -> Self {
-        Line { min: point_u16::Point::min(), max: point_u16::Point::min() }
+        Line { min: Point::min(), max: Point::min() }
     }
 
     pub fn max() -> Self {
-        Line { min: point_u16::Point::max(), max: point_u16::Point::max() }
+        Line { min: Point::max(), max: Point::max() }
     }
 }
 
@@ -32,7 +32,7 @@ impl std::fmt::Display for Line {
 
 impl From<line_u8::Line> for Line {
     fn from(r: line_u8::Line) -> Self {
-        Line { min: point_u16::Point::from(r.min), max: point_u16::Point::from(r.max) }
+        Line { min: Point::from(r.min), max: Point::from(r.max) }
     }
 }
 

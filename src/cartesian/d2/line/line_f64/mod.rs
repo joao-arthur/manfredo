@@ -1,26 +1,26 @@
-use crate::cartesian::d2::{line::line_f32, point::point_f64};
+use crate::cartesian::d2::{line::line_f32, point::point_f64::Point};
 
 #[derive(PartialEq, Debug, Clone)]
 pub struct Line {
-    pub min: point_f64::Point,
-    pub max: point_f64::Point,
+    pub min: Point,
+    pub max: Point,
 }
 
 impl Line {
     pub fn of(x1: f64, y1: f64, x2: f64, y2: f64) -> Self {
-        Line { min: point_f64::Point { x: x1, y: y1 }, max: point_f64::Point { x: x2, y: y2 } }
+        Line { min: Point::of(x1, y1), max: Point::of(x2, y2) }
     }
 
     pub fn largest() -> Self {
-        Line { min: point_f64::Point::min(), max: point_f64::Point::max() }
+        Line { min: Point::min(), max: Point::max() }
     }
 
     pub fn min() -> Self {
-        Line { min: point_f64::Point::min(), max: point_f64::Point::min() }
+        Line { min: Point::min(), max: Point::min() }
     }
 
     pub fn max() -> Self {
-        Line { min: point_f64::Point::max(), max: point_f64::Point::max() }
+        Line { min: Point::max(), max: Point::max() }
     }
 }
 
@@ -32,7 +32,7 @@ impl std::fmt::Display for Line {
 
 impl From<line_f32::Line> for Line {
     fn from(r: line_f32::Line) -> Self {
-        Line { min: point_f64::Point::from(r.min), max: point_f64::Point::from(r.max) }
+        Line { min: Point::from(r.min), max: Point::from(r.max) }
     }
 }
 

@@ -26,7 +26,7 @@ fn delta_from_min() {
 }
 
 #[test]
-fn delta_from_max() {
+fn delta_frop_max() {
     let p = Point::of(MAX - 2, MAX - 2);
     assert_eq!(delta(&p, &Point::of(MAX - 2, MAX - 2)), Point::min());
     assert_eq!(delta(&p, &Point::of(MAX - 2, MAX - 1)), Point::of(0, 1));

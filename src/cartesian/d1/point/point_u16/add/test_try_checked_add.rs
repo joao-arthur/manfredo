@@ -20,8 +20,8 @@ fn out_of_bounds() {
     let p_min = Point::of(2);
     assert_eq!(try_checked_add(&p_min, &PointI::of(-10)), None);
 
-    let m_max = Point::of(MAX - 2);
-    assert_eq!(try_checked_add(&m_max, &PointI::of(10)), None);
+    let p_max = Point::of(MAX - 2);
+    assert_eq!(try_checked_add(&p_max, &PointI::of(10)), None);
 }
 
 #[test]

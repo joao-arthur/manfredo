@@ -23,10 +23,10 @@ fn out_of_bounds() {
     assert_eq!(try_checked_add(&p_min, &Point::of(0, -10)), None);
     assert_eq!(try_checked_add(&p_min, &Point::of(-10, -10)), None);
 
-    let m_max = Point::of(MAX - 2, MAX - 5);
-    assert_eq!(try_checked_add(&m_max, &Point::of(10, 0)), None);
-    assert_eq!(try_checked_add(&m_max, &Point::of(0, 10)), None);
-    assert_eq!(try_checked_add(&m_max, &Point::of(10, 10)), None);
+    let p_max = Point::of(MAX - 2, MAX - 5);
+    assert_eq!(try_checked_add(&p_max, &Point::of(10, 0)), None);
+    assert_eq!(try_checked_add(&p_max, &Point::of(0, 10)), None);
+    assert_eq!(try_checked_add(&p_max, &Point::of(10, 10)), None);
 }
 
 #[test]

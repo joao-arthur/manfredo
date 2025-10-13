@@ -16,9 +16,9 @@ fn to_bounds() {
     wrapping_add_assign(&mut p_min, &Point::of(-2.0, -5.0));
     assert_eq!(p_min, Point::min());
 
-    let mut m_max = Point::of(MAX - 2.0, MAX - 5.0);
-    wrapping_add_assign(&mut m_max, &Point::of(2.0, 5.0));
-    assert_eq!(m_max, Point::max());
+    let mut p_max = Point::of(MAX - 2.0, MAX - 5.0);
+    wrapping_add_assign(&mut p_max, &Point::of(2.0, 5.0));
+    assert_eq!(p_max, Point::max());
 }
 
 #[test]
@@ -27,9 +27,9 @@ fn out_of_bounds() {
     wrapping_add_assign(&mut p_min, &Point::of(-10.0, -10.0));
     assert_eq!(p_min, Point::of(MAX - 7.0, MAX - 4.0));
 
-    let mut m_max = Point::of(MAX - 2.0, MAX - 5.0);
-    wrapping_add_assign(&mut m_max, &Point::of(10.0, 10.0));
-    assert_eq!(m_max, Point::of(MIN + 7.0, MIN + 4.0));
+    let mut p_max = Point::of(MAX - 2.0, MAX - 5.0);
+    wrapping_add_assign(&mut p_max, &Point::of(10.0, 10.0));
+    assert_eq!(p_max, Point::of(MIN + 7.0, MIN + 4.0));
 }
 
 #[test]
@@ -38,7 +38,7 @@ fn limits_out_of_bounds() {
     wrapping_add_assign(&mut p_min, &Point::min());
     assert_eq!(p_min, Point::of(1.0, 1.0));
 
-    let mut m_max = Point::of(MAX - 1.0, MAX - 1.0);
-    wrapping_add_assign(&mut m_max, &Point::max());
-    assert_eq!(m_max, Point::of(-3.0, -3.0));
+    let mut p_max = Point::of(MAX - 1.0, MAX - 1.0);
+    wrapping_add_assign(&mut p_max, &Point::max());
+    assert_eq!(p_max, Point::of(-3.0, -3.0));
 }

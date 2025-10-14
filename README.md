@@ -88,7 +88,6 @@ let e = rect_i32::wrapping_add_assign(&mut a, &b);
 
 - 1D
   - [ ] `Point`
-  - [ ] `Line`
 - 2D
   - [ ] `Point` distance
   - [ ] `Circle`

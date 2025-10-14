@@ -1,0 +1,85 @@
+use crate::matrix::d1::{
+    line::{line_i8, line_i16, line_i32},
+    point::point_i64::Point,
+};
+
+#[derive(Eq, PartialEq, Debug, Clone)]
+pub struct Line {
+    pub min: Point,
+    pub max: Point,
+}
+
+impl Line {
+    pub fn of(i1: i64, i2: i64) -> Self {
+        Line { min: Point::of(i1), max: Point::of(i2) }
+    }
+
+    pub fn largest() -> Self {
+        Line { min: Point::min(), max: Point::max() }
+    }
+
+    pub fn min() -> Self {
+        Line { min: Point::min(), max: Point::min() }
+    }
+
+    pub fn max() -> Self {
+        Line { min: Point::max(), max: Point::max() }
+    }
+}
+
+impl std::fmt::Display for Line {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "({}, {})", self.min, self.max)
+    }
+}
+
+impl From<line_i8::Line> for Line {
+    fn from(r: line_i8::Line) -> Self {
+        Line { min: Point::from(r.min), max: Point::from(r.max) }
+    }
+}
+
+impl From<line_i16::Line> for Line {
+    fn from(r: line_i16::Line) -> Self {
+        Line { min: Point::from(r.min), max: Point::from(r.max) }
+    }
+}
+
+impl From<line_i32::Line> for Line {
+    fn from(r: line_i32::Line) -> Self {
+        Line { min: Point::from(r.min), max: Point::from(r.max) }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::Line;
+    use crate::matrix::d1::{
+        line::{line_i8, line_i16, line_i32},
+        point::point_i64::Point,
+    };
+
+    const MIN: i64 = i64::MIN;
+    const MAX: i64 = i64::MAX;
+
+    #[test]
+    fn line() {
+        assert_eq!(Line::largest(), Line { min: Point { i: MIN }, max: Point { i: MAX } });
+        assert_eq!(Line::min(), Line { min: Point { i: MIN }, max: Point { i: MIN } });
+        assert_eq!(Line::max(), Line { min: Point { i: MAX }, max: Point { i: MAX } });
+        assert_eq!(Line::of(MIN, 1), Line { min: Point { i: MIN }, max: Point { i: 1 } });
+    }
+
+    #[test]
+    fn to_string() {
+        assert_eq!(Line::largest().to_string(), "((-9223372036854775808), (9223372036854775807))");
+        assert_eq!(Line::of(MIN, 0).to_string(), "((-9223372036854775808), (0))");
+    }
+
+    #[test]
+    fn from() {
+        assert_eq!(Line::from(line_i8::Line::largest()), Line { min: Point { i: i8::MIN.into() }, max: Point { i: i8::MAX.into() } });
+        assert_eq!(Line::from(line_i16::Line::largest()), Line { min: Point { i: i16::MIN.into() }, max: Point { i: i16::MAX.into() } });
+        assert_eq!(Line::from(line_i32::Line::largest()), Line { min: Point { i: i32::MIN.into() }, max: Point { i: i32::MAX.into() } });
+    }
+}

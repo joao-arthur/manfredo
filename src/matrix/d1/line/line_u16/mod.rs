@@ -31,8 +31,8 @@ impl std::fmt::Display for Line {
 }
 
 impl From<line_u8::Line> for Line {
-    fn from(r: line_u8::Line) -> Self {
-        Line { min: Point::from(r.min), max: Point::from(r.max) }
+    fn from(l: line_u8::Line) -> Self {
+        Line { min: Point::from(l.min), max: Point::from(l.max) }
     }
 }
 

@@ -1,20 +1,24 @@
 use crate::cartesian::d2::point::point_i8::Point;
 
+mod area;
+
+pub use self::area::area;
+
 #[derive(Eq, PartialEq, Debug, Clone)]
 pub struct Circle {
-    pub center: Point,
-    pub radius: u8,
+    pub p: Point,
+    pub r: u8,
 }
 
 impl Circle {
-    pub fn of(center: Point, radius: u8) -> Self {
-       Circle { center, radius }
+    pub fn of(p: Point, r: u8) -> Self {
+        Circle { p, r }
     }
 }
 
 impl std::fmt::Display for Circle {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "({}, {})", self.center, self.radius)
+        write!(f, "({}, {})", self.p, self.r)
     }
 }
 
@@ -28,10 +32,10 @@ mod tests {
 
     #[test]
     fn circle() {
-        assert_eq!(Circle::of(Point::of(MIN, MIN), u8::MAX), Circle { center: Point { x: MIN, y: MIN }, radius: u8::MAX });
-        assert_eq!(Circle::of(Point::of(MIN, MAX), u8::MAX), Circle { center: Point { x: MIN, y: MAX }, radius: u8::MAX });
-        assert_eq!(Circle::of(Point::of(MAX, MIN), u8::MAX), Circle { center: Point { x: MAX, y: MIN }, radius: u8::MAX });
-        assert_eq!(Circle::of(Point::of(MAX, MAX), u8::MAX), Circle { center: Point { x: MAX, y: MAX }, radius: u8::MAX });
+        assert_eq!(Circle::of(Point::of(MIN, MIN), u8::MAX), Circle { p: Point { x: MIN, y: MIN }, r: u8::MAX });
+        assert_eq!(Circle::of(Point::of(MIN, MAX), u8::MAX), Circle { p: Point { x: MIN, y: MAX }, r: u8::MAX });
+        assert_eq!(Circle::of(Point::of(MAX, MIN), u8::MAX), Circle { p: Point { x: MAX, y: MIN }, r: u8::MAX });
+        assert_eq!(Circle::of(Point::of(MAX, MAX), u8::MAX), Circle { p: Point { x: MAX, y: MAX }, r: u8::MAX });
     }
 
     #[test]

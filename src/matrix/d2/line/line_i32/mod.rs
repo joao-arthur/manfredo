@@ -34,14 +34,14 @@ impl std::fmt::Display for Line {
 }
 
 impl From<line_i8::Line> for Line {
-    fn from(r: line_i8::Line) -> Self {
-        Line { min: point_i32::Point::from(r.min), max: point_i32::Point::from(r.max) }
+    fn from(l: line_i8::Line) -> Self {
+        Line { min: point_i32::Point::from(l.min), max: point_i32::Point::from(l.max) }
     }
 }
 
 impl From<line_i16::Line> for Line {
-    fn from(r: line_i16::Line) -> Self {
-        Line { min: point_i32::Point::from(r.min), max: point_i32::Point::from(r.max) }
+    fn from(l: line_i16::Line) -> Self {
+        Line { min: point_i32::Point::from(l.min), max: point_i32::Point::from(l.max) }
     }
 }
 

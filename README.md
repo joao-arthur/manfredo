@@ -86,8 +86,6 @@ let e = rect_i32::wrapping_add_assign(&mut a, &b);
 
 ## 🚧 Roadmap
 
-- 2D
-  - [ ] `Circle` Area
 - 3D
   - [ ] `Sphere`
   - [ ] `Cuboid`

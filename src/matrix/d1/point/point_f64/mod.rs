@@ -63,7 +63,7 @@ mod tests {
 
     #[test]
     fn from() {
-        assert_eq!(Point::from(point_f32::Point::min()), Point { i: -16777216.0 });
-        assert_eq!(Point::from(point_f32::Point::max()), Point { i: 16777215.0 });
+        assert_eq!(Point::from(point_f32::Point::min()), Point { i: point_f32::MIN.into() });
+        assert_eq!(Point::from(point_f32::Point::max()), Point { i: point_f32::MAX.into() });
     }
 }

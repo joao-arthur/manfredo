@@ -4,6 +4,8 @@ mod delta;
 pub use self::add::{checked_add, checked_add_assign, saturating_add, saturating_add_assign, try_checked_add, try_checked_add_assign, wrapping_add, wrapping_add_assign};
 pub use self::delta::delta;
 
+const MAX: u8 = u8::MAX;
+
 #[derive(Eq, PartialEq, Debug, Clone, Hash)]
 pub struct Point {
     pub x: u8,
@@ -31,13 +33,13 @@ impl std::fmt::Display for Point {
 
 #[cfg(test)]
 mod tests {
-    use super::Point;
+    use super::{MAX, Point};
 
     #[test]
     fn point() {
         assert_eq!(Point::of(10), Point { x: 10 });
         assert_eq!(Point::min(), Point { x: 0 });
-        assert_eq!(Point::max(), Point { x: u8::MAX });
+        assert_eq!(Point::max(), Point { x: MAX });
     }
 
     #[test]

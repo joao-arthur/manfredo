@@ -4,6 +4,9 @@ mod delta;
 pub use self::add::{checked_add, checked_add_assign, saturating_add, saturating_add_assign, try_checked_add, try_checked_add_assign, wrapping_add, wrapping_add_assign};
 pub use self::delta::delta;
 
+const MIN: i8 = i8::MIN;
+const MAX: i8 = i8::MAX;
+
 #[derive(Eq, PartialEq, Debug, Clone, Hash)]
 pub struct Point {
     pub i: i8,
@@ -15,11 +18,11 @@ impl Point {
     }
 
     pub fn min() -> Self {
-        Point { i: i8::MIN }
+        Point { i: MIN }
     }
 
     pub fn max() -> Self {
-        Point { i: i8::MAX }
+        Point { i: MAX }
     }
 }
 
@@ -31,14 +34,14 @@ impl std::fmt::Display for Point {
 
 #[cfg(test)]
 mod tests {
-    use super::Point;
+    use super::{MAX, MIN, Point};
 
     #[test]
     fn point() {
         assert_eq!(Point::of(-10), Point { i: -10 });
         assert_eq!(Point::of(10), Point { i: 10 });
-        assert_eq!(Point::min(), Point { i: i8::MIN });
-        assert_eq!(Point::max(), Point { i: i8::MAX });
+        assert_eq!(Point::min(), Point { i: MIN });
+        assert_eq!(Point::max(), Point { i: MAX });
     }
 
     #[test]

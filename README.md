@@ -87,10 +87,12 @@ let e = rect_i32::wrapping_add_assign(&mut a, &b);
 ## 🚧 Roadmap
 
 - 3D
+  - [ ] `Point` 
   - [ ] `Sphere`
   - [ ] `Cuboid`
   - [ ] `Line`
 - 4D
+  - [ ] `HyperPoint`
   - [ ] `HyperLine`
   - [ ] `HyperSphere`
   - [ ] `HyperCuboid`

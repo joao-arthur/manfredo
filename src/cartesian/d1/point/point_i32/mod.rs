@@ -6,6 +6,9 @@ mod delta;
 pub use self::add::{checked_add, checked_add_assign, saturating_add, saturating_add_assign, try_checked_add, try_checked_add_assign, wrapping_add, wrapping_add_assign};
 pub use self::delta::delta;
 
+const MIN: i32 = i32::MIN;
+const MAX: i32 = i32::MAX;
+
 #[derive(Eq, PartialEq, Debug, Clone, Hash)]
 pub struct Point {
     pub x: i32,
@@ -17,11 +20,11 @@ impl Point {
     }
 
     pub fn min() -> Self {
-        Point { x: i32::MIN }
+        Point { x: MIN }
     }
 
     pub fn max() -> Self {
-        Point { x: i32::MAX }
+        Point { x: MAX }
     }
 }
 
@@ -45,15 +48,15 @@ impl From<point_i16::Point> for Point {
 
 #[cfg(test)]
 mod tests {
-    use super::Point;
+    use super::{MAX, MIN, Point};
     use crate::cartesian::d1::point::{point_i8, point_i16};
 
     #[test]
     fn point() {
         assert_eq!(Point::of(-10), Point { x: -10 });
         assert_eq!(Point::of(10), Point { x: 10 });
-        assert_eq!(Point::min(), Point { x: i32::MIN });
-        assert_eq!(Point::max(), Point { x: i32::MAX });
+        assert_eq!(Point::min(), Point { x: MIN });
+        assert_eq!(Point::max(), Point { x: MAX });
     }
 
     #[test]

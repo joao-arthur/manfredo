@@ -8,6 +8,9 @@ pub use self::add::{checked_add, checked_add_assign, saturating_add, saturating_
 pub use self::delta::{delta, delta_max, delta_min, delta_x, delta_y};
 pub use self::distance::distance;
 
+const MIN: i32 = i32::MIN;
+const MAX: i32 = i32::MAX;
+
 #[derive(Eq, PartialEq, Debug, Clone, Hash)]
 pub struct Point {
     pub x: i32,
@@ -20,11 +23,11 @@ impl Point {
     }
 
     pub fn min() -> Self {
-        Point { x: i32::MIN, y: i32::MIN }
+        Point { x: MIN, y: MIN }
     }
 
     pub fn max() -> Self {
-        Point { x: i32::MAX, y: i32::MAX }
+        Point { x: MAX, y: MAX }
     }
 }
 
@@ -48,19 +51,21 @@ impl From<point_i16::Point> for Point {
 
 #[cfg(test)]
 mod tests {
-    use super::Point;
+    use super::{MAX, MIN, Point};
     use crate::cartesian::d2::point::{point_i8, point_i16};
 
     #[test]
     fn point() {
-        assert_eq!(Point::of(i32::MIN, i32::MAX), Point { x: i32::MIN, y: i32::MAX });
-        assert_eq!(Point::min(), Point { x: i32::MIN, y: i32::MIN });
-        assert_eq!(Point::max(), Point { x: i32::MAX, y: i32::MAX });
+        assert_eq!(Point::of(MIN, MAX), Point { x: MIN, y: MAX });
+        assert_eq!(Point::of(MAX, MIN), Point { x: MAX, y: MIN });
+        assert_eq!(Point::min(), Point { x: MIN, y: MIN });
+        assert_eq!(Point::max(), Point { x: MAX, y: MAX });
     }
 
     #[test]
     fn to_string() {
-        assert_eq!(Point::of(i32::MIN, i32::MAX).to_string(), "(-2147483648, 2147483647)");
+        assert_eq!(Point::of(MIN, MAX).to_string(), "(-2147483648, 2147483647)");
+        assert_eq!(Point::of(MAX, MIN).to_string(), "(2147483647, -2147483648)");
         assert_eq!(Point::min().to_string(), "(-2147483648, -2147483648)");
         assert_eq!(Point::max().to_string(), "(2147483647, 2147483647)");
     }

@@ -21,7 +21,7 @@ impl Point {
     }
 
     pub fn max() -> Self {
-        Point { x: u8::MAX }
+        Point { x: MAX }
     }
 }
 

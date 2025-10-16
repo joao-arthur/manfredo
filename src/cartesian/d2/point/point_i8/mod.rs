@@ -6,6 +6,9 @@ pub use self::add::{checked_add, checked_add_assign, saturating_add, saturating_
 pub use self::delta::{delta, delta_max, delta_min, delta_x, delta_y};
 pub use self::distance::distance;
 
+const MIN: i8 = i8::MIN;
+const MAX: i8 = i8::MAX;
+
 #[derive(Eq, PartialEq, Debug, Clone, Hash)]
 pub struct Point {
     pub x: i8,
@@ -18,11 +21,11 @@ impl Point {
     }
 
     pub fn min() -> Self {
-        Point { x: i8::MIN, y: i8::MIN }
+        Point { x: MIN, y: MIN }
     }
 
     pub fn max() -> Self {
-        Point { x: i8::MAX, y: i8::MAX }
+        Point { x: MAX, y: MAX }
     }
 }
 
@@ -34,18 +37,20 @@ impl std::fmt::Display for Point {
 
 #[cfg(test)]
 mod tests {
-    use super::Point;
+    use super::{MAX, MIN, Point};
 
     #[test]
     fn point() {
-        assert_eq!(Point::of(i8::MIN, i8::MAX), Point { x: i8::MIN, y: i8::MAX });
-        assert_eq!(Point::min(), Point { x: i8::MIN, y: i8::MIN });
-        assert_eq!(Point::max(), Point { x: i8::MAX, y: i8::MAX });
+        assert_eq!(Point::of(MIN, MAX), Point { x: MIN, y: MAX });
+        assert_eq!(Point::of(MAX, MIN), Point { x: MAX, y: MIN });
+        assert_eq!(Point::min(), Point { x: MIN, y: MIN });
+        assert_eq!(Point::max(), Point { x: MAX, y: MAX });
     }
 
     #[test]
     fn to_string() {
-        assert_eq!(Point::of(i8::MIN, i8::MAX).to_string(), "(-128, 127)");
+        assert_eq!(Point::of(MIN, MAX).to_string(), "(-128, 127)");
+        assert_eq!(Point::of(MAX, MIN).to_string(), "(127, -128)");
         assert_eq!(Point::min().to_string(), "(-128, -128)");
         assert_eq!(Point::max().to_string(), "(127, 127)");
     }

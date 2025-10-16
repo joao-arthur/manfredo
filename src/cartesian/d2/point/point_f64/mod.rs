@@ -51,6 +51,7 @@ mod tests {
     #[test]
     fn point() {
         assert_eq!(Point::of(MIN, MAX), Point { x: MIN, y: MAX });
+        assert_eq!(Point::of(MAX, MIN), Point { x: MAX, y: MIN });
         assert_eq!(Point::min(), Point { x: MIN, y: MIN });
         assert_eq!(Point::max(), Point { x: MAX, y: MAX });
     }
@@ -58,6 +59,7 @@ mod tests {
     #[test]
     fn to_string() {
         assert_eq!(Point::of(MIN, MAX).to_string(), "(-9007199254740992, 9007199254740991)");
+        assert_eq!(Point::of(MAX, MIN).to_string(), "(9007199254740991, -9007199254740992)");
         assert_eq!(Point::min().to_string(), "(-9007199254740992, -9007199254740992)");
         assert_eq!(Point::max().to_string(), "(9007199254740991, 9007199254740991)");
     }

@@ -3,7 +3,7 @@ use std::f32;
 use super::Circle;
 
 pub fn area(c: &Circle) -> f32 {
-    f32::consts::PI * c.r as f32 * c.r as f32
+    f32::consts::PI * c.r * c.r
 }
 
 #[cfg(test)]
@@ -16,10 +16,10 @@ mod tests {
 
     #[test]
     fn test_area() {
-        assert_eq!(area(&Circle::of(Point::of(0.0, 0.0), 2.0)), 12.5663706);
-        assert_eq!(area(&Circle::of(Point::of(0.0, 0.0), 3.0)), 28.2743338);
-        assert_eq!(area(&Circle::of(Point::of(0.0, 0.0), 4.0)), 50.2654824);
-        assert_eq!(area(&Circle::of(Point::of(0.0, 0.0), 5.0)), 78.5398163);
+        assert_eq!(area(&Circle::of(Point::of(0.0, 0.0), 2.0)), 12.566_371);
+        assert_eq!(area(&Circle::of(Point::of(0.0, 0.0), 3.0)), 28.274_334);
+        assert_eq!(area(&Circle::of(Point::of(0.0, 0.0), 4.0)), 50.265_484);
+        assert_eq!(area(&Circle::of(Point::of(0.0, 0.0), 5.0)), 78.539_82);
     }
 
     #[test]

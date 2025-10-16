@@ -3,7 +3,7 @@ use std::f64;
 use super::Circle;
 
 pub fn area(c: &Circle) -> f64 {
-    f64::consts::PI * c.r as f64 * c.r as f64
+    f64::consts::PI * c.r * c.r
 }
 
 #[cfg(test)]
@@ -24,14 +24,14 @@ mod tests {
 
     #[test]
     fn area_powers_of_10() {
-        assert_eq!(area(&Circle::of(Point::of(0.0, 0.0), 1.0)), 3.1415926535897932);
-        assert_eq!(area(&Circle::of(Point::of(0.0, 0.0), 10.0)), 314.15926535897932);
+        assert_eq!(area(&Circle::of(Point::of(0.0, 0.0), 1.0)), 3.141_592_653_589_793);
+        assert_eq!(area(&Circle::of(Point::of(0.0, 0.0), 10.0)), 314.159_265_358_979_3);
         assert_eq!(area(&Circle::of(Point::of(0.0, 0.0), 100.0)), 31415.926535897932);
-        assert_eq!(area(&Circle::of(Point::of(0.0, 0.0), 1000.0)), 3141592.6535897932);
+        assert_eq!(area(&Circle::of(Point::of(0.0, 0.0), 1000.0)), 3_141_592.653_589_793);
         assert_eq!(area(&Circle::of(Point::of(0.0, 0.0), 10000.0)), 314159265.35897932);
-        assert_eq!(area(&Circle::of(Point::of(0.0, 0.0), 100000.0)), 31415926535.897932);
-        assert_eq!(area(&Circle::of(Point::of(0.0, 0.0), 1000000.0)), 3141592653589.7932);
-        assert_eq!(area(&Circle::of(Point::of(0.0, 0.0), 10000000.0)), 314159265358979.32);
+        assert_eq!(area(&Circle::of(Point::of(0.0, 0.0), 100000.0)), 31_415_926_535.897_93);
+        assert_eq!(area(&Circle::of(Point::of(0.0, 0.0), 1000000.0)), 3_141_592_653_589.793);
+        assert_eq!(area(&Circle::of(Point::of(0.0, 0.0), 10000000.0)), 314_159_265_358_979.3);
     }
 
     #[test]

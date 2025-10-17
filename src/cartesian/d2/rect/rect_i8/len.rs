@@ -9,7 +9,7 @@ pub fn len_y(r: &Rect) -> u8 {
 }
 
 pub fn len_max(r: &Rect) -> u8 {
-    std::cmp::max(len_x(r), len_y(r))
+    len_x(r).max(len_y(r))
 }
 
 #[cfg(test)]

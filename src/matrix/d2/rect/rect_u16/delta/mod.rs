@@ -10,11 +10,11 @@ pub fn delta_col(r: &Rect) -> u16 {
 }
 
 pub fn delta_min(r: &Rect) -> u16 {
-    std::cmp::min(delta_row(r), delta_col(r))
+    delta_row(r).min(delta_col(r))
 }
 
 pub fn delta_max(r: &Rect) -> u16 {
-    std::cmp::max(delta_row(r), delta_col(r))
+    delta_row(r).max(delta_col(r))
 }
 
 #[cfg(test)]

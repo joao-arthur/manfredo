@@ -9,7 +9,7 @@ pub fn len_col(r: &Rect) -> u16 {
 }
 
 pub fn len_max(r: &Rect) -> u16 {
-    std::cmp::max(len_row(r), len_col(r))
+    len_row(r).max(len_col(r))
 }
 
 #[cfg(test)]

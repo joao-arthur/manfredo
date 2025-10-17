@@ -10,11 +10,11 @@ pub fn delta_y(r: &Rect) -> u8 {
 }
 
 pub fn delta_min(r: &Rect) -> u8 {
-    std::cmp::min(delta_x(r), delta_y(r))
+    delta_x(r).min(delta_y(r))
 }
 
 pub fn delta_max(r: &Rect) -> u8 {
-    std::cmp::max(delta_x(r), delta_y(r))
+    delta_x(r).max(delta_y(r))
 }
 
 #[cfg(test)]

@@ -13,7 +13,7 @@ mod tests {
     #[test]
     fn test_3x3() {
         let cam = Cam::of(0, 0, 2, 2);
-        assert_eq!(cartesian_in_cam_to_matrix(&Cartesian::of(0, 0), &cam), Matrix::of(2, 0));
+        assert_eq!(cartesian_in_cam_to_matrix(&Cartesian::min(), &cam), Matrix::of(2, 0));
         assert_eq!(cartesian_in_cam_to_matrix(&Cartesian::of(0, 1), &cam), Matrix::of(1, 0));
         assert_eq!(cartesian_in_cam_to_matrix(&Cartesian::of(0, 2), &cam), Matrix::of(0, 0));
 
@@ -53,7 +53,7 @@ mod tests {
     #[test]
     fn bounds() {
         let cam = Cam::largest();
-        assert_eq!(cartesian_in_cam_to_matrix(&Cartesian::of(0, 0), &cam), Matrix::of(u32::MAX, 0));
+        assert_eq!(cartesian_in_cam_to_matrix(&Cartesian::min(), &cam), Matrix::of(u32::MAX, 0));
         assert_eq!(cartesian_in_cam_to_matrix(&Cartesian::of(u32::MAX, 0), &cam), Matrix::max());
         assert_eq!(cartesian_in_cam_to_matrix(&Cartesian::of(0, u32::MAX), &cam), Matrix::of(0, 0));
         assert_eq!(cartesian_in_cam_to_matrix(&Cartesian::max(), &cam), Matrix::of(0, u32::MAX));

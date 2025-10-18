@@ -53,7 +53,7 @@ mod tests {
     #[test]
     fn bounds() {
         let cam = Cam::largest();
-        assert_eq!(cartesian_to_matrix_in_cam(&Cartesian::of(0, 0), &cam), Matrix::of(u16::MAX, 0));
+        assert_eq!(cartesian_to_matrix_in_cam(&Cartesian::min(), &cam), Matrix::of(u16::MAX, 0));
         assert_eq!(cartesian_to_matrix_in_cam(&Cartesian::of(u16::MAX, 0), &cam), Matrix::max());
         assert_eq!(cartesian_to_matrix_in_cam(&Cartesian::of(0, u16::MAX), &cam), Matrix::of(0, 0));
         assert_eq!(cartesian_to_matrix_in_cam(&Cartesian::max(), &cam), Matrix::of(0, u16::MAX));

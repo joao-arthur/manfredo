@@ -27,14 +27,14 @@ mod tests {
 
     #[test]
     fn test_delta_row() {
-        assert_eq!(delta_row(&Point::of(0, 0), &Point::of(MAX, 0)), MAX);
-        assert_eq!(delta_row(&Point::of(0, 0), &Point::of(0, MAX)), 0);
+        assert_eq!(delta_row(&Point::min(), &Point::of(MAX, 0)), MAX);
+        assert_eq!(delta_row(&Point::min(), &Point::of(0, MAX)), 0);
     }
 
     #[test]
     fn test_delta_col() {
-        assert_eq!(delta_col(&Point::of(0, 0), &Point::of(MAX, 0)), 0);
-        assert_eq!(delta_col(&Point::of(0, 0), &Point::of(0, MAX)), MAX);
+        assert_eq!(delta_col(&Point::min(), &Point::of(MAX, 0)), 0);
+        assert_eq!(delta_col(&Point::min(), &Point::of(0, MAX)), MAX);
     }
 
     #[test]
@@ -51,7 +51,7 @@ mod tests {
 
     #[test]
     fn test_delta() {
-        assert_eq!(delta(&Point::of(0, 0), &Point::of(0, 0)), Point::min());
+        assert_eq!(delta(&Point::min(), &Point::min()), Point::min());
         assert_eq!(delta(&Point::min(), &Point::max()), Point::max());
     }
 }

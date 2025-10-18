@@ -13,7 +13,7 @@ mod tests {
 
     #[test]
     fn delta_0() {
-        assert_eq!(distance(&Point::of(0, 0), &Point::of(0, 0)), 0.0);
+        assert_eq!(distance(&Point::min(), &Point::min()), 0.0);
         assert_eq!(distance(&Point::of(0, 1), &Point::of(0, 1)), 0.0);
         assert_eq!(distance(&Point::of(1, 0), &Point::of(1, 0)), 0.0);
         assert_eq!(distance(&Point::of(1, 1), &Point::of(1, 1)), 0.0);
@@ -33,14 +33,14 @@ mod tests {
 
     #[test]
     fn pythagorean() {
-        assert_eq!(distance(&Point::of(0, 0), &Point::of(3, 4)), 5.0);
-        assert_eq!(distance(&Point::of(0, 0), &Point::of(5, 12)), 13.0);
-        assert_eq!(distance(&Point::of(0, 0), &Point::of(8, 15)), 17.0);
+        assert_eq!(distance(&Point::min(), &Point::of(3, 4)), 5.0);
+        assert_eq!(distance(&Point::min(), &Point::of(5, 12)), 13.0);
+        assert_eq!(distance(&Point::min(), &Point::of(8, 15)), 17.0);
     }
 
     #[test]
     fn square() {
-        assert_eq!(distance(&Point::of(0, 0), &Point::of(100, 100)), 141.4213562373095);
-        assert_eq!(distance(&Point::of(0, 0), &Point::of(200, 200)), 282.842712474619);
+        assert_eq!(distance(&Point::min(), &Point::of(100, 100)), 141.4213562373095);
+        assert_eq!(distance(&Point::min(), &Point::of(200, 200)), 282.842712474619);
     }
 }

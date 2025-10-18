@@ -6,8 +6,8 @@ mod delta;
 pub use self::add::{checked_add, checked_add_assign, saturating_add, saturating_add_assign, try_checked_add, try_checked_add_assign, wrapping_add, wrapping_add_assign};
 pub use self::delta::delta;
 
-const MIN: i32 = i32::MIN;
-const MAX: i32 = i32::MAX;
+pub const MIN: i32 = i32::MIN;
+pub const MAX: i32 = i32::MAX;
 
 #[derive(Eq, PartialEq, Debug, Clone, Hash)]
 pub struct Point {

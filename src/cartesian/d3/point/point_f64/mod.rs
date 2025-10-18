@@ -1,5 +1,9 @@
 use super::point_f32;
 
+mod delta;
+
+pub use self::delta::{delta, delta_max, delta_min, delta_x, delta_y, delta_z};
+
 pub const MIN: f64 = -9_007_199_254_740_992.0;
 pub const MAX: f64 = 9_007_199_254_740_991.0;
 

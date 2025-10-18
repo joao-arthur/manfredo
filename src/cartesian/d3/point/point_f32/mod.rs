@@ -1,6 +1,10 @@
 pub const MIN: f32 = -16_777_216.0;
 pub const MAX: f32 = 16_777_215.0;
 
+mod delta;
+
+pub use self::delta::{delta, delta_max, delta_min, delta_x, delta_y, delta_z};
+
 #[derive(PartialEq, Debug, Clone)]
 pub struct Point {
     pub x: f32,

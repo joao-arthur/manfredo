@@ -41,18 +41,18 @@ mod tests {
 
     #[test]
     fn circle() {
-        assert_eq!(Circle::of(Point::of(MIN, MIN), MAX), Circle { p: Point { x: MIN, y: MIN }, r: MAX });
+        assert_eq!(Circle::of(Point::min(), MAX), Circle { p: Point { x: MIN, y: MIN }, r: MAX });
         assert_eq!(Circle::of(Point::of(MIN, MAX), MAX), Circle { p: Point { x: MIN, y: MAX }, r: MAX });
         assert_eq!(Circle::of(Point::of(MAX, MIN), MAX), Circle { p: Point { x: MAX, y: MIN }, r: MAX });
-        assert_eq!(Circle::of(Point::of(MAX, MAX), MAX), Circle { p: Point { x: MAX, y: MAX }, r: MAX });
+        assert_eq!(Circle::of(Point::max(), MAX), Circle { p: Point { x: MAX, y: MAX }, r: MAX });
     }
 
     #[test]
     fn to_string() {
-        assert_eq!(Circle::of(Point::of(MIN, MIN), MAX).to_string(), "((-9007199254740992, -9007199254740992), 9007199254740991)");
+        assert_eq!(Circle::of(Point::min(), MAX).to_string(), "((-9007199254740992, -9007199254740992), 9007199254740991)");
         assert_eq!(Circle::of(Point::of(MIN, MAX), MAX).to_string(), "((-9007199254740992, 9007199254740991), 9007199254740991)");
         assert_eq!(Circle::of(Point::of(MAX, MIN), MAX).to_string(), "((9007199254740991, -9007199254740992), 9007199254740991)");
-        assert_eq!(Circle::of(Point::of(MAX, MAX), MAX).to_string(), "((9007199254740991, 9007199254740991), 9007199254740991)");
+        assert_eq!(Circle::of(Point::max(), MAX).to_string(), "((9007199254740991, 9007199254740991), 9007199254740991)");
     }
 
     #[test]

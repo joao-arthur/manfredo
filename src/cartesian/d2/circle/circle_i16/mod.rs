@@ -41,18 +41,18 @@ mod tests {
 
     #[test]
     fn circle() {
-        assert_eq!(Circle::of(Point::of(MIN, MIN), u16::MAX), Circle { p: Point { x: MIN, y: MIN }, r: u16::MAX });
+        assert_eq!(Circle::of(Point::min(), u16::MAX), Circle { p: Point { x: MIN, y: MIN }, r: u16::MAX });
         assert_eq!(Circle::of(Point::of(MIN, MAX), u16::MAX), Circle { p: Point { x: MIN, y: MAX }, r: u16::MAX });
         assert_eq!(Circle::of(Point::of(MAX, MIN), u16::MAX), Circle { p: Point { x: MAX, y: MIN }, r: u16::MAX });
-        assert_eq!(Circle::of(Point::of(MAX, MAX), u16::MAX), Circle { p: Point { x: MAX, y: MAX }, r: u16::MAX });
+        assert_eq!(Circle::of(Point::max(), u16::MAX), Circle { p: Point { x: MAX, y: MAX }, r: u16::MAX });
     }
 
     #[test]
     fn to_string() {
-        assert_eq!(Circle::of(Point::of(MIN, MIN), u16::MAX).to_string(), "((-32768, -32768), 65535)");
+        assert_eq!(Circle::of(Point::min(), u16::MAX).to_string(), "((-32768, -32768), 65535)");
         assert_eq!(Circle::of(Point::of(MIN, MAX), u16::MAX).to_string(), "((-32768, 32767), 65535)");
         assert_eq!(Circle::of(Point::of(MAX, MIN), u16::MAX).to_string(), "((32767, -32768), 65535)");
-        assert_eq!(Circle::of(Point::of(MAX, MAX), u16::MAX).to_string(), "((32767, 32767), 65535)");
+        assert_eq!(Circle::of(Point::max(), u16::MAX).to_string(), "((32767, 32767), 65535)");
     }
 
     #[test]

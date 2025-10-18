@@ -1,10 +1,10 @@
 use super::delta;
-use crate::cartesian::d2::point::point_f32::{MAX, Point};
+use crate::cartesian::d2::point::point_f32::Point;
 
 #[test]
 fn test_delta() {
     assert_eq!(delta(&Point::of(0.0, 0.0), &Point::of(0.0, 0.0)), Point::of(0.0, 0.0));
-    assert_eq!(delta(&Point::of(-8_388_608.0, -8_388_608.0), &Point::of(8_388_607.0, 8_388_607.0)), Point::of(MAX, MAX));
+    assert_eq!(delta(&Point::of(-8_388_608.0, -8_388_608.0), &Point::of(8_388_607.0, 8_388_607.0)), Point::max());
 }
 
 #[test]

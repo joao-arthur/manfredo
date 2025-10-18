@@ -1,6 +1,10 @@
 use super::{point_u8, point_u16};
 
-pub const MAX: u32 = u32::MAX;
+mod delta;
+
+pub use self::delta::{delta, delta_max, delta_min, delta_x, delta_y, delta_z};
+
+const MAX: u32 = u32::MAX;
 
 #[derive(Eq, PartialEq, Debug, Clone, Hash)]
 pub struct Point {

@@ -1,7 +1,11 @@
 use super::{point_i8, point_i16};
 
-pub const MIN: i32 = i32::MIN;
-pub const MAX: i32 = i32::MAX;
+mod delta;
+
+pub use self::delta::{delta, delta_max, delta_min, delta_x, delta_y, delta_z};
+
+const MIN: i32 = i32::MIN;
+const MAX: i32 = i32::MAX;
 
 #[derive(Eq, PartialEq, Debug, Clone, Hash)]
 pub struct Point {

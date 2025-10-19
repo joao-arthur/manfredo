@@ -7,10 +7,10 @@ pub fn contains_rect(outer: &Rect, r: &Rect) -> bool {
 #[cfg(test)]
 mod tests {
     use super::contains_rect;
-    use crate::cartesian::d2::rect::rect_i32::Rect;
-
-    const MIN: i32 = i32::MIN;
-    const MAX: i32 = i32::MAX;
+    use crate::cartesian::{
+        d1::point::point_i32::{MAX, MIN},
+        d2::rect::rect_i32::Rect,
+    };
 
     #[test]
     fn inside() {

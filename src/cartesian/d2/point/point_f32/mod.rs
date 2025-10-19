@@ -1,5 +1,4 @@
-pub const MIN: f32 = -16_777_216.0;
-pub const MAX: f32 = 16_777_215.0;
+use crate::cartesian::d1::point::point_f32::{MAX, MIN};
 
 mod add;
 mod delta;

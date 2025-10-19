@@ -1,5 +1,5 @@
 use super::Rect;
-use crate::cartesian::d2::point::point_f64::{MAX, MIN};
+use crate::cartesian::d1::point::point_f64::{MAX, MIN};
 
 pub fn try_checked_inflate_assign(r: &mut Rect) -> Option<()> {
     if r.min.x == MIN || r.min.y == MIN || r.max.x == MAX || r.max.y == MAX {

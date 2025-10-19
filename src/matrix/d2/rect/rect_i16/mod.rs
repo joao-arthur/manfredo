@@ -78,10 +78,10 @@ impl From<rect_i8::Rect> for Rect {
 #[cfg(test)]
 mod tests {
     use super::Rect;
-    use crate::matrix::d2::{point::point_i16::Point, rect::rect_i8};
-
-    const MIN: i16 = i16::MIN;
-    const MAX: i16 = i16::MAX;
+    use crate::matrix::{
+        d1::point::point_i16::{MAX, MIN},
+        d2::{point::point_i16::Point, rect::rect_i8},
+    };
 
     #[test]
     fn rect() {

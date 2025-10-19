@@ -1,8 +1,8 @@
 use super::saturating_add_assign;
-use crate::matrix::d2::rect::rect_i16::Rect;
-
-const MIN: i16 = i16::MIN;
-const MAX: i16 = i16::MAX;
+use crate::matrix::{
+    d1::point::point_i16::{MAX, MIN},
+    d2::rect::rect_i16::Rect,
+};
 
 #[test]
 fn test() {

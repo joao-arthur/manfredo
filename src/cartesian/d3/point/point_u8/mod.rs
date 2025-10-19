@@ -1,8 +1,8 @@
+use crate::cartesian::d1::point::point_u8::MAX;
+
 mod delta;
 
 pub use self::delta::{delta, delta_max, delta_min, delta_x, delta_y, delta_z};
-
-const MAX: u8 = u8::MAX;
 
 #[derive(Eq, PartialEq, Debug, Clone, Hash)]
 pub struct Point {

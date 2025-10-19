@@ -1,3 +1,5 @@
+use crate::cartesian::d1::point::point_u64::MAX;
+
 use super::{point_u8, point_u16, point_u32};
 
 mod add;
@@ -7,8 +9,6 @@ mod distance;
 pub use self::add::{checked_add, checked_add_assign, saturating_add, saturating_add_assign, try_checked_add, try_checked_add_assign, wrapping_add, wrapping_add_assign};
 pub use self::delta::{delta, delta_max, delta_min, delta_x, delta_y};
 pub use self::distance::distance;
-
-const MAX: u64 = u64::MAX;
 
 #[derive(Eq, PartialEq, Debug, Clone, Hash)]
 pub struct Point {

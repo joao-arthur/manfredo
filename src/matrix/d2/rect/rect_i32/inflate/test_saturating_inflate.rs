@@ -1,8 +1,8 @@
 use super::saturating_inflate;
-use crate::matrix::d2::rect::rect_i32::Rect;
-
-const MIN: i32 = i32::MIN;
-const MAX: i32 = i32::MAX;
+use crate::matrix::{
+    d1::point::point_i32::{MAX, MIN},
+    d2::rect::rect_i32::Rect,
+};
 
 #[test]
 fn min_bounds() {

@@ -1,4 +1,5 @@
 use super::point_i8;
+use crate::cartesian::d1::point::point_i16::{MAX, MIN};
 
 mod add;
 mod delta;
@@ -7,9 +8,6 @@ mod distance;
 pub use self::add::{checked_add, checked_add_assign, saturating_add, saturating_add_assign, try_checked_add, try_checked_add_assign, wrapping_add, wrapping_add_assign};
 pub use self::delta::{delta, delta_max, delta_min, delta_x, delta_y};
 pub use self::distance::distance;
-
-const MIN: i16 = i16::MIN;
-const MAX: i16 = i16::MAX;
 
 #[derive(Eq, PartialEq, Debug, Clone, Hash)]
 pub struct Point {
@@ -45,8 +43,11 @@ impl From<point_i8::Point> for Point {
 
 #[cfg(test)]
 mod tests {
-    use super::{MAX, MIN, Point};
-    use crate::cartesian::d2::point::point_i8;
+    use super::Point;
+    use crate::cartesian::{
+        d1::point::point_i16::{MAX, MIN},
+        d2::point::point_i8,
+    };
 
     #[test]
     fn point() {

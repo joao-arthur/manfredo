@@ -9,7 +9,7 @@ pub fn area(r: &Rect) -> f32 {
 #[cfg(test)]
 mod tests {
     use super::area;
-    use crate::cartesian::d2::{point::point_f32::MAX, rect::rect_f32::Rect};
+    use crate::cartesian::{d1::point::point_f32::MAX, d2::rect::rect_f32::Rect};
 
     #[test]
     fn test_area() {

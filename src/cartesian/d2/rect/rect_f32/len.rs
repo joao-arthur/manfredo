@@ -15,9 +15,9 @@ pub fn len_max(r: &Rect) -> f32 {
 #[cfg(test)]
 mod tests {
     use super::{len_max, len_x, len_y};
-    use crate::cartesian::d2::{
-        point::point_f32::{MAX, MIN},
-        rect::rect_f32::Rect,
+    use crate::cartesian::{
+        d1::point::point_f32::{MAX, MIN},
+        d2::rect::rect_f32::Rect,
     };
 
     #[test]

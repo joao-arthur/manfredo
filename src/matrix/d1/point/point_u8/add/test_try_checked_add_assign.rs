@@ -1,7 +1,8 @@
 use super::try_checked_add_assign;
-use crate::matrix::d1::point::{point_i8::Point as PointI, point_u8::Point};
-
-const MAX: u8 = u8::MAX;
+use crate::matrix::d1::point::{
+    point_i8::Point as PointI,
+    point_u8::{MAX, Point},
+};
 
 #[test]
 fn test() {

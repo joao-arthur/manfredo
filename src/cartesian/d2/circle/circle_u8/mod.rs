@@ -25,9 +25,7 @@ impl std::fmt::Display for Circle {
 #[cfg(test)]
 mod tests {
     use super::Circle;
-    use crate::cartesian::d2::point::point_u8::Point;
-
-    const MAX: u8 = u8::MAX;
+    use crate::cartesian::{d1::point::point_u8::MAX, d2::point::point_u8::Point};
 
     #[test]
     fn circle() {

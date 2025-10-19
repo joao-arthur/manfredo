@@ -56,10 +56,8 @@ mod tests {
     use super::Line;
     use crate::cartesian::d1::{
         line::{line_u8, line_u16, line_u32},
-        point::point_u64::Point,
+        point::point_u64::{MAX, Point},
     };
-
-    const MAX: u64 = u64::MAX;
 
     #[test]
     fn line() {

@@ -7,9 +7,7 @@ pub fn delta(p1: &Point, p2: &Point) -> u16 {
 #[cfg(test)]
 mod tests {
     use super::delta;
-    use crate::cartesian::d1::point::point_u16::Point;
-
-    const MAX: u16 = u16::MAX;
+    use crate::cartesian::d1::point::point_u16::{MAX, Point};
 
     #[test]
     fn test_delta() {

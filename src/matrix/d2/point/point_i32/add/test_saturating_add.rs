@@ -1,8 +1,8 @@
 use super::saturating_add;
-use crate::matrix::d2::point::point_i32::Point;
-
-const MIN: i32 = i32::MIN;
-const MAX: i32 = i32::MAX;
+use crate::matrix::{
+    d1::point::point_i32::{MAX, MIN},
+    d2::point::point_i32::Point,
+};
 
 #[test]
 fn test() {

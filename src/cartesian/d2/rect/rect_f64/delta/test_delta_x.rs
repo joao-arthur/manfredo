@@ -1,5 +1,5 @@
 use super::delta_x;
-use crate::cartesian::d2::{point::point_f64::MAX, rect::rect_f64::Rect};
+use crate::cartesian::{d1::point::point_f64::MAX, d2::rect::rect_f64::Rect};
 
 #[test]
 fn test_delta_x() {

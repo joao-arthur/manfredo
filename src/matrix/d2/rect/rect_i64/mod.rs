@@ -93,13 +93,13 @@ impl From<rect_i32::Rect> for Rect {
 #[cfg(test)]
 mod tests {
     use super::Rect;
-    use crate::matrix::d2::{
-        point::point_i64::Point,
-        rect::{rect_i8, rect_i16, rect_i32},
+    use crate::matrix::{
+        d1::point::point_i64::{MAX, MIN},
+        d2::{
+            point::point_i64::Point,
+            rect::{rect_i8, rect_i16, rect_i32},
+        },
     };
-
-    const MIN: i64 = i64::MIN;
-    const MAX: i64 = i64::MAX;
 
     #[test]
     fn rect() {

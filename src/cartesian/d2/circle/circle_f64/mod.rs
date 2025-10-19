@@ -31,11 +31,14 @@ impl From<circle_f32::Circle> for Circle {
 #[cfg(test)]
 mod tests {
     use super::Circle;
-    use crate::cartesian::d2::{
-        circle::circle_f32,
-        point::{
-            point_f32,
-            point_f64::{MAX, MIN, Point},
+    use crate::cartesian::{
+        d1::{
+            self,
+            point::point_f64::{MAX, MIN},
+        },
+        d2::{
+            circle::circle_f32,
+            point::{point_f32, point_f64::Point},
         },
     };
 
@@ -58,8 +61,8 @@ mod tests {
     #[test]
     fn from() {
         assert_eq!(
-            Circle::from(circle_f32::Circle::of(point_f32::Point::of(point_f32::MIN, point_f32::MAX), point_f32::MAX)),
-            Circle { p: Point { x: point_f32::MIN.into(), y: point_f32::MAX.into() }, r: point_f32::MAX.into() }
+            Circle::from(circle_f32::Circle::of(point_f32::Point::of(d1::point::point_f32::MIN, d1::point::point_f32::MAX), d1::point::point_f32::MAX)),
+            Circle { p: Point { x: d1::point::point_f32::MIN.into(), y: d1::point::point_f32::MAX.into() }, r: d1::point::point_f32::MAX.into() }
         );
     }
 }

@@ -112,12 +112,12 @@ impl From<rect_f32::Rect> for Rect {
 #[cfg(test)]
 mod tests {
     use super::Rect;
-    use crate::cartesian::d2::{
-        point::{
+    use crate::cartesian::{
+        d1::point::{
             point_f32,
-            point_f64::{MAX, MIN, Point},
+            point_f64::{MAX, MIN},
         },
-        rect::rect_f32,
+        d2::{point::point_f64::Point, rect::rect_f32},
     };
 
     #[test]

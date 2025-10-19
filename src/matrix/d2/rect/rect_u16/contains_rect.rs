@@ -7,9 +7,7 @@ pub fn contains_rect(outer: &Rect, r: &Rect) -> bool {
 #[cfg(test)]
 mod tests {
     use super::contains_rect;
-    use crate::matrix::d2::rect::rect_u16::Rect;
-
-    const MAX: u16 = u16::MAX;
+    use crate::matrix::{d1::point::point_u16::MAX, d2::rect::rect_u16::Rect};
 
     #[test]
     fn inside() {

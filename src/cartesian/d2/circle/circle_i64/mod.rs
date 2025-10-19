@@ -46,13 +46,13 @@ impl From<circle_i32::Circle> for Circle {
 #[cfg(test)]
 mod tests {
     use super::Circle;
-    use crate::cartesian::d2::{
-        circle::{circle_i8, circle_i16, circle_i32},
-        point::{point_i8, point_i16, point_i32, point_i64::Point},
+    use crate::cartesian::{
+        d1::point::point_i64::{MAX, MIN},
+        d2::{
+            circle::{circle_i8, circle_i16, circle_i32},
+            point::{point_i8, point_i16, point_i32, point_i64::Point},
+        },
     };
-
-    const MIN: i64 = i64::MIN;
-    const MAX: i64 = i64::MAX;
 
     #[test]
     fn circle() {

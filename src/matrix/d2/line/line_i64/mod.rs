@@ -54,13 +54,13 @@ impl From<line_i32::Line> for Line {
 #[cfg(test)]
 mod tests {
     use super::Line;
-    use crate::matrix::d2::{
-        line::{line_i8, line_i16, line_i32},
-        point::point_i64::Point,
+    use crate::matrix::{
+        d1::point::point_i64::{MAX, MIN},
+        d2::{
+            line::{line_i8, line_i16, line_i32},
+            point::point_i64::Point,
+        },
     };
-
-    const MIN: i64 = i64::MIN;
-    const MAX: i64 = i64::MAX;
 
     #[test]
     fn line() {

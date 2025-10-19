@@ -1,8 +1,8 @@
 use super::saturating_translate;
-use crate::cartesian::d2::{point::point_i8::Point, rect::rect_i8::Rect};
-
-const MIN: i8 = i8::MIN;
-const MAX: i8 = i8::MAX;
+use crate::cartesian::{
+    d1::point::point_i8::{MAX, MIN},
+    d2::{point::point_i8::Point, rect::rect_i8::Rect},
+};
 
 #[test]
 fn test() {

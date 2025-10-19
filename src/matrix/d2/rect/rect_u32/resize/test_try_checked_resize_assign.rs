@@ -1,7 +1,5 @@
 use super::try_checked_resize_assign;
-use crate::matrix::d2::rect::rect_u32::Rect;
-
-const MAX: u32 = u32::MAX;
+use crate::matrix::{d1::point::point_u32::MAX, d2::rect::rect_u32::Rect};
 
 #[test]
 fn odd() {

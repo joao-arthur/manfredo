@@ -1,8 +1,8 @@
 use super::wrapping_translate_assign;
-use crate::matrix::d2::{point::point_i64::Point, rect::rect_i64::Rect};
-
-const MIN: i64 = i64::MIN;
-const MAX: i64 = i64::MAX;
+use crate::matrix::{
+    d1::point::point_i64::{MAX, MIN},
+    d2::{point::point_i64::Point, rect::rect_i64::Rect},
+};
 
 #[test]
 fn test() {

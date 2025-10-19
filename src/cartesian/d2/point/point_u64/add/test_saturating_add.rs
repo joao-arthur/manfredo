@@ -1,7 +1,8 @@
 use super::saturating_add;
-use crate::cartesian::d2::point::{point_i64::Point as PointI, point_u64::Point};
-
-const MAX: u64 = u64::MAX;
+use crate::cartesian::{
+    d1::point::point_u64::MAX,
+    d2::point::{point_i64::Point as PointI, point_u64::Point},
+};
 
 #[test]
 fn test() {

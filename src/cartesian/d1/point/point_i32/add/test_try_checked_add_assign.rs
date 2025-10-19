@@ -1,8 +1,5 @@
 use super::try_checked_add_assign;
-use crate::cartesian::d1::point::point_i32::Point;
-
-const MIN: i32 = i32::MIN;
-const MAX: i32 = i32::MAX;
+use crate::cartesian::d1::point::point_i32::{MAX, MIN, Point};
 
 #[test]
 fn test() {

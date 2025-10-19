@@ -39,12 +39,12 @@ impl From<line_f32::Line> for Line {
 #[cfg(test)]
 mod tests {
     use super::Line;
-    use crate::cartesian::d2::{
-        line::line_f32,
-        point::{
+    use crate::cartesian::{
+        d1::point::{
             point_f32,
-            point_f64::{MAX, MIN, Point},
+            point_f64::{MAX, MIN},
         },
+        d2::{line::line_f32, point::point_f64::Point},
     };
 
     #[test]

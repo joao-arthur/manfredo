@@ -1,4 +1,5 @@
 use super::point_f32;
+use crate::cartesian::d1::point::point_f64::{MAX, MIN};
 
 mod add;
 mod delta;
@@ -7,9 +8,6 @@ mod distance;
 pub use self::add::{checked_add, checked_add_assign, saturating_add, saturating_add_assign, try_checked_add, try_checked_add_assign, wrapping_add, wrapping_add_assign};
 pub use self::delta::{delta, delta_max, delta_min, delta_x, delta_y};
 pub use self::distance::distance;
-
-pub const MIN: f64 = -9_007_199_254_740_992.0;
-pub const MAX: f64 = 9_007_199_254_740_991.0;
 
 #[derive(PartialEq, Debug, Clone)]
 pub struct Point {
@@ -46,7 +44,7 @@ impl From<point_f32::Point> for Point {
 #[cfg(test)]
 mod tests {
     use super::{MAX, MIN, Point};
-    use crate::cartesian::d2::point::point_f32;
+    use crate::cartesian::{d1, d2};
 
     #[test]
     fn point() {
@@ -66,7 +64,7 @@ mod tests {
 
     #[test]
     fn from() {
-        assert_eq!(Point::from(point_f32::Point::min()), Point { x: point_f32::MIN.into(), y: point_f32::MIN.into() });
-        assert_eq!(Point::from(point_f32::Point::max()), Point { x: point_f32::MAX.into(), y: point_f32::MAX.into() });
+        assert_eq!(Point::from(d2::point::point_f32::Point::min()), Point { x: d1::point::point_f32::MIN.into(), y: d1::point::point_f32::MIN.into() });
+        assert_eq!(Point::from(d2::point::point_f32::Point::max()), Point { x: d1::point::point_f32::MAX.into(), y: d1::point::point_f32::MAX.into() });
     }
 }

@@ -31,12 +31,13 @@ impl From<circle_u8::Circle> for Circle {
 #[cfg(test)]
 mod tests {
     use super::Circle;
-    use crate::cartesian::d2::{
-        circle::circle_u8,
-        point::{point_u8, point_u16::Point},
+    use crate::cartesian::{
+        d1::point::point_u16::MAX,
+        d2::{
+            circle::circle_u8,
+            point::{point_u8, point_u16::Point},
+        },
     };
-
-    const MAX: u16 = u16::MAX;
 
     #[test]
     fn circle() {

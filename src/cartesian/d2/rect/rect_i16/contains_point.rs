@@ -8,10 +8,10 @@ pub fn contains_point(r: &Rect, p: &Point) -> bool {
 #[cfg(test)]
 mod tests {
     use super::contains_point;
-    use crate::cartesian::d2::{point::point_i16::Point, rect::rect_i16::Rect};
-
-    const MIN: i16 = i16::MIN;
-    const MAX: i16 = i16::MAX;
+    use crate::cartesian::{
+        d1::point::point_i16::{MAX, MIN},
+        d2::{point::point_i16::Point, rect::rect_i16::Rect},
+    };
 
     #[test]
     fn inside_borders() {

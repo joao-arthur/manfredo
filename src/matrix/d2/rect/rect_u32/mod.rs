@@ -87,12 +87,13 @@ impl From<rect_u16::Rect> for Rect {
 #[cfg(test)]
 mod tests {
     use super::Rect;
-    use crate::matrix::d2::{
-        point::point_u32::Point,
-        rect::{rect_u8, rect_u16},
+    use crate::matrix::{
+        d1::point::point_u32::MAX,
+        d2::{
+            point::point_u32::Point,
+            rect::{rect_u8, rect_u16},
+        },
     };
-
-    const MAX: u32 = u32::MAX;
 
     #[test]
     fn rect() {

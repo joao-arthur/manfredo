@@ -1,4 +1,5 @@
 use super::{point_i8, point_i16};
+use crate::matrix::d1::point::point_i32::{MAX, MIN};
 
 mod add;
 mod delta;
@@ -20,11 +21,11 @@ impl Point {
     }
 
     pub fn min() -> Self {
-        Point { row: i32::MIN, col: i32::MIN }
+        Point { row: MIN, col: MIN }
     }
 
     pub fn max() -> Self {
-        Point { row: i32::MAX, col: i32::MAX }
+        Point { row: MAX, col: MAX }
     }
 }
 
@@ -49,18 +50,21 @@ impl From<point_i16::Point> for Point {
 #[cfg(test)]
 mod tests {
     use super::Point;
-    use crate::matrix::d2::point::{point_i8, point_i16};
+    use crate::matrix::{
+        d1::point::point_i32::{MAX, MIN},
+        d2::point::{point_i8, point_i16},
+    };
 
     #[test]
     fn point() {
-        assert_eq!(Point::of(i32::MIN, i32::MAX), Point { row: i32::MIN, col: i32::MAX });
-        assert_eq!(Point::min(), Point { row: i32::MIN, col: i32::MIN });
-        assert_eq!(Point::max(), Point { row: i32::MAX, col: i32::MAX });
+        assert_eq!(Point::of(MIN, MAX), Point { row: MIN, col: MAX });
+        assert_eq!(Point::min(), Point { row: MIN, col: MIN });
+        assert_eq!(Point::max(), Point { row: MAX, col: MAX });
     }
 
     #[test]
     fn to_string() {
-        assert_eq!(Point::of(i32::MIN, i32::MAX).to_string(), "(-2147483648, 2147483647)");
+        assert_eq!(Point::of(MIN, MAX).to_string(), "(-2147483648, 2147483647)");
         assert_eq!(Point::min().to_string(), "(-2147483648, -2147483648)");
         assert_eq!(Point::max().to_string(), "(2147483647, 2147483647)");
     }

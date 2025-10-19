@@ -1,7 +1,8 @@
 use super::wrapping_translate_assign;
-use crate::matrix::d2::{point::point_i16::Point, rect::rect_u16::Rect};
-
-const MAX: u16 = u16::MAX;
+use crate::matrix::{
+    d1::point::point_u16::MAX,
+    d2::{point::point_i16::Point, rect::rect_u16::Rect},
+};
 
 #[test]
 fn test() {

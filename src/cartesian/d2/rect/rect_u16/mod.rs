@@ -78,9 +78,10 @@ impl From<rect_u8::Rect> for Rect {
 #[cfg(test)]
 mod tests {
     use super::Rect;
-    use crate::cartesian::d2::{point::point_u16::Point, rect::rect_u8};
-
-    const MAX: u16 = u16::MAX;
+    use crate::cartesian::{
+        d1::point::point_u16::MAX,
+        d2::{point::point_u16::Point, rect::rect_u8},
+    };
 
     #[test]
     fn rect() {

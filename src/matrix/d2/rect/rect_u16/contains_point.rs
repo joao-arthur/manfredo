@@ -8,9 +8,10 @@ pub fn contains_point(r: &Rect, p: &Point) -> bool {
 #[cfg(test)]
 mod tests {
     use super::contains_point;
-    use crate::matrix::d2::{point::point_u16::Point, rect::rect_u16::Rect};
-
-    const MAX: u16 = u16::MAX;
+    use crate::matrix::{
+        d1::point::point_u16::MAX,
+        d2::{point::point_u16::Point, rect::rect_u16::Rect},
+    };
 
     #[test]
     fn inside_borders() {

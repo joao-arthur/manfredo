@@ -1,7 +1,5 @@
 use super::delta_y;
-use crate::cartesian::d2::rect::rect_u16::Rect;
-
-const MAX: u16 = u16::MAX;
+use crate::cartesian::{d1::point::point_u16::MAX, d2::rect::rect_u16::Rect};
 
 #[test]
 fn test_delta_y() {

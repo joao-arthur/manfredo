@@ -1,3 +1,5 @@
+use crate::matrix::d1::point::point_i8::{MAX, MIN};
+
 mod add;
 mod delta;
 mod distance;
@@ -18,11 +20,11 @@ impl Point {
     }
 
     pub fn min() -> Self {
-        Point { row: i8::MIN, col: i8::MIN }
+        Point { row: MIN, col: MIN }
     }
 
     pub fn max() -> Self {
-        Point { row: i8::MAX, col: i8::MAX }
+        Point { row: MAX, col: MAX }
     }
 }
 
@@ -35,17 +37,18 @@ impl std::fmt::Display for Point {
 #[cfg(test)]
 mod tests {
     use super::Point;
+    use crate::matrix::d1::point::point_i8::{MAX, MIN};
 
     #[test]
     fn point() {
-        assert_eq!(Point::of(i8::MIN, i8::MAX), Point { row: i8::MIN, col: i8::MAX });
-        assert_eq!(Point::min(), Point { row: i8::MIN, col: i8::MIN });
-        assert_eq!(Point::max(), Point { row: i8::MAX, col: i8::MAX });
+        assert_eq!(Point::of(MIN, MAX), Point { row: MIN, col: MAX });
+        assert_eq!(Point::min(), Point { row: MIN, col: MIN });
+        assert_eq!(Point::max(), Point { row: MAX, col: MAX });
     }
 
     #[test]
     fn to_string() {
-        assert_eq!(Point::of(i8::MIN, i8::MAX).to_string(), "(-128, 127)");
+        assert_eq!(Point::of(MIN, MAX).to_string(), "(-128, 127)");
         assert_eq!(Point::min().to_string(), "(-128, -128)");
         assert_eq!(Point::max().to_string(), "(127, 127)");
     }

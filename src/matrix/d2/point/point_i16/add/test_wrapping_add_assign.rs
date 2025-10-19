@@ -1,8 +1,8 @@
 use super::wrapping_add_assign;
-use crate::matrix::d2::point::point_i16::Point;
-
-const MIN: i16 = i16::MIN;
-const MAX: i16 = i16::MAX;
+use crate::matrix::{
+    d1::point::point_i16::{MAX, MIN},
+    d2::point::point_i16::Point,
+};
 
 #[test]
 fn test() {

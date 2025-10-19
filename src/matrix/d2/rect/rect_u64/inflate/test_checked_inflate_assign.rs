@@ -1,7 +1,5 @@
 use super::checked_inflate_assign;
-use crate::matrix::d2::rect::rect_u64::Rect;
-
-const MAX: u64 = u64::MAX;
+use crate::matrix::{d1::point::point_u64::MAX, d2::rect::rect_u64::Rect};
 
 #[test]
 fn min_bounds() {

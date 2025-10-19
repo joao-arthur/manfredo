@@ -33,10 +33,10 @@ impl std::fmt::Display for Line {
 #[cfg(test)]
 mod tests {
     use super::Line;
-    use crate::matrix::d2::point::point_i8::Point;
-
-    const MIN: i8 = i8::MIN;
-    const MAX: i8 = i8::MAX;
+    use crate::matrix::{
+        d1::point::point_i8::{MAX, MIN},
+        d2::point::point_i8::Point,
+    };
 
     #[test]
     fn line() {

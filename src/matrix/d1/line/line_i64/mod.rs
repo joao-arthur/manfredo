@@ -56,11 +56,8 @@ mod tests {
     use super::Line;
     use crate::matrix::d1::{
         line::{line_i8, line_i16, line_i32},
-        point::point_i64::Point,
+        point::point_i64::{MAX, MIN, Point},
     };
-
-    const MIN: i64 = i64::MIN;
-    const MAX: i64 = i64::MAX;
 
     #[test]
     fn line() {

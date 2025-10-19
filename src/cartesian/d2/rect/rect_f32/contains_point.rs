@@ -8,9 +8,9 @@ pub fn contains_point(r: &Rect, p: &Point) -> bool {
 #[cfg(test)]
 mod tests {
     use super::contains_point;
-    use crate::cartesian::d2::{
-        point::point_f32::{MAX, MIN, Point},
-        rect::rect_f32::Rect,
+    use crate::cartesian::{
+        d1::point::point_f32::{MAX, MIN},
+        d2::{point::point_f32::Point, rect::rect_f32::Rect},
     };
 
     #[test]

@@ -39,10 +39,10 @@ impl From<line_i8::Line> for Line {
 #[cfg(test)]
 mod tests {
     use super::Line;
-    use crate::cartesian::d2::{line::line_i8, point::point_i16::Point};
-
-    const MIN: i16 = i16::MIN;
-    const MAX: i16 = i16::MAX;
+    use crate::cartesian::{
+        d1::point::point_i16::{MAX, MIN},
+        d2::{line::line_i8, point::point_i16::Point},
+    };
 
     #[test]
     fn line() {

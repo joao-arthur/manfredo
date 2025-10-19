@@ -7,9 +7,9 @@ pub fn contains_rect(outer: &Rect, r: &Rect) -> bool {
 #[cfg(test)]
 mod tests {
     use super::contains_rect;
-    use crate::cartesian::d2::{
-        point::point_f32::{MAX, MIN},
-        rect::rect_f32::Rect,
+    use crate::cartesian::{
+        d1::point::point_f32::{MAX, MIN},
+        d2::rect::rect_f32::Rect,
     };
 
     #[test]

@@ -1,7 +1,5 @@
 use super::try_checked_inflate_assign;
-use crate::cartesian::d2::rect::rect_u32::Rect;
-
-const MAX: u32 = u32::MAX;
+use crate::cartesian::{d1::point::point_u32::MAX, d2::rect::rect_u32::Rect};
 
 #[test]
 fn min_bounds() {

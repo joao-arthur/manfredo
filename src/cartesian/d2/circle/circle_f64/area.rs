@@ -9,9 +9,9 @@ pub fn area(c: &Circle) -> f64 {
 #[cfg(test)]
 mod tests {
     use super::area;
-    use crate::cartesian::d2::{
-        circle::circle_f64::Circle,
-        point::point_f64::{MAX, Point},
+    use crate::cartesian::{
+        d1::point::point_f64::MAX,
+        d2::{circle::circle_f64::Circle, point::point_f64::Point},
     };
     use std::f64::consts::PI;
 

@@ -1,11 +1,9 @@
 use super::point_i8;
+use crate::cartesian::d1::point::point_i16::{MAX, MIN};
 
 mod delta;
 
 pub use self::delta::{delta, delta_max, delta_min, delta_x, delta_y, delta_z};
-
-const MIN: i16 = i16::MIN;
-const MAX: i16 = i16::MAX;
 
 #[derive(Eq, PartialEq, Debug, Clone, Hash)]
 pub struct Point {

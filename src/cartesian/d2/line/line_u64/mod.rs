@@ -54,12 +54,13 @@ impl From<line_u32::Line> for Line {
 #[cfg(test)]
 mod tests {
     use super::Line;
-    use crate::cartesian::d2::{
-        line::{line_u8, line_u16, line_u32},
-        point::point_u64::Point,
+    use crate::cartesian::{
+        d1::point::point_u64::MAX,
+        d2::{
+            line::{line_u8, line_u16, line_u32},
+            point::point_u64::Point,
+        },
     };
-
-    const MAX: u64 = u64::MAX;
 
     #[test]
     fn line() {

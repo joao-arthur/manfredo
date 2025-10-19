@@ -1,7 +1,7 @@
 use super::wrapping_translate_assign;
-use crate::cartesian::d2::{
-    point::point_f64::{MAX, MIN, Point},
-    rect::rect_f64::Rect,
+use crate::cartesian::{
+    d1::point::point_f64::{MAX, MIN},
+    d2::{point::point_f64::Point, rect::rect_f64::Rect},
 };
 
 #[test]

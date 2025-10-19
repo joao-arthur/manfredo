@@ -1,7 +1,5 @@
 use super::saturating_inflate;
-use crate::matrix::d2::rect::rect_u16::Rect;
-
-const MAX: u16 = u16::MAX;
+use crate::matrix::{d1::point::point_u16::MAX, d2::rect::rect_u16::Rect};
 
 #[test]
 fn min_bounds() {

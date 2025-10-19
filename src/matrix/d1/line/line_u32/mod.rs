@@ -50,10 +50,8 @@ mod tests {
     use super::Line;
     use crate::matrix::d1::{
         line::{line_u8, line_u16},
-        point::point_u32::Point,
+        point::point_u32::{MAX, Point},
     };
-
-    const MAX: u32 = u32::MAX;
 
     #[test]
     fn line() {

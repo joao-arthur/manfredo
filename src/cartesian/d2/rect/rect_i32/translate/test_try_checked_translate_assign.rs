@@ -1,8 +1,8 @@
 use super::try_checked_translate_assign;
-use crate::cartesian::d2::{point::point_i32::Point, rect::rect_i32::Rect};
-
-const MIN: i32 = i32::MIN;
-const MAX: i32 = i32::MAX;
+use crate::cartesian::{
+    d1::point::point_i32::{MAX, MIN},
+    d2::{point::point_i32::Point, rect::rect_i32::Rect},
+};
 
 #[test]
 fn test() {

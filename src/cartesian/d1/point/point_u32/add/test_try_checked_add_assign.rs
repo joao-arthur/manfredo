@@ -1,7 +1,8 @@
 use super::try_checked_add_assign;
-use crate::cartesian::d1::point::{point_i32::Point as PointI, point_u32::Point};
-
-const MAX: u32 = u32::MAX;
+use crate::cartesian::d1::point::{
+    point_i32::Point as PointI,
+    point_u32::{MAX, Point},
+};
 
 #[test]
 fn test() {

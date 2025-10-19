@@ -9,9 +9,9 @@ pub fn area(c: &Circle) -> f32 {
 #[cfg(test)]
 mod tests {
     use super::area;
-    use crate::cartesian::d2::{
-        circle::circle_f32::Circle,
-        point::point_f32::{MAX, Point},
+    use crate::cartesian::{
+        d1::point::point_f32::MAX,
+        d2::{circle::circle_f32::Circle, point::point_f32::Point},
     };
     use std::f32::consts::PI;
 

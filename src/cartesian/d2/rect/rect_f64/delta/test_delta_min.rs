@@ -1,7 +1,7 @@
 use super::delta_min;
-use crate::cartesian::d2::{
-    point::point_f64::{MAX, MIN},
-    rect::rect_f64::Rect,
+use crate::cartesian::{
+    d1::point::point_f64::{MAX, MIN},
+    d2::rect::rect_f64::Rect,
 };
 
 #[test]

@@ -1,4 +1,4 @@
-use crate::cartesian::d2::point::point_i8;
+use crate::cartesian::d2::point::point_i8::Point;
 use std::ops::RangeInclusive;
 
 mod add;
@@ -33,25 +33,28 @@ pub use self::translate::{
 
 #[derive(Eq, PartialEq, Debug, Clone)]
 pub struct Rect {
-    pub min: point_i8::Point,
-    pub max: point_i8::Point,
+    pub min: Point,
+    pub max: Point,
 }
 
 impl Rect {
     pub fn of(x1: i8, y1: i8, x2: i8, y2: i8) -> Self {
-        Rect { min: point_i8::Point::of(x1, y1), max: point_i8::Point::of(x2, y2) }
+        Rect { min: Point::of(x1, y1), max: Point::of(x2, y2) }
     }
 
     pub fn largest() -> Self {
-        Rect { min: point_i8::Point::min(), max: point_i8::Point::max() }
+        Rect { min: Point::min(), max: Point::max() }
     }
-
     pub fn min() -> Self {
-        Rect { min: point_i8::Point::min(), max: point_i8::Point::min() }
+        Rect { min: Point::min(), max: Point::min() }
     }
 
     pub fn max() -> Self {
-        Rect { min: point_i8::Point::max(), max: point_i8::Point::max() }
+        Rect { min: Point::max(), max: Point::max() }
+    }
+
+    pub fn zero() -> Self {
+        Rect { min: Point::zero(), max: Point::zero() }
     }
 
     pub fn iter_x(&self) -> RangeInclusive<i8> {
@@ -82,12 +85,16 @@ mod tests {
         assert_eq!(Rect::largest(), Rect { min: Point { x: MIN, y: MIN }, max: Point { x: MAX, y: MAX } });
         assert_eq!(Rect::min(), Rect { min: Point { x: MIN, y: MIN }, max: Point { x: MIN, y: MIN } });
         assert_eq!(Rect::max(), Rect { min: Point { x: MAX, y: MAX }, max: Point { x: MAX, y: MAX } });
+        assert_eq!(Rect::zero(), Rect { min: Point { x: 0, y: 0 }, max: Point { x: 0, y: 0 } });
         assert_eq!(Rect::of(MIN, -1, 1, MAX), Rect { min: Point { x: MIN, y: -1 }, max: Point { x: 1, y: MAX } });
     }
 
     #[test]
     fn to_string() {
         assert_eq!(Rect::largest().to_string(), "((-128, -128), (127, 127))");
+        assert_eq!(Rect::min().to_string(), "((-128, -128), (-128, -128))");
+        assert_eq!(Rect::max().to_string(), "((127, 127), (127, 127))");
+        assert_eq!(Rect::zero().to_string(), "((0, 0), (0, 0))");
         assert_eq!(Rect::of(MIN, -0, 0, MAX).to_string(), "((-128, 0), (0, 127))");
     }
 

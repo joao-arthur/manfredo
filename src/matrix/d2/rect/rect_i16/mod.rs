@@ -1,4 +1,4 @@
-use crate::matrix::d2::{point::point_i16, rect::rect_i8};
+use crate::matrix::d2::{point::point_i16::Point, rect::rect_i8};
 use std::ops::RangeInclusive;
 
 mod add;
@@ -33,25 +33,28 @@ pub use self::translate::{
 
 #[derive(Eq, PartialEq, Debug, Clone)]
 pub struct Rect {
-    pub min: point_i16::Point,
-    pub max: point_i16::Point,
+    pub min: Point,
+    pub max: Point,
 }
 
 impl Rect {
     pub fn of(row1: i16, col1: i16, row2: i16, col2: i16) -> Self {
-        Rect { min: point_i16::Point::of(row1, col1), max: point_i16::Point::of(row2, col2) }
+        Rect { min: Point::of(row1, col1), max: Point::of(row2, col2) }
     }
 
     pub fn largest() -> Self {
-        Rect { min: point_i16::Point::min(), max: point_i16::Point::max() }
+        Rect { min: Point::min(), max: Point::max() }
     }
-
     pub fn min() -> Self {
-        Rect { min: point_i16::Point::min(), max: point_i16::Point::min() }
+        Rect { min: Point::min(), max: Point::min() }
     }
 
     pub fn max() -> Self {
-        Rect { min: point_i16::Point::max(), max: point_i16::Point::max() }
+        Rect { min: Point::max(), max: Point::max() }
+    }
+
+    pub fn zero() -> Self {
+        Rect { min: Point::zero(), max: Point::zero() }
     }
 
     pub fn iter_row(&self) -> RangeInclusive<i16> {
@@ -71,7 +74,7 @@ impl std::fmt::Display for Rect {
 
 impl From<rect_i8::Rect> for Rect {
     fn from(r: rect_i8::Rect) -> Self {
-        Rect { min: point_i16::Point::from(r.min), max: point_i16::Point::from(r.max) }
+        Rect { min: Point::from(r.min), max: Point::from(r.max) }
     }
 }
 
@@ -88,12 +91,16 @@ mod tests {
         assert_eq!(Rect::largest(), Rect { min: Point { row: MIN, col: MIN }, max: Point { row: MAX, col: MAX } });
         assert_eq!(Rect::min(), Rect { min: Point { row: MIN, col: MIN }, max: Point { row: MIN, col: MIN } });
         assert_eq!(Rect::max(), Rect { min: Point { row: MAX, col: MAX }, max: Point { row: MAX, col: MAX } });
+        assert_eq!(Rect::zero(), Rect { min: Point { row: 0, col: 0 }, max: Point { row: 0, col: 0 } });
         assert_eq!(Rect::of(MIN, -1, 1, MAX), Rect { min: Point { row: MIN, col: -1 }, max: Point { row: 1, col: MAX } });
     }
 
     #[test]
     fn to_string() {
         assert_eq!(Rect::largest().to_string(), "((-32768, -32768), (32767, 32767))");
+        assert_eq!(Rect::min().to_string(), "((-32768, -32768), (-32768, -32768))");
+        assert_eq!(Rect::max().to_string(), "((32767, 32767), (32767, 32767))");
+        assert_eq!(Rect::zero().to_string(), "((0, 0), (0, 0))");
         assert_eq!(Rect::of(MIN, -0, 0, MAX).to_string(), "((-32768, 0), (0, 32767))");
     }
 

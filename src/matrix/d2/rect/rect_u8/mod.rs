@@ -1,4 +1,4 @@
-use crate::matrix::d2::point::point_u8;
+use crate::matrix::d2::point::point_u8::Point;
 use std::ops::RangeInclusive;
 
 mod add;
@@ -33,25 +33,25 @@ pub use self::translate::{
 
 #[derive(Eq, PartialEq, Debug, Clone)]
 pub struct Rect {
-    pub min: point_u8::Point,
-    pub max: point_u8::Point,
+    pub min: Point,
+    pub max: Point,
 }
 
 impl Rect {
     pub fn of(row1: u8, col1: u8, row2: u8, col2: u8) -> Self {
-        Rect { min: point_u8::Point::of(row1, col1), max: point_u8::Point::of(row2, col2) }
+        Rect { min: Point::of(row1, col1), max: Point::of(row2, col2) }
     }
 
     pub fn largest() -> Self {
-        Rect { min: point_u8::Point::min(), max: point_u8::Point::max() }
+        Rect { min: Point::min(), max: Point::max() }
     }
 
     pub fn min() -> Self {
-        Rect { min: point_u8::Point::min(), max: point_u8::Point::min() }
+        Rect { min: Point::min(), max: Point::min() }
     }
 
     pub fn max() -> Self {
-        Rect { min: point_u8::Point::max(), max: point_u8::Point::max() }
+        Rect { min: Point::max(), max: Point::max() }
     }
 
     pub fn iter_row(&self) -> RangeInclusive<u8> {
@@ -85,6 +85,8 @@ mod tests {
     #[test]
     fn to_string() {
         assert_eq!(Rect::largest().to_string(), "((0, 0), (255, 255))");
+        assert_eq!(Rect::min().to_string(), "((0, 0), (0, 0))");
+        assert_eq!(Rect::max().to_string(), "((255, 255), (255, 255))");
         assert_eq!(Rect::of(0, 2, 4, 8).to_string(), "((0, 2), (4, 8))");
     }
 

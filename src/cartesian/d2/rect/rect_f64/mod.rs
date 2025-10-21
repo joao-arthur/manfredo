@@ -1,4 +1,4 @@
-use crate::cartesian::d2::{point::point_f64, rect::rect_f32};
+use crate::cartesian::d2::{point::point_f64::Point, rect::rect_f32};
 
 mod add;
 mod area;
@@ -30,8 +30,8 @@ pub use self::translate::{
 
 #[derive(PartialEq, Debug, Clone)]
 pub struct Rect {
-    pub min: point_f64::Point,
-    pub max: point_f64::Point,
+    pub min: Point,
+    pub max: Point,
 }
 
 pub struct RectF64Iterator {
@@ -65,27 +65,31 @@ impl DoubleEndedIterator for RectF64Iterator {
 
 impl Rect {
     pub fn of(x1: f64, y1: f64, x2: f64, y2: f64) -> Self {
-        Rect { min: point_f64::Point { x: x1, y: y1 }, max: point_f64::Point { x: x2, y: y2 } }
+        Rect { min: Point { x: x1, y: y1 }, max: Point { x: x2, y: y2 } }
     }
 
     pub fn largest() -> Self {
-        Rect { min: point_f64::Point::min(), max: point_f64::Point::max() }
+        Rect { min: Point::min(), max: Point::max() }
     }
 
     pub fn largest_min() -> Self {
-        Rect { min: point_f64::Point::min(), max: point_f64::Point::zero() }
+        Rect { min: Point::min(), max: Point::zero() }
     }
 
     pub fn largest_max() -> Self {
-        Rect { min: point_f64::Point::zero(), max: point_f64::Point::max() }
+        Rect { min: Point::zero(), max: Point::max() }
     }
 
     pub fn min() -> Self {
-        Rect { min: point_f64::Point::min(), max: point_f64::Point::min() }
+        Rect { min: Point::min(), max: Point::min() }
     }
 
     pub fn max() -> Self {
-        Rect { min: point_f64::Point::max(), max: point_f64::Point::max() }
+        Rect { min: Point::max(), max: Point::max() }
+    }
+
+    pub fn zero() -> Self {
+        Rect { min: Point::zero(), max: Point::zero() }
     }
 
     pub fn iter_x(&self) -> RectF64Iterator {
@@ -105,7 +109,7 @@ impl std::fmt::Display for Rect {
 
 impl From<rect_f32::Rect> for Rect {
     fn from(r: rect_f32::Rect) -> Self {
-        Rect { min: point_f64::Point::from(r.min), max: point_f64::Point::from(r.max) }
+        Rect { min: Point::from(r.min), max: Point::from(r.max) }
     }
 }
 
@@ -127,6 +131,7 @@ mod tests {
         assert_eq!(Rect::largest_max(), Rect { min: Point { x: 0.0, y: 0.0 }, max: Point { x: MAX, y: MAX } });
         assert_eq!(Rect::min(), Rect { min: Point { x: MIN, y: MIN }, max: Point { x: MIN, y: MIN } });
         assert_eq!(Rect::max(), Rect { min: Point { x: MAX, y: MAX }, max: Point { x: MAX, y: MAX } });
+        assert_eq!(Rect::zero(), Rect { min: Point { x: 0.0, y: 0.0 }, max: Point { x: 0.0, y: 0.0 } });
         assert_eq!(Rect::of(MIN, -0.0, 0.0, MAX), Rect { min: Point { x: MIN, y: -0.0 }, max: Point { x: 0.0, y: MAX } });
     }
 
@@ -135,6 +140,9 @@ mod tests {
         assert_eq!(Rect::largest().to_string(), "((-9007199254740992, -9007199254740992), (9007199254740991, 9007199254740991))");
         assert_eq!(Rect::largest_min().to_string(), "((-9007199254740992, -9007199254740992), (0, 0))");
         assert_eq!(Rect::largest_max().to_string(), "((0, 0), (9007199254740991, 9007199254740991))");
+        assert_eq!(Rect::min().to_string(), "((-9007199254740992, -9007199254740992), (-9007199254740992, -9007199254740992))");
+        assert_eq!(Rect::max().to_string(), "((9007199254740991, 9007199254740991), (9007199254740991, 9007199254740991))");
+        assert_eq!(Rect::zero().to_string(), "((0, 0), (0, 0))");
         assert_eq!(Rect::of(MIN, -0.0, 0.0, MAX).to_string(), "((-9007199254740992, -0), (0, 9007199254740991))");
     }
 

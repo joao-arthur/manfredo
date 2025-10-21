@@ -1,4 +1,4 @@
-use crate::cartesian::d2::{point::point_u16, rect::rect_u8};
+use crate::cartesian::d2::{point::point_u16::Point, rect::rect_u8};
 use std::ops::RangeInclusive;
 
 mod add;
@@ -33,25 +33,25 @@ pub use self::translate::{
 
 #[derive(Eq, PartialEq, Debug, Clone)]
 pub struct Rect {
-    pub min: point_u16::Point,
-    pub max: point_u16::Point,
+    pub min: Point,
+    pub max: Point,
 }
 
 impl Rect {
     pub fn of(x1: u16, y1: u16, x2: u16, y2: u16) -> Self {
-        Rect { min: point_u16::Point::of(x1, y1), max: point_u16::Point::of(x2, y2) }
+        Rect { min: Point::of(x1, y1), max: Point::of(x2, y2) }
     }
 
     pub fn largest() -> Self {
-        Rect { min: point_u16::Point::min(), max: point_u16::Point::max() }
+        Rect { min: Point::min(), max: Point::max() }
     }
 
     pub fn min() -> Self {
-        Rect { min: point_u16::Point::min(), max: point_u16::Point::min() }
+        Rect { min: Point::min(), max: Point::min() }
     }
 
     pub fn max() -> Self {
-        Rect { min: point_u16::Point::max(), max: point_u16::Point::max() }
+        Rect { min: Point::max(), max: Point::max() }
     }
 
     pub fn iter_x(&self) -> RangeInclusive<u16> {
@@ -71,7 +71,7 @@ impl std::fmt::Display for Rect {
 
 impl From<rect_u8::Rect> for Rect {
     fn from(r: rect_u8::Rect) -> Self {
-        Rect { min: point_u16::Point::from(r.min), max: point_u16::Point::from(r.max) }
+        Rect { min: Point::from(r.min), max: Point::from(r.max) }
     }
 }
 
@@ -94,6 +94,8 @@ mod tests {
     #[test]
     fn to_string() {
         assert_eq!(Rect::largest().to_string(), "((0, 0), (65535, 65535))");
+        assert_eq!(Rect::min().to_string(), "((0, 0), (0, 0))");
+        assert_eq!(Rect::max().to_string(), "((65535, 65535), (65535, 65535))");
         assert_eq!(Rect::of(16, 32, 16, 32).to_string(), "((16, 32), (16, 32))");
     }
 

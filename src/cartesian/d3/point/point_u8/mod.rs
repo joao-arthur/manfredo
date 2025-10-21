@@ -33,7 +33,8 @@ impl std::fmt::Display for Point {
 
 #[cfg(test)]
 mod tests {
-    use super::{MAX, Point};
+    use super::Point;
+    use crate::cartesian::d1::point::point_u8::MAX;
 
     #[test]
     fn point() {

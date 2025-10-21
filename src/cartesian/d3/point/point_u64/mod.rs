@@ -52,7 +52,8 @@ impl From<point_u32::Point> for Point {
 
 #[cfg(test)]
 mod tests {
-    use super::{MAX, Point};
+    use super::Point;
+    use crate::cartesian::d1::point::point_u64::MAX;
     use crate::cartesian::d3::point::{point_u8, point_u16, point_u32};
 
     #[test]

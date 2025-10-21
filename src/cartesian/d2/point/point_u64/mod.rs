@@ -1,6 +1,5 @@
-use crate::cartesian::d1::point::point_u64::MAX;
-
 use super::{point_u8, point_u16, point_u32};
+use crate::cartesian::d1::point::point_u64::MAX;
 
 mod add;
 mod delta;
@@ -56,7 +55,8 @@ impl From<point_u32::Point> for Point {
 
 #[cfg(test)]
 mod tests {
-    use super::{MAX, Point};
+    use super::Point;
+    use crate::cartesian::d1::point::point_u64::MAX;
     use crate::cartesian::d2::point::{point_u8, point_u16, point_u32};
 
     #[test]

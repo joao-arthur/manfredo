@@ -1,6 +1,5 @@
-use std::f64;
-
 use super::Circle;
+use std::f64;
 
 pub fn area(c: &Circle) -> f64 {
     f64::consts::PI * c.r * c.r

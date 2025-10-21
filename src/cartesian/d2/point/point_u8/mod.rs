@@ -41,16 +41,14 @@ mod tests {
 
     #[test]
     fn point() {
-        assert_eq!(Point::of(0, MAX), Point { x: 0, y: MAX });
-        assert_eq!(Point::of(MAX, 0), Point { x: MAX, y: 0 });
+        assert_eq!(Point::of(10, 20), Point { x: 10, y: 20 });
         assert_eq!(Point::min(), Point { x: 0, y: 0 });
         assert_eq!(Point::max(), Point { x: MAX, y: MAX });
     }
 
     #[test]
     fn to_string() {
-        assert_eq!(Point::of(0, MAX).to_string(), "(0, 255)");
-        assert_eq!(Point::of(MAX, 0).to_string(), "(255, 0)");
+        assert_eq!(Point::of(10, 20).to_string(), "(10, 20)");
         assert_eq!(Point::min().to_string(), "(0, 0)");
         assert_eq!(Point::max().to_string(), "(255, 255)");
     }

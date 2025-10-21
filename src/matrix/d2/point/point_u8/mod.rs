@@ -38,14 +38,14 @@ mod tests {
 
     #[test]
     fn point() {
-        assert_eq!(Point::of(0, u8::MAX), Point { row: 0, col: u8::MAX });
+        assert_eq!(Point::of(10, 20), Point { row: 10, col: 20 });
         assert_eq!(Point::min(), Point { row: 0, col: 0 });
         assert_eq!(Point::max(), Point { row: u8::MAX, col: u8::MAX });
     }
 
     #[test]
     fn to_string() {
-        assert_eq!(Point::of(0, u8::MAX).to_string(), "(0, 255)");
+        assert_eq!(Point::of(10, 20).to_string(), "(10, 20)");
         assert_eq!(Point::min().to_string(), "(0, 0)");
         assert_eq!(Point::max().to_string(), "(255, 255)");
     }

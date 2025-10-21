@@ -1,4 +1,5 @@
 use crate::cartesian::d1::point::point_f32::{MAX, MIN};
+
 mod delta;
 
 pub use self::delta::{delta, delta_max, delta_min, delta_x, delta_y, delta_z};

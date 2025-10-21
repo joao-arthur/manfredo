@@ -1,6 +1,8 @@
 use super::delta_z;
-use crate::cartesian::d1::point::point_f64::{MAX, MIN};
-use crate::cartesian::d3::point::point_f64::Point;
+use crate::cartesian::{
+    d1::point::point_f64::{MAX, MIN},
+    d3::point::point_f64::Point,
+};
 
 #[test]
 fn from_min() {

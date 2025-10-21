@@ -47,19 +47,21 @@ impl From<point_u16::Point> for Point {
 #[cfg(test)]
 mod tests {
     use super::Point;
-    use crate::cartesian::d1::point::point_u32::MAX;
-    use crate::cartesian::d3::point::{point_u8, point_u16};
+    use crate::cartesian::{
+        d1::point::point_u32::MAX,
+        d3::point::{point_u8, point_u16},
+    };
 
     #[test]
     fn point() {
-        assert_eq!(Point::of(0, MAX, 0), Point { x: 0, y: MAX, z: 0 });
+        assert_eq!(Point::of(10, 20, 30), Point { x: 10, y: 20, z: 30 });
         assert_eq!(Point::min(), Point { x: 0, y: 0, z: 0 });
         assert_eq!(Point::max(), Point { x: MAX, y: MAX, z: MAX });
     }
 
     #[test]
     fn to_string() {
-        assert_eq!(Point::of(0, MAX, 0).to_string(), "(0, 4294967295, 0)");
+        assert_eq!(Point::of(10, 20, 30).to_string(), "(10, 20, 30)");
         assert_eq!(Point::min().to_string(), "(0, 0, 0)");
         assert_eq!(Point::max().to_string(), "(4294967295, 4294967295, 4294967295)");
     }

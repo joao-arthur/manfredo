@@ -57,8 +57,10 @@ impl From<point_i32::Point> for Point {
 #[cfg(test)]
 mod tests {
     use super::Point;
-    use crate::cartesian::d1::point::point_i64::{MAX, MIN};
-    use crate::cartesian::d3::point::{point_i8, point_i16, point_i32};
+    use crate::cartesian::{
+        d1::point::point_i64::{MAX, MIN},
+        d3::point::{point_i8, point_i16, point_i32},
+    };
 
     #[test]
     fn point() {

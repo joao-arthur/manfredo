@@ -3,7 +3,7 @@ use crate::matrix::d1::point::point_i32::{MAX, MIN, Point};
 
 #[test]
 fn test() {
-    assert_eq!(wrapping_add(&Point::of(0), &Point::of(10)), Point::of(10));
+    assert_eq!(wrapping_add(&Point::zero(), &Point::of(10)), Point::of(10));
     assert_eq!(wrapping_add(&Point::of(10), &Point::of(-5)), Point::of(5));
 }
 

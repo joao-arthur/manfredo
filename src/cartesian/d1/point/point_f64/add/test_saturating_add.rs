@@ -3,7 +3,7 @@ use crate::cartesian::d1::point::point_f64::{MAX, MIN, Point};
 
 #[test]
 fn test() {
-    assert_eq!(saturating_add(&Point::of(0.0), &Point::of(10.0)), Point::of(10.0));
+    assert_eq!(saturating_add(&Point::zero(), &Point::of(10.0)), Point::of(10.0));
     assert_eq!(saturating_add(&Point::of(10.0), &Point::of(-5.0)), Point::of(5.0));
 }
 

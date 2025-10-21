@@ -3,7 +3,7 @@ use crate::cartesian::d1::point::point_f32::{MAX, MIN, Point};
 
 #[test]
 fn test() {
-    let mut p = Point::of(0.0);
+    let mut p = Point::zero();
     wrapping_add_assign(&mut p, &Point::of(10.0));
     assert_eq!(p, Point::of(10.0));
     wrapping_add_assign(&mut p, &Point::of(-5.0));

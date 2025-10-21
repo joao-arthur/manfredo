@@ -3,7 +3,7 @@ use crate::cartesian::d1::point::point_i8::{MAX, MIN, Point};
 
 #[test]
 fn test() {
-    assert_eq!(try_checked_add(&Point::of(0), &Point::of(10)), Some(Point::of(10)));
+    assert_eq!(try_checked_add(&Point::zero(), &Point::of(10)), Some(Point::of(10)));
     assert_eq!(try_checked_add(&Point::of(10), &Point::of(-5)), Some(Point::of(5)));
 }
 

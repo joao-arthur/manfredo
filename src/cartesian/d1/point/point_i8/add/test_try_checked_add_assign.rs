@@ -3,7 +3,7 @@ use crate::cartesian::d1::point::point_i8::{MAX, MIN, Point};
 
 #[test]
 fn test() {
-    let mut p = Point::of(0);
+    let mut p = Point::zero();
     assert_eq!(try_checked_add_assign(&mut p, &Point::of(10)), Some(()));
     assert_eq!(p, Point::of(10));
     assert_eq!(try_checked_add_assign(&mut p, &Point::of(-25)), Some(()));

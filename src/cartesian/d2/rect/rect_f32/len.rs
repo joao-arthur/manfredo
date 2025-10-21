@@ -45,7 +45,7 @@ mod tests {
 
     #[test]
     fn len_max_1() {
-        assert_eq!(len_max(&Rect::of(0.0, 0.0, 0.0, 0.0)), 1.0);
+        assert_eq!(len_max(&Rect::zero()), 1.0);
         assert_eq!(len_max(&Rect::of(1.0, 1.0, 1.0, 1.0)), 1.0);
         assert_eq!(len_max(&Rect::of(-1.0, -1.0, -1.0, -1.0)), 1.0);
         assert_eq!(len_max(&Rect::of(5.0, 10.0, 5.0, 10.0)), 1.0);

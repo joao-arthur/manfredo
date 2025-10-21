@@ -34,7 +34,7 @@ mod tests {
 
     #[test]
     fn area_bounds() {
-        assert_eq!(area(&Rect::of(0, 0, 0, 0)), 0);
+        assert_eq!(area(&Rect::min()), 0);
         assert_eq!(area(&Rect::largest()), 18_446_744_065_119_617_025);
     }
 }

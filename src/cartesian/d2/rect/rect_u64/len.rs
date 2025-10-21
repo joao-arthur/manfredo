@@ -19,13 +19,13 @@ mod tests {
 
     #[test]
     fn test_len_x() {
-        assert_eq!(len_x(&Rect::of(0, 0, 0, 0)), 1);
+        assert_eq!(len_x(&Rect::min()), 1);
         assert_eq!(len_x(&Rect::of(0, 0, u64::MAX - 1, 0)), u64::MAX);
     }
 
     #[test]
     fn test_len_y() {
-        assert_eq!(len_y(&Rect::of(0, 0, 0, 0)), 1);
+        assert_eq!(len_y(&Rect::min()), 1);
         assert_eq!(len_y(&Rect::of(0, 0, 0, u64::MAX - 1)), u64::MAX);
     }
 
@@ -37,7 +37,7 @@ mod tests {
 
     #[test]
     fn len_max_1() {
-        assert_eq!(len_max(&Rect::of(0, 0, 0, 0)), 1);
+        assert_eq!(len_max(&Rect::min()), 1);
         assert_eq!(len_max(&Rect::of(1, 1, 1, 1)), 1);
         assert_eq!(len_max(&Rect::of(5, 10, 5, 10)), 1);
     }

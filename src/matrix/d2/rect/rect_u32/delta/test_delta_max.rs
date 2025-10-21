@@ -9,7 +9,7 @@ fn test_delta_max() {
 
 #[test]
 fn delta_max_0() {
-    assert_eq!(delta_max(&Rect::of(0, 0, 0, 0)), 0);
+    assert_eq!(delta_max(&Rect::min()), 0);
     assert_eq!(delta_max(&Rect::of(1, 1, 1, 1)), 0);
     assert_eq!(delta_max(&Rect::of(5, 10, 5, 10)), 0);
 }

@@ -19,13 +19,13 @@ mod tests {
 
     #[test]
     fn test_len_row() {
-        assert_eq!(len_row(&Rect::of(0, 0, 0, 0)), 1);
+        assert_eq!(len_row(&Rect::min()), 1);
         assert_eq!(len_row(&Rect::of(0, 0, u8::MAX - 1, 0)), u8::MAX);
     }
 
     #[test]
     fn test_len_col() {
-        assert_eq!(len_col(&Rect::of(0, 0, 0, 0)), 1);
+        assert_eq!(len_col(&Rect::min()), 1);
         assert_eq!(len_col(&Rect::of(0, 0, 0, u8::MAX - 1)), u8::MAX);
     }
 
@@ -37,7 +37,7 @@ mod tests {
 
     #[test]
     fn len_max_1() {
-        assert_eq!(len_max(&Rect::of(0, 0, 0, 0)), 1);
+        assert_eq!(len_max(&Rect::min()), 1);
         assert_eq!(len_max(&Rect::of(1, 1, 1, 1)), 1);
         assert_eq!(len_max(&Rect::of(5, 10, 5, 10)), 1);
     }

@@ -24,6 +24,10 @@ impl Point {
     pub fn max() -> Self {
         Point { x: MAX, y: MAX, z: MAX }
     }
+
+    pub fn zero() -> Self {
+        Point { x: 0.0, y: 0.0, z: 0.0 }
+    }
 }
 
 impl std::fmt::Display for Point {
@@ -41,28 +45,33 @@ impl From<point_f32::Point> for Point {
 #[cfg(test)]
 mod tests {
     use super::Point;
-    use crate::cartesian::d1::point::point_f64::{MAX, MIN};
-    use crate::cartesian::{d1, d3::point::point_f32};
+    use crate::cartesian::{
+        d1::point::{
+            point_f32::{MAX as MAX_F32, MIN as MIN_F32},
+            point_f64::{MAX, MIN},
+        },
+        d3::point::point_f32::Point as PointF32,
+    };
 
     #[test]
     fn point() {
-        assert_eq!(Point::of(MIN, MAX, MIN), Point { x: MIN, y: MAX, z: MIN });
-        assert_eq!(Point::of(MAX, MIN, MAX), Point { x: MAX, y: MIN, z: MAX });
+        assert_eq!(Point::of(-10.0, 0.0, 10.0), Point { x: -10.0, y: 0.0, z: 10.0 });
         assert_eq!(Point::min(), Point { x: MIN, y: MIN, z: MIN });
         assert_eq!(Point::max(), Point { x: MAX, y: MAX, z: MAX });
+        assert_eq!(Point::zero(), Point { x: 0.0, y: 0.0, z: 0.0 });
     }
 
     #[test]
     fn to_string() {
-        assert_eq!(Point::of(MIN, MAX, MIN).to_string(), "(-9007199254740992, 9007199254740991, -9007199254740992)");
-        assert_eq!(Point::of(MAX, MIN, MAX).to_string(), "(9007199254740991, -9007199254740992, 9007199254740991)");
+        assert_eq!(Point::of(-10.0, 0.0, 10.0).to_string(), "(-10, 0, 10)");
         assert_eq!(Point::min().to_string(), "(-9007199254740992, -9007199254740992, -9007199254740992)");
         assert_eq!(Point::max().to_string(), "(9007199254740991, 9007199254740991, 9007199254740991)");
+        assert_eq!(Point::zero().to_string(), "(0, 0, 0)");
     }
 
     #[test]
     fn from() {
-        assert_eq!(Point::from(point_f32::Point::min()), Point { x: d1::point::point_f32::MIN.into(), y: d1::point::point_f32::MIN.into(), z: d1::point::point_f32::MIN.into() });
-        assert_eq!(Point::from(point_f32::Point::max()), Point { x: d1::point::point_f32::MAX.into(), y: d1::point::point_f32::MAX.into(), z: d1::point::point_f32::MAX.into() });
+        assert_eq!(Point::from(PointF32::min()), Point { x: MIN_F32.into(), y: MIN_F32.into(), z: MIN_F32.into() });
+        assert_eq!(Point::from(PointF32::max()), Point { x: MAX_F32.into(), y: MAX_F32.into(), z: MAX_F32.into() });
     }
 }

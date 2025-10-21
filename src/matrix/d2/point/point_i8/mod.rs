@@ -26,6 +26,10 @@ impl Point {
     pub fn max() -> Self {
         Point { row: MAX, col: MAX }
     }
+
+    pub fn zero() -> Self {
+        Point { row: 0, col: 0 }
+    }
 }
 
 impl std::fmt::Display for Point {
@@ -41,15 +45,17 @@ mod tests {
 
     #[test]
     fn point() {
-        assert_eq!(Point::of(MIN, MAX), Point { row: MIN, col: MAX });
+        assert_eq!(Point::of(-10, 10), Point { row: -10, col: 10 });
         assert_eq!(Point::min(), Point { row: MIN, col: MIN });
         assert_eq!(Point::max(), Point { row: MAX, col: MAX });
+        assert_eq!(Point::zero(), Point { row: 0, col: 0 });
     }
 
     #[test]
     fn to_string() {
-        assert_eq!(Point::of(MIN, MAX).to_string(), "(-128, 127)");
+        assert_eq!(Point::of(-10, 10).to_string(), "(-10, 10)");
         assert_eq!(Point::min().to_string(), "(-128, -128)");
         assert_eq!(Point::max().to_string(), "(127, 127)");
+        assert_eq!(Point::zero().to_string(), "(0, 0)");
     }
 }

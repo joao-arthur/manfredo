@@ -86,18 +86,37 @@ let e = rect_i32::wrapping_add_assign(&mut a, &b);
 
 ## 🚧 Roadmap
 
-- 3D
-  - [ ] `Point` 
-  - [ ] `Sphere`
-  - [ ] `Cuboid`
-  - [ ] `Line`
-- 4D
-  - [ ] `HyperPoint`
-  - [ ] `HyperLine`
-  - [ ] `HyperSphere`
-  - [ ] `HyperCuboid`
-
-- Polar plane
+- [-] Cartesian Plane
+  - [-] 1D
+    - [ ] `Line` distance
+  - [-] 2D
+    - [ ] `Line` distance
+  - [-] 3D
+    - [-] `Point` 
+    - [ ] `Sphere`
+    - [ ] `Cuboid`
+    - [ ] `Line`
+  - [ ] 4D
+    - [ ] `HyperPoint`
+    - [ ] `HyperLine`
+    - [ ] `HyperSphere`
+    - [ ] `HyperCuboid`
+- [-] Matrix Plane
+  - [-] 1D
+    - [ ] `Line` distance
+  - [-] 2D
+    - [ ] `Line` distance
+  - [ ] 3D
+    - [ ] `Point` 
+    - [ ] `Sphere`
+    - [ ] `Cuboid`
+    - [ ] `Line`
+  - [ ] 4D
+- [ ] Transform
+  - [x] 2D
+  - [ ] 3D
+  - [ ] 4D
+- [ ] Polar plane
 
 ## 📜 License
 

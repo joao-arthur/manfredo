@@ -6,7 +6,7 @@ use crate::cartesian::{
 
 #[test]
 fn test() {
-    let mut p = Point::of(0.0, 0.0);
+    let mut p = Point::zero();
     assert_eq!(try_checked_add_assign(&mut p, &Point::of(10.0, 13.0)), Some(()));
     assert_eq!(p, Point::of(10.0, 13.0));
     assert_eq!(try_checked_add_assign(&mut p, &Point::of(-25.0, -30.0)), Some(()));

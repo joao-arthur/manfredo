@@ -6,7 +6,7 @@ use crate::cartesian::{
 
 #[test]
 fn test() {
-    assert_eq!(saturating_add(&Point::of(0.0, 0.0), &Point::of(10.0, 13.0)), Point::of(10.0, 13.0));
+    assert_eq!(saturating_add(&Point::zero(), &Point::of(10.0, 13.0)), Point::of(10.0, 13.0));
     assert_eq!(saturating_add(&Point::of(10.0, 10.0), &Point::of(-5.0, -3.0)), Point::of(5.0, 7.0));
 }
 

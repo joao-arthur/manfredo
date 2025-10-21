@@ -73,11 +73,11 @@ impl Rect {
     }
 
     pub fn largest_min() -> Self {
-        Rect { min: point_f64::Point::min(), max: point_f64::Point::of(0.0, 0.0) }
+        Rect { min: point_f64::Point::min(), max: point_f64::Point::zero() }
     }
 
     pub fn largest_max() -> Self {
-        Rect { min: point_f64::Point::of(0.0, 0.0), max: point_f64::Point::max() }
+        Rect { min: point_f64::Point::zero(), max: point_f64::Point::max() }
     }
 
     pub fn min() -> Self {

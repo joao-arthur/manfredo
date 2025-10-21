@@ -13,7 +13,7 @@ mod tests {
 
     #[test]
     fn edges() {
-        assert_eq!(matrix_to_cartesian(&Matrix::of(0, 0)), Cartesian::of(i32::MIN, i32::MAX));
+        assert_eq!(matrix_to_cartesian(&Matrix::min()), Cartesian::of(i32::MIN, i32::MAX));
         assert_eq!(matrix_to_cartesian(&Matrix::of(u32::MAX, 0)), Cartesian::min());
         assert_eq!(matrix_to_cartesian(&Matrix::of(0, u32::MAX)), Cartesian::max());
         assert_eq!(matrix_to_cartesian(&Matrix::max()), Cartesian::of(i32::MAX, i32::MIN));

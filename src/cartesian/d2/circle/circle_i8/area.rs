@@ -29,7 +29,7 @@ mod tests {
 
     #[test]
     fn area_bounds() {
-        assert_eq!(area(&Circle::of(Point::of(0, 0), 0)), 0.0);
-        assert_eq!(area(&Circle::of(Point::of(0, 0), u8::MAX)), 204282.0622996763);
+        assert_eq!(area(&Circle::of(Point::zero(), 0)), 0.0);
+        assert_eq!(area(&Circle::of(Point::zero(), u8::MAX)), 204282.0622996763);
     }
 }

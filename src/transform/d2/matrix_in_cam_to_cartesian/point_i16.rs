@@ -15,7 +15,7 @@ mod tests {
     #[test]
     fn test_3x3() {
         let cam = Cam::of(0, 0, 2, 2);
-        assert_eq!(matrix_in_cam_to_cartesian(&Matrix::of(0, 0), &cam), Cartesian::of(i16::MIN, i16::MIN + 2));
+        assert_eq!(matrix_in_cam_to_cartesian(&Matrix::min(), &cam), Cartesian::of(i16::MIN, i16::MIN + 2));
         assert_eq!(matrix_in_cam_to_cartesian(&Matrix::of(0, 1), &cam), Cartesian::of(i16::MIN + 1, i16::MIN + 2));
         assert_eq!(matrix_in_cam_to_cartesian(&Matrix::of(0, 2), &cam), Cartesian::of(i16::MIN + 2, i16::MIN + 2));
 
@@ -55,7 +55,7 @@ mod tests {
     #[test]
     fn edges() {
         let cam = Cam::largest();
-        assert_eq!(matrix_in_cam_to_cartesian(&Matrix::of(0, 0), &cam), Cartesian::of(i16::MIN, i16::MAX));
+        assert_eq!(matrix_in_cam_to_cartesian(&Matrix::min(), &cam), Cartesian::of(i16::MIN, i16::MAX));
         assert_eq!(matrix_in_cam_to_cartesian(&Matrix::of(u16::MAX, 0), &cam), Cartesian::min());
         assert_eq!(matrix_in_cam_to_cartesian(&Matrix::of(0, u16::MAX), &cam), Cartesian::max());
         assert_eq!(matrix_in_cam_to_cartesian(&Matrix::max(), &cam), Cartesian::of(i16::MAX, i16::MIN));

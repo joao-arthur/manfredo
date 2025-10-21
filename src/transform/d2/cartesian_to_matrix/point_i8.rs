@@ -15,7 +15,7 @@ mod tests {
     fn bounds() {
         assert_eq!(cartesian_to_matrix(&Cartesian::min()), Matrix::of(u8::MAX, 0));
         assert_eq!(cartesian_to_matrix(&Cartesian::of(i8::MAX, i8::MIN)), Matrix::max());
-        assert_eq!(cartesian_to_matrix(&Cartesian::of(i8::MIN, i8::MAX)), Matrix::of(0, 0));
+        assert_eq!(cartesian_to_matrix(&Cartesian::of(i8::MIN, i8::MAX)), Matrix::min());
         assert_eq!(cartesian_to_matrix(&Cartesian::max()), Matrix::of(0, u8::MAX));
     }
 

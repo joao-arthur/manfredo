@@ -14,27 +14,27 @@ mod tests {
 
     #[test]
     fn test_area() {
-        assert_eq!(area(&Circle::of(Point::of(0, 0), 2)), 4.0 * PI);
-        assert_eq!(area(&Circle::of(Point::of(0, 0), 3)), 9.0 * PI);
-        assert_eq!(area(&Circle::of(Point::of(0, 0), 4)), 16.0 * PI);
-        assert_eq!(area(&Circle::of(Point::of(0, 0), 5)), 25.0 * PI);
+        assert_eq!(area(&Circle::of(Point::zero(), 2)), 4.0 * PI);
+        assert_eq!(area(&Circle::of(Point::zero(), 3)), 9.0 * PI);
+        assert_eq!(area(&Circle::of(Point::zero(), 4)), 16.0 * PI);
+        assert_eq!(area(&Circle::of(Point::zero(), 5)), 25.0 * PI);
     }
 
     #[test]
     fn area_powers_of_10() {
-        assert_eq!(area(&Circle::of(Point::of(0, 0), 1)), PI);
-        assert_eq!(area(&Circle::of(Point::of(0, 0), 10)), 100.0 * PI);
-        assert_eq!(area(&Circle::of(Point::of(0, 0), 100)), 10000.0 * PI);
-        assert_eq!(area(&Circle::of(Point::of(0, 0), 1000)), 1000000.0 * PI);
-        assert_eq!(area(&Circle::of(Point::of(0, 0), 10000)), 314159265.35897932);
-        assert_eq!(area(&Circle::of(Point::of(0, 0), 100000)), 31_415_926_535.897_93);
-        assert_eq!(area(&Circle::of(Point::of(0, 0), 1000000)), 3_141_592_653_589.793);
-        assert_eq!(area(&Circle::of(Point::of(0, 0), 10000000)), 314_159_265_358_979.3);
+        assert_eq!(area(&Circle::of(Point::zero(), 1)), PI);
+        assert_eq!(area(&Circle::of(Point::zero(), 10)), 100.0 * PI);
+        assert_eq!(area(&Circle::of(Point::zero(), 100)), 10000.0 * PI);
+        assert_eq!(area(&Circle::of(Point::zero(), 1000)), 1000000.0 * PI);
+        assert_eq!(area(&Circle::of(Point::zero(), 10000)), 314159265.35897932);
+        assert_eq!(area(&Circle::of(Point::zero(), 100000)), 31_415_926_535.897_93);
+        assert_eq!(area(&Circle::of(Point::zero(), 1000000)), 3_141_592_653_589.793);
+        assert_eq!(area(&Circle::of(Point::zero(), 10000000)), 314_159_265_358_979.3);
     }
 
     #[test]
     fn area_bounds() {
-        assert_eq!(area(&Circle::of(Point::of(0, 0), 0)), 0.0);
-        assert_eq!(area(&Circle::of(Point::of(0, 0), u64::MAX)), 1.0690285840649667e39);
+        assert_eq!(area(&Circle::of(Point::zero(), 0)), 0.0);
+        assert_eq!(area(&Circle::of(Point::zero(), u64::MAX)), 1.0690285840649667e39);
     }
 }

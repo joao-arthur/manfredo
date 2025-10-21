@@ -3,7 +3,7 @@ use crate::cartesian::d2::point::point_i64::Point;
 
 #[test]
 fn test() {
-    let mut p = Point::of(0, 0);
+    let mut p = Point::zero();
     checked_add_assign(&mut p, &Point::of(10, 13));
     assert_eq!(p, Point::of(10, 13));
     checked_add_assign(&mut p, &Point::of(-25, -30));

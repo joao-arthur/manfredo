@@ -33,15 +33,15 @@ mod tests {
 
     #[test]
     fn pythagorean() {
-        assert_eq!(distance(&Point::of(0.0, 0.0), &Point::of(3.0, 4.0)), 5.0);
-        assert_eq!(distance(&Point::of(0.0, 0.0), &Point::of(30.0, 40.0)), 50.0);
-        assert_eq!(distance(&Point::of(0.0, 0.0), &Point::of(300.0, 400.0)), 500.0);
-        assert_eq!(distance(&Point::of(0.0, 0.0), &Point::of(5000.0, 12000.0)), 13000.0);
-        assert_eq!(distance(&Point::of(0.0, 0.0), &Point::of(50000.0, 120000.0)), 130000.0);
-        assert_eq!(distance(&Point::of(0.0, 0.0), &Point::of(500000.0, 1200000.0)), 1300000.0);
-        assert_eq!(distance(&Point::of(0.0, 0.0), &Point::of(8000000.0, 15000000.0)), 17000000.0);
-        assert_eq!(distance(&Point::of(0.0, 0.0), &Point::of(80000000.0, 150000000.0)), 170000000.0);
-        assert_eq!(distance(&Point::of(0.0, 0.0), &Point::of(800000000.0, 1500000000.0)), 1700000000.0);
+        assert_eq!(distance(&Point::zero(), &Point::of(3.0, 4.0)), 5.0);
+        assert_eq!(distance(&Point::zero(), &Point::of(30.0, 40.0)), 50.0);
+        assert_eq!(distance(&Point::zero(), &Point::of(300.0, 400.0)), 500.0);
+        assert_eq!(distance(&Point::zero(), &Point::of(5000.0, 12000.0)), 13000.0);
+        assert_eq!(distance(&Point::zero(), &Point::of(50000.0, 120000.0)), 130000.0);
+        assert_eq!(distance(&Point::zero(), &Point::of(500000.0, 1200000.0)), 1300000.0);
+        assert_eq!(distance(&Point::zero(), &Point::of(8000000.0, 15000000.0)), 17000000.0);
+        assert_eq!(distance(&Point::zero(), &Point::of(80000000.0, 150000000.0)), 170000000.0);
+        assert_eq!(distance(&Point::zero(), &Point::of(800000000.0, 1500000000.0)), 1700000000.0);
     }
 
     #[test]
@@ -49,7 +49,7 @@ mod tests {
         assert_eq!(distance(&Point::of(-50.0, -50.0), &Point::of(50.0, 50.0)), 141.4213562373095);
         assert_eq!(distance(&Point::of(-100.0, -100.0), &Point::of(100.0, 100.0)), 282.842712474619);
 
-        assert_eq!(distance(&Point::of(0.0, 0.0), &Point::of(141.4213562373095, 141.4213562373095)), 200.0);
-        assert_eq!(distance(&Point::of(0.0, 0.0), &Point::of(282.842712474619, 282.842712474619)), 400.0);
+        assert_eq!(distance(&Point::zero(), &Point::of(141.4213562373095, 141.4213562373095)), 200.0);
+        assert_eq!(distance(&Point::zero(), &Point::of(282.842712474619, 282.842712474619)), 400.0);
     }
 }

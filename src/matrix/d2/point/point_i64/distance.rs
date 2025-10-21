@@ -33,15 +33,15 @@ mod tests {
 
     #[test]
     fn pythagorean() {
-        assert_eq!(distance(&Point::of(0, 0), &Point::of(3, 4)), 5.0);
-        assert_eq!(distance(&Point::of(0, 0), &Point::of(30, 40)), 50.0);
-        assert_eq!(distance(&Point::of(0, 0), &Point::of(300, 400)), 500.0);
-        assert_eq!(distance(&Point::of(0, 0), &Point::of(5000, 12000)), 13000.0);
-        assert_eq!(distance(&Point::of(0, 0), &Point::of(50000, 120000)), 130000.0);
-        assert_eq!(distance(&Point::of(0, 0), &Point::of(500000, 1200000)), 1300000.0);
-        assert_eq!(distance(&Point::of(0, 0), &Point::of(8000000, 15000000)), 17000000.0);
-        assert_eq!(distance(&Point::of(0, 0), &Point::of(80000000, 150000000)), 170000000.0);
-        assert_eq!(distance(&Point::of(0, 0), &Point::of(800000000, 1500000000)), 1700000000.0);
+        assert_eq!(distance(&Point::zero(), &Point::of(3, 4)), 5.0);
+        assert_eq!(distance(&Point::zero(), &Point::of(30, 40)), 50.0);
+        assert_eq!(distance(&Point::zero(), &Point::of(300, 400)), 500.0);
+        assert_eq!(distance(&Point::zero(), &Point::of(5000, 12000)), 13000.0);
+        assert_eq!(distance(&Point::zero(), &Point::of(50000, 120000)), 130000.0);
+        assert_eq!(distance(&Point::zero(), &Point::of(500000, 1200000)), 1300000.0);
+        assert_eq!(distance(&Point::zero(), &Point::of(8000000, 15000000)), 17000000.0);
+        assert_eq!(distance(&Point::zero(), &Point::of(80000000, 150000000)), 170000000.0);
+        assert_eq!(distance(&Point::zero(), &Point::of(800000000, 1500000000)), 1700000000.0);
     }
 
     #[test]

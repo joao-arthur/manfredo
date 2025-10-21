@@ -70,7 +70,7 @@ mod tests {
 
     #[test]
     fn test_delta() {
-        assert_eq!(delta(&Point::of(0, 0, 0), &Point::of(0, 0, 0)), point_u16::Point::min());
+        assert_eq!(delta(&Point::zero(), &Point::zero()), point_u16::Point::min());
         assert_eq!(delta(&Point::min(), &Point::max()), point_u16::Point::max());
     }
 }

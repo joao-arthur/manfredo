@@ -33,9 +33,9 @@ mod tests {
 
     #[test]
     fn pythagorean() {
-        assert_eq!(distance(&Point::of(0, 0), &Point::of(3, 4)), 5.0);
-        assert_eq!(distance(&Point::of(0, 0), &Point::of(50, 120)), 130.0);
-        assert_eq!(distance(&Point::of(0, 0), &Point::of(800, 1500)), 1700.0);
+        assert_eq!(distance(&Point::zero(), &Point::of(3, 4)), 5.0);
+        assert_eq!(distance(&Point::zero(), &Point::of(50, 120)), 130.0);
+        assert_eq!(distance(&Point::zero(), &Point::of(800, 1500)), 1700.0);
     }
 
     #[test]

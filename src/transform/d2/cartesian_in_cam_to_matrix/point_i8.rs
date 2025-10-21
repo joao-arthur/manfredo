@@ -17,10 +17,10 @@ mod tests {
         let cam = Cam::of(-1, -1, 1, 1);
         assert_eq!(cartesian_in_cam_to_matrix(&Cartesian::of(-1, -1), &cam), Matrix::of(2, 0));
         assert_eq!(cartesian_in_cam_to_matrix(&Cartesian::of(-1, 0), &cam), Matrix::of(1, 0));
-        assert_eq!(cartesian_in_cam_to_matrix(&Cartesian::of(-1, 1), &cam), Matrix::of(0, 0));
+        assert_eq!(cartesian_in_cam_to_matrix(&Cartesian::of(-1, 1), &cam), Matrix::min());
 
         assert_eq!(cartesian_in_cam_to_matrix(&Cartesian::of(0, -1), &cam), Matrix::of(2, 1));
-        assert_eq!(cartesian_in_cam_to_matrix(&Cartesian::of(0, 0), &cam), Matrix::of(1, 1));
+        assert_eq!(cartesian_in_cam_to_matrix(&Cartesian::zero(), &cam), Matrix::of(1, 1));
         assert_eq!(cartesian_in_cam_to_matrix(&Cartesian::of(0, 1), &cam), Matrix::of(0, 1));
 
         assert_eq!(cartesian_in_cam_to_matrix(&Cartesian::of(1, -1), &cam), Matrix::of(2, 2));
@@ -34,7 +34,7 @@ mod tests {
         assert_eq!(cartesian_in_cam_to_matrix(&Cartesian::of(-2, -2), &cam), Matrix::of(3, 0));
         assert_eq!(cartesian_in_cam_to_matrix(&Cartesian::of(-2, -1), &cam), Matrix::of(2, 0));
         assert_eq!(cartesian_in_cam_to_matrix(&Cartesian::of(-2, 0), &cam), Matrix::of(1, 0));
-        assert_eq!(cartesian_in_cam_to_matrix(&Cartesian::of(-2, 1), &cam), Matrix::of(0, 0));
+        assert_eq!(cartesian_in_cam_to_matrix(&Cartesian::of(-2, 1), &cam), Matrix::min());
 
         assert_eq!(cartesian_in_cam_to_matrix(&Cartesian::of(-1, -2), &cam), Matrix::of(3, 1));
         assert_eq!(cartesian_in_cam_to_matrix(&Cartesian::of(-1, -1), &cam), Matrix::of(2, 1));
@@ -43,7 +43,7 @@ mod tests {
 
         assert_eq!(cartesian_in_cam_to_matrix(&Cartesian::of(0, -2), &cam), Matrix::of(3, 2));
         assert_eq!(cartesian_in_cam_to_matrix(&Cartesian::of(0, -1), &cam), Matrix::of(2, 2));
-        assert_eq!(cartesian_in_cam_to_matrix(&Cartesian::of(0, 0), &cam), Matrix::of(1, 2));
+        assert_eq!(cartesian_in_cam_to_matrix(&Cartesian::zero(), &cam), Matrix::of(1, 2));
         assert_eq!(cartesian_in_cam_to_matrix(&Cartesian::of(0, 1), &cam), Matrix::of(0, 2));
 
         assert_eq!(cartesian_in_cam_to_matrix(&Cartesian::of(1, -2), &cam), Matrix::of(3, 3));
@@ -57,7 +57,7 @@ mod tests {
         let cam = Cam::largest();
         assert_eq!(cartesian_in_cam_to_matrix(&Cartesian::min(), &cam), Matrix::of(u8::MAX, 0));
         assert_eq!(cartesian_in_cam_to_matrix(&Cartesian::of(i8::MAX, i8::MIN), &cam), Matrix::max());
-        assert_eq!(cartesian_in_cam_to_matrix(&Cartesian::of(i8::MIN, i8::MAX), &cam), Matrix::of(0, 0));
+        assert_eq!(cartesian_in_cam_to_matrix(&Cartesian::of(i8::MIN, i8::MAX), &cam), Matrix::min());
         assert_eq!(cartesian_in_cam_to_matrix(&Cartesian::max(), &cam), Matrix::of(0, u8::MAX));
     }
 

@@ -6,7 +6,7 @@ use crate::matrix::{
 
 #[test]
 fn test() {
-    let mut p = Point::of(0, 0);
+    let mut p = Point::zero();
     wrapping_add_assign(&mut p, &Point::of(10, 13));
     assert_eq!(p, Point::of(10, 13));
     wrapping_add_assign(&mut p, &Point::of(-5, -3));

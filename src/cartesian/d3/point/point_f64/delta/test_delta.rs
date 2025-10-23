@@ -1,8 +1,5 @@
 use super::delta;
-use crate::cartesian::{
-    d1::point::point_f64::MIN,
-    d3::point::point_f64::Point,
-};
+use crate::cartesian::{d1::point::point_f64::MIN, d3::point::point_f64::Point};
 
 #[test]
 fn test_delta() {

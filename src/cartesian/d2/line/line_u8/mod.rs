@@ -33,19 +33,21 @@ impl std::fmt::Display for Line {
 #[cfg(test)]
 mod tests {
     use super::Line;
-    use crate::cartesian::{d1::point::point_u8::MAX, d2::point::point_u8::Point};
+    use crate::cartesian::d2::point::point_u8::Point;
 
     #[test]
     fn line() {
-        assert_eq!(Line::largest(), Line { min: Point { x: 0, y: 0 }, max: Point { x: MAX, y: MAX } });
-        assert_eq!(Line::min(), Line { min: Point { x: 0, y: 0 }, max: Point { x: 0, y: 0 } });
-        assert_eq!(Line::max(), Line { min: Point { x: MAX, y: MAX }, max: Point { x: MAX, y: MAX } });
+        assert_eq!(Line::largest(), Line { min: Point::min(), max: Point::max() });
+        assert_eq!(Line::min(), Line { min: Point::min(), max: Point::min() });
+        assert_eq!(Line::max(), Line { min: Point::max(), max: Point::max() });
         assert_eq!(Line::of(0, 2, 4, 8), Line { min: Point { x: 0, y: 2 }, max: Point { x: 4, y: 8 } });
     }
 
     #[test]
     fn to_string() {
         assert_eq!(Line::largest().to_string(), "((0, 0), (255, 255))");
+        assert_eq!(Line::min().to_string(), "((0, 0), (0, 0))");
+        assert_eq!(Line::max().to_string(), "((255, 255), (255, 255))");
         assert_eq!(Line::of(0, 2, 4, 8).to_string(), "((0, 2), (4, 8))");
     }
 }

@@ -49,15 +49,17 @@ mod tests {
 
     #[test]
     fn line() {
-        assert_eq!(Line::largest(), Line { min: Point { x: MIN, y: MIN }, max: Point { x: MAX, y: MAX } });
-        assert_eq!(Line::min(), Line { min: Point { x: MIN, y: MIN }, max: Point { x: MIN, y: MIN } });
-        assert_eq!(Line::max(), Line { min: Point { x: MAX, y: MAX }, max: Point { x: MAX, y: MAX } });
+        assert_eq!(Line::largest(), Line { min: Point::min(), max: Point::max() });
+        assert_eq!(Line::min(), Line { min: Point::min(), max: Point::min() });
+        assert_eq!(Line::max(), Line { min: Point::max(), max: Point::max() });
         assert_eq!(Line::of(MIN, -0.0, 0.0, MAX), Line { min: Point { x: MIN, y: -0.0 }, max: Point { x: 0.0, y: MAX } });
     }
 
     #[test]
     fn to_string() {
         assert_eq!(Line::largest().to_string(), "((-9007199254740992, -9007199254740992), (9007199254740991, 9007199254740991))");
+        assert_eq!(Line::min().to_string(), "((-9007199254740992, -9007199254740992), (-9007199254740992, -9007199254740992))");
+        assert_eq!(Line::max().to_string(), "((9007199254740991, 9007199254740991), (9007199254740991, 9007199254740991))");
         assert_eq!(Line::of(MIN, -0.0, 0.0, MAX).to_string(), "((-9007199254740992, -0), (0, 9007199254740991))");
     }
 

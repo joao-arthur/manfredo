@@ -40,15 +40,14 @@ impl From<line_u8::Line> for Line {
 mod tests {
     use super::Line;
     use crate::matrix::{
-        d1::point::point_u16::MAX,
         d2::{line::line_u8, point::point_u16::Point},
     };
 
     #[test]
     fn line() {
-        assert_eq!(Line::largest(), Line { min: Point { row: 0, col: 0 }, max: Point { row: MAX, col: MAX } });
-        assert_eq!(Line::min(), Line { min: Point { row: 0, col: 0 }, max: Point { row: 0, col: 0 } });
-        assert_eq!(Line::max(), Line { min: Point { row: MAX, col: MAX }, max: Point { row: MAX, col: MAX } });
+        assert_eq!(Line::largest(), Line { min: Point::min(), max: Point::max() });
+        assert_eq!(Line::min(), Line { min: Point::min(), max: Point::min() });
+        assert_eq!(Line::max(), Line { min: Point::max(), max: Point::max() });
         assert_eq!(Line::of(16, 32, 16, 32), Line { min: Point { row: 16, col: 32 }, max: Point { row: 16, col: 32 } });
     }
 
@@ -60,6 +59,6 @@ mod tests {
 
     #[test]
     fn from() {
-        assert_eq!(Line::from(line_u8::Line::largest()), Line { min: Point { row: 0, col: 0 }, max: Point { row: u8::MAX.into(), col: u8::MAX.into() } });
+        assert_eq!(Line::from(line_u8::Line::largest()), Line { min: Point::min(), max: Point { row: u8::MAX.into(), col: u8::MAX.into() } });
     }
 }

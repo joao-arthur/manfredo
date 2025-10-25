@@ -33,13 +33,13 @@ impl std::fmt::Display for Line {
 #[cfg(test)]
 mod tests {
     use super::Line;
-    use crate::matrix::{d1::point::point_u8::MAX, d2::point::point_u8::Point};
+    use crate::matrix::d2::point::point_u8::Point;
 
     #[test]
     fn line() {
-        assert_eq!(Line::largest(), Line { min: Point { row: 0, col: 0 }, max: Point { row: MAX, col: MAX } });
-        assert_eq!(Line::min(), Line { min: Point { row: 0, col: 0 }, max: Point { row: 0, col: 0 } });
-        assert_eq!(Line::max(), Line { min: Point { row: MAX, col: MAX }, max: Point { row: MAX, col: MAX } });
+        assert_eq!(Line::largest(), Line { min: Point::min(), max: Point::max() });
+        assert_eq!(Line::min(), Line { min: Point::min(), max: Point::min() });
+        assert_eq!(Line::max(), Line { min: Point::max(), max: Point::max() });
         assert_eq!(Line::of(0, 2, 4, 8), Line { min: Point { row: 0, col: 2 }, max: Point { row: 4, col: 8 } });
     }
 

@@ -40,9 +40,9 @@ mod tests {
 
     #[test]
     fn line() {
-        assert_eq!(Line::largest(), Line { min: Point { row: MIN, col: MIN }, max: Point { row: MAX, col: MAX } });
-        assert_eq!(Line::min(), Line { min: Point { row: MIN, col: MIN }, max: Point { row: MIN, col: MIN } });
-        assert_eq!(Line::max(), Line { min: Point { row: MAX, col: MAX }, max: Point { row: MAX, col: MAX } });
+        assert_eq!(Line::largest(), Line { min: Point::min(), max: Point::max() });
+        assert_eq!(Line::min(), Line { min: Point::min(), max: Point::min() });
+        assert_eq!(Line::max(), Line { min: Point::max(), max: Point::max() });
         assert_eq!(Line::of(MIN, -1, 1, MAX), Line { min: Point { row: MIN, col: -1 }, max: Point { row: 1, col: MAX } });
     }
 

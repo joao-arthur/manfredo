@@ -55,7 +55,6 @@ impl From<line_u32::Line> for Line {
 mod tests {
     use super::Line;
     use crate::cartesian::{
-        d1::point::point_u64::MAX,
         d2::{
             line::{line_u8, line_u16, line_u32},
             point::point_u64::Point,
@@ -64,22 +63,24 @@ mod tests {
 
     #[test]
     fn line() {
-        assert_eq!(Line::largest(), Line { min: Point { x: 0, y: 0 }, max: Point { x: MAX, y: MAX } });
-        assert_eq!(Line::min(), Line { min: Point { x: 0, y: 0 }, max: Point { x: 0, y: 0 } });
-        assert_eq!(Line::max(), Line { min: Point { x: MAX, y: MAX }, max: Point { x: MAX, y: MAX } });
+        assert_eq!(Line::largest(), Line { min: Point::min(), max: Point::max() });
+        assert_eq!(Line::min(), Line { min: Point::min(), max: Point::min() });
+        assert_eq!(Line::max(), Line { min: Point::max(), max: Point::max() });
         assert_eq!(Line::of(4096, 8192, 16384, 32768), Line { min: Point { x: 4096, y: 8192 }, max: Point { x: 16384, y: 32768 } });
     }
 
     #[test]
     fn to_string() {
         assert_eq!(Line::largest().to_string(), "((0, 0), (18446744073709551615, 18446744073709551615))");
+        assert_eq!(Line::min().to_string(), "((0, 0), (0, 0))");
+        assert_eq!(Line::max().to_string(), "((18446744073709551615, 18446744073709551615), (18446744073709551615, 18446744073709551615))");
         assert_eq!(Line::of(4096, 8192, 16384, 32768).to_string(), "((4096, 8192), (16384, 32768))");
     }
 
     #[test]
     fn from() {
-        assert_eq!(Line::from(line_u8::Line::largest()), Line { min: Point { x: 0, y: 0 }, max: Point { x: u8::MAX.into(), y: u8::MAX.into() } });
-        assert_eq!(Line::from(line_u16::Line::largest()), Line { min: Point { x: 0, y: 0 }, max: Point { x: u16::MAX.into(), y: u16::MAX.into() } });
-        assert_eq!(Line::from(line_u32::Line::largest()), Line { min: Point { x: 0, y: 0 }, max: Point { x: u32::MAX.into(), y: u32::MAX.into() } });
+        assert_eq!(Line::from(line_u8::Line::largest()), Line { min: Point::min(), max: Point { x: u8::MAX.into(), y: u8::MAX.into() } });
+        assert_eq!(Line::from(line_u16::Line::largest()), Line { min: Point::min(), max: Point { x: u16::MAX.into(), y: u16::MAX.into() } });
+        assert_eq!(Line::from(line_u32::Line::largest()), Line { min: Point::min(), max: Point { x: u32::MAX.into(), y: u32::MAX.into() } });
     }
 }

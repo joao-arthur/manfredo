@@ -56,21 +56,23 @@ mod tests {
     use super::Line;
     use crate::matrix::d1::{
         line::{line_i8, line_i16, line_i32},
-        point::point_i64::{MAX, MIN, Point},
+        point::point_i64::Point,
     };
 
     #[test]
     fn line() {
-        assert_eq!(Line::largest(), Line { min: Point { i: MIN }, max: Point { i: MAX } });
-        assert_eq!(Line::min(), Line { min: Point { i: MIN }, max: Point { i: MIN } });
-        assert_eq!(Line::max(), Line { min: Point { i: MAX }, max: Point { i: MAX } });
-        assert_eq!(Line::of(MIN, 1), Line { min: Point { i: MIN }, max: Point { i: 1 } });
+        assert_eq!(Line::largest(), Line { min: Point::min(), max: Point::max() });
+        assert_eq!(Line::min(), Line { min: Point::min(), max: Point::min() });
+        assert_eq!(Line::max(), Line { min: Point::max(), max: Point::max() });
+        assert_eq!(Line::of(-1, 1), Line { min: Point { i: -1 }, max: Point { i: 1 } });
     }
 
     #[test]
     fn to_string() {
         assert_eq!(Line::largest().to_string(), "((-9223372036854775808), (9223372036854775807))");
-        assert_eq!(Line::of(MIN, 0).to_string(), "((-9223372036854775808), (0))");
+        assert_eq!(Line::min().to_string(), "((-9223372036854775808), (-9223372036854775808))");
+        assert_eq!(Line::max().to_string(), "((9223372036854775807), (9223372036854775807))");
+        assert_eq!(Line::of(-1, 1).to_string(), "((-1), (1))");
     }
 
     #[test]

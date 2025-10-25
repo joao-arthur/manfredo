@@ -39,16 +39,14 @@ impl From<line_u8::Line> for Line {
 #[cfg(test)]
 mod tests {
     use super::Line;
-    use crate::cartesian::{
-        d2::{line::line_u8, point::point_u16::Point},
-    };
+    use crate::cartesian::d2::{line::line_u8, point::point_u16::Point};
 
     #[test]
     fn line() {
         assert_eq!(Line::largest(), Line { min: Point::min(), max: Point::max() });
         assert_eq!(Line::min(), Line { min: Point::min(), max: Point::min() });
         assert_eq!(Line::max(), Line { min: Point::max(), max: Point::max() });
-        assert_eq!(Line::of(16, 32, 16, 32), Line { min: Point { x: 16, y: 32 }, max: Point { x: 16, y: 32 } });
+        assert_eq!(Line::of(0, 2, 4, 8), Line { min: Point { x: 0, y: 2 }, max: Point { x: 4, y: 8 } });
     }
 
     #[test]
@@ -56,7 +54,7 @@ mod tests {
         assert_eq!(Line::largest().to_string(), "((0, 0), (65535, 65535))");
         assert_eq!(Line::min().to_string(), "((0, 0), (0, 0))");
         assert_eq!(Line::max().to_string(), "((65535, 65535), (65535, 65535))");
-        assert_eq!(Line::of(16, 32, 16, 32).to_string(), "((16, 32), (16, 32))");
+        assert_eq!(Line::of(0, 2, 4, 8).to_string(), "((0, 2), (4, 8))");
     }
 
     #[test]

@@ -48,11 +48,9 @@ impl From<line_u16::Line> for Line {
 #[cfg(test)]
 mod tests {
     use super::Line;
-    use crate::matrix::{
-        d2::{
-            line::{line_u8, line_u16},
-            point::point_u32::Point,
-        },
+    use crate::matrix::d2::{
+        line::{line_u8, line_u16},
+        point::point_u32::Point,
     };
 
     #[test]
@@ -60,13 +58,15 @@ mod tests {
         assert_eq!(Line::largest(), Line { min: Point::min(), max: Point::max() });
         assert_eq!(Line::min(), Line { min: Point::min(), max: Point::min() });
         assert_eq!(Line::max(), Line { min: Point::max(), max: Point::max() });
-        assert_eq!(Line::of(256, 512, 1024, 2048), Line { min: Point { row: 256, col: 512 }, max: Point { row: 1024, col: 2048 } });
+        assert_eq!(Line::of(0, 2, 4, 8), Line { min: Point { row: 0, col: 2 }, max: Point { row: 4, col: 8 } });
     }
 
     #[test]
     fn to_string() {
         assert_eq!(Line::largest().to_string(), "((0, 0), (4294967295, 4294967295))");
-        assert_eq!(Line::of(256, 512, 1024, 2048).to_string(), "((256, 512), (1024, 2048))");
+        assert_eq!(Line::min().to_string(), "((0, 0), (0, 0))");
+        assert_eq!(Line::max().to_string(), "((4294967295, 4294967295), (4294967295, 4294967295))");
+        assert_eq!(Line::of(0, 2, 4, 8).to_string(), "((0, 2), (4, 8))");
     }
 
     #[test]

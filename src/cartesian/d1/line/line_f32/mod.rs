@@ -33,19 +33,21 @@ impl std::fmt::Display for Line {
 #[cfg(test)]
 mod tests {
     use super::Line;
-    use crate::cartesian::d1::point::point_f32::{MAX, MIN, Point};
+    use crate::cartesian::d1::point::point_f32::Point;
 
     #[test]
     fn line() {
-        assert_eq!(Line::largest(), Line { min: Point { x: MIN }, max: Point { x: MAX } });
-        assert_eq!(Line::min(), Line { min: Point { x: MIN }, max: Point { x: MIN } });
-        assert_eq!(Line::max(), Line { min: Point { x: MAX }, max: Point { x: MAX } });
-        assert_eq!(Line::of(MIN, 0.0), Line { min: Point { x: MIN }, max: Point { x: 0.0 } });
+        assert_eq!(Line::largest(), Line { min: Point::min(), max: Point::max() });
+        assert_eq!(Line::min(), Line { min: Point::min(), max: Point::min() });
+        assert_eq!(Line::max(), Line { min: Point::max(), max: Point::max() });
+        assert_eq!(Line::of(-1.0, 1.0), Line { min: Point { x: -1.0 }, max: Point { x: 1.0 } });
     }
 
     #[test]
     fn to_string() {
         assert_eq!(Line::largest().to_string(), "((-16777216), (16777215))");
-        assert_eq!(Line::of(MIN, 0.0).to_string(), "((-16777216), (0))");
+        assert_eq!(Line::min().to_string(), "((-16777216), (-16777216))");
+        assert_eq!(Line::max().to_string(), "((16777215), (16777215))");
+        assert_eq!(Line::of(-1.0, 1.0).to_string(), "((-1), (1))");
     }
 }

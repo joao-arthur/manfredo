@@ -54,12 +54,9 @@ impl From<line_i32::Line> for Line {
 #[cfg(test)]
 mod tests {
     use super::Line;
-    use crate::cartesian::{
-        d1::point::point_i64::{MAX, MIN},
-        d2::{
-            line::{line_i8, line_i16, line_i32},
-            point::point_i64::Point,
-        },
+    use crate::cartesian::d2::{
+        line::{line_i8, line_i16, line_i32},
+        point::point_i64::Point,
     };
 
     #[test]
@@ -67,7 +64,7 @@ mod tests {
         assert_eq!(Line::largest(), Line { min: Point::min(), max: Point::max() });
         assert_eq!(Line::min(), Line { min: Point::min(), max: Point::min() });
         assert_eq!(Line::max(), Line { min: Point::max(), max: Point::max() });
-        assert_eq!(Line::of(MIN, -1, 1, MAX), Line { min: Point { x: MIN, y: -1 }, max: Point { x: 1, y: MAX } });
+        assert_eq!(Line::of(-2, -1, 1, 2), Line { min: Point { x: -2, y: -1 }, max: Point { x: 1, y: 2 } });
     }
 
     #[test]
@@ -75,7 +72,7 @@ mod tests {
         assert_eq!(Line::largest().to_string(), "((-9223372036854775808, -9223372036854775808), (9223372036854775807, 9223372036854775807))");
         assert_eq!(Line::min().to_string(), "((-9223372036854775808, -9223372036854775808), (-9223372036854775808, -9223372036854775808))");
         assert_eq!(Line::max().to_string(), "((9223372036854775807, 9223372036854775807), (9223372036854775807, 9223372036854775807))");
-        assert_eq!(Line::of(MIN, -0, 0, MAX).to_string(), "((-9223372036854775808, 0), (0, 9223372036854775807))");
+        assert_eq!(Line::of(-2, -1, 1, 2).to_string(), "((-2, -1), (1, 2))");
     }
 
     #[test]

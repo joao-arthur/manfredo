@@ -50,26 +50,28 @@ mod tests {
     use super::Line;
     use crate::cartesian::d1::{
         line::{line_u8, line_u16},
-        point::point_u32::{MAX, Point},
+        point::point_u32::Point,
     };
 
     #[test]
     fn line() {
-        assert_eq!(Line::largest(), Line { min: Point { x: 0 }, max: Point { x: MAX } });
-        assert_eq!(Line::min(), Line { min: Point { x: 0 }, max: Point { x: 0 } });
-        assert_eq!(Line::max(), Line { min: Point { x: MAX }, max: Point { x: MAX } });
-        assert_eq!(Line::of(256, 1024), Line { min: Point { x: 256 }, max: Point { x: 1024 } });
+        assert_eq!(Line::largest(), Line { min: Point::min(), max: Point::max() });
+        assert_eq!(Line::min(), Line { min: Point::min(), max: Point::min() });
+        assert_eq!(Line::max(), Line { min: Point::max(), max: Point::max() });
+        assert_eq!(Line::of(1, 2), Line { min: Point { x: 1 }, max: Point { x: 2 } });
     }
 
     #[test]
     fn to_string() {
         assert_eq!(Line::largest().to_string(), "((0), (4294967295))");
-        assert_eq!(Line::of(256, 1024).to_string(), "((256), (1024))");
+        assert_eq!(Line::min().to_string(), "((0), (0))");
+        assert_eq!(Line::max().to_string(), "((4294967295), (4294967295))");
+        assert_eq!(Line::of(1, 2).to_string(), "((1), (2))");
     }
 
     #[test]
     fn from() {
-        assert_eq!(Line::from(line_u8::Line::largest()), Line { min: Point { x: 0 }, max: Point { x: u8::MAX.into() } });
-        assert_eq!(Line::from(line_u16::Line::largest()), Line { min: Point { x: 0 }, max: Point { x: u16::MAX.into() } });
+        assert_eq!(Line::from(line_u8::Line::largest()), Line { min: Point::min(), max: Point { x: u8::MAX.into() } });
+        assert_eq!(Line::from(line_u16::Line::largest()), Line { min: Point::min(), max: Point { x: u16::MAX.into() } });
     }
 }

@@ -33,19 +33,21 @@ impl std::fmt::Display for Line {
 #[cfg(test)]
 mod tests {
     use super::Line;
-    use crate::matrix::d1::point::point_u8::{MAX, Point};
+    use crate::matrix::d1::point::point_u8::Point;
 
     #[test]
     fn line() {
-        assert_eq!(Line::largest(), Line { min: Point { i: 0 }, max: Point { i: MAX } });
-        assert_eq!(Line::min(), Line { min: Point { i: 0 }, max: Point { i: 0 } });
-        assert_eq!(Line::max(), Line { min: Point { i: MAX }, max: Point { i: MAX } });
-        assert_eq!(Line::of(0, 4), Line { min: Point { i: 0 }, max: Point { i: 4 } });
+        assert_eq!(Line::largest(), Line { min: Point::min(), max: Point::max() });
+        assert_eq!(Line::min(), Line { min: Point::min(), max: Point::min() });
+        assert_eq!(Line::max(), Line { min: Point::max(), max: Point::max() });
+        assert_eq!(Line::of(1, 2), Line { min: Point { i: 1 }, max: Point { i: 2 } });
     }
 
     #[test]
     fn to_string() {
         assert_eq!(Line::largest().to_string(), "((0), (255))");
-        assert_eq!(Line::of(0, 4).to_string(), "((0), (4))");
+        assert_eq!(Line::min().to_string(), "((0), (0))");
+        assert_eq!(Line::max().to_string(), "((255), (255))");
+        assert_eq!(Line::of(1, 2).to_string(), "((1), (2))");
     }
 }

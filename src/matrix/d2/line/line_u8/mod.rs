@@ -46,6 +46,8 @@ mod tests {
     #[test]
     fn to_string() {
         assert_eq!(Line::largest().to_string(), "((0, 0), (255, 255))");
+        assert_eq!(Line::min().to_string(), "((0, 0), (0, 0))");
+        assert_eq!(Line::max().to_string(), "((255, 255), (255, 255))");
         assert_eq!(Line::of(0, 2, 4, 8).to_string(), "((0, 2), (4, 8))");
     }
 }

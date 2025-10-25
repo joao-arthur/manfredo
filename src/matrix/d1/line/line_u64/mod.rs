@@ -56,27 +56,29 @@ mod tests {
     use super::Line;
     use crate::matrix::d1::{
         line::{line_u8, line_u16, line_u32},
-        point::point_u64::{MAX, Point},
+        point::point_u64::Point,
     };
 
     #[test]
     fn line() {
-        assert_eq!(Line::largest(), Line { min: Point { i: 0 }, max: Point { i: MAX } });
-        assert_eq!(Line::min(), Line { min: Point { i: 0 }, max: Point { i: 0 } });
-        assert_eq!(Line::max(), Line { min: Point { i: MAX }, max: Point { i: MAX } });
-        assert_eq!(Line::of(4096, 16384), Line { min: Point { i: 4096 }, max: Point { i: 16384 } });
+        assert_eq!(Line::largest(), Line { min: Point::min(), max: Point::max() });
+        assert_eq!(Line::min(), Line { min: Point::min(), max: Point::min() });
+        assert_eq!(Line::max(), Line { min: Point::max(), max: Point::max() });
+        assert_eq!(Line::of(1, 2), Line { min: Point { i: 1 }, max: Point { i: 2 } });
     }
 
     #[test]
     fn to_string() {
         assert_eq!(Line::largest().to_string(), "((0), (18446744073709551615))");
-        assert_eq!(Line::of(4096, 16384).to_string(), "((4096), (16384))");
+        assert_eq!(Line::min().to_string(), "((0), (0))");
+        assert_eq!(Line::max().to_string(), "((18446744073709551615), (18446744073709551615))");
+        assert_eq!(Line::of(1, 2).to_string(), "((1), (2))");
     }
 
     #[test]
     fn from() {
-        assert_eq!(Line::from(line_u8::Line::largest()), Line { min: Point { i: 0 }, max: Point { i: u8::MAX.into() } });
-        assert_eq!(Line::from(line_u16::Line::largest()), Line { min: Point { i: 0 }, max: Point { i: u16::MAX.into() } });
-        assert_eq!(Line::from(line_u32::Line::largest()), Line { min: Point { i: 0 }, max: Point { i: u32::MAX.into() } });
+        assert_eq!(Line::from(line_u8::Line::largest()), Line { min: Point::min(), max: Point { i: u8::MAX.into() } });
+        assert_eq!(Line::from(line_u16::Line::largest()), Line { min: Point::min(), max: Point { i: u16::MAX.into() } });
+        assert_eq!(Line::from(line_u32::Line::largest()), Line { min: Point::min(), max: Point { i: u32::MAX.into() } });
     }
 }

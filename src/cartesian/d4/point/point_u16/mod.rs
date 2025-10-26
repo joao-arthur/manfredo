@@ -46,14 +46,15 @@ mod tests {
 
     #[test]
     fn point() {
-        assert_eq!(Point::of(10, 20, 30, 40), Point { x: 10, y: 20, z: 30, w: 40 });
+        assert_eq!(Point::of(1, 2, 3, 4), Point { x: 1, y: 2, z: 3, w: 4 });
+        assert_eq!(Point::of(4, 3, 2, 1), Point { x: 4, y: 3, z: 2, w: 1 });
         assert_eq!(Point::min(), Point { x: 0, y: 0, z: 0, w: 0 });
         assert_eq!(Point::max(), Point { x: MAX, y: MAX, z: MAX, w: MAX });
     }
 
     #[test]
     fn to_string() {
-        assert_eq!(Point::of(10, 20, 30, 40).to_string(), "(10, 20, 30, 40)");
+        assert_eq!(Point::of(1, 2, 3, 4).to_string(), "(1, 2, 3, 4)");
         assert_eq!(Point::min().to_string(), "(0, 0, 0, 0)");
         assert_eq!(Point::max().to_string(), "(65535, 65535, 65535, 65535)");
     }

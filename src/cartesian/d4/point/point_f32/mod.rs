@@ -43,7 +43,8 @@ mod tests {
 
     #[test]
     fn point() {
-        assert_eq!(Point::of(-20.0, -10.0, 10.0, 20.0), Point { x: -20.0, y: -10.0, z: 10.0, w: 20.0 });
+        assert_eq!(Point::of(-2.0, -1.0, 1.0, 2.0), Point { x: -2.0, y: -1.0, z: 1.0, w: 2.0 });
+        assert_eq!(Point::of(2.0, 1.0, -1.0, -2.0), Point { x: 2.0, y: 1.0, z: -1.0, w: -2.0 });
         assert_eq!(Point::min(), Point { x: MIN, y: MIN, z: MIN, w: MIN });
         assert_eq!(Point::max(), Point { x: MAX, y: MAX, z: MAX, w: MAX });
         assert_eq!(Point::zero(), Point { x: 0.0, y: 0.0, z: 0.0, w: 0.0 });
@@ -51,7 +52,7 @@ mod tests {
 
     #[test]
     fn to_string() {
-        assert_eq!(Point::of(-20.0, -10.0, 10.0, 20.0).to_string(), "(-20, -10, 10, 20)");
+        assert_eq!(Point::of(-2.0, -1.0, 1.0, 2.0).to_string(), "(-2, -1, 1, 2)");
         assert_eq!(Point::min().to_string(), "(-16777216, -16777216, -16777216, -16777216)");
         assert_eq!(Point::max().to_string(), "(16777215, 16777215, 16777215, 16777215)");
         assert_eq!(Point::zero().to_string(), "(0, 0, 0, 0)");

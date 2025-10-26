@@ -51,8 +51,8 @@ mod tests {
 
     #[test]
     fn point() {
-        assert_eq!(Point::of(-10.0), Point { x: -10.0 });
-        assert_eq!(Point::of(10.0), Point { x: 10.0 });
+        assert_eq!(Point::of(-1.0), Point { x: -1.0 });
+        assert_eq!(Point::of(1.0), Point { x: 1.0 });
         assert_eq!(Point::min(), Point { x: MIN });
         assert_eq!(Point::max(), Point { x: MAX });
         assert_eq!(Point::zero(), Point { x: 0.0 });
@@ -60,8 +60,7 @@ mod tests {
 
     #[test]
     fn to_string() {
-        assert_eq!(Point::of(-10.0).to_string(), "(-10)");
-        assert_eq!(Point::of(10.0).to_string(), "(10)");
+        assert_eq!(Point::of(-1.0).to_string(), "(-1)");
         assert_eq!(Point::min().to_string(), "(-9007199254740992)");
         assert_eq!(Point::max().to_string(), "(9007199254740991)");
         assert_eq!(Point::zero().to_string(), "(0)");

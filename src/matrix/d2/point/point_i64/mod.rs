@@ -3,11 +3,9 @@ use crate::matrix::d1::point::point_i64::{MAX, MIN};
 
 mod add;
 mod delta;
-mod distance;
 
 pub use self::add::{checked_add, checked_add_assign, saturating_add, saturating_add_assign, try_checked_add, try_checked_add_assign, wrapping_add, wrapping_add_assign};
 pub use self::delta::{delta, delta_col, delta_max, delta_min, delta_row};
-pub use self::distance::distance;
 
 #[derive(Eq, PartialEq, Debug, Clone, Hash)]
 pub struct Point {
@@ -67,7 +65,8 @@ mod tests {
 
     #[test]
     fn point() {
-        assert_eq!(Point::of(-10, 10), Point { row: -10, col: 10 });
+        assert_eq!(Point::of(-1, 1), Point { row: -1, col: 1 });
+        assert_eq!(Point::of(1, -1), Point { row: 1, col: -1 });
         assert_eq!(Point::min(), Point { row: MIN, col: MIN });
         assert_eq!(Point::max(), Point { row: MAX, col: MAX });
         assert_eq!(Point::zero(), Point { row: 0, col: 0 });
@@ -75,7 +74,7 @@ mod tests {
 
     #[test]
     fn to_string() {
-        assert_eq!(Point::of(-10, 10).to_string(), "(-10, 10)");
+        assert_eq!(Point::of(-1, 1).to_string(), "(-1, 1)");
         assert_eq!(Point::min().to_string(), "(-9223372036854775808, -9223372036854775808)");
         assert_eq!(Point::max().to_string(), "(9223372036854775807, 9223372036854775807)");
         assert_eq!(Point::zero().to_string(), "(0, 0)");

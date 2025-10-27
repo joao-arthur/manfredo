@@ -3,13 +3,13 @@ use crate::matrix::d1::point::point_i64::{MAX, MIN};
 
 mod delta;
 
-pub use self::delta::{delta, delta_col, delta_max, delta_min, delta_row, delta_depth};
+pub use self::delta::{delta, delta_col, delta_depth, delta_max, delta_min, delta_row};
 
 #[derive(Eq, PartialEq, Debug, Clone, Hash)]
 pub struct Point {
     pub row: i64,
     pub col: i64,
-    pub depth: i64
+    pub depth: i64,
 }
 
 impl Point {
@@ -33,7 +33,6 @@ impl Point {
 impl std::fmt::Display for Point {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "({}, {}, {})", self.row, self.col, self.depth)
-
     }
 }
 

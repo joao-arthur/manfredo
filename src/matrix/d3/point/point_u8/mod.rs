@@ -2,13 +2,13 @@ use crate::matrix::d1::point::point_u8::MAX;
 
 mod delta;
 
-pub use self::delta::{delta, delta_col, delta_max, delta_min, delta_row, delta_depth};
+pub use self::delta::{delta, delta_col, delta_depth, delta_max, delta_min, delta_row};
 
 #[derive(Eq, PartialEq, Debug, Clone, Hash)]
 pub struct Point {
     pub row: u8,
     pub col: u8,
-    pub depth: u8
+    pub depth: u8,
 }
 
 impl Point {
@@ -34,7 +34,7 @@ impl std::fmt::Display for Point {
 #[cfg(test)]
 mod tests {
     use super::Point;
-use crate::matrix::d1::point::point_u8::MAX;
+    use crate::matrix::d1::point::point_u8::MAX;
 
     #[test]
     fn point() {

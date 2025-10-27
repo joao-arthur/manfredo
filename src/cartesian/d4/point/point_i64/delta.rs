@@ -84,8 +84,8 @@ mod tests {
         assert_eq!(delta_min(&Point::of(2, 3, 0, 1), &Point::of(8, 8, 8, 8)), 5);
         assert_eq!(delta_min(&Point::of(3, 0, 1, 1), &Point::of(7, 7, 7, 7)), 4);
     }
-    #[test]
 
+    #[test]
     fn test_delta() {
         assert_eq!(delta(&Point::zero(), &Point::zero()), point_u64::Point::min());
         assert_eq!(delta(&Point::min(), &Point::max()), point_u64::Point::max());

@@ -2,17 +2,17 @@ use crate::matrix::d1::point::point_i8::{MAX, MIN};
 
 mod delta;
 
-pub use self::delta::{delta, delta_col, delta_max, delta_min, delta_row, delta_depth};
+pub use self::delta::{delta, delta_col, delta_depth, delta_max, delta_min, delta_row};
 
 #[derive(Eq, PartialEq, Debug, Clone, Hash)]
 pub struct Point {
     pub row: i8,
     pub col: i8,
-    pub depth: i8
+    pub depth: i8,
 }
 
 impl Point {
-    pub fn of(row: i8, col: i8, depth:i8 ) -> Self {
+    pub fn of(row: i8, col: i8, depth: i8) -> Self {
         Point { row, col, depth }
     }
 
@@ -32,7 +32,6 @@ impl Point {
 impl std::fmt::Display for Point {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "({}, {}, {})", self.row, self.col, self.depth)
-
     }
 }
 

@@ -1,15 +1,15 @@
-use crate::matrix::d1::point::point_u64::MAX;
 use super::{point_u8, point_u16, point_u32};
+use crate::matrix::d1::point::point_u64::MAX;
 
 mod delta;
 
-pub use self::delta::{delta, delta_col, delta_max, delta_min, delta_row, delta_depth};
+pub use self::delta::{delta, delta_col, delta_depth, delta_max, delta_min, delta_row};
 
 #[derive(Eq, PartialEq, Debug, Clone, Hash)]
 pub struct Point {
     pub row: u64,
     pub col: u64,
-    pub depth: u64
+    pub depth: u64,
 }
 
 impl Point {
@@ -53,7 +53,10 @@ impl From<point_u32::Point> for Point {
 #[cfg(test)]
 mod tests {
     use super::Point;
-    use crate::matrix::{d1::point::point_u64::MAX, d3::point::{point_u8, point_u16, point_u32}};
+    use crate::matrix::{
+        d1::point::point_u64::MAX,
+        d3::point::{point_u8, point_u16, point_u32},
+    };
 
     #[test]
     fn point() {

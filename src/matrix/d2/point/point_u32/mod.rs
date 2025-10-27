@@ -48,7 +48,10 @@ impl From<point_u16::Point> for Point {
 #[cfg(test)]
 mod tests {
     use super::Point;
-    use crate::matrix::{d1::point::point_u32::MAX, d2::point::{point_u8, point_u16}};
+    use crate::matrix::{
+        d1::point::point_u32::MAX,
+        d2::point::{point_u8, point_u16},
+    };
 
     #[test]
     fn point() {

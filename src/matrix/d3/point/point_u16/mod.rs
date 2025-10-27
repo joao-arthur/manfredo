@@ -1,16 +1,15 @@
 use super::point_u8;
 use crate::matrix::d1::point::point_u16::MAX;
 
-
 mod delta;
 
-pub use self::delta::{delta, delta_col, delta_max, delta_min, delta_row, delta_depth};
+pub use self::delta::{delta, delta_col, delta_depth, delta_max, delta_min, delta_row};
 
 #[derive(Eq, PartialEq, Debug, Clone, Hash)]
 pub struct Point {
     pub row: u16,
     pub col: u16,
-    pub depth: u16
+    pub depth: u16,
 }
 
 impl Point {

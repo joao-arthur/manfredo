@@ -27,7 +27,7 @@ pub fn delta(p1: &Point, p2: &Point) -> point_u32::Point {
 
 #[cfg(test)]
 mod tests {
-    use super::{delta, delta_col, delta_max, delta_min, delta_row, delta_depth};
+    use super::{delta, delta_col, delta_depth, delta_max, delta_min, delta_row};
     use crate::matrix::{
         d1::point::point_i32::{MAX, MIN},
         d3::point::{point_i32::Point, point_u32},

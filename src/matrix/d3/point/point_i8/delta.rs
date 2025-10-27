@@ -13,7 +13,6 @@ pub fn delta_depth(p1: &Point, p2: &Point) -> u8 {
     (i16::from(p2.depth) - i16::from(p1.depth)).unsigned_abs() as u8
 }
 
-
 pub fn delta_min(p1: &Point, p2: &Point) -> u8 {
     delta_row(p1, p2).min(delta_col(p1, p2)).min(delta_depth(p1, p2))
 }
@@ -28,7 +27,7 @@ pub fn delta(p1: &Point, p2: &Point) -> point_u8::Point {
 
 #[cfg(test)]
 mod tests {
-    use super::{delta, delta_col, delta_max, delta_min, delta_row, delta_depth};
+    use super::{delta, delta_col, delta_depth, delta_max, delta_min, delta_row};
     use crate::matrix::{
         d1::point::point_i8::{MAX, MIN},
         d3::point::{point_i8::Point, point_u8},

@@ -1,6 +1,6 @@
-use crate::cartesian::d4::point::point_f32::Point;
+use crate::matrix::d4::point::point_i8::Point;
 
-#[derive(PartialEq, Debug, Clone)]
+#[derive(Eq, PartialEq, Debug, Clone)]
 pub struct Line {
     pub min: Point,
     pub max: Point,
@@ -33,24 +33,21 @@ impl std::fmt::Display for Line {
 #[cfg(test)]
 mod tests {
     use super::Line;
-    use crate::cartesian::d4::point::point_f32::Point;
+    use crate::matrix::d4::point::point_i8::Point;
 
     #[test]
     fn line() {
         assert_eq!(Line::largest(), Line { min: Point::min(), max: Point::max() });
         assert_eq!(Line::min(), Line { min: Point::min(), max: Point::min() });
         assert_eq!(Line::max(), Line { min: Point::max(), max: Point::max() });
-        assert_eq!(
-            Line::of(Point::of(-4.0, -3.0, -2.0, -1.0), Point::of(1.0, 2.0, 3.0, 4.0)),
-            Line { min: Point { x: -4.0, y: -3.0, z: -2.0, w: -1.0 }, max: Point { x: 1.0, y: 2.0, z: 3.0, w: 4.0 } }
-        );
+        assert_eq!(Line::of(Point::of(-4, -3, -2, -1), Point::of(1, 2, 3, 4)), Line { min: Point { row: -4, col: -3, depth: -2, channel: -1 }, max: Point { row: 1, col: 2, depth: 3, channel: 4 } });
     }
 
     #[test]
     fn to_string() {
-        assert_eq!(Line::largest().to_string(), "((-16777216, -16777216, -16777216, -16777216), (16777215, 16777215, 16777215, 16777215))");
-        assert_eq!(Line::min().to_string(), "((-16777216, -16777216, -16777216, -16777216), (-16777216, -16777216, -16777216, -16777216))");
-        assert_eq!(Line::max().to_string(), "((16777215, 16777215, 16777215, 16777215), (16777215, 16777215, 16777215, 16777215))");
-        assert_eq!(Line::of(Point::of(-4.0, -3.0, -2.0, -1.0), Point::of(1.0, 2.0, 3.0, 4.0)).to_string(), "((-4, -3, -2, -1), (1, 2, 3, 4))");
+        assert_eq!(Line::largest().to_string(), "((-128, -128, -128, -128), (127, 127, 127, 127))");
+        assert_eq!(Line::min().to_string(), "((-128, -128, -128, -128), (-128, -128, -128, -128))");
+        assert_eq!(Line::max().to_string(), "((127, 127, 127, 127), (127, 127, 127, 127))");
+        assert_eq!(Line::of(Point::of(-4, -3, -2, -1), Point::of(1, 2, 3, 4)).to_string(), "((-4, -3, -2, -1), (1, 2, 3, 4))");
     }
 }

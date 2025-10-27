@@ -1,4 +1,4 @@
-use crate::cartesian::d4::{line::line_i8, point::point_i16::Point};
+use crate::matrix::d4::{line::line_i8, point::point_i16::Point};
 
 #[derive(Eq, PartialEq, Debug, Clone)]
 pub struct Line {
@@ -39,14 +39,14 @@ impl From<line_i8::Line> for Line {
 #[cfg(test)]
 mod tests {
     use super::Line;
-    use crate::cartesian::d4::{line::line_i8, point::point_i16::Point};
+    use crate::matrix::d4::{line::line_i8, point::point_i16::Point};
 
     #[test]
     fn line() {
         assert_eq!(Line::largest(), Line { min: Point::min(), max: Point::max() });
         assert_eq!(Line::min(), Line { min: Point::min(), max: Point::min() });
         assert_eq!(Line::max(), Line { min: Point::max(), max: Point::max() });
-        assert_eq!(Line::of(Point::of(-4, -3, -2, -1), Point::of(1, 2, 3, 4)), Line { min: Point { x: -4, y: -3, z: -2, w: -1 }, max: Point { x: 1, y: 2, z: 3, w: 4 } });
+        assert_eq!(Line::of(Point::of(-4, -3, -2, -1), Point::of(1, 2, 3, 4)), Line { min: Point { row: -4, col: -3, depth: -2, channel: -1 }, max: Point { row: 1, col: 2, depth: 3, channel: 4 } });
     }
 
     #[test]
@@ -62,8 +62,8 @@ mod tests {
         assert_eq!(
             Line::from(line_i8::Line::largest()),
             Line {
-                min: Point { x: i8::MIN.into(), y: i8::MIN.into(), z: i8::MIN.into(), w: i8::MIN.into() },
-                max: Point { x: i8::MAX.into(), y: i8::MAX.into(), z: i8::MAX.into(), w: i8::MAX.into() }
+                min: Point { row: i8::MIN.into(), col: i8::MIN.into(), depth: i8::MIN.into(), channel: i8::MIN.into() },
+                max: Point { row: i8::MAX.into(), col: i8::MAX.into(), depth: i8::MAX.into(), channel: i8::MAX.into() }
             }
         );
     }

@@ -1,4 +1,4 @@
-use crate::cartesian::d4::{
+use crate::matrix::d4::{
     line::{line_u8, line_u16, line_u32},
     point::point_u64::Point,
 };
@@ -54,7 +54,7 @@ impl From<line_u32::Line> for Line {
 #[cfg(test)]
 mod tests {
     use super::Line;
-    use crate::cartesian::d4::{
+    use crate::matrix::d4::{
         line::{line_u8, line_u16, line_u32},
         point::point_u64::Point,
     };
@@ -64,7 +64,7 @@ mod tests {
         assert_eq!(Line::largest(), Line { min: Point::min(), max: Point::max() });
         assert_eq!(Line::min(), Line { min: Point::min(), max: Point::min() });
         assert_eq!(Line::max(), Line { min: Point::max(), max: Point::max() });
-        assert_eq!(Line::of(Point::of(0, 1, 2, 3), Point::of(4, 5, 6, 7)), Line { min: Point { x: 0, y: 1, z: 2, w: 3 }, max: Point { x: 4, y: 5, z: 6, w: 7 } });
+        assert_eq!(Line::of(Point::of(0, 1, 2, 3), Point::of(4, 5, 6, 7)), Line { min: Point { row: 0, col: 1, depth: 2, channel: 3 }, max: Point { row: 4, col: 5, depth: 6, channel: 7 } });
     }
 
     #[test]
@@ -80,8 +80,8 @@ mod tests {
 
     #[test]
     fn from() {
-        assert_eq!(Line::from(line_u8::Line::largest()), Line { min: Point::min(), max: Point { x: u8::MAX.into(), y: u8::MAX.into(), z: u8::MAX.into(), w: u8::MAX.into() } });
-        assert_eq!(Line::from(line_u16::Line::largest()), Line { min: Point::min(), max: Point { x: u16::MAX.into(), y: u16::MAX.into(), z: u16::MAX.into(), w: u16::MAX.into() } });
-        assert_eq!(Line::from(line_u32::Line::largest()), Line { min: Point::min(), max: Point { x: u32::MAX.into(), y: u32::MAX.into(), z: u32::MAX.into(), w: u32::MAX.into() } });
+        assert_eq!(Line::from(line_u8::Line::largest()), Line { min: Point::min(), max: Point { row: u8::MAX.into(), col: u8::MAX.into(), depth: u8::MAX.into(), channel: u8::MAX.into() } });
+        assert_eq!(Line::from(line_u16::Line::largest()), Line { min: Point::min(), max: Point { row: u16::MAX.into(), col: u16::MAX.into(), depth: u16::MAX.into(), channel: u16::MAX.into() } });
+        assert_eq!(Line::from(line_u32::Line::largest()), Line { min: Point::min(), max: Point { row: u32::MAX.into(), col: u32::MAX.into(), depth: u32::MAX.into(), channel: u32::MAX.into() } });
     }
 }

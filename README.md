@@ -88,31 +88,136 @@ let e = rect_i32::wrapping_add_assign(&mut a, &b);
 
 - [-] Cartesian Plane
   - [-] 1D
-    - [ ] `Line` distance
+    - [x] `Point`
+      - [x] add
+      - [x] delta
+    - [-] `Line`
+      - [ ] delta
   - [-] 2D
-    - [ ] `Line` distance
+    - [x] `Point`
+      - [x] add
+      - [x] delta
+      - [x] distance
+    - [-] `Line`
+      - [ ] delta
+      - [ ] distance
+    - [x] `Circle`
+      - [x] area
+    - [x] `Rect`
+      - [x] add
+      - [x] delta
+      - [x] inflate
+      - [x] resize
+      - [x] translate
+      - [x] area
+      - [x] contains_point
+      - [x] contains_rect
+      - [x] deflate
+      - [x] len (can overflow)
   - [-] 3D
-    - [-] `Point` 
+    - [-] `Point`
+      - [ ] add
+      - [x] delta
+      - [ ] distance
+    - [-] `Line`
+      - [ ] delta
+      - [ ] distance
     - [ ] `Sphere`
-    - [ ] `Cuboid`
-    - [ ] `Line`
-  - [ ] 4D
-    - [ ] `HyperPoint`
-    - [ ] `HyperLine`
-    - [ ] `HyperSphere`
-    - [ ] `HyperCuboid`
+      - [ ] area
+    - [-] `Rect`
+      - [ ] add
+      - [ ] delta
+      - [ ] inflate
+      - [ ] resize
+      - [ ] translate
+      - [ ] area
+      - [ ] contains_point
+      - [ ] contains_rect
+      - [ ] deflate
+      - [ ] len (can overflow)
+  - [-] 4D
+    - [-] `Point`
+      - [ ] add
+      - [x] delta
+      - [ ] distance
+    - [-] `Line`
+      - [ ] delta
+      - [ ] distance
+    - [ ] `Sphere`
+      - [ ] area
+    - [-] `Rect`
+      - [ ] add
+      - [ ] delta
+      - [ ] inflate
+      - [ ] resize
+      - [ ] translate
+      - [ ] area
+      - [ ] contains_point
+      - [ ] contains_rect
+      - [ ] deflate
+      - [ ] len (can overflow)
 - [-] Matrix Plane
   - [-] 1D
-    - [ ] `Line` distance
+    - [x] `Point`
+      - [x] add
+      - [x] delta
+    - [-] `Line`
+      - [ ] delta
   - [-] 2D
-    - [ ] `Line` distance
-  - [ ] 3D
-    - [ ] `Point` 
-    - [ ] `Sphere`
-    - [ ] `Cuboid`
-    - [ ] `Line`
-  - [ ] 4D
+    - [x] `Point`
+      - [x] add
+      - [x] delta
+    - [-] `Line`
+      - [ ] delta
+    - [x] `Rect`
+      - [x] add
+      - [x] delta
+      - [x] inflate
+      - [x] resize
+      - [x] translate
+      - [x] area
+      - [x] contains_point
+      - [x] contains_rect
+      - [x] deflate
+      - [x] len (can overflow)
+  - [-] 3D
+    - [-] `Point`
+      - [ ] add
+      - [x] delta
+    - [-] `Line`
+      - [ ] delta
+      - [ ] distance
+    - [-] `Rect`
+      - [ ] add
+      - [ ] delta
+      - [ ] inflate
+      - [ ] resize
+      - [ ] translate
+      - [ ] area
+      - [ ] contains_point
+      - [ ] contains_rect
+      - [ ] deflate
+      - [ ] len (can overflow)
+  - [-] 4D
+    - [-] `Point`
+      - [ ] add
+      - [x] delta
+    - [-] `Line`
+      - [ ] delta
+      - [ ] distance
+    - [-] `Rect`
+      - [ ] add
+      - [ ] delta
+      - [ ] inflate
+      - [ ] resize
+      - [ ] translate
+      - [ ] area
+      - [ ] contains_point
+      - [ ] contains_rect
+      - [ ] deflate
+      - [ ] len (can overflow)
 - [ ] Transform
+  - [ ] 1D
   - [x] 2D
   - [ ] 3D
   - [ ] 4D

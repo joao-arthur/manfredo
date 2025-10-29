@@ -61,18 +61,19 @@ mod tests {
 
     #[test]
     fn line() {
+        assert_eq!(Line::of(0, 1, 2, 3), Line { min: Point { row: 0, col: 1 }, max: Point { row: 2, col: 3 } });
+        assert_eq!(Line::of(1, 2, 4, 5), Line { min: Point { row: 1, col: 2 }, max: Point { row: 4, col: 5 } });
         assert_eq!(Line::largest(), Line { min: Point::min(), max: Point::max() });
         assert_eq!(Line::min(), Line { min: Point::min(), max: Point::min() });
         assert_eq!(Line::max(), Line { min: Point::max(), max: Point::max() });
-        assert_eq!(Line::of(0, 2, 4, 8), Line { min: Point { row: 0, col: 2 }, max: Point { row: 4, col: 8 } });
     }
 
     #[test]
     fn to_string() {
+        assert_eq!(Line::of(0, 1, 2, 3).to_string(), "((0, 1), (2, 3))");
         assert_eq!(Line::largest().to_string(), "((0, 0), (18446744073709551615, 18446744073709551615))");
         assert_eq!(Line::min().to_string(), "((0, 0), (0, 0))");
         assert_eq!(Line::max().to_string(), "((18446744073709551615, 18446744073709551615), (18446744073709551615, 18446744073709551615))");
-        assert_eq!(Line::of(0, 2, 4, 8).to_string(), "((0, 2), (4, 8))");
     }
 
     #[test]

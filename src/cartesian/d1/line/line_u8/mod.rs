@@ -37,17 +37,18 @@ mod tests {
 
     #[test]
     fn line() {
+        assert_eq!(Line::of(0, 1), Line { min: Point { x: 0 }, max: Point { x: 1 } });
+        assert_eq!(Line::of(2, 3), Line { min: Point { x: 2 }, max: Point { x: 3 } });
         assert_eq!(Line::largest(), Line { min: Point::min(), max: Point::max() });
         assert_eq!(Line::min(), Line { min: Point::min(), max: Point::min() });
         assert_eq!(Line::max(), Line { min: Point::max(), max: Point::max() });
-        assert_eq!(Line::of(1, 2), Line { min: Point { x: 1 }, max: Point { x: 2 } });
     }
 
     #[test]
     fn to_string() {
+        assert_eq!(Line::of(0, 1).to_string(), "((0), (1))");
         assert_eq!(Line::largest().to_string(), "((0), (255))");
         assert_eq!(Line::min().to_string(), "((0), (0))");
         assert_eq!(Line::max().to_string(), "((255), (255))");
-        assert_eq!(Line::of(1, 2).to_string(), "((1), (2))");
     }
 }

@@ -92,6 +92,8 @@ let e = rect_i32::wrapping_add_assign(&mut a, &b);
       - [x] add
       - [x] delta
     - [-] `Line`
+      - [ ] ::zero
+      - [ ] ::iter_
       - [ ] delta
   - [-] 2D
     - [x] `Point`
@@ -99,6 +101,8 @@ let e = rect_i32::wrapping_add_assign(&mut a, &b);
       - [x] delta
       - [x] distance
     - [-] `Line`
+      - [ ] ::zero
+      - [ ] ::iter_
       - [ ] delta
       - [ ] distance
     - [x] `Circle`
@@ -120,6 +124,8 @@ let e = rect_i32::wrapping_add_assign(&mut a, &b);
       - [x] delta
       - [ ] distance
     - [-] `Line`
+      - [ ] ::zero
+      - [ ] ::iter_
       - [ ] delta
       - [ ] distance
     - [ ] `Sphere`
@@ -141,6 +147,8 @@ let e = rect_i32::wrapping_add_assign(&mut a, &b);
       - [x] delta
       - [ ] distance
     - [-] `Line`
+      - [ ] ::zero
+      - [ ] ::iter_
       - [ ] delta
       - [ ] distance
     - [ ] `Sphere`
@@ -162,12 +170,16 @@ let e = rect_i32::wrapping_add_assign(&mut a, &b);
       - [x] add
       - [x] delta
     - [-] `Line`
+      - [ ] ::zero
+      - [ ] ::iter_
       - [ ] delta
   - [-] 2D
     - [x] `Point`
       - [x] add
       - [x] delta
     - [-] `Line`
+      - [ ] ::zero
+      - [ ] ::iter_
       - [ ] delta
     - [x] `Rect`
       - [x] add
@@ -185,8 +197,9 @@ let e = rect_i32::wrapping_add_assign(&mut a, &b);
       - [ ] add
       - [x] delta
     - [-] `Line`
+      - [ ] ::zero
+      - [ ] ::iter_
       - [ ] delta
-      - [ ] distance
     - [-] `Rect`
       - [ ] add
       - [ ] delta
@@ -203,8 +216,9 @@ let e = rect_i32::wrapping_add_assign(&mut a, &b);
       - [ ] add
       - [x] delta
     - [-] `Line`
+      - [ ] ::zero
+      - [ ] ::iter_
       - [ ] delta
-      - [ ] distance
     - [-] `Rect`
       - [ ] add
       - [ ] delta

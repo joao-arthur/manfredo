@@ -61,21 +61,22 @@ mod tests {
 
     #[test]
     fn line() {
+        assert_eq!(Line::of(Point::of(0, 1, 2, 3), Point::of(4, 5, 6, 7)), Line { min: Point { x: 0, y: 1, z: 2, w: 3 }, max: Point { x: 4, y: 5, z: 6, w: 7 } });
+        assert_eq!(Line::of(Point::of(1, 2, 3, 4), Point::of(5, 6, 7, 8)), Line { min: Point { x: 1, y: 2, z: 3, w: 4 }, max: Point { x: 5, y: 6, z: 7, w: 8 } });
         assert_eq!(Line::largest(), Line { min: Point::min(), max: Point::max() });
         assert_eq!(Line::min(), Line { min: Point::min(), max: Point::min() });
         assert_eq!(Line::max(), Line { min: Point::max(), max: Point::max() });
-        assert_eq!(Line::of(Point::of(0, 1, 2, 3), Point::of(4, 5, 6, 7)), Line { min: Point { x: 0, y: 1, z: 2, w: 3 }, max: Point { x: 4, y: 5, z: 6, w: 7 } });
     }
 
     #[test]
     fn to_string() {
+        assert_eq!(Line::of(Point::of(0, 1, 2, 3), Point::of(4, 5, 6, 7)).to_string(), "((0, 1, 2, 3), (4, 5, 6, 7))");
         assert_eq!(Line::largest().to_string(), "((0, 0, 0, 0), (18446744073709551615, 18446744073709551615, 18446744073709551615, 18446744073709551615))");
         assert_eq!(Line::min().to_string(), "((0, 0, 0, 0), (0, 0, 0, 0))");
         assert_eq!(
             Line::max().to_string(),
             "((18446744073709551615, 18446744073709551615, 18446744073709551615, 18446744073709551615), (18446744073709551615, 18446744073709551615, 18446744073709551615, 18446744073709551615))"
         );
-        assert_eq!(Line::of(Point::of(0, 1, 2, 3), Point::of(4, 5, 6, 7)).to_string(), "((0, 1, 2, 3), (4, 5, 6, 7))");
     }
 
     #[test]

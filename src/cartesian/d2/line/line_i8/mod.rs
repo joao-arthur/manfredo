@@ -22,6 +22,10 @@ impl Line {
     pub fn max() -> Self {
         Line { min: Point::max(), max: Point::max() }
     }
+
+    pub fn zero() -> Self {
+        Line { min: Point::zero(), max: Point::zero() }
+    }
 }
 
 impl std::fmt::Display for Line {
@@ -37,17 +41,20 @@ mod tests {
 
     #[test]
     fn line() {
+        assert_eq!(Line::of(-2, -1, 1, 2), Line { min: Point { x: -2, y: -1 }, max: Point { x: 1, y: 2 } });
+        assert_eq!(Line::of(-4, -2, 2, 4), Line { min: Point { x: -4, y: -2 }, max: Point { x: 2, y: 4 } });
         assert_eq!(Line::largest(), Line { min: Point::min(), max: Point::max() });
         assert_eq!(Line::min(), Line { min: Point::min(), max: Point::min() });
         assert_eq!(Line::max(), Line { min: Point::max(), max: Point::max() });
-        assert_eq!(Line::of(-2, -1, 1, 2), Line { min: Point { x: -2, y: -1 }, max: Point { x: 1, y: 2 } });
+        assert_eq!(Line::zero(), Line { min: Point::zero(), max: Point::zero() });
     }
 
     #[test]
     fn to_string() {
+        assert_eq!(Line::of(-2, -1, 1, 2).to_string(), "((-2, -1), (1, 2))");
         assert_eq!(Line::largest().to_string(), "((-128, -128), (127, 127))");
         assert_eq!(Line::min().to_string(), "((-128, -128), (-128, -128))");
         assert_eq!(Line::max().to_string(), "((127, 127), (127, 127))");
-        assert_eq!(Line::of(-2, -1, 1, 2).to_string(), "((-2, -1), (1, 2))");
+        assert_eq!(Line::zero().to_string(), "((0, 0), (0, 0))");
     }
 }

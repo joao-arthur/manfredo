@@ -10,8 +10,8 @@ pub struct Line {
 }
 
 impl Line {
-    pub fn of(min: Point, max: Point) -> Self {
-        Line { min, max }
+    pub fn of(min: (i64, i64, i64, i64), max: (i64, i64, i64, i64)) -> Self {
+        Line { min: Point::of(min.0, min.1, min.2, min.3), max: Point::of(max.0, max.1, max.2, max.3) }
     }
 
     pub fn largest() -> Self {
@@ -65,8 +65,8 @@ mod tests {
 
     #[test]
     fn line() {
-        assert_eq!(Line::of(Point::of(-4, -3, -2, -1), Point::of(1, 2, 3, 4)), Line { min: Point { x: -4, y: -3, z: -2, w: -1 }, max: Point { x: 1, y: 2, z: 3, w: 4 } });
-        assert_eq!(Line::of(Point::of(-5, -4, -3, -2), Point::of(2, 3, 4, 5)), Line { min: Point { x: -5, y: -4, z: -3, w: -2 }, max: Point { x: 2, y: 3, z: 4, w: 5 } });
+        assert_eq!(Line::of((-4, -3, -2, -1), (1, 2, 3, 4)), Line { min: Point { x: -4, y: -3, z: -2, w: -1 }, max: Point { x: 1, y: 2, z: 3, w: 4 } });
+        assert_eq!(Line::of((-8, -7, -6, -5), (5, 6, 7, 8)), Line { min: Point { x: -8, y: -7, z: -6, w: -5 }, max: Point { x: 5, y: 6, z: 7, w: 8 } });
         assert_eq!(Line::largest(), Line { min: Point::min(), max: Point::max() });
         assert_eq!(Line::min(), Line { min: Point::min(), max: Point::min() });
         assert_eq!(Line::max(), Line { min: Point::max(), max: Point::max() });
@@ -75,7 +75,7 @@ mod tests {
 
     #[test]
     fn to_string() {
-        assert_eq!(Line::of(Point::of(-4, -3, -2, -1), Point::of(1, 2, 3, 4)).to_string(), "((-4, -3, -2, -1), (1, 2, 3, 4))");
+        assert_eq!(Line::of((-4, -3, -2, -1), (1, 2, 3, 4)).to_string(), "((-4, -3, -2, -1), (1, 2, 3, 4))");
         assert_eq!(
             Line::largest().to_string(),
             "((-9223372036854775808, -9223372036854775808, -9223372036854775808, -9223372036854775808), (9223372036854775807, 9223372036854775807, 9223372036854775807, 9223372036854775807))"

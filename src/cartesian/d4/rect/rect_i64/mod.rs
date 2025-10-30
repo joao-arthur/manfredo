@@ -69,9 +69,18 @@ mod tests {
 
     #[test]
     fn to_string() {
-        assert_eq!(Rect::largest().to_string(), "((-9223372036854775808, -9223372036854775808, -9223372036854775808, -9223372036854775808), (9223372036854775807, 9223372036854775807, 9223372036854775807, 9223372036854775807))");
-        assert_eq!(Rect::min().to_string(), "((-9223372036854775808, -9223372036854775808, -9223372036854775808, -9223372036854775808), (-9223372036854775808, -9223372036854775808, -9223372036854775808, -9223372036854775808))");
-        assert_eq!(Rect::max().to_string(), "((9223372036854775807, 9223372036854775807, 9223372036854775807, 9223372036854775807), (9223372036854775807, 9223372036854775807, 9223372036854775807, 9223372036854775807))");
+        assert_eq!(
+            Rect::largest().to_string(),
+            "((-9223372036854775808, -9223372036854775808, -9223372036854775808, -9223372036854775808), (9223372036854775807, 9223372036854775807, 9223372036854775807, 9223372036854775807))"
+        );
+        assert_eq!(
+            Rect::min().to_string(),
+            "((-9223372036854775808, -9223372036854775808, -9223372036854775808, -9223372036854775808), (-9223372036854775808, -9223372036854775808, -9223372036854775808, -9223372036854775808))"
+        );
+        assert_eq!(
+            Rect::max().to_string(),
+            "((9223372036854775807, 9223372036854775807, 9223372036854775807, 9223372036854775807), (9223372036854775807, 9223372036854775807, 9223372036854775807, 9223372036854775807))"
+        );
         assert_eq!(Rect::of(Point::of(-4, -3, -2, -1), Point::of(1, 2, 3, 4)).to_string(), "((-4, -3, -2, -1), (1, 2, 3, 4))");
     }
 
@@ -79,15 +88,24 @@ mod tests {
     fn from() {
         assert_eq!(
             Rect::from(rect_i8::Rect::largest()),
-            Rect { min: Point { x: i8::MIN.into(), y: i8::MIN.into(), z: i8::MIN.into(), w: i8::MIN.into() }, max: Point { x: i8::MAX.into(), y: i8::MAX.into(), z: i8::MAX.into(), w: i8::MAX.into() } }
+            Rect {
+                min: Point { x: i8::MIN.into(), y: i8::MIN.into(), z: i8::MIN.into(), w: i8::MIN.into() },
+                max: Point { x: i8::MAX.into(), y: i8::MAX.into(), z: i8::MAX.into(), w: i8::MAX.into() }
+            }
         );
         assert_eq!(
             Rect::from(rect_i16::Rect::largest()),
-            Rect { min: Point { x: i16::MIN.into(), y: i16::MIN.into(), z: i16::MIN.into(), w: i16::MIN.into() }, max: Point { x: i16::MAX.into(), y: i16::MAX.into(), z: i16::MAX.into(), w: i16::MAX.into() } }
+            Rect {
+                min: Point { x: i16::MIN.into(), y: i16::MIN.into(), z: i16::MIN.into(), w: i16::MIN.into() },
+                max: Point { x: i16::MAX.into(), y: i16::MAX.into(), z: i16::MAX.into(), w: i16::MAX.into() }
+            }
         );
         assert_eq!(
             Rect::from(rect_i32::Rect::largest()),
-            Rect { min: Point { x: i32::MIN.into(), y: i32::MIN.into(), z: i32::MIN.into(), w: i32::MIN.into() }, max: Point { x: i32::MAX.into(), y: i32::MAX.into(), z: i32::MAX.into(), w: i32::MAX.into() } }
+            Rect {
+                min: Point { x: i32::MIN.into(), y: i32::MIN.into(), z: i32::MIN.into(), w: i32::MIN.into() },
+                max: Point { x: i32::MAX.into(), y: i32::MAX.into(), z: i32::MAX.into(), w: i32::MAX.into() }
+            }
         );
     }
 }

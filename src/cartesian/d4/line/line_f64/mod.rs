@@ -7,8 +7,8 @@ pub struct Line {
 }
 
 impl Line {
-    pub fn of(min: Point, max: Point) -> Self {
-        Line { min, max }
+    pub fn of(min: (f64, f64, f64, f64), max: (f64, f64, f64, f64)) -> Self {
+        Line { min: Point::of(min.0, min.1, min.2, min.3), max: Point::of(max.0, max.1, max.2, max.3) }
     }
 
     pub fn largest() -> Self {
@@ -50,14 +50,8 @@ mod tests {
 
     #[test]
     fn line() {
-        assert_eq!(
-            Line::of(Point::of(-4.0, -3.0, -2.0, -1.0), Point::of(1.0, 2.0, 3.0, 4.0)),
-            Line { min: Point { x: -4.0, y: -3.0, z: -2.0, w: -1.0 }, max: Point { x: 1.0, y: 2.0, z: 3.0, w: 4.0 } }
-        );
-        assert_eq!(
-            Line::of(Point::of(-5.0, -4.0, -3.0, -2.0), Point::of(2.0, 3.0, 4.0, 5.0)),
-            Line { min: Point { x: -5.0, y: -4.0, z: -3.0, w: -2.0 }, max: Point { x: 2.0, y: 3.0, z: 4.0, w: 5.0 } }
-        );
+        assert_eq!(Line::of((-4.0, -3.0, -2.0, -1.0), (1.0, 2.0, 3.0, 4.0)), Line { min: Point { x: -4.0, y: -3.0, z: -2.0, w: -1.0 }, max: Point { x: 1.0, y: 2.0, z: 3.0, w: 4.0 } });
+        assert_eq!(Line::of((-8.0, -7.0, -6.0, -5.0), (5.0, 6.0, 7.0, 8.0)), Line { min: Point { x: -8.0, y: -7.0, z: -6.0, w: -5.0 }, max: Point { x: 5.0, y: 6.0, z: 7.0, w: 8.0 } });
         assert_eq!(Line::largest(), Line { min: Point::min(), max: Point::max() });
         assert_eq!(Line::min(), Line { min: Point::min(), max: Point::min() });
         assert_eq!(Line::max(), Line { min: Point::max(), max: Point::max() });
@@ -66,7 +60,7 @@ mod tests {
 
     #[test]
     fn to_string() {
-        assert_eq!(Line::of(Point::of(-4.0, -3.0, -2.0, -1.0), Point::of(1.0, 2.0, 3.0, 4.0)).to_string(), "((-4, -3, -2, -1), (1, 2, 3, 4))");
+        assert_eq!(Line::of((-4.0, -3.0, -2.0, -1.0), (1.0, 2.0, 3.0, 4.0)).to_string(), "((-4, -3, -2, -1), (1, 2, 3, 4))");
         assert_eq!(
             Line::largest().to_string(),
             "((-9007199254740992, -9007199254740992, -9007199254740992, -9007199254740992), (9007199254740991, 9007199254740991, 9007199254740991, 9007199254740991))"

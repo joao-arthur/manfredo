@@ -10,8 +10,8 @@ pub struct Line {
 }
 
 impl Line {
-    pub fn of(i1: u64, i2: u64) -> Self {
-        Line { min: Point::of(i1), max: Point::of(i2) }
+    pub fn of(min: u64, max: u64) -> Self {
+        Line { min: Point::of(min), max: Point::of(max) }
     }
 
     pub fn largest() -> Self {

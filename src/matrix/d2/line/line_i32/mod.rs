@@ -1,33 +1,33 @@
 use crate::matrix::d2::{
     line::{line_i8, line_i16},
-    point::point_i32,
+    point::point_i32::Point,
 };
 
 #[derive(Eq, PartialEq, Debug, Clone)]
 pub struct Line {
-    pub min: point_i32::Point,
-    pub max: point_i32::Point,
+    pub min: Point,
+    pub max: Point,
 }
 
 impl Line {
-    pub fn of(row1: i32, col1: i32, row2: i32, col2: i32) -> Self {
-        Line { min: point_i32::Point::of(row1, col1), max: point_i32::Point::of(row2, col2) }
+    pub fn of(min: (i32, i32), max: (i32, i32)) -> Self {
+        Line { min: Point::of(min.0, min.1), max: Point::of(max.0, max.1) }
     }
 
     pub fn largest() -> Self {
-        Line { min: point_i32::Point::min(), max: point_i32::Point::max() }
+        Line { min: Point::min(), max: Point::max() }
     }
 
     pub fn min() -> Self {
-        Line { min: point_i32::Point::min(), max: point_i32::Point::min() }
+        Line { min: Point::min(), max: Point::min() }
     }
 
     pub fn max() -> Self {
-        Line { min: point_i32::Point::max(), max: point_i32::Point::max() }
+        Line { min: Point::max(), max: Point::max() }
     }
 
     pub fn zero() -> Self {
-        Line { min: point_i32::Point::zero(), max: point_i32::Point::zero() }
+        Line { min: Point::zero(), max: Point::zero() }
     }
 }
 
@@ -39,13 +39,13 @@ impl std::fmt::Display for Line {
 
 impl From<line_i8::Line> for Line {
     fn from(l: line_i8::Line) -> Self {
-        Line { min: point_i32::Point::from(l.min), max: point_i32::Point::from(l.max) }
+        Line { min: Point::from(l.min), max: Point::from(l.max) }
     }
 }
 
 impl From<line_i16::Line> for Line {
     fn from(l: line_i16::Line) -> Self {
-        Line { min: point_i32::Point::from(l.min), max: point_i32::Point::from(l.max) }
+        Line { min: Point::from(l.min), max: Point::from(l.max) }
     }
 }
 
@@ -59,7 +59,8 @@ mod tests {
 
     #[test]
     fn line() {
-        assert_eq!(Line::of(-2, -1, 1, 2), Line { min: Point { row: -2, col: -1 }, max: Point { row: 1, col: 2 } });
+        assert_eq!(Line::of((-2, -1), (1, 2)), Line { min: Point { row: -2, col: -1 }, max: Point { row: 1, col: 2 } });
+        assert_eq!(Line::of((-4, -3), (3, 4)), Line { min: Point { row: -4, col: -3 }, max: Point { row: 3, col: 4 } });
         assert_eq!(Line::largest(), Line { min: Point::min(), max: Point::max() });
         assert_eq!(Line::min(), Line { min: Point::min(), max: Point::min() });
         assert_eq!(Line::max(), Line { min: Point::max(), max: Point::max() });
@@ -68,7 +69,7 @@ mod tests {
 
     #[test]
     fn to_string() {
-        assert_eq!(Line::of(-2, -1, 1, 2).to_string(), "((-2, -1), (1, 2))");
+        assert_eq!(Line::of((-2, -1), (1, 2)).to_string(), "((-2, -1), (1, 2))");
         assert_eq!(Line::largest().to_string(), "((-2147483648, -2147483648), (2147483647, 2147483647))");
         assert_eq!(Line::min().to_string(), "((-2147483648, -2147483648), (-2147483648, -2147483648))");
         assert_eq!(Line::max().to_string(), "((2147483647, 2147483647), (2147483647, 2147483647))");

@@ -6,6 +6,6 @@ use crate::matrix::{
 
 #[test]
 fn test_delta_row() {
-    assert_eq!(delta_row(&Rect::of(0, MIN, 0, MAX)), 0);
-    assert_eq!(delta_row(&Rect::of(MIN, 0, MAX, 0)), u64::MAX);
+    assert_eq!(delta_row(&Rect::of((0, MIN), (0, MAX))), 0);
+    assert_eq!(delta_row(&Rect::of((MIN, 0), (MAX, 0))), u64::MAX);
 }

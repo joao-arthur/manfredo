@@ -38,8 +38,8 @@ pub struct Rect {
 }
 
 impl Rect {
-    pub fn of(row1: i16, col1: i16, row2: i16, col2: i16) -> Self {
-        Rect { min: Point::of(row1, col1), max: Point::of(row2, col2) }
+    pub fn of(min: (i16, i16), max: (i16, i16)) -> Self {
+        Rect { min: Point { row: min.0, col: min.1 }, max: Point { row: max.0, col: max.1 } }
     }
 
     pub fn largest() -> Self {
@@ -92,7 +92,7 @@ mod tests {
         assert_eq!(Rect::min(), Rect { min: Point { row: MIN, col: MIN }, max: Point { row: MIN, col: MIN } });
         assert_eq!(Rect::max(), Rect { min: Point { row: MAX, col: MAX }, max: Point { row: MAX, col: MAX } });
         assert_eq!(Rect::zero(), Rect { min: Point { row: 0, col: 0 }, max: Point { row: 0, col: 0 } });
-        assert_eq!(Rect::of(MIN, -1, 1, MAX), Rect { min: Point { row: MIN, col: -1 }, max: Point { row: 1, col: MAX } });
+        assert_eq!(Rect::of((MIN, -1), (1, MAX)), Rect { min: Point { row: MIN, col: -1 }, max: Point { row: 1, col: MAX } });
     }
 
     #[test]
@@ -101,7 +101,7 @@ mod tests {
         assert_eq!(Rect::min().to_string(), "((-32768, -32768), (-32768, -32768))");
         assert_eq!(Rect::max().to_string(), "((32767, 32767), (32767, 32767))");
         assert_eq!(Rect::zero().to_string(), "((0, 0), (0, 0))");
-        assert_eq!(Rect::of(MIN, -0, 0, MAX).to_string(), "((-32768, 0), (0, 32767))");
+        assert_eq!(Rect::of((MIN, -0), (0, MAX)).to_string(), "((-32768, 0), (0, 32767))");
     }
 
     #[test]
@@ -111,29 +111,29 @@ mod tests {
 
     #[test]
     fn iter_row() {
-        assert_eq!(Rect::of(-6, -8, -7, -6).iter_row().collect::<Vec<i16>>(), []);
-        assert_eq!(Rect::of(-6, -8, -6, -6).iter_row().collect::<Vec<i16>>(), [-6]);
-        assert_eq!(Rect::of(-6, -8, -5, -6).iter_row().collect::<Vec<i16>>(), [-6, -5]);
-        assert_eq!(Rect::of(-6, -8, -4, -6).iter_row().collect::<Vec<i16>>(), [-6, -5, -4]);
-        assert_eq!(Rect::of(-6, -8, -3, -6).iter_row().collect::<Vec<i16>>(), [-6, -5, -4, -3]);
-        assert_eq!(Rect::of(-6, -8, -3, -6).iter_row().rev().collect::<Vec<i16>>(), [-3, -4, -5, -6]);
-        assert_eq!(Rect::of(-6, -8, -4, -6).iter_row().rev().collect::<Vec<i16>>(), [-4, -5, -6]);
-        assert_eq!(Rect::of(-6, -8, -5, -6).iter_row().rev().collect::<Vec<i16>>(), [-5, -6]);
-        assert_eq!(Rect::of(-6, -8, -6, -6).iter_row().rev().collect::<Vec<i16>>(), [-6]);
-        assert_eq!(Rect::of(-6, -8, -7, -6).iter_row().rev().collect::<Vec<i16>>(), []);
+        assert_eq!(Rect::of((-6, -8), (-7, -6)).iter_row().collect::<Vec<i16>>(), []);
+        assert_eq!(Rect::of((-6, -8), (-6, -6)).iter_row().collect::<Vec<i16>>(), [-6]);
+        assert_eq!(Rect::of((-6, -8), (-5, -6)).iter_row().collect::<Vec<i16>>(), [-6, -5]);
+        assert_eq!(Rect::of((-6, -8), (-4, -6)).iter_row().collect::<Vec<i16>>(), [-6, -5, -4]);
+        assert_eq!(Rect::of((-6, -8), (-3, -6)).iter_row().collect::<Vec<i16>>(), [-6, -5, -4, -3]);
+        assert_eq!(Rect::of((-6, -8), (-3, -6)).iter_row().rev().collect::<Vec<i16>>(), [-3, -4, -5, -6]);
+        assert_eq!(Rect::of((-6, -8), (-4, -6)).iter_row().rev().collect::<Vec<i16>>(), [-4, -5, -6]);
+        assert_eq!(Rect::of((-6, -8), (-5, -6)).iter_row().rev().collect::<Vec<i16>>(), [-5, -6]);
+        assert_eq!(Rect::of((-6, -8), (-6, -6)).iter_row().rev().collect::<Vec<i16>>(), [-6]);
+        assert_eq!(Rect::of((-6, -8), (-7, -6)).iter_row().rev().collect::<Vec<i16>>(), []);
     }
 
     #[test]
     fn iter_col() {
-        assert_eq!(Rect::of(-6, -8, -4, -9).iter_col().collect::<Vec<i16>>(), []);
-        assert_eq!(Rect::of(-6, -8, -4, -8).iter_col().collect::<Vec<i16>>(), [-8]);
-        assert_eq!(Rect::of(-6, -8, -4, -7).iter_col().collect::<Vec<i16>>(), [-8, -7]);
-        assert_eq!(Rect::of(-6, -8, -4, -6).iter_col().collect::<Vec<i16>>(), [-8, -7, -6]);
-        assert_eq!(Rect::of(-6, -8, -4, -5).iter_col().collect::<Vec<i16>>(), [-8, -7, -6, -5]);
-        assert_eq!(Rect::of(-6, -8, -4, -5).iter_col().rev().collect::<Vec<i16>>(), [-5, -6, -7, -8]);
-        assert_eq!(Rect::of(-6, -8, -4, -6).iter_col().rev().collect::<Vec<i16>>(), [-6, -7, -8]);
-        assert_eq!(Rect::of(-6, -8, -4, -7).iter_col().rev().collect::<Vec<i16>>(), [-7, -8]);
-        assert_eq!(Rect::of(-6, -8, -4, -8).iter_col().rev().collect::<Vec<i16>>(), [-8]);
-        assert_eq!(Rect::of(-6, -8, -4, -9).iter_col().rev().collect::<Vec<i16>>(), []);
+        assert_eq!(Rect::of((-6, -8), (-4, -9)).iter_col().collect::<Vec<i16>>(), []);
+        assert_eq!(Rect::of((-6, -8), (-4, -8)).iter_col().collect::<Vec<i16>>(), [-8]);
+        assert_eq!(Rect::of((-6, -8), (-4, -7)).iter_col().collect::<Vec<i16>>(), [-8, -7]);
+        assert_eq!(Rect::of((-6, -8), (-4, -6)).iter_col().collect::<Vec<i16>>(), [-8, -7, -6]);
+        assert_eq!(Rect::of((-6, -8), (-4, -5)).iter_col().collect::<Vec<i16>>(), [-8, -7, -6, -5]);
+        assert_eq!(Rect::of((-6, -8), (-4, -5)).iter_col().rev().collect::<Vec<i16>>(), [-5, -6, -7, -8]);
+        assert_eq!(Rect::of((-6, -8), (-4, -6)).iter_col().rev().collect::<Vec<i16>>(), [-6, -7, -8]);
+        assert_eq!(Rect::of((-6, -8), (-4, -7)).iter_col().rev().collect::<Vec<i16>>(), [-7, -8]);
+        assert_eq!(Rect::of((-6, -8), (-4, -8)).iter_col().rev().collect::<Vec<i16>>(), [-8]);
+        assert_eq!(Rect::of((-6, -8), (-4, -9)).iter_col().rev().collect::<Vec<i16>>(), []);
     }
 }

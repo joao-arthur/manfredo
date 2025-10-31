@@ -17,7 +17,7 @@ pub fn try_checked_inflate(r: &Rect) -> Option<Rect> {
     let min_col = r.min.col.checked_sub(1)?;
     let max_row = r.max.row.checked_add(1)?;
     let max_col = r.max.col.checked_add(1)?;
-    Some(Rect::of(min_row, min_col, max_row, max_col))
+    Some(Rect::of((min_row, min_col), (max_row, max_col)))
 }
 
 pub fn checked_inflate_assign(r: &mut Rect) {
@@ -63,7 +63,7 @@ pub fn try_saturating_inflate(r: &Rect) -> Option<Rect> {
     let min_col = r.min.col.saturating_sub(min_col_modifier);
     let max_row = r.max.row.saturating_add(max_row_modifier);
     let max_col = r.max.col.saturating_add(max_col_modifier);
-    Some(Rect::of(min_row, min_col, max_row, max_col))
+    Some(Rect::of((min_row, min_col), (max_row, max_col)))
 }
 
 pub fn saturating_inflate_assign(r: &mut Rect) {
@@ -90,7 +90,7 @@ pub fn wrapping_inflate(r: &Rect) -> Rect {
     let min_col = r.min.col.wrapping_sub(1);
     let max_row = r.max.row.wrapping_add(1);
     let max_col = r.max.col.wrapping_add(1);
-    Rect::of(min_row, min_col, max_row, max_col)
+    Rect::of((min_row, min_col), (max_row, max_col))
 }
 
 #[cfg(test)]

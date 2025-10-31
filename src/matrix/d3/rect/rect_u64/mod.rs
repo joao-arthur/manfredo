@@ -10,8 +10,8 @@ pub struct Rect {
 }
 
 impl Rect {
-    pub fn of(min: Point, max: Point) -> Self {
-        Rect { min, max }
+    pub fn of(min: (u64, u64, u64), max: (u64, u64, u64)) -> Self {
+        Rect { min: Point { row: min.0, col: min.1, depth: min.2 }, max: Point { row: max.0, col: max.1, depth: max.2 } }
     }
 
     pub fn largest() -> Self {
@@ -64,7 +64,7 @@ mod tests {
         assert_eq!(Rect::largest(), Rect { min: Point::min(), max: Point::max() });
         assert_eq!(Rect::min(), Rect { min: Point::min(), max: Point::min() });
         assert_eq!(Rect::max(), Rect { min: Point::max(), max: Point::max() });
-        assert_eq!(Rect::of(Point::of(0, 1, 2), Point::of(3, 4, 5)), Rect { min: Point { row: 0, col: 1, depth: 2 }, max: Point { row: 3, col: 4, depth: 5 } });
+        assert_eq!(Rect::of((0, 1, 2), (3, 4, 5)), Rect { min: Point { row: 0, col: 1, depth: 2 }, max: Point { row: 3, col: 4, depth: 5 } });
     }
 
     #[test]
@@ -72,7 +72,7 @@ mod tests {
         assert_eq!(Rect::largest().to_string(), "((0, 0, 0), (18446744073709551615, 18446744073709551615, 18446744073709551615))");
         assert_eq!(Rect::min().to_string(), "((0, 0, 0), (0, 0, 0))");
         assert_eq!(Rect::max().to_string(), "((18446744073709551615, 18446744073709551615, 18446744073709551615), (18446744073709551615, 18446744073709551615, 18446744073709551615))");
-        assert_eq!(Rect::of(Point::of(0, 1, 2), Point::of(3, 4, 5)).to_string(), "((0, 1, 2), (3, 4, 5))");
+        assert_eq!(Rect::of((0, 1, 2), (3, 4, 5)).to_string(), "((0, 1, 2), (3, 4, 5))");
     }
 
     #[test]

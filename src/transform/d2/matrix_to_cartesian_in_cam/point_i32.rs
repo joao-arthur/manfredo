@@ -14,7 +14,7 @@ mod tests {
 
     #[test]
     fn test_3x3() {
-        let cam = Cam::of(0, 0, 2, 2);
+        let cam = Cam::of((0, 0), (2, 2));
         assert_eq!(matrix_to_cartesian_in_cam(&Matrix::min(), &cam), Cartesian::of(0, 2));
         assert_eq!(matrix_to_cartesian_in_cam(&Matrix::of(0, 1), &cam), Cartesian::of(1, 2));
         assert_eq!(matrix_to_cartesian_in_cam(&Matrix::of(0, 2), &cam), Cartesian::of(2, 2));
@@ -30,7 +30,7 @@ mod tests {
 
     #[test]
     fn test_4x4() {
-        let cam = Cam::of(-13, -13, -10, -10);
+        let cam = Cam::of((-13, -13), (-10, -10));
         assert_eq!(matrix_to_cartesian_in_cam(&Matrix::min(), &cam), Cartesian::of(-13, -10));
         assert_eq!(matrix_to_cartesian_in_cam(&Matrix::of(0, 1), &cam), Cartesian::of(-12, -10));
         assert_eq!(matrix_to_cartesian_in_cam(&Matrix::of(0, 2), &cam), Cartesian::of(-11, -10));

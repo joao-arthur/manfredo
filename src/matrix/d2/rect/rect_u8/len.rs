@@ -20,41 +20,41 @@ mod tests {
     #[test]
     fn test_len_row() {
         assert_eq!(len_row(&Rect::min()), 1);
-        assert_eq!(len_row(&Rect::of(0, 0, u8::MAX - 1, 0)), u8::MAX);
+        assert_eq!(len_row(&Rect::of((0, 0), (u8::MAX - 1, 0))), u8::MAX);
     }
 
     #[test]
     fn test_len_col() {
         assert_eq!(len_col(&Rect::min()), 1);
-        assert_eq!(len_col(&Rect::of(0, 0, 0, u8::MAX - 1)), u8::MAX);
+        assert_eq!(len_col(&Rect::of((0, 0), (0, u8::MAX - 1))), u8::MAX);
     }
 
     #[test]
     fn test_len_max() {
-        assert_eq!(len_max(&Rect::of(0, 5, 10, 10)), 11);
-        assert_eq!(len_max(&Rect::of(5, 0, 9, 9)), 10);
+        assert_eq!(len_max(&Rect::of((0, 5), (10, 10))), 11);
+        assert_eq!(len_max(&Rect::of((5, 0), (9, 9))), 10);
     }
 
     #[test]
     fn len_max_1() {
         assert_eq!(len_max(&Rect::min()), 1);
-        assert_eq!(len_max(&Rect::of(1, 1, 1, 1)), 1);
-        assert_eq!(len_max(&Rect::of(5, 10, 5, 10)), 1);
+        assert_eq!(len_max(&Rect::of((1, 1), (1, 1))), 1);
+        assert_eq!(len_max(&Rect::of((5, 10), (5, 10))), 1);
     }
 
     #[test]
     fn len_max_2() {
-        assert_eq!(len_max(&Rect::of(0, 0, 1, 1)), 2);
-        assert_eq!(len_max(&Rect::of(5, 5, 6, 6)), 2);
-        assert_eq!(len_max(&Rect::of(0, 0, 0, 1)), 2);
-        assert_eq!(len_max(&Rect::of(5, 9, 5, 10)), 2);
+        assert_eq!(len_max(&Rect::of((0, 0), (1, 1))), 2);
+        assert_eq!(len_max(&Rect::of((5, 5), (6, 6))), 2);
+        assert_eq!(len_max(&Rect::of((0, 0), (0, 1))), 2);
+        assert_eq!(len_max(&Rect::of((5, 9), (5, 10))), 2);
     }
 
     #[test]
     fn len_max_bounds() {
-        assert_eq!(len_max(&Rect::of(1, 0, u8::MAX - 1, u8::MAX - 1)), u8::MAX);
-        assert_eq!(len_max(&Rect::of(0, 1, u8::MAX - 1, u8::MAX - 1)), u8::MAX);
-        assert_eq!(len_max(&Rect::of(0, 0, u8::MAX - 2, u8::MAX - 1)), u8::MAX);
-        assert_eq!(len_max(&Rect::of(0, 0, u8::MAX - 1, u8::MAX - 2)), u8::MAX);
+        assert_eq!(len_max(&Rect::of((1, 0), (u8::MAX - 1, u8::MAX - 1))), u8::MAX);
+        assert_eq!(len_max(&Rect::of((0, 1), (u8::MAX - 1, u8::MAX - 1))), u8::MAX);
+        assert_eq!(len_max(&Rect::of((0, 0), (u8::MAX - 2, u8::MAX - 1))), u8::MAX);
+        assert_eq!(len_max(&Rect::of((0, 0), (u8::MAX - 1, u8::MAX - 2))), u8::MAX);
     }
 }

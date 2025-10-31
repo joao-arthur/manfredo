@@ -18,7 +18,7 @@ pub fn try_checked_add(r: &Rect, delta: &rect_i32::Rect) -> Option<Rect> {
     let min_y = r.min.y.checked_add_signed(delta.min.y)?;
     let max_x = r.max.x.checked_add_signed(delta.max.x)?;
     let max_y = r.max.y.checked_add_signed(delta.max.y)?;
-    Some(Rect::of(min_x, min_y, max_x, max_y))
+    Some(Rect::of((min_x, min_y), (max_x, max_y)))
 }
 
 pub fn checked_add_assign(r: &mut Rect, delta: &rect_i32::Rect) {
@@ -41,7 +41,7 @@ pub fn saturating_add(r: &Rect, delta: &rect_i32::Rect) -> Rect {
     let min_y = r.min.y.saturating_add_signed(delta.min.y);
     let max_x = r.max.x.saturating_add_signed(delta.max.x);
     let max_y = r.max.y.saturating_add_signed(delta.max.y);
-    Rect::of(min_x, min_y, max_x, max_y)
+    Rect::of((min_x, min_y), (max_x, max_y))
 }
 
 pub fn wrapping_add_assign(r: &mut Rect, delta: &rect_i32::Rect) {
@@ -56,7 +56,7 @@ pub fn wrapping_add(r: &Rect, delta: &rect_i32::Rect) -> Rect {
     let min_y = r.min.y.wrapping_add_signed(delta.min.y);
     let max_x = r.max.x.wrapping_add_signed(delta.max.x);
     let max_y = r.max.y.wrapping_add_signed(delta.max.y);
-    Rect::of(min_x, min_y, max_x, max_y)
+    Rect::of((min_x, min_y), (max_x, max_y))
 }
 
 #[cfg(test)]

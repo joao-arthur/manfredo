@@ -15,7 +15,7 @@ mod tests {
 
     #[test]
     fn inside_borders() {
-        let r = Rect::of(MIN + 1, MIN + 1, MAX - 1, MAX - 1);
+        let r = Rect::of((MIN + 1, MIN + 1), (MAX - 1, MAX - 1));
         assert!(contains_point(&r, &Point::of(MIN + 1, MIN + 1)));
         assert!(contains_point(&r, &Point::of(MIN + 1, MAX - 1)));
         assert!(contains_point(&r, &Point::of(MAX - 1, MIN + 1)));
@@ -24,7 +24,7 @@ mod tests {
 
     #[test]
     fn outside_borders() {
-        let r = Rect::of(MIN + 1, MIN + 1, MAX - 1, MAX - 1);
+        let r = Rect::of((MIN + 1, MIN + 1), (MAX - 1, MAX - 1));
         assert!(!contains_point(&r, &Point::min()));
         assert!(!contains_point(&r, &Point::of(MIN + 1, MIN)));
         assert!(!contains_point(&r, &Point::of(MIN, MIN + 1)));
@@ -44,7 +44,7 @@ mod tests {
 
     #[test]
     fn inside() {
-        let r = Rect::of(MIN + 1, MIN + 1, MAX - 1, MAX - 1);
+        let r = Rect::of((MIN + 1, MIN + 1), (MAX - 1, MAX - 1));
         assert!(contains_point(&r, &Point::of(MIN + 10, MIN + 10)));
         assert!(contains_point(&r, &Point::of(MAX - 10, MIN + 10)));
         assert!(contains_point(&r, &Point::of(MIN + 10, MAX - 10)));

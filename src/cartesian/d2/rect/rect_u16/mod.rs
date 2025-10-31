@@ -38,8 +38,8 @@ pub struct Rect {
 }
 
 impl Rect {
-    pub fn of(x1: u16, y1: u16, x2: u16, y2: u16) -> Self {
-        Rect { min: Point::of(x1, y1), max: Point::of(x2, y2) }
+    pub fn of(min: (u16, u16), max: (u16, u16)) -> Self {
+        Rect { min: Point { x: min.0, y: min.1 }, max: Point { x: max.0, y: max.1 } }
     }
 
     pub fn largest() -> Self {
@@ -88,7 +88,7 @@ mod tests {
         assert_eq!(Rect::largest(), Rect { min: Point { x: 0, y: 0 }, max: Point { x: MAX, y: MAX } });
         assert_eq!(Rect::min(), Rect { min: Point { x: 0, y: 0 }, max: Point { x: 0, y: 0 } });
         assert_eq!(Rect::max(), Rect { min: Point { x: MAX, y: MAX }, max: Point { x: MAX, y: MAX } });
-        assert_eq!(Rect::of(16, 32, 16, 32), Rect { min: Point { x: 16, y: 32 }, max: Point { x: 16, y: 32 } });
+        assert_eq!(Rect::of((16, 32), (16, 32)), Rect { min: Point { x: 16, y: 32 }, max: Point { x: 16, y: 32 } });
     }
 
     #[test]
@@ -96,7 +96,7 @@ mod tests {
         assert_eq!(Rect::largest().to_string(), "((0, 0), (65535, 65535))");
         assert_eq!(Rect::min().to_string(), "((0, 0), (0, 0))");
         assert_eq!(Rect::max().to_string(), "((65535, 65535), (65535, 65535))");
-        assert_eq!(Rect::of(16, 32, 16, 32).to_string(), "((16, 32), (16, 32))");
+        assert_eq!(Rect::of((16, 32), (16, 32)).to_string(), "((16, 32), (16, 32))");
     }
 
     #[test]
@@ -106,29 +106,29 @@ mod tests {
 
     #[test]
     fn iter_x() {
-        assert_eq!(Rect::of(3, 6, 2, 8).iter_x().collect::<Vec<u16>>(), []);
-        assert_eq!(Rect::of(3, 6, 3, 8).iter_x().collect::<Vec<u16>>(), [3]);
-        assert_eq!(Rect::of(3, 6, 4, 8).iter_x().collect::<Vec<u16>>(), [3, 4]);
-        assert_eq!(Rect::of(3, 6, 5, 8).iter_x().collect::<Vec<u16>>(), [3, 4, 5]);
-        assert_eq!(Rect::of(3, 6, 6, 8).iter_x().collect::<Vec<u16>>(), [3, 4, 5, 6]);
-        assert_eq!(Rect::of(3, 6, 6, 8).iter_x().rev().collect::<Vec<u16>>(), [6, 5, 4, 3]);
-        assert_eq!(Rect::of(3, 6, 5, 8).iter_x().rev().collect::<Vec<u16>>(), [5, 4, 3]);
-        assert_eq!(Rect::of(3, 6, 4, 8).iter_x().rev().collect::<Vec<u16>>(), [4, 3]);
-        assert_eq!(Rect::of(3, 6, 3, 8).iter_x().rev().collect::<Vec<u16>>(), [3]);
-        assert_eq!(Rect::of(3, 6, 2, 8).iter_x().rev().collect::<Vec<u16>>(), []);
+        assert_eq!(Rect::of((3, 6), (2, 8)).iter_x().collect::<Vec<u16>>(), []);
+        assert_eq!(Rect::of((3, 6), (3, 8)).iter_x().collect::<Vec<u16>>(), [3]);
+        assert_eq!(Rect::of((3, 6), (4, 8)).iter_x().collect::<Vec<u16>>(), [3, 4]);
+        assert_eq!(Rect::of((3, 6), (5, 8)).iter_x().collect::<Vec<u16>>(), [3, 4, 5]);
+        assert_eq!(Rect::of((3, 6), (6, 8)).iter_x().collect::<Vec<u16>>(), [3, 4, 5, 6]);
+        assert_eq!(Rect::of((3, 6), (6, 8)).iter_x().rev().collect::<Vec<u16>>(), [6, 5, 4, 3]);
+        assert_eq!(Rect::of((3, 6), (5, 8)).iter_x().rev().collect::<Vec<u16>>(), [5, 4, 3]);
+        assert_eq!(Rect::of((3, 6), (4, 8)).iter_x().rev().collect::<Vec<u16>>(), [4, 3]);
+        assert_eq!(Rect::of((3, 6), (3, 8)).iter_x().rev().collect::<Vec<u16>>(), [3]);
+        assert_eq!(Rect::of((3, 6), (2, 8)).iter_x().rev().collect::<Vec<u16>>(), []);
     }
 
     #[test]
     fn iter_y() {
-        assert_eq!(Rect::of(3, 6, 4, 5).iter_y().collect::<Vec<u16>>(), []);
-        assert_eq!(Rect::of(3, 6, 4, 6).iter_y().collect::<Vec<u16>>(), [6]);
-        assert_eq!(Rect::of(3, 6, 4, 7).iter_y().collect::<Vec<u16>>(), [6, 7]);
-        assert_eq!(Rect::of(3, 6, 4, 8).iter_y().collect::<Vec<u16>>(), [6, 7, 8]);
-        assert_eq!(Rect::of(3, 6, 4, 9).iter_y().collect::<Vec<u16>>(), [6, 7, 8, 9]);
-        assert_eq!(Rect::of(3, 6, 4, 9).iter_y().rev().collect::<Vec<u16>>(), [9, 8, 7, 6]);
-        assert_eq!(Rect::of(3, 6, 4, 8).iter_y().rev().collect::<Vec<u16>>(), [8, 7, 6]);
-        assert_eq!(Rect::of(3, 6, 4, 7).iter_y().rev().collect::<Vec<u16>>(), [7, 6]);
-        assert_eq!(Rect::of(3, 6, 4, 6).iter_y().rev().collect::<Vec<u16>>(), [6]);
-        assert_eq!(Rect::of(3, 6, 4, 5).iter_y().rev().collect::<Vec<u16>>(), []);
+        assert_eq!(Rect::of((3, 6), (4, 5)).iter_y().collect::<Vec<u16>>(), []);
+        assert_eq!(Rect::of((3, 6), (4, 6)).iter_y().collect::<Vec<u16>>(), [6]);
+        assert_eq!(Rect::of((3, 6), (4, 7)).iter_y().collect::<Vec<u16>>(), [6, 7]);
+        assert_eq!(Rect::of((3, 6), (4, 8)).iter_y().collect::<Vec<u16>>(), [6, 7, 8]);
+        assert_eq!(Rect::of((3, 6), (4, 9)).iter_y().collect::<Vec<u16>>(), [6, 7, 8, 9]);
+        assert_eq!(Rect::of((3, 6), (4, 9)).iter_y().rev().collect::<Vec<u16>>(), [9, 8, 7, 6]);
+        assert_eq!(Rect::of((3, 6), (4, 8)).iter_y().rev().collect::<Vec<u16>>(), [8, 7, 6]);
+        assert_eq!(Rect::of((3, 6), (4, 7)).iter_y().rev().collect::<Vec<u16>>(), [7, 6]);
+        assert_eq!(Rect::of((3, 6), (4, 6)).iter_y().rev().collect::<Vec<u16>>(), [6]);
+        assert_eq!(Rect::of((3, 6), (4, 5)).iter_y().rev().collect::<Vec<u16>>(), []);
     }
 }

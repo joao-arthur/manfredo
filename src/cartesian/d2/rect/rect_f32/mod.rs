@@ -117,24 +117,24 @@ mod tests {
 
     #[test]
     fn rect() {
+        assert_eq!(Rect::of((MIN, -0.0), (0.0, MAX)), Rect { min: Point { x: MIN, y: -0.0 }, max: Point { x: 0.0, y: MAX } });
         assert_eq!(Rect::largest(), Rect { min: Point { x: MIN, y: MIN }, max: Point { x: MAX, y: MAX } });
         assert_eq!(Rect::largest_min(), Rect { min: Point { x: MIN, y: MIN }, max: Point { x: 0.0, y: 0.0 } });
         assert_eq!(Rect::largest_max(), Rect { min: Point { x: 0.0, y: 0.0 }, max: Point { x: MAX, y: MAX } });
         assert_eq!(Rect::min(), Rect { min: Point { x: MIN, y: MIN }, max: Point { x: MIN, y: MIN } });
         assert_eq!(Rect::max(), Rect { min: Point { x: MAX, y: MAX }, max: Point { x: MAX, y: MAX } });
         assert_eq!(Rect::zero(), Rect { min: Point { x: 0.0, y: 0.0 }, max: Point { x: 0.0, y: 0.0 } });
-        assert_eq!(Rect::of((MIN, -0.0), (0.0, MAX)), Rect { min: Point { x: MIN, y: -0.0 }, max: Point { x: 0.0, y: MAX } });
     }
 
     #[test]
     fn to_string() {
+        assert_eq!(Rect::of((MIN, -0.0), (0.0, MAX)).to_string(), "((-16777216, -0), (0, 16777215))");
         assert_eq!(Rect::largest().to_string(), "((-16777216, -16777216), (16777215, 16777215))");
         assert_eq!(Rect::largest_min().to_string(), "((-16777216, -16777216), (0, 0))");
         assert_eq!(Rect::largest_max().to_string(), "((0, 0), (16777215, 16777215))");
         assert_eq!(Rect::min().to_string(), "((-16777216, -16777216), (-16777216, -16777216))");
         assert_eq!(Rect::max().to_string(), "((16777215, 16777215), (16777215, 16777215))");
         assert_eq!(Rect::zero().to_string(), "((0, 0), (0, 0))");
-        assert_eq!(Rect::of((MIN, -0.0), (0.0, MAX)).to_string(), "((-16777216, -0), (0, 16777215))");
     }
 
     #[test]

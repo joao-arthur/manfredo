@@ -61,14 +61,15 @@ mod tests {
 
     #[test]
     fn rect() {
+        assert_eq!(Rect::of((-4, -3, -2, -1), (1, 2, 3, 4)), Rect { min: Point { x: -4, y: -3, z: -2, w: -1 }, max: Point { x: 1, y: 2, z: 3, w: 4 } });
         assert_eq!(Rect::largest(), Rect { min: Point::min(), max: Point::max() });
         assert_eq!(Rect::min(), Rect { min: Point::min(), max: Point::min() });
         assert_eq!(Rect::max(), Rect { min: Point::max(), max: Point::max() });
-        assert_eq!(Rect::of((-4, -3, -2, -1), (1, 2, 3, 4)), Rect { min: Point { x: -4, y: -3, z: -2, w: -1 }, max: Point { x: 1, y: 2, z: 3, w: 4 } });
     }
 
     #[test]
     fn to_string() {
+        assert_eq!(Rect::of((-4, -3, -2, -1), (1, 2, 3, 4)).to_string(), "((-4, -3, -2, -1), (1, 2, 3, 4))");
         assert_eq!(
             Rect::largest().to_string(),
             "((-9223372036854775808, -9223372036854775808, -9223372036854775808, -9223372036854775808), (9223372036854775807, 9223372036854775807, 9223372036854775807, 9223372036854775807))"
@@ -81,7 +82,6 @@ mod tests {
             Rect::max().to_string(),
             "((9223372036854775807, 9223372036854775807, 9223372036854775807, 9223372036854775807), (9223372036854775807, 9223372036854775807, 9223372036854775807, 9223372036854775807))"
         );
-        assert_eq!(Rect::of((-4, -3, -2, -1), (1, 2, 3, 4)).to_string(), "((-4, -3, -2, -1), (1, 2, 3, 4))");
     }
 
     #[test]

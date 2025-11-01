@@ -103,18 +103,18 @@ mod tests {
 
     #[test]
     fn rect() {
+        assert_eq!(Rect::of((4096, 8192), (16384, 32768)), Rect { min: Point { row: 4096, col: 8192 }, max: Point { row: 16384, col: 32768 } });
         assert_eq!(Rect::largest(), Rect { min: Point { row: 0, col: 0 }, max: Point { row: MAX, col: MAX } });
         assert_eq!(Rect::min(), Rect { min: Point { row: 0, col: 0 }, max: Point { row: 0, col: 0 } });
         assert_eq!(Rect::max(), Rect { min: Point { row: MAX, col: MAX }, max: Point { row: MAX, col: MAX } });
-        assert_eq!(Rect::of((4096, 8192), (16384, 32768)), Rect { min: Point { row: 4096, col: 8192 }, max: Point { row: 16384, col: 32768 } });
     }
 
     #[test]
     fn to_string() {
+        assert_eq!(Rect::of((4096, 8192), (16384, 32768)).to_string(), "((4096, 8192), (16384, 32768))");
         assert_eq!(Rect::largest().to_string(), "((0, 0), (18446744073709551615, 18446744073709551615))");
         assert_eq!(Rect::min().to_string(), "((0, 0), (0, 0))");
         assert_eq!(Rect::max().to_string(), "((18446744073709551615, 18446744073709551615), (18446744073709551615, 18446744073709551615))");
-        assert_eq!(Rect::of((4096, 8192), (16384, 32768)).to_string(), "((4096, 8192), (16384, 32768))");
     }
 
     #[test]

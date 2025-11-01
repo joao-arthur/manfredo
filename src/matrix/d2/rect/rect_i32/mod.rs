@@ -100,20 +100,20 @@ mod tests {
 
     #[test]
     fn rect() {
+        assert_eq!(Rect::of((MIN, -1), (1, MAX)), Rect { min: Point { row: MIN, col: -1 }, max: Point { row: 1, col: MAX } });
         assert_eq!(Rect::largest(), Rect { min: Point { row: MIN, col: MIN }, max: Point { row: MAX, col: MAX } });
         assert_eq!(Rect::min(), Rect { min: Point { row: MIN, col: MIN }, max: Point { row: MIN, col: MIN } });
         assert_eq!(Rect::max(), Rect { min: Point { row: MAX, col: MAX }, max: Point { row: MAX, col: MAX } });
         assert_eq!(Rect::zero(), Rect { min: Point { row: 0, col: 0 }, max: Point { row: 0, col: 0 } });
-        assert_eq!(Rect::of((MIN, -1), (1, MAX)), Rect { min: Point { row: MIN, col: -1 }, max: Point { row: 1, col: MAX } });
     }
 
     #[test]
     fn to_string() {
+        assert_eq!(Rect::of((MIN, -0), (0, MAX)).to_string(), "((-2147483648, 0), (0, 2147483647))");
         assert_eq!(Rect::largest().to_string(), "((-2147483648, -2147483648), (2147483647, 2147483647))");
         assert_eq!(Rect::min().to_string(), "((-2147483648, -2147483648), (-2147483648, -2147483648))");
         assert_eq!(Rect::max().to_string(), "((2147483647, 2147483647), (2147483647, 2147483647))");
         assert_eq!(Rect::zero().to_string(), "((0, 0), (0, 0))");
-        assert_eq!(Rect::of((MIN, -0), (0, MAX)).to_string(), "((-2147483648, 0), (0, 2147483647))");
     }
 
     #[test]

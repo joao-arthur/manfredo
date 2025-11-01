@@ -43,18 +43,18 @@ mod tests {
 
     #[test]
     fn rect() {
+        assert_eq!(Rect::of((0, 1, 2), (3, 4, 5)), Rect { min: Point { row: 0, col: 1, depth: 2 }, max: Point { row: 3, col: 4, depth: 5 } });
         assert_eq!(Rect::largest(), Rect { min: Point::min(), max: Point::max() });
         assert_eq!(Rect::min(), Rect { min: Point::min(), max: Point::min() });
         assert_eq!(Rect::max(), Rect { min: Point::max(), max: Point::max() });
-        assert_eq!(Rect::of((0, 1, 2), (3, 4, 5)), Rect { min: Point { row: 0, col: 1, depth: 2 }, max: Point { row: 3, col: 4, depth: 5 } });
     }
 
     #[test]
     fn to_string() {
+        assert_eq!(Rect::of((0, 1, 2), (3, 4, 5)).to_string(), "((0, 1, 2), (3, 4, 5))");
         assert_eq!(Rect::largest().to_string(), "((0, 0, 0), (65535, 65535, 65535))");
         assert_eq!(Rect::min().to_string(), "((0, 0, 0), (0, 0, 0))");
         assert_eq!(Rect::max().to_string(), "((65535, 65535, 65535), (65535, 65535, 65535))");
-        assert_eq!(Rect::of((0, 1, 2), (3, 4, 5)).to_string(), "((0, 1, 2), (3, 4, 5))");
     }
 
     #[test]

@@ -97,18 +97,18 @@ mod tests {
 
     #[test]
     fn rect() {
+        assert_eq!(Rect::of((256, 512), (1024, 2048)), Rect { min: Point { row: 256, col: 512 }, max: Point { row: 1024, col: 2048 } });
         assert_eq!(Rect::largest(), Rect { min: Point { row: 0, col: 0 }, max: Point { row: MAX, col: MAX } });
         assert_eq!(Rect::min(), Rect { min: Point { row: 0, col: 0 }, max: Point { row: 0, col: 0 } });
         assert_eq!(Rect::max(), Rect { min: Point { row: MAX, col: MAX }, max: Point { row: MAX, col: MAX } });
-        assert_eq!(Rect::of((256, 512), (1024, 2048)), Rect { min: Point { row: 256, col: 512 }, max: Point { row: 1024, col: 2048 } });
     }
 
     #[test]
     fn to_string() {
+        assert_eq!(Rect::of((256, 512), (1024, 2048)).to_string(), "((256, 512), (1024, 2048))");
         assert_eq!(Rect::largest().to_string(), "((0, 0), (4294967295, 4294967295))");
         assert_eq!(Rect::min().to_string(), "((0, 0), (0, 0))");
         assert_eq!(Rect::max().to_string(), "((4294967295, 4294967295), (4294967295, 4294967295))");
-        assert_eq!(Rect::of((256, 512), (1024, 2048)).to_string(), "((256, 512), (1024, 2048))");
     }
 
     #[test]

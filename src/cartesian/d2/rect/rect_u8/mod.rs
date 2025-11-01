@@ -76,18 +76,18 @@ mod tests {
 
     #[test]
     fn rect() {
+        assert_eq!(Rect::of((0, 2), (4, 8)), Rect { min: Point { x: 0, y: 2 }, max: Point { x: 4, y: 8 } });
         assert_eq!(Rect::largest(), Rect { min: Point { x: 0, y: 0 }, max: Point { x: MAX, y: MAX } });
         assert_eq!(Rect::min(), Rect { min: Point { x: 0, y: 0 }, max: Point { x: 0, y: 0 } });
         assert_eq!(Rect::max(), Rect { min: Point { x: MAX, y: MAX }, max: Point { x: MAX, y: MAX } });
-        assert_eq!(Rect::of((0, 2), (4, 8)), Rect { min: Point { x: 0, y: 2 }, max: Point { x: 4, y: 8 } });
     }
 
     #[test]
     fn to_string() {
+        assert_eq!(Rect::of((0, 2), (4, 8)).to_string(), "((0, 2), (4, 8))");
         assert_eq!(Rect::largest().to_string(), "((0, 0), (255, 255))");
         assert_eq!(Rect::min().to_string(), "((0, 0), (0, 0))");
         assert_eq!(Rect::max().to_string(), "((255, 255), (255, 255))");
-        assert_eq!(Rect::of((0, 2), (4, 8)).to_string(), "((0, 2), (4, 8))");
     }
 
     #[test]

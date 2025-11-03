@@ -138,15 +138,15 @@ mod tests {
 
     #[test]
     fn iter_y() {
-        assert_eq!(Rect::of((-6, -8), (-4, -9)).iter_y().collect::<Vec<i32>>(), []);
-        assert_eq!(Rect::of((-6, -8), (-4, -8)).iter_y().collect::<Vec<i32>>(), [-8]);
-        assert_eq!(Rect::of((-6, -8), (-4, -7)).iter_y().collect::<Vec<i32>>(), [-8, -7]);
-        assert_eq!(Rect::of((-6, -8), (-4, -6)).iter_y().collect::<Vec<i32>>(), [-8, -7, -6]);
-        assert_eq!(Rect::of((-6, -8), (-4, -5)).iter_y().collect::<Vec<i32>>(), [-8, -7, -6, -5]);
-        assert_eq!(Rect::of((-6, -8), (-4, -5)).iter_y().rev().collect::<Vec<i32>>(), [-5, -6, -7, -8]);
-        assert_eq!(Rect::of((-6, -8), (-4, -6)).iter_y().rev().collect::<Vec<i32>>(), [-6, -7, -8]);
-        assert_eq!(Rect::of((-6, -8), (-4, -7)).iter_y().rev().collect::<Vec<i32>>(), [-7, -8]);
-        assert_eq!(Rect::of((-6, -8), (-4, -8)).iter_y().rev().collect::<Vec<i32>>(), [-8]);
-        assert_eq!(Rect::of((-6, -8), (-4, -9)).iter_y().rev().collect::<Vec<i32>>(), []);
+        assert_eq!(Rect::of((-8, -7), (-7, -8)).iter_y().collect::<Vec<i32>>(), []);
+        assert_eq!(Rect::of((-8, -7), (-7, -7)).iter_y().collect::<Vec<i32>>(), [-7]);
+        assert_eq!(Rect::of((-8, -7), (-7, -6)).iter_y().collect::<Vec<i32>>(), [-7, -6]);
+        assert_eq!(Rect::of((-8, -7), (-7, -5)).iter_y().collect::<Vec<i32>>(), [-7, -6, -5]);
+        assert_eq!(Rect::of((-8, -7), (-7, -4)).iter_y().collect::<Vec<i32>>(), [-7, -6, -5, -4]);
+        assert_eq!(Rect::of((-8, -7), (-7, -4)).iter_y().rev().collect::<Vec<i32>>(), [-4, -5, -6, -7]);
+        assert_eq!(Rect::of((-8, -7), (-7, -5)).iter_y().rev().collect::<Vec<i32>>(), [-5, -6, -7]);
+        assert_eq!(Rect::of((-8, -7), (-7, -6)).iter_y().rev().collect::<Vec<i32>>(), [-6, -7]);
+        assert_eq!(Rect::of((-8, -7), (-7, -7)).iter_y().rev().collect::<Vec<i32>>(), [-7]);
+        assert_eq!(Rect::of((-8, -7), (-7, -8)).iter_y().rev().collect::<Vec<i32>>(), []);
     }
 }

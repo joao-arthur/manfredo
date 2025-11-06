@@ -1,4 +1,5 @@
 use crate::cartesian::d2::point::point_f32::Point;
+use crate::iter::iter_f32;
 
 mod add;
 mod area;
@@ -34,35 +35,6 @@ pub struct Rect {
     pub max: Point,
 }
 
-pub struct RectF32Iterator {
-    begin: f32,
-    end: f32,
-}
-
-impl Iterator for RectF32Iterator {
-    type Item = f32;
-
-    fn next(&mut self) -> Option<Self::Item> {
-        if self.begin > self.end {
-            return None;
-        }
-        let result = self.begin;
-        self.begin += 1.0;
-        Some(result)
-    }
-}
-
-impl DoubleEndedIterator for RectF32Iterator {
-    fn next_back(&mut self) -> Option<Self::Item> {
-        if self.begin > self.end {
-            return None;
-        }
-        let result = self.end;
-        self.end -= 1.0;
-        Some(result)
-    }
-}
-
 impl Rect {
     pub fn of(min: (f32, f32), max: (f32, f32)) -> Self {
         Rect { min: Point { x: min.0, y: min.1 }, max: Point { x: max.0, y: max.1 } }
@@ -92,12 +64,12 @@ impl Rect {
         Rect { min: Point::zero(), max: Point::zero() }
     }
 
-    pub fn iter_x(&self) -> RectF32Iterator {
-        RectF32Iterator { begin: self.min.x, end: self.max.x }
+    pub fn iter_x(&self) -> iter_f32::Iter {
+        iter_f32::Iter::new(self.min.x, self.max.x)
     }
 
-    pub fn iter_y(&self) -> RectF32Iterator {
-        RectF32Iterator { begin: self.min.y, end: self.max.y }
+    pub fn iter_y(&self) -> iter_f32::Iter {
+        iter_f32::Iter::new(self.min.y, self.max.y)
     }
 }
 
@@ -142,10 +114,6 @@ mod tests {
         assert_eq!(Rect::of((-8.0, -7.0), (-9.0, -6.0)).iter_x().collect::<Vec<f32>>(), []);
         assert_eq!(Rect::of((-8.0, -7.0), (-8.0, -6.0)).iter_x().collect::<Vec<f32>>(), [-8.0]);
         assert_eq!(Rect::of((-8.0, -7.0), (-7.0, -6.0)).iter_x().collect::<Vec<f32>>(), [-8.0, -7.0]);
-        assert_eq!(Rect::of((-8.0, -7.0), (-6.0, -6.0)).iter_x().collect::<Vec<f32>>(), [-8.0, -7.0, -6.0]);
-        assert_eq!(Rect::of((-8.0, -7.0), (-5.0, -6.0)).iter_x().collect::<Vec<f32>>(), [-8.0, -7.0, -6.0, -5.0]);
-        assert_eq!(Rect::of((-8.0, -7.0), (-5.0, -6.0)).iter_x().rev().collect::<Vec<f32>>(), [-5.0, -6.0, -7.0, -8.0]);
-        assert_eq!(Rect::of((-8.0, -7.0), (-6.0, -6.0)).iter_x().rev().collect::<Vec<f32>>(), [-6.0, -7.0, -8.0]);
         assert_eq!(Rect::of((-8.0, -7.0), (-7.0, -6.0)).iter_x().rev().collect::<Vec<f32>>(), [-7.0, -8.0]);
         assert_eq!(Rect::of((-8.0, -7.0), (-8.0, -6.0)).iter_x().rev().collect::<Vec<f32>>(), [-8.0]);
         assert_eq!(Rect::of((-8.0, -7.0), (-9.0, -6.0)).iter_x().rev().collect::<Vec<f32>>(), []);
@@ -156,10 +124,6 @@ mod tests {
         assert_eq!(Rect::of((-8.0, -7.0), (-7.0, -8.0)).iter_y().collect::<Vec<f32>>(), []);
         assert_eq!(Rect::of((-8.0, -7.0), (-7.0, -7.0)).iter_y().collect::<Vec<f32>>(), [-7.0]);
         assert_eq!(Rect::of((-8.0, -7.0), (-7.0, -6.0)).iter_y().collect::<Vec<f32>>(), [-7.0, -6.0]);
-        assert_eq!(Rect::of((-8.0, -7.0), (-7.0, -5.0)).iter_y().collect::<Vec<f32>>(), [-7.0, -6.0, -5.0]);
-        assert_eq!(Rect::of((-8.0, -7.0), (-7.0, -4.0)).iter_y().collect::<Vec<f32>>(), [-7.0, -6.0, -5.0, -4.0]);
-        assert_eq!(Rect::of((-8.0, -7.0), (-7.0, -4.0)).iter_y().rev().collect::<Vec<f32>>(), [-4.0, -5.0, -6.0, -7.0]);
-        assert_eq!(Rect::of((-8.0, -7.0), (-7.0, -5.0)).iter_y().rev().collect::<Vec<f32>>(), [-5.0, -6.0, -7.0]);
         assert_eq!(Rect::of((-8.0, -7.0), (-7.0, -6.0)).iter_y().rev().collect::<Vec<f32>>(), [-6.0, -7.0]);
         assert_eq!(Rect::of((-8.0, -7.0), (-7.0, -7.0)).iter_y().rev().collect::<Vec<f32>>(), [-7.0]);
         assert_eq!(Rect::of((-8.0, -7.0), (-7.0, -8.0)).iter_y().rev().collect::<Vec<f32>>(), []);

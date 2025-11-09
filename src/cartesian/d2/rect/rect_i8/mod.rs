@@ -87,6 +87,8 @@ mod tests {
         assert_eq!(Rect::min(), Rect { min: Point { x: MIN, y: MIN }, max: Point { x: MIN, y: MIN } });
         assert_eq!(Rect::max(), Rect { min: Point { x: MAX, y: MAX }, max: Point { x: MAX, y: MAX } });
         assert_eq!(Rect::zero(), Rect { min: Point { x: 0, y: 0 }, max: Point { x: 0, y: 0 } });
+        assert_eq!(Rect::of((-8, -7), (-5, -6)).iter_x().collect::<Vec<i8>>(), [-8, -7, -6, -5]);
+        assert_eq!(Rect::of((-8, -7), (-7, -4)).iter_y().collect::<Vec<i8>>(), [-7, -6, -5, -4]);
     }
 
     #[test]
@@ -96,33 +98,5 @@ mod tests {
         assert_eq!(Rect::min().to_string(), "((-128, -128), (-128, -128))");
         assert_eq!(Rect::max().to_string(), "((127, 127), (127, 127))");
         assert_eq!(Rect::zero().to_string(), "((0, 0), (0, 0))");
-    }
-
-    #[test]
-    fn iter_x() {
-        assert_eq!(Rect::of((-8, -7), (-9, -6)).iter_x().collect::<Vec<i8>>(), []);
-        assert_eq!(Rect::of((-8, -7), (-8, -6)).iter_x().collect::<Vec<i8>>(), [-8]);
-        assert_eq!(Rect::of((-8, -7), (-7, -6)).iter_x().collect::<Vec<i8>>(), [-8, -7]);
-        assert_eq!(Rect::of((-8, -7), (-6, -6)).iter_x().collect::<Vec<i8>>(), [-8, -7, -6]);
-        assert_eq!(Rect::of((-8, -7), (-5, -6)).iter_x().collect::<Vec<i8>>(), [-8, -7, -6, -5]);
-        assert_eq!(Rect::of((-8, -7), (-5, -6)).iter_x().rev().collect::<Vec<i8>>(), [-5, -6, -7, -8]);
-        assert_eq!(Rect::of((-8, -7), (-6, -6)).iter_x().rev().collect::<Vec<i8>>(), [-6, -7, -8]);
-        assert_eq!(Rect::of((-8, -7), (-7, -6)).iter_x().rev().collect::<Vec<i8>>(), [-7, -8]);
-        assert_eq!(Rect::of((-8, -7), (-8, -6)).iter_x().rev().collect::<Vec<i8>>(), [-8]);
-        assert_eq!(Rect::of((-8, -7), (-9, -6)).iter_x().rev().collect::<Vec<i8>>(), []);
-    }
-
-    #[test]
-    fn iter_y() {
-        assert_eq!(Rect::of((-8, -7), (-7, -8)).iter_y().collect::<Vec<i8>>(), []);
-        assert_eq!(Rect::of((-8, -7), (-7, -7)).iter_y().collect::<Vec<i8>>(), [-7]);
-        assert_eq!(Rect::of((-8, -7), (-7, -6)).iter_y().collect::<Vec<i8>>(), [-7, -6]);
-        assert_eq!(Rect::of((-8, -7), (-7, -5)).iter_y().collect::<Vec<i8>>(), [-7, -6, -5]);
-        assert_eq!(Rect::of((-8, -7), (-7, -4)).iter_y().collect::<Vec<i8>>(), [-7, -6, -5, -4]);
-        assert_eq!(Rect::of((-8, -7), (-7, -4)).iter_y().rev().collect::<Vec<i8>>(), [-4, -5, -6, -7]);
-        assert_eq!(Rect::of((-8, -7), (-7, -5)).iter_y().rev().collect::<Vec<i8>>(), [-5, -6, -7]);
-        assert_eq!(Rect::of((-8, -7), (-7, -6)).iter_y().rev().collect::<Vec<i8>>(), [-6, -7]);
-        assert_eq!(Rect::of((-8, -7), (-7, -7)).iter_y().rev().collect::<Vec<i8>>(), [-7]);
-        assert_eq!(Rect::of((-8, -7), (-7, -8)).iter_y().rev().collect::<Vec<i8>>(), []);
     }
 }

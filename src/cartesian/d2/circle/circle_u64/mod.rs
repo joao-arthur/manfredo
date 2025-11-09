@@ -14,7 +14,7 @@ pub struct Circle {
 }
 
 impl Circle {
-    pub fn of(p: Point, r: u64) -> Self {
+    pub fn new(p: Point, r: u64) -> Self {
         Circle { p, r }
     }
 }
@@ -56,24 +56,24 @@ mod tests {
 
     #[test]
     fn circle() {
-        assert_eq!(Circle::of(Point::min(), MAX), Circle { p: Point { x: 0, y: 0 }, r: MAX });
-        assert_eq!(Circle::of(Point::of(0, MAX), MAX), Circle { p: Point { x: 0, y: MAX }, r: MAX });
-        assert_eq!(Circle::of(Point::of(MAX, 0), MAX), Circle { p: Point { x: MAX, y: 0 }, r: MAX });
-        assert_eq!(Circle::of(Point::max(), MAX), Circle { p: Point { x: MAX, y: MAX }, r: MAX });
+        assert_eq!(Circle::new(Point::min(), MAX), Circle { p: Point { x: 0, y: 0 }, r: MAX });
+        assert_eq!(Circle::new(Point::new(0, MAX), MAX), Circle { p: Point { x: 0, y: MAX }, r: MAX });
+        assert_eq!(Circle::new(Point::new(MAX, 0), MAX), Circle { p: Point { x: MAX, y: 0 }, r: MAX });
+        assert_eq!(Circle::new(Point::max(), MAX), Circle { p: Point { x: MAX, y: MAX }, r: MAX });
     }
 
     #[test]
     fn to_string() {
-        assert_eq!(Circle::of(Point::min(), MAX).to_string(), "((0, 0), 18446744073709551615)");
-        assert_eq!(Circle::of(Point::of(0, MAX), MAX).to_string(), "((0, 18446744073709551615), 18446744073709551615)");
-        assert_eq!(Circle::of(Point::of(MAX, 0), MAX).to_string(), "((18446744073709551615, 0), 18446744073709551615)");
-        assert_eq!(Circle::of(Point::max(), MAX).to_string(), "((18446744073709551615, 18446744073709551615), 18446744073709551615)");
+        assert_eq!(Circle::new(Point::min(), MAX).to_string(), "((0, 0), 18446744073709551615)");
+        assert_eq!(Circle::new(Point::new(0, MAX), MAX).to_string(), "((0, 18446744073709551615), 18446744073709551615)");
+        assert_eq!(Circle::new(Point::new(MAX, 0), MAX).to_string(), "((18446744073709551615, 0), 18446744073709551615)");
+        assert_eq!(Circle::new(Point::max(), MAX).to_string(), "((18446744073709551615, 18446744073709551615), 18446744073709551615)");
     }
 
     #[test]
     fn from() {
-        assert_eq!(Circle::from(circle_u8::Circle::of(point_u8::Point::of(0, u8::MAX), u8::MAX)), Circle { p: Point { x: 0, y: u8::MAX.into() }, r: u8::MAX.into() });
-        assert_eq!(Circle::from(circle_u16::Circle::of(point_u16::Point::of(0, u16::MAX), u16::MAX)), Circle { p: Point { x: 0, y: u16::MAX.into() }, r: u16::MAX.into() });
-        assert_eq!(Circle::from(circle_u32::Circle::of(point_u32::Point::of(0, u32::MAX), u32::MAX)), Circle { p: Point { x: 0, y: u32::MAX.into() }, r: u32::MAX.into() });
+        assert_eq!(Circle::from(circle_u8::Circle::new(point_u8::Point::new(0, u8::MAX), u8::MAX)), Circle { p: Point { x: 0, y: u8::MAX.into() }, r: u8::MAX.into() });
+        assert_eq!(Circle::from(circle_u16::Circle::new(point_u16::Point::new(0, u16::MAX), u16::MAX)), Circle { p: Point { x: 0, y: u16::MAX.into() }, r: u16::MAX.into() });
+        assert_eq!(Circle::from(circle_u32::Circle::new(point_u32::Point::new(0, u32::MAX), u32::MAX)), Circle { p: Point { x: 0, y: u32::MAX.into() }, r: u32::MAX.into() });
     }
 }

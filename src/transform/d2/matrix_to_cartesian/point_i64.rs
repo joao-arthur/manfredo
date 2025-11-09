@@ -13,23 +13,23 @@ mod tests {
 
     #[test]
     fn edges() {
-        assert_eq!(matrix_to_cartesian(&Matrix::min()), Cartesian::of(i64::MIN, i64::MAX));
-        assert_eq!(matrix_to_cartesian(&Matrix::of(u64::MAX, 0)), Cartesian::min());
-        assert_eq!(matrix_to_cartesian(&Matrix::of(0, u64::MAX)), Cartesian::max());
-        assert_eq!(matrix_to_cartesian(&Matrix::max()), Cartesian::of(i64::MAX, i64::MIN));
+        assert_eq!(matrix_to_cartesian(&Matrix::min()), Cartesian::new(i64::MIN, i64::MAX));
+        assert_eq!(matrix_to_cartesian(&Matrix::new(u64::MAX, 0)), Cartesian::min());
+        assert_eq!(matrix_to_cartesian(&Matrix::new(0, u64::MAX)), Cartesian::max());
+        assert_eq!(matrix_to_cartesian(&Matrix::max()), Cartesian::new(i64::MAX, i64::MIN));
     }
 
     #[test]
     fn sequence_min() {
-        assert_eq!(matrix_to_cartesian(&Matrix::of(1, 1)), Cartesian::of(i64::MIN + 1, i64::MAX - 1));
-        assert_eq!(matrix_to_cartesian(&Matrix::of(2, 2)), Cartesian::of(i64::MIN + 2, i64::MAX - 2));
-        assert_eq!(matrix_to_cartesian(&Matrix::of(3, 3)), Cartesian::of(i64::MIN + 3, i64::MAX - 3));
+        assert_eq!(matrix_to_cartesian(&Matrix::new(1, 1)), Cartesian::new(i64::MIN + 1, i64::MAX - 1));
+        assert_eq!(matrix_to_cartesian(&Matrix::new(2, 2)), Cartesian::new(i64::MIN + 2, i64::MAX - 2));
+        assert_eq!(matrix_to_cartesian(&Matrix::new(3, 3)), Cartesian::new(i64::MIN + 3, i64::MAX - 3));
     }
 
     #[test]
     fn sequence_max() {
-        assert_eq!(matrix_to_cartesian(&Matrix::of(u64::MAX - 1, u64::MAX - 1)), Cartesian::of(i64::MAX - 1, i64::MIN + 1));
-        assert_eq!(matrix_to_cartesian(&Matrix::of(u64::MAX - 2, u64::MAX - 2)), Cartesian::of(i64::MAX - 2, i64::MIN + 2));
-        assert_eq!(matrix_to_cartesian(&Matrix::of(u64::MAX - 3, u64::MAX - 3)), Cartesian::of(i64::MAX - 3, i64::MIN + 3));
+        assert_eq!(matrix_to_cartesian(&Matrix::new(u64::MAX - 1, u64::MAX - 1)), Cartesian::new(i64::MAX - 1, i64::MIN + 1));
+        assert_eq!(matrix_to_cartesian(&Matrix::new(u64::MAX - 2, u64::MAX - 2)), Cartesian::new(i64::MAX - 2, i64::MIN + 2));
+        assert_eq!(matrix_to_cartesian(&Matrix::new(u64::MAX - 3, u64::MAX - 3)), Cartesian::new(i64::MAX - 3, i64::MIN + 3));
     }
 }

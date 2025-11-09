@@ -20,7 +20,7 @@ pub fn try_checked_inflate(r: &Rect) -> Option<Rect> {
     let min_y = r.min.y - 1.0;
     let max_x = r.max.x + 1.0;
     let max_y = r.max.y + 1.0;
-    Some(Rect::of((min_x, min_y), (max_x, max_y)))
+    Some(Rect::new((min_x, min_y), (max_x, max_y)))
 }
 
 pub fn checked_inflate_assign(r: &mut Rect) {
@@ -66,7 +66,7 @@ pub fn try_saturating_inflate(r: &Rect) -> Option<Rect> {
     let min_y = (r.min.y - min_y_modifier).max(MIN);
     let max_x = (r.max.x + max_x_modifier).min(MAX);
     let max_y = (r.max.y + max_y_modifier).min(MAX);
-    Some(Rect::of((min_x, min_y), (max_x, max_y)))
+    Some(Rect::new((min_x, min_y), (max_x, max_y)))
 }
 
 pub fn saturating_inflate_assign(r: &mut Rect) {

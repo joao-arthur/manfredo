@@ -18,7 +18,7 @@ pub fn try_checked_translate(r: &Rect, delta: &Point) -> Option<Rect> {
     let min_col = r.min.col.checked_add(delta.col)?;
     let max_row = r.max.row.checked_add(delta.row)?;
     let max_col = r.max.col.checked_add(delta.col)?;
-    Some(Rect::of((min_row, min_col), (max_row, max_col)))
+    Some(Rect::new((min_row, min_col), (max_row, max_col)))
 }
 
 pub fn checked_translate_assign(r: &mut Rect, delta: &Point) {
@@ -74,7 +74,7 @@ pub fn wrapping_translate(r: &Rect, delta: &Point) -> Rect {
     let min_col = r.min.col.wrapping_add(delta.col);
     let max_row = min_row.wrapping_add_unsigned(d_row);
     let max_col = min_col.wrapping_add_unsigned(d_col);
-    Rect::of((min_row, min_col), (max_row, max_col))
+    Rect::new((min_row, min_col), (max_row, max_col))
 }
 
 #[cfg(test)]

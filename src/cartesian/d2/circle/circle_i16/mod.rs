@@ -11,7 +11,7 @@ mod area;
 pub use self::area::area;
 
 impl Circle {
-    pub fn of(p: Point, r: u16) -> Self {
+    pub fn new(p: Point, r: u16) -> Self {
         Circle { p, r }
     }
 }
@@ -41,22 +41,22 @@ mod tests {
 
     #[test]
     fn circle() {
-        assert_eq!(Circle::of(Point::min(), u16::MAX), Circle { p: Point { x: MIN, y: MIN }, r: u16::MAX });
-        assert_eq!(Circle::of(Point::of(MIN, MAX), u16::MAX), Circle { p: Point { x: MIN, y: MAX }, r: u16::MAX });
-        assert_eq!(Circle::of(Point::of(MAX, MIN), u16::MAX), Circle { p: Point { x: MAX, y: MIN }, r: u16::MAX });
-        assert_eq!(Circle::of(Point::max(), u16::MAX), Circle { p: Point { x: MAX, y: MAX }, r: u16::MAX });
+        assert_eq!(Circle::new(Point::min(), u16::MAX), Circle { p: Point { x: MIN, y: MIN }, r: u16::MAX });
+        assert_eq!(Circle::new(Point::new(MIN, MAX), u16::MAX), Circle { p: Point { x: MIN, y: MAX }, r: u16::MAX });
+        assert_eq!(Circle::new(Point::new(MAX, MIN), u16::MAX), Circle { p: Point { x: MAX, y: MIN }, r: u16::MAX });
+        assert_eq!(Circle::new(Point::max(), u16::MAX), Circle { p: Point { x: MAX, y: MAX }, r: u16::MAX });
     }
 
     #[test]
     fn to_string() {
-        assert_eq!(Circle::of(Point::min(), u16::MAX).to_string(), "((-32768, -32768), 65535)");
-        assert_eq!(Circle::of(Point::of(MIN, MAX), u16::MAX).to_string(), "((-32768, 32767), 65535)");
-        assert_eq!(Circle::of(Point::of(MAX, MIN), u16::MAX).to_string(), "((32767, -32768), 65535)");
-        assert_eq!(Circle::of(Point::max(), u16::MAX).to_string(), "((32767, 32767), 65535)");
+        assert_eq!(Circle::new(Point::min(), u16::MAX).to_string(), "((-32768, -32768), 65535)");
+        assert_eq!(Circle::new(Point::new(MIN, MAX), u16::MAX).to_string(), "((-32768, 32767), 65535)");
+        assert_eq!(Circle::new(Point::new(MAX, MIN), u16::MAX).to_string(), "((32767, -32768), 65535)");
+        assert_eq!(Circle::new(Point::max(), u16::MAX).to_string(), "((32767, 32767), 65535)");
     }
 
     #[test]
     fn from() {
-        assert_eq!(Circle::from(circle_i8::Circle::of(point_i8::Point::of(i8::MIN, i8::MAX), u8::MAX)), Circle { p: Point { x: i8::MIN.into(), y: i8::MAX.into() }, r: u8::MAX.into() });
+        assert_eq!(Circle::from(circle_i8::Circle::new(point_i8::Point::new(i8::MIN, i8::MAX), u8::MAX)), Circle { p: Point { x: i8::MIN.into(), y: i8::MAX.into() }, r: u8::MAX.into() });
     }
 }

@@ -31,7 +31,7 @@ pub fn try_checked_resize(r: &Rect, size: u64) -> Option<Rect> {
     let min_y = i64::try_from(temp_min_y).ok()?;
     let max_x = min_x.checked_add_unsigned(size - 1)?;
     let max_y = min_y.checked_add_unsigned(size - 1)?;
-    Some(Rect::of((min_x, min_y), (max_x, max_y)))
+    Some(Rect::new((min_x, min_y), (max_x, max_y)))
 }
 
 pub fn checked_resize_assign(r: &mut Rect, size: u64) {
@@ -73,7 +73,7 @@ pub fn try_saturating_resize(r: &Rect, size: u64) -> Option<Rect> {
     let min_y = clamped_min_y as i64;
     let max_x = (clamped_min_x + i128::from(size) - 1) as i64;
     let max_y = (clamped_min_y + i128::from(size) - 1) as i64;
-    Some(Rect::of((min_x, min_y), (max_x, max_y)))
+    Some(Rect::new((min_x, min_y), (max_x, max_y)))
 }
 
 pub fn saturating_resize_assign(r: &mut Rect, size: u64) {
@@ -115,7 +115,7 @@ pub fn try_wrapping_resize(r: &Rect, size: u64) -> Option<Rect> {
     let min_y = temp_min_y as i64;
     let max_x = min_x.wrapping_add_unsigned(size - 1);
     let max_y = min_y.wrapping_add_unsigned(size - 1);
-    Some(Rect::of((min_x, min_y), (max_x, max_y)))
+    Some(Rect::new((min_x, min_y), (max_x, max_y)))
 }
 
 pub fn wrapping_resize_assign(r: &mut Rect, size: u64) {

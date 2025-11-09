@@ -7,7 +7,7 @@ pub struct Rect {
 }
 
 impl Rect {
-    pub fn of(min: (i16, i16, i16, i16), max: (i16, i16, i16, i16)) -> Self {
+    pub fn new(min: (i16, i16, i16, i16), max: (i16, i16, i16, i16)) -> Self {
         Rect { min: Point { x: min.0, y: min.1, z: min.2, w: min.3 }, max: Point { x: max.0, y: max.1, z: max.2, w: max.3 } }
     }
 
@@ -43,7 +43,7 @@ mod tests {
 
     #[test]
     fn rect() {
-        assert_eq!(Rect::of((-4, -3, -2, -1), (1, 2, 3, 4)), Rect { min: Point { x: -4, y: -3, z: -2, w: -1 }, max: Point { x: 1, y: 2, z: 3, w: 4 } });
+        assert_eq!(Rect::new((-4, -3, -2, -1), (1, 2, 3, 4)), Rect { min: Point { x: -4, y: -3, z: -2, w: -1 }, max: Point { x: 1, y: 2, z: 3, w: 4 } });
         assert_eq!(Rect::largest(), Rect { min: Point::min(), max: Point::max() });
         assert_eq!(Rect::min(), Rect { min: Point::min(), max: Point::min() });
         assert_eq!(Rect::max(), Rect { min: Point::max(), max: Point::max() });
@@ -51,7 +51,7 @@ mod tests {
 
     #[test]
     fn to_string() {
-        assert_eq!(Rect::of((-4, -3, -2, -1), (1, 2, 3, 4)).to_string(), "((-4, -3, -2, -1), (1, 2, 3, 4))");
+        assert_eq!(Rect::new((-4, -3, -2, -1), (1, 2, 3, 4)).to_string(), "((-4, -3, -2, -1), (1, 2, 3, 4))");
         assert_eq!(Rect::largest().to_string(), "((-32768, -32768, -32768, -32768), (32767, 32767, 32767, 32767))");
         assert_eq!(Rect::min().to_string(), "((-32768, -32768, -32768, -32768), (-32768, -32768, -32768, -32768))");
         assert_eq!(Rect::max().to_string(), "((32767, 32767, 32767, 32767), (32767, 32767, 32767, 32767))");

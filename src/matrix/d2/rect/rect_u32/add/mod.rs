@@ -18,7 +18,7 @@ pub fn try_checked_add(r: &Rect, delta: &rect_i32::Rect) -> Option<Rect> {
     let min_col = r.min.col.checked_add_signed(delta.min.col)?;
     let max_row = r.max.row.checked_add_signed(delta.max.row)?;
     let max_col = r.max.col.checked_add_signed(delta.max.col)?;
-    Some(Rect::of((min_row, min_col), (max_row, max_col)))
+    Some(Rect::new((min_row, min_col), (max_row, max_col)))
 }
 
 pub fn checked_add_assign(r: &mut Rect, delta: &rect_i32::Rect) {
@@ -41,7 +41,7 @@ pub fn saturating_add(r: &Rect, delta: &rect_i32::Rect) -> Rect {
     let min_col = r.min.col.saturating_add_signed(delta.min.col);
     let max_row = r.max.row.saturating_add_signed(delta.max.row);
     let max_col = r.max.col.saturating_add_signed(delta.max.col);
-    Rect::of((min_row, min_col), (max_row, max_col))
+    Rect::new((min_row, min_col), (max_row, max_col))
 }
 
 pub fn wrapping_add_assign(r: &mut Rect, delta: &rect_i32::Rect) {
@@ -56,7 +56,7 @@ pub fn wrapping_add(r: &Rect, delta: &rect_i32::Rect) -> Rect {
     let min_col = r.min.col.wrapping_add_signed(delta.min.col);
     let max_row = r.max.row.wrapping_add_signed(delta.max.row);
     let max_col = r.max.col.wrapping_add_signed(delta.max.col);
-    Rect::of((min_row, min_col), (max_row, max_col))
+    Rect::new((min_row, min_col), (max_row, max_col))
 }
 
 #[cfg(test)]

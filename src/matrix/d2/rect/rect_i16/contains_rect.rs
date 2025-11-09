@@ -14,37 +14,37 @@ mod tests {
 
     #[test]
     fn inside() {
-        let r = Rect::of((MIN + 1, MIN + 1), (MAX - 1, MAX - 1));
-        assert!(contains_rect(&r, &Rect::of((MIN + 2, MIN + 2), (MAX - 2, MAX - 2))));
-        assert!(contains_rect(&r, &Rect::of((MIN + 3, MIN + 3), (MAX - 3, MAX - 3))));
-        assert!(contains_rect(&r, &Rect::of((MIN + 10, MIN + 10), (MAX - 10, MAX - 10))));
+        let r = Rect::new((MIN + 1, MIN + 1), (MAX - 1, MAX - 1));
+        assert!(contains_rect(&r, &Rect::new((MIN + 2, MIN + 2), (MAX - 2, MAX - 2))));
+        assert!(contains_rect(&r, &Rect::new((MIN + 3, MIN + 3), (MAX - 3, MAX - 3))));
+        assert!(contains_rect(&r, &Rect::new((MIN + 10, MIN + 10), (MAX - 10, MAX - 10))));
     }
 
     #[test]
     fn borders() {
-        let r = Rect::of((MIN + 1, MIN + 1), (MAX - 1, MAX - 1));
-        assert!(contains_rect(&r, &Rect::of((MIN + 1, MIN + 1), (MAX - 1, MAX - 1))));
+        let r = Rect::new((MIN + 1, MIN + 1), (MAX - 1, MAX - 1));
+        assert!(contains_rect(&r, &Rect::new((MIN + 1, MIN + 1), (MAX - 1, MAX - 1))));
 
-        assert!(contains_rect(&r, &Rect::of((MIN + 2, MIN + 1), (MAX - 1, MAX - 1))));
-        assert!(contains_rect(&r, &Rect::of((MIN + 1, MIN + 2), (MAX - 1, MAX - 1))));
-        assert!(contains_rect(&r, &Rect::of((MIN + 1, MIN + 1), (MAX - 2, MAX - 1))));
-        assert!(contains_rect(&r, &Rect::of((MIN + 1, MIN + 1), (MAX - 1, MAX - 2))));
+        assert!(contains_rect(&r, &Rect::new((MIN + 2, MIN + 1), (MAX - 1, MAX - 1))));
+        assert!(contains_rect(&r, &Rect::new((MIN + 1, MIN + 2), (MAX - 1, MAX - 1))));
+        assert!(contains_rect(&r, &Rect::new((MIN + 1, MIN + 1), (MAX - 2, MAX - 1))));
+        assert!(contains_rect(&r, &Rect::new((MIN + 1, MIN + 1), (MAX - 1, MAX - 2))));
 
-        assert!(contains_rect(&r, &Rect::of((MIN + 1, MIN + 1), (MAX - 2, MAX - 2))));
-        assert!(contains_rect(&r, &Rect::of((MIN + 2, MIN + 2), (MAX - 1, MAX - 1))));
+        assert!(contains_rect(&r, &Rect::new((MIN + 1, MIN + 1), (MAX - 2, MAX - 2))));
+        assert!(contains_rect(&r, &Rect::new((MIN + 2, MIN + 2), (MAX - 1, MAX - 1))));
     }
 
     #[test]
     fn outside() {
-        let r = Rect::of((MIN + 1, MIN + 1), (MAX - 1, MAX - 1));
+        let r = Rect::new((MIN + 1, MIN + 1), (MAX - 1, MAX - 1));
         assert!(!contains_rect(&r, &Rect::largest()));
 
-        assert!(!contains_rect(&r, &Rect::of((MIN, MIN + 1), (MAX - 1, MAX - 1))));
-        assert!(!contains_rect(&r, &Rect::of((MIN + 1, MIN), (MAX - 1, MAX - 1))));
-        assert!(!contains_rect(&r, &Rect::of((MIN + 1, MIN + 1), (MAX, MAX - 1))));
-        assert!(!contains_rect(&r, &Rect::of((MIN + 1, MIN + 1), (MAX - 1, MAX))));
+        assert!(!contains_rect(&r, &Rect::new((MIN, MIN + 1), (MAX - 1, MAX - 1))));
+        assert!(!contains_rect(&r, &Rect::new((MIN + 1, MIN), (MAX - 1, MAX - 1))));
+        assert!(!contains_rect(&r, &Rect::new((MIN + 1, MIN + 1), (MAX, MAX - 1))));
+        assert!(!contains_rect(&r, &Rect::new((MIN + 1, MIN + 1), (MAX - 1, MAX))));
 
-        assert!(!contains_rect(&r, &Rect::of((MIN + 1, MIN + 1), (MAX, MAX))));
-        assert!(!contains_rect(&r, &Rect::of((MIN, MIN), (MAX - 1, MAX - 1))));
+        assert!(!contains_rect(&r, &Rect::new((MIN + 1, MIN + 1), (MAX, MAX))));
+        assert!(!contains_rect(&r, &Rect::new((MIN, MIN), (MAX - 1, MAX - 1))));
     }
 }

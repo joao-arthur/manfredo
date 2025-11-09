@@ -7,8 +7,8 @@ pub struct Line {
 }
 
 impl Line {
-    pub fn of(min: (f64, f64, f64), max: (f64, f64, f64)) -> Self {
-        Line { min: Point::of(min.0, min.1, min.2), max: Point::of(max.0, max.1, max.2) }
+    pub fn new(min: (f64, f64, f64), max: (f64, f64, f64)) -> Self {
+        Line { min: Point::new(min.0, min.1, min.2), max: Point::new(max.0, max.1, max.2) }
     }
 
     pub fn largest() -> Self {
@@ -50,8 +50,8 @@ mod tests {
 
     #[test]
     fn line() {
-        assert_eq!(Line::of((-3.0, -2.0, -1.0), (1.0, 2.0, 3.0)), Line { min: Point { x: -3.0, y: -2.0, z: -1.0 }, max: Point { x: 1.0, y: 2.0, z: 3.0 } });
-        assert_eq!(Line::of((-6.0, -5.0, -4.0), (4.0, 5.0, 6.0)), Line { min: Point { x: -6.0, y: -5.0, z: -4.0 }, max: Point { x: 4.0, y: 5.0, z: 6.0 } });
+        assert_eq!(Line::new((-3.0, -2.0, -1.0), (1.0, 2.0, 3.0)), Line { min: Point { x: -3.0, y: -2.0, z: -1.0 }, max: Point { x: 1.0, y: 2.0, z: 3.0 } });
+        assert_eq!(Line::new((-6.0, -5.0, -4.0), (4.0, 5.0, 6.0)), Line { min: Point { x: -6.0, y: -5.0, z: -4.0 }, max: Point { x: 4.0, y: 5.0, z: 6.0 } });
         assert_eq!(Line::largest(), Line { min: Point::min(), max: Point::max() });
         assert_eq!(Line::min(), Line { min: Point::min(), max: Point::min() });
         assert_eq!(Line::max(), Line { min: Point::max(), max: Point::max() });
@@ -60,7 +60,7 @@ mod tests {
 
     #[test]
     fn to_string() {
-        assert_eq!(Line::of((-3.0, -2.0, -1.0), (1.0, 2.0, 3.0)).to_string(), "((-3, -2, -1), (1, 2, 3))");
+        assert_eq!(Line::new((-3.0, -2.0, -1.0), (1.0, 2.0, 3.0)).to_string(), "((-3, -2, -1), (1, 2, 3))");
         assert_eq!(Line::largest().to_string(), "((-9007199254740992, -9007199254740992, -9007199254740992), (9007199254740991, 9007199254740991, 9007199254740991))");
         assert_eq!(Line::min().to_string(), "((-9007199254740992, -9007199254740992, -9007199254740992), (-9007199254740992, -9007199254740992, -9007199254740992))");
         assert_eq!(Line::max().to_string(), "((9007199254740991, 9007199254740991, 9007199254740991), (9007199254740991, 9007199254740991, 9007199254740991))");

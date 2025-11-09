@@ -14,7 +14,7 @@ pub struct Point {
 }
 
 impl Point {
-    pub fn of(x: u16) -> Self {
+    pub fn new(x: u16) -> Self {
         Point { x }
     }
 
@@ -46,15 +46,15 @@ mod tests {
 
     #[test]
     fn point() {
-        assert_eq!(Point::of(1), Point { x: 1 });
-        assert_eq!(Point::of(2), Point { x: 2 });
+        assert_eq!(Point::new(1), Point { x: 1 });
+        assert_eq!(Point::new(2), Point { x: 2 });
         assert_eq!(Point::min(), Point { x: 0 });
         assert_eq!(Point::max(), Point { x: MAX });
     }
 
     #[test]
     fn to_string() {
-        assert_eq!(Point::of(1).to_string(), "(1)");
+        assert_eq!(Point::new(1).to_string(), "(1)");
         assert_eq!(Point::min().to_string(), "(0)");
         assert_eq!(Point::max().to_string(), "(65535)");
     }

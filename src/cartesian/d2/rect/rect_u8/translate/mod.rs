@@ -18,7 +18,7 @@ pub fn try_checked_translate(r: &Rect, delta: &Point) -> Option<Rect> {
     let min_y = r.min.y.checked_add_signed(delta.y)?;
     let max_x = r.max.x.checked_add_signed(delta.x)?;
     let max_y = r.max.y.checked_add_signed(delta.y)?;
-    Some(Rect::of((min_x, min_y), (max_x, max_y)))
+    Some(Rect::new((min_x, min_y), (max_x, max_y)))
 }
 
 pub fn checked_translate_assign(r: &mut Rect, delta: &Point) {
@@ -57,7 +57,7 @@ pub fn saturating_translate(r: &Rect, delta: &Point) -> Rect {
     let min_y = clamped_y as u8;
     let max_x = min_x + dx;
     let max_y = min_y + dy;
-    Rect::of((min_x, min_y), (max_x, max_y))
+    Rect::new((min_x, min_y), (max_x, max_y))
 }
 
 pub fn wrapping_translate_assign(r: &mut Rect, delta: &Point) {
@@ -80,7 +80,7 @@ pub fn wrapping_translate(r: &Rect, delta: &Point) -> Rect {
     let min_y = r.min.y.wrapping_add_signed(delta.y);
     let max_x = min_x.wrapping_add(dx);
     let max_y = min_y.wrapping_add(dy);
-    Rect::of((min_x, min_y), (max_x, max_y))
+    Rect::new((min_x, min_y), (max_x, max_y))
 }
 
 #[cfg(test)]

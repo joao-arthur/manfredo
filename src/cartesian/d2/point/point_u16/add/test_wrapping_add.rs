@@ -6,24 +6,24 @@ use crate::cartesian::{
 
 #[test]
 fn test() {
-    assert_eq!(wrapping_add(&Point::min(), &PointI::of(10, 13)), Point::of(10, 13));
-    assert_eq!(wrapping_add(&Point::of(10, 10), &PointI::of(-5, -3)), Point::of(5, 7));
+    assert_eq!(wrapping_add(&Point::min(), &PointI::new(10, 13)), Point::new(10, 13));
+    assert_eq!(wrapping_add(&Point::new(10, 10), &PointI::new(-5, -3)), Point::new(5, 7));
 }
 
 #[test]
 fn to_bounds() {
-    assert_eq!(wrapping_add(&Point::of(2, 5), &PointI::of(-2, -5)), Point::min());
-    assert_eq!(wrapping_add(&Point::of(MAX - 2, MAX - 5), &PointI::of(2, 5)), Point::max());
+    assert_eq!(wrapping_add(&Point::new(2, 5), &PointI::new(-2, -5)), Point::min());
+    assert_eq!(wrapping_add(&Point::new(MAX - 2, MAX - 5), &PointI::new(2, 5)), Point::max());
 }
 
 #[test]
 fn out_of_bounds() {
-    assert_eq!(wrapping_add(&Point::of(2, 5), &PointI::of(-10, -10)), Point::of(MAX - 7, MAX - 4));
-    assert_eq!(wrapping_add(&Point::of(MAX - 2, MAX - 5), &PointI::of(10, 10)), Point::of(7, 4));
+    assert_eq!(wrapping_add(&Point::new(2, 5), &PointI::new(-10, -10)), Point::new(MAX - 7, MAX - 4));
+    assert_eq!(wrapping_add(&Point::new(MAX - 2, MAX - 5), &PointI::new(10, 10)), Point::new(7, 4));
 }
 
 #[test]
 fn limits_out_of_bounds() {
-    assert_eq!(wrapping_add(&Point::of(1, 1), &PointI::min()), Point::of(32769, 32769));
-    assert_eq!(wrapping_add(&Point::of(MAX - 1, MAX - 1), &PointI::max()), Point::of(32765, 32765));
+    assert_eq!(wrapping_add(&Point::new(1, 1), &PointI::min()), Point::new(32769, 32769));
+    assert_eq!(wrapping_add(&Point::new(MAX - 1, MAX - 1), &PointI::max()), Point::new(32765, 32765));
 }

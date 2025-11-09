@@ -6,28 +6,28 @@ use crate::cartesian::{
 
 #[test]
 fn test_delta_min() {
-    assert_eq!(delta_min(&Rect::of((0.0, -5.0), (5.0, 5.0))), 5.0);
-    assert_eq!(delta_min(&Rect::of((-5.0, 0.0), (4.0, 4.0))), 4.0);
+    assert_eq!(delta_min(&Rect::new((0.0, -5.0), (5.0, 5.0))), 5.0);
+    assert_eq!(delta_min(&Rect::new((-5.0, 0.0), (4.0, 4.0))), 4.0);
 }
 
 #[test]
 fn delta_min_0() {
-    assert_eq!(delta_min(&Rect::of((-1.0, 0.0), (0.0, 0.0))), 0.0);
-    assert_eq!(delta_min(&Rect::of((0.0, -1.0), (0.0, 0.0))), 0.0);
-    assert_eq!(delta_min(&Rect::of((0.0, 0.0), (1.0, 0.0))), 0.0);
-    assert_eq!(delta_min(&Rect::of((0.0, 0.0), (0.0, 1.0))), 0.0);
+    assert_eq!(delta_min(&Rect::new((-1.0, 0.0), (0.0, 0.0))), 0.0);
+    assert_eq!(delta_min(&Rect::new((0.0, -1.0), (0.0, 0.0))), 0.0);
+    assert_eq!(delta_min(&Rect::new((0.0, 0.0), (1.0, 0.0))), 0.0);
+    assert_eq!(delta_min(&Rect::new((0.0, 0.0), (0.0, 1.0))), 0.0);
 }
 
 #[test]
 fn delta_min_1() {
-    assert_eq!(delta_min(&Rect::of((4.0, -5.0), (5.0, 5.0))), 1.0);
-    assert_eq!(delta_min(&Rect::of((-5.0, 4.0), (5.0, 5.0))), 1.0);
-    assert_eq!(delta_min(&Rect::of((-5.0, -5.0), (-4.0, 5.0))), 1.0);
-    assert_eq!(delta_min(&Rect::of((-5.0, -5.0), (5.0, -4.0))), 1.0);
+    assert_eq!(delta_min(&Rect::new((4.0, -5.0), (5.0, 5.0))), 1.0);
+    assert_eq!(delta_min(&Rect::new((-5.0, 4.0), (5.0, 5.0))), 1.0);
+    assert_eq!(delta_min(&Rect::new((-5.0, -5.0), (-4.0, 5.0))), 1.0);
+    assert_eq!(delta_min(&Rect::new((-5.0, -5.0), (5.0, -4.0))), 1.0);
 }
 
 #[test]
 fn delta_min_bounds() {
-    assert_eq!(delta_min(&Rect::of((MIN + 1.0, MIN + 1.0), (0.0, 0.0))), MAX);
-    assert_eq!(delta_min(&Rect::of((0.0, 0.0), (MAX, MAX))), MAX);
+    assert_eq!(delta_min(&Rect::new((MIN + 1.0, MIN + 1.0), (0.0, 0.0))), MAX);
+    assert_eq!(delta_min(&Rect::new((0.0, 0.0), (MAX, MAX))), MAX);
 }

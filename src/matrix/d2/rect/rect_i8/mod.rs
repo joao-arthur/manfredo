@@ -38,7 +38,7 @@ pub struct Rect {
 }
 
 impl Rect {
-    pub fn of(min: (i8, i8), max: (i8, i8)) -> Self {
+    pub fn new(min: (i8, i8), max: (i8, i8)) -> Self {
         Rect { min: Point { row: min.0, col: min.1 }, max: Point { row: max.0, col: max.1 } }
     }
 
@@ -82,18 +82,18 @@ mod tests {
 
     #[test]
     fn rect() {
-        assert_eq!(Rect::of((MIN, -1), (1, MAX)), Rect { min: Point { row: MIN, col: -1 }, max: Point { row: 1, col: MAX } });
+        assert_eq!(Rect::new((MIN, -1), (1, MAX)), Rect { min: Point { row: MIN, col: -1 }, max: Point { row: 1, col: MAX } });
         assert_eq!(Rect::largest(), Rect { min: Point { row: MIN, col: MIN }, max: Point { row: MAX, col: MAX } });
         assert_eq!(Rect::min(), Rect { min: Point { row: MIN, col: MIN }, max: Point { row: MIN, col: MIN } });
         assert_eq!(Rect::max(), Rect { min: Point { row: MAX, col: MAX }, max: Point { row: MAX, col: MAX } });
         assert_eq!(Rect::zero(), Rect { min: Point { row: 0, col: 0 }, max: Point { row: 0, col: 0 } });
-        assert_eq!(Rect::of((-8, -7), (-5, -6)).iter_row().collect::<Vec<i8>>(), [-8, -7, -6, -5]);
-        assert_eq!(Rect::of((-8, -7), (-7, -4)).iter_col().collect::<Vec<i8>>(), [-7, -6, -5, -4]);
+        assert_eq!(Rect::new((-8, -7), (-5, -6)).iter_row().collect::<Vec<i8>>(), [-8, -7, -6, -5]);
+        assert_eq!(Rect::new((-8, -7), (-7, -4)).iter_col().collect::<Vec<i8>>(), [-7, -6, -5, -4]);
     }
 
     #[test]
     fn to_string() {
-        assert_eq!(Rect::of((MIN, -0), (0, MAX)).to_string(), "((-128, 0), (0, 127))");
+        assert_eq!(Rect::new((MIN, -0), (0, MAX)).to_string(), "((-128, 0), (0, 127))");
         assert_eq!(Rect::largest().to_string(), "((-128, -128), (127, 127))");
         assert_eq!(Rect::min().to_string(), "((-128, -128), (-128, -128))");
         assert_eq!(Rect::max().to_string(), "((127, 127), (127, 127))");

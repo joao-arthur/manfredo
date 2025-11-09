@@ -14,33 +14,33 @@ mod tests {
     #[test]
     fn delta_0() {
         assert_eq!(distance(&Point::min(), &Point::min()), 0.0);
-        assert_eq!(distance(&Point::of(0, 1), &Point::of(0, 1)), 0.0);
-        assert_eq!(distance(&Point::of(1, 0), &Point::of(1, 0)), 0.0);
-        assert_eq!(distance(&Point::of(1, 1), &Point::of(1, 1)), 0.0);
+        assert_eq!(distance(&Point::new(0, 1), &Point::new(0, 1)), 0.0);
+        assert_eq!(distance(&Point::new(1, 0), &Point::new(1, 0)), 0.0);
+        assert_eq!(distance(&Point::new(1, 1), &Point::new(1, 1)), 0.0);
     }
 
     #[test]
     fn delta_x() {
-        assert_eq!(distance(&Point::of(10, 0), &Point::of(10, 50)), 50.0);
-        assert_eq!(distance(&Point::of(10, 100), &Point::of(10, 200)), 100.0);
+        assert_eq!(distance(&Point::new(10, 0), &Point::new(10, 50)), 50.0);
+        assert_eq!(distance(&Point::new(10, 100), &Point::new(10, 200)), 100.0);
     }
 
     #[test]
     fn delta_y() {
-        assert_eq!(distance(&Point::of(0, 10), &Point::of(50, 10)), 50.0);
-        assert_eq!(distance(&Point::of(100, 10), &Point::of(200, 10)), 100.0);
+        assert_eq!(distance(&Point::new(0, 10), &Point::new(50, 10)), 50.0);
+        assert_eq!(distance(&Point::new(100, 10), &Point::new(200, 10)), 100.0);
     }
 
     #[test]
     fn pythagorean() {
-        assert_eq!(distance(&Point::min(), &Point::of(3, 4)), 5.0);
-        assert_eq!(distance(&Point::min(), &Point::of(5, 12)), 13.0);
-        assert_eq!(distance(&Point::min(), &Point::of(8, 15)), 17.0);
+        assert_eq!(distance(&Point::min(), &Point::new(3, 4)), 5.0);
+        assert_eq!(distance(&Point::min(), &Point::new(5, 12)), 13.0);
+        assert_eq!(distance(&Point::min(), &Point::new(8, 15)), 17.0);
     }
 
     #[test]
     fn square() {
-        assert_eq!(distance(&Point::min(), &Point::of(100, 100)), 141.4213562373095);
-        assert_eq!(distance(&Point::min(), &Point::of(200, 200)), 282.842712474619);
+        assert_eq!(distance(&Point::min(), &Point::new(100, 100)), 141.4213562373095);
+        assert_eq!(distance(&Point::min(), &Point::new(200, 200)), 282.842712474619);
     }
 }

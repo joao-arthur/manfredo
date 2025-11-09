@@ -6,6 +6,6 @@ use crate::cartesian::{
 
 #[test]
 fn test_delta_x() {
-    assert_eq!(delta_x(&Rect::of((0, MIN), (0, MAX))), 0);
-    assert_eq!(delta_x(&Rect::of((MIN, 0), (MAX, 0))), u16::MAX);
+    assert_eq!(delta_x(&Rect::new((0, MIN), (0, MAX))), 0);
+    assert_eq!(delta_x(&Rect::new((MIN, 0), (MAX, 0))), u16::MAX);
 }

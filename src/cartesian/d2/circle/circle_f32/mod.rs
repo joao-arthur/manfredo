@@ -11,7 +11,7 @@ pub struct Circle {
 }
 
 impl Circle {
-    pub fn of(p: Point, r: f32) -> Self {
+    pub fn new(p: Point, r: f32) -> Self {
         Circle { p, r }
     }
 }
@@ -32,17 +32,17 @@ mod tests {
 
     #[test]
     fn circle() {
-        assert_eq!(Circle::of(Point::min(), MAX), Circle { p: Point { x: MIN, y: MIN }, r: MAX });
-        assert_eq!(Circle::of(Point::of(MIN, MAX), MAX), Circle { p: Point { x: MIN, y: MAX }, r: MAX });
-        assert_eq!(Circle::of(Point::of(MAX, MIN), MAX), Circle { p: Point { x: MAX, y: MIN }, r: MAX });
-        assert_eq!(Circle::of(Point::max(), MAX), Circle { p: Point { x: MAX, y: MAX }, r: MAX });
+        assert_eq!(Circle::new(Point::min(), MAX), Circle { p: Point { x: MIN, y: MIN }, r: MAX });
+        assert_eq!(Circle::new(Point::new(MIN, MAX), MAX), Circle { p: Point { x: MIN, y: MAX }, r: MAX });
+        assert_eq!(Circle::new(Point::new(MAX, MIN), MAX), Circle { p: Point { x: MAX, y: MIN }, r: MAX });
+        assert_eq!(Circle::new(Point::max(), MAX), Circle { p: Point { x: MAX, y: MAX }, r: MAX });
     }
 
     #[test]
     fn to_string() {
-        assert_eq!(Circle::of(Point::min(), MAX).to_string(), "((-16777216, -16777216), 16777215)");
-        assert_eq!(Circle::of(Point::of(MIN, MAX), MAX).to_string(), "((-16777216, 16777215), 16777215)");
-        assert_eq!(Circle::of(Point::of(MAX, MIN), MAX).to_string(), "((16777215, -16777216), 16777215)");
-        assert_eq!(Circle::of(Point::max(), MAX).to_string(), "((16777215, 16777215), 16777215)");
+        assert_eq!(Circle::new(Point::min(), MAX).to_string(), "((-16777216, -16777216), 16777215)");
+        assert_eq!(Circle::new(Point::new(MIN, MAX), MAX).to_string(), "((-16777216, 16777215), 16777215)");
+        assert_eq!(Circle::new(Point::new(MAX, MIN), MAX).to_string(), "((16777215, -16777216), 16777215)");
+        assert_eq!(Circle::new(Point::max(), MAX).to_string(), "((16777215, 16777215), 16777215)");
     }
 }

@@ -13,23 +13,23 @@ mod tests {
 
     #[test]
     fn edges() {
-        assert_eq!(matrix_to_cartesian(&Matrix::min()), Cartesian::of(i8::MIN, i8::MAX));
-        assert_eq!(matrix_to_cartesian(&Matrix::of(u8::MAX, 0)), Cartesian::min());
-        assert_eq!(matrix_to_cartesian(&Matrix::of(0, u8::MAX)), Cartesian::max());
-        assert_eq!(matrix_to_cartesian(&Matrix::max()), Cartesian::of(i8::MAX, i8::MIN));
+        assert_eq!(matrix_to_cartesian(&Matrix::min()), Cartesian::new(i8::MIN, i8::MAX));
+        assert_eq!(matrix_to_cartesian(&Matrix::new(u8::MAX, 0)), Cartesian::min());
+        assert_eq!(matrix_to_cartesian(&Matrix::new(0, u8::MAX)), Cartesian::max());
+        assert_eq!(matrix_to_cartesian(&Matrix::max()), Cartesian::new(i8::MAX, i8::MIN));
     }
 
     #[test]
     fn sequence_min() {
-        assert_eq!(matrix_to_cartesian(&Matrix::of(1, 1)), Cartesian::of(i8::MIN + 1, i8::MAX - 1));
-        assert_eq!(matrix_to_cartesian(&Matrix::of(2, 2)), Cartesian::of(i8::MIN + 2, i8::MAX - 2));
-        assert_eq!(matrix_to_cartesian(&Matrix::of(3, 3)), Cartesian::of(i8::MIN + 3, i8::MAX - 3));
+        assert_eq!(matrix_to_cartesian(&Matrix::new(1, 1)), Cartesian::new(i8::MIN + 1, i8::MAX - 1));
+        assert_eq!(matrix_to_cartesian(&Matrix::new(2, 2)), Cartesian::new(i8::MIN + 2, i8::MAX - 2));
+        assert_eq!(matrix_to_cartesian(&Matrix::new(3, 3)), Cartesian::new(i8::MIN + 3, i8::MAX - 3));
     }
 
     #[test]
     fn sequence_max() {
-        assert_eq!(matrix_to_cartesian(&Matrix::of(u8::MAX - 1, u8::MAX - 1)), Cartesian::of(i8::MAX - 1, i8::MIN + 1));
-        assert_eq!(matrix_to_cartesian(&Matrix::of(u8::MAX - 2, u8::MAX - 2)), Cartesian::of(i8::MAX - 2, i8::MIN + 2));
-        assert_eq!(matrix_to_cartesian(&Matrix::of(u8::MAX - 3, u8::MAX - 3)), Cartesian::of(i8::MAX - 3, i8::MIN + 3));
+        assert_eq!(matrix_to_cartesian(&Matrix::new(u8::MAX - 1, u8::MAX - 1)), Cartesian::new(i8::MAX - 1, i8::MIN + 1));
+        assert_eq!(matrix_to_cartesian(&Matrix::new(u8::MAX - 2, u8::MAX - 2)), Cartesian::new(i8::MAX - 2, i8::MIN + 2));
+        assert_eq!(matrix_to_cartesian(&Matrix::new(u8::MAX - 3, u8::MAX - 3)), Cartesian::new(i8::MAX - 3, i8::MIN + 3));
     }
 }

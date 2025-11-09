@@ -4,5 +4,5 @@ use crate::matrix::{d1::point::point_u64::MAX, d2::rect::rect_u64::Rect};
 #[test]
 fn test_delta_col() {
     assert_eq!(delta_col(&Rect::min()), 0);
-    assert_eq!(delta_col(&Rect::of((0, 0), (0, MAX))), MAX);
+    assert_eq!(delta_col(&Rect::new((0, 0), (0, MAX))), MAX);
 }

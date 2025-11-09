@@ -7,8 +7,8 @@ pub struct Line {
 }
 
 impl Line {
-    pub fn of(min: f32, max: f32) -> Self {
-        Line { min: Point::of(min), max: Point::of(max) }
+    pub fn new(min: f32, max: f32) -> Self {
+        Line { min: Point::new(min), max: Point::new(max) }
     }
 
     pub fn largest() -> Self {
@@ -41,8 +41,8 @@ mod tests {
 
     #[test]
     fn line() {
-        assert_eq!(Line::of(-1.0, 1.0), Line { min: Point { x: -1.0 }, max: Point { x: 1.0 } });
-        assert_eq!(Line::of(-2.0, 2.0), Line { min: Point { x: -2.0 }, max: Point { x: 2.0 } });
+        assert_eq!(Line::new(-1.0, 1.0), Line { min: Point { x: -1.0 }, max: Point { x: 1.0 } });
+        assert_eq!(Line::new(-2.0, 2.0), Line { min: Point { x: -2.0 }, max: Point { x: 2.0 } });
         assert_eq!(Line::largest(), Line { min: Point::min(), max: Point::max() });
         assert_eq!(Line::min(), Line { min: Point::min(), max: Point::min() });
         assert_eq!(Line::max(), Line { min: Point::max(), max: Point::max() });
@@ -51,7 +51,7 @@ mod tests {
 
     #[test]
     fn to_string() {
-        assert_eq!(Line::of(-1.0, 1.0).to_string(), "((-1), (1))");
+        assert_eq!(Line::new(-1.0, 1.0).to_string(), "((-1), (1))");
         assert_eq!(Line::largest().to_string(), "((-16777216), (16777215))");
         assert_eq!(Line::min().to_string(), "((-16777216), (-16777216))");
         assert_eq!(Line::max().to_string(), "((16777215), (16777215))");

@@ -13,40 +13,40 @@ mod tests {
 
     #[test]
     fn delta_0() {
-        assert_eq!(distance(&Point::of(-1, -1), &Point::of(-1, -1)), 0.0);
-        assert_eq!(distance(&Point::of(-1, 1), &Point::of(-1, 1)), 0.0);
-        assert_eq!(distance(&Point::of(1, -1), &Point::of(1, -1)), 0.0);
-        assert_eq!(distance(&Point::of(1, 1), &Point::of(1, 1)), 0.0);
+        assert_eq!(distance(&Point::new(-1, -1), &Point::new(-1, -1)), 0.0);
+        assert_eq!(distance(&Point::new(-1, 1), &Point::new(-1, 1)), 0.0);
+        assert_eq!(distance(&Point::new(1, -1), &Point::new(1, -1)), 0.0);
+        assert_eq!(distance(&Point::new(1, 1), &Point::new(1, 1)), 0.0);
     }
 
     #[test]
     fn delta_x() {
-        assert_eq!(distance(&Point::of(-10, 0), &Point::of(-10, 50)), 50.0);
-        assert_eq!(distance(&Point::of(10, 100), &Point::of(10, 200)), 100.0);
+        assert_eq!(distance(&Point::new(-10, 0), &Point::new(-10, 50)), 50.0);
+        assert_eq!(distance(&Point::new(10, 100), &Point::new(10, 200)), 100.0);
     }
 
     #[test]
     fn delta_y() {
-        assert_eq!(distance(&Point::of(0, -10), &Point::of(50, -10)), 50.0);
-        assert_eq!(distance(&Point::of(100, 10), &Point::of(200, 10)), 100.0);
+        assert_eq!(distance(&Point::new(0, -10), &Point::new(50, -10)), 50.0);
+        assert_eq!(distance(&Point::new(100, 10), &Point::new(200, 10)), 100.0);
     }
 
     #[test]
     fn pythagorean() {
-        assert_eq!(distance(&Point::zero(), &Point::of(3, 4)), 5.0);
-        assert_eq!(distance(&Point::zero(), &Point::of(30, 40)), 50.0);
-        assert_eq!(distance(&Point::zero(), &Point::of(300, 400)), 500.0);
-        assert_eq!(distance(&Point::zero(), &Point::of(5000, 12000)), 13000.0);
-        assert_eq!(distance(&Point::zero(), &Point::of(50000, 120000)), 130000.0);
-        assert_eq!(distance(&Point::zero(), &Point::of(500000, 1200000)), 1300000.0);
-        assert_eq!(distance(&Point::zero(), &Point::of(8000000, 15000000)), 17000000.0);
-        assert_eq!(distance(&Point::zero(), &Point::of(80000000, 150000000)), 170000000.0);
-        assert_eq!(distance(&Point::zero(), &Point::of(800000000, 1500000000)), 1700000000.0);
+        assert_eq!(distance(&Point::zero(), &Point::new(3, 4)), 5.0);
+        assert_eq!(distance(&Point::zero(), &Point::new(30, 40)), 50.0);
+        assert_eq!(distance(&Point::zero(), &Point::new(300, 400)), 500.0);
+        assert_eq!(distance(&Point::zero(), &Point::new(5000, 12000)), 13000.0);
+        assert_eq!(distance(&Point::zero(), &Point::new(50000, 120000)), 130000.0);
+        assert_eq!(distance(&Point::zero(), &Point::new(500000, 1200000)), 1300000.0);
+        assert_eq!(distance(&Point::zero(), &Point::new(8000000, 15000000)), 17000000.0);
+        assert_eq!(distance(&Point::zero(), &Point::new(80000000, 150000000)), 170000000.0);
+        assert_eq!(distance(&Point::zero(), &Point::new(800000000, 1500000000)), 1700000000.0);
     }
 
     #[test]
     fn square() {
-        assert_eq!(distance(&Point::of(-50, -50), &Point::of(50, 50)), 141.4213562373095);
-        assert_eq!(distance(&Point::of(-100, -100), &Point::of(100, 100)), 282.842712474619);
+        assert_eq!(distance(&Point::new(-50, -50), &Point::new(50, 50)), 141.4213562373095);
+        assert_eq!(distance(&Point::new(-100, -100), &Point::new(100, 100)), 282.842712474619);
     }
 }

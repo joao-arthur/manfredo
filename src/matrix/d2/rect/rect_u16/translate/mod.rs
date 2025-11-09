@@ -18,7 +18,7 @@ pub fn try_checked_translate(r: &Rect, delta: &Point) -> Option<Rect> {
     let min_col = r.min.col.checked_add_signed(delta.col)?;
     let max_row = r.max.row.checked_add_signed(delta.row)?;
     let max_col = r.max.col.checked_add_signed(delta.col)?;
-    Some(Rect::of((min_row, min_col), (max_row, max_col)))
+    Some(Rect::new((min_row, min_col), (max_row, max_col)))
 }
 
 pub fn checked_translate_assign(r: &mut Rect, delta: &Point) {
@@ -57,7 +57,7 @@ pub fn saturating_translate(r: &Rect, delta: &Point) -> Rect {
     let min_col = clamped_col as u16;
     let max_row = min_row + d_row;
     let max_col = min_col + d_col;
-    Rect::of((min_row, min_col), (max_row, max_col))
+    Rect::new((min_row, min_col), (max_row, max_col))
 }
 
 pub fn wrapping_translate_assign(r: &mut Rect, delta: &Point) {
@@ -80,7 +80,7 @@ pub fn wrapping_translate(r: &Rect, delta: &Point) -> Rect {
     let min_col = r.min.col.wrapping_add_signed(delta.col);
     let max_row = min_row.wrapping_add(d_row);
     let max_col = min_col.wrapping_add(d_col);
-    Rect::of((min_row, min_col), (max_row, max_col))
+    Rect::new((min_row, min_col), (max_row, max_col))
 }
 
 #[cfg(test)]

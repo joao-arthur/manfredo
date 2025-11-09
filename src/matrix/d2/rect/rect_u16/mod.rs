@@ -38,7 +38,7 @@ pub struct Rect {
 }
 
 impl Rect {
-    pub fn of(min: (u16, u16), max: (u16, u16)) -> Self {
+    pub fn new(min: (u16, u16), max: (u16, u16)) -> Self {
         Rect { min: Point { row: min.0, col: min.1 }, max: Point { row: max.0, col: max.1 } }
     }
 
@@ -85,17 +85,17 @@ mod tests {
 
     #[test]
     fn rect() {
-        assert_eq!(Rect::of((16, 32), (64, 128)), Rect { min: Point { row: 16, col: 32 }, max: Point { row: 64, col: 128 } });
+        assert_eq!(Rect::new((16, 32), (64, 128)), Rect { min: Point { row: 16, col: 32 }, max: Point { row: 64, col: 128 } });
         assert_eq!(Rect::largest(), Rect { min: Point { row: 0, col: 0 }, max: Point { row: MAX, col: MAX } });
         assert_eq!(Rect::min(), Rect { min: Point { row: 0, col: 0 }, max: Point { row: 0, col: 0 } });
         assert_eq!(Rect::max(), Rect { min: Point { row: MAX, col: MAX }, max: Point { row: MAX, col: MAX } });
-        assert_eq!(Rect::of((1, 2), (4, 3)).iter_row().collect::<Vec<u16>>(), [1, 2, 3, 4]);
-        assert_eq!(Rect::of((1, 2), (2, 5)).iter_col().collect::<Vec<u16>>(), [2, 3, 4, 5]);
+        assert_eq!(Rect::new((1, 2), (4, 3)).iter_row().collect::<Vec<u16>>(), [1, 2, 3, 4]);
+        assert_eq!(Rect::new((1, 2), (2, 5)).iter_col().collect::<Vec<u16>>(), [2, 3, 4, 5]);
     }
 
     #[test]
     fn to_string() {
-        assert_eq!(Rect::of((16, 32), (64, 128)).to_string(), "((16, 32), (64, 128))");
+        assert_eq!(Rect::new((16, 32), (64, 128)).to_string(), "((16, 32), (64, 128))");
         assert_eq!(Rect::largest().to_string(), "((0, 0), (65535, 65535))");
         assert_eq!(Rect::min().to_string(), "((0, 0), (0, 0))");
         assert_eq!(Rect::max().to_string(), "((65535, 65535), (65535, 65535))");

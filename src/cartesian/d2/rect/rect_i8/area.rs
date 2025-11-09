@@ -13,16 +13,16 @@ mod tests {
 
     #[test]
     fn test_area() {
-        assert_eq!(area(&Rect::of((-5, 0), (0, 2))), 10);
-        assert_eq!(area(&Rect::of((-50, 50), (-30, 51))), 20);
-        assert_eq!(area(&Rect::of((10, -30), (15, -20))), 50);
+        assert_eq!(area(&Rect::new((-5, 0), (0, 2))), 10);
+        assert_eq!(area(&Rect::new((-50, 50), (-30, 51))), 20);
+        assert_eq!(area(&Rect::new((10, -30), (15, -20))), 50);
     }
 
     #[test]
     fn area_powers_of_10() {
-        assert_eq!(area(&Rect::of((0, 0), (1, 1))), 1);
-        assert_eq!(area(&Rect::of((-5, -5), (5, 5))), 100);
-        assert_eq!(area(&Rect::of((-50, -50), (50, 50))), 10000);
+        assert_eq!(area(&Rect::new((0, 0), (1, 1))), 1);
+        assert_eq!(area(&Rect::new((-5, -5), (5, 5))), 100);
+        assert_eq!(area(&Rect::new((-50, -50), (50, 50))), 10000);
     }
 
     #[test]

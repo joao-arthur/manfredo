@@ -35,50 +35,50 @@ mod tests {
 
     #[test]
     fn test_delta_x() {
-        assert_eq!(delta_x(&Point::min(), &Point::of(MAX, 0, 0, 0)), MAX);
-        assert_eq!(delta_x(&Point::min(), &Point::of(0, MAX, 0, 0)), 0);
-        assert_eq!(delta_x(&Point::min(), &Point::of(0, 0, MAX, 0)), 0);
-        assert_eq!(delta_x(&Point::min(), &Point::of(0, 0, 0, MAX)), 0);
+        assert_eq!(delta_x(&Point::min(), &Point::new(MAX, 0, 0, 0)), MAX);
+        assert_eq!(delta_x(&Point::min(), &Point::new(0, MAX, 0, 0)), 0);
+        assert_eq!(delta_x(&Point::min(), &Point::new(0, 0, MAX, 0)), 0);
+        assert_eq!(delta_x(&Point::min(), &Point::new(0, 0, 0, MAX)), 0);
     }
 
     #[test]
     fn test_delta_y() {
-        assert_eq!(delta_y(&Point::min(), &Point::of(MAX, 0, 0, 0)), 0);
-        assert_eq!(delta_y(&Point::min(), &Point::of(0, MAX, 0, 0)), MAX);
-        assert_eq!(delta_y(&Point::min(), &Point::of(0, 0, MAX, 0)), 0);
-        assert_eq!(delta_y(&Point::min(), &Point::of(0, 0, 0, MAX)), 0);
+        assert_eq!(delta_y(&Point::min(), &Point::new(MAX, 0, 0, 0)), 0);
+        assert_eq!(delta_y(&Point::min(), &Point::new(0, MAX, 0, 0)), MAX);
+        assert_eq!(delta_y(&Point::min(), &Point::new(0, 0, MAX, 0)), 0);
+        assert_eq!(delta_y(&Point::min(), &Point::new(0, 0, 0, MAX)), 0);
     }
 
     #[test]
     fn test_delta_z() {
-        assert_eq!(delta_z(&Point::min(), &Point::of(MAX, 0, 0, 0)), 0);
-        assert_eq!(delta_z(&Point::min(), &Point::of(0, MAX, 0, 0)), 0);
-        assert_eq!(delta_z(&Point::min(), &Point::of(0, 0, MAX, 0)), MAX);
-        assert_eq!(delta_z(&Point::min(), &Point::of(0, 0, 0, MAX)), 0);
+        assert_eq!(delta_z(&Point::min(), &Point::new(MAX, 0, 0, 0)), 0);
+        assert_eq!(delta_z(&Point::min(), &Point::new(0, MAX, 0, 0)), 0);
+        assert_eq!(delta_z(&Point::min(), &Point::new(0, 0, MAX, 0)), MAX);
+        assert_eq!(delta_z(&Point::min(), &Point::new(0, 0, 0, MAX)), 0);
     }
 
     #[test]
     fn test_delta_w() {
-        assert_eq!(delta_w(&Point::min(), &Point::of(MAX, 0, 0, 0)), 0);
-        assert_eq!(delta_w(&Point::min(), &Point::of(0, MAX, 0, 0)), 0);
-        assert_eq!(delta_w(&Point::min(), &Point::of(0, 0, MAX, 0)), 0);
-        assert_eq!(delta_w(&Point::min(), &Point::of(0, 0, 0, MAX)), MAX);
+        assert_eq!(delta_w(&Point::min(), &Point::new(MAX, 0, 0, 0)), 0);
+        assert_eq!(delta_w(&Point::min(), &Point::new(0, MAX, 0, 0)), 0);
+        assert_eq!(delta_w(&Point::min(), &Point::new(0, 0, MAX, 0)), 0);
+        assert_eq!(delta_w(&Point::min(), &Point::new(0, 0, 0, MAX)), MAX);
     }
 
     #[test]
     fn test_delta_max() {
-        assert_eq!(delta_max(&Point::of(0, 1, 2, 3), &Point::of(10, 10, 10, 10)), 10);
-        assert_eq!(delta_max(&Point::of(1, 2, 3, 0), &Point::of(9, 9, 9, 9)), 9);
-        assert_eq!(delta_max(&Point::of(2, 3, 0, 1), &Point::of(8, 8, 8, 8)), 8);
-        assert_eq!(delta_max(&Point::of(3, 0, 1, 2), &Point::of(7, 7, 7, 7)), 7);
+        assert_eq!(delta_max(&Point::new(0, 1, 2, 3), &Point::new(10, 10, 10, 10)), 10);
+        assert_eq!(delta_max(&Point::new(1, 2, 3, 0), &Point::new(9, 9, 9, 9)), 9);
+        assert_eq!(delta_max(&Point::new(2, 3, 0, 1), &Point::new(8, 8, 8, 8)), 8);
+        assert_eq!(delta_max(&Point::new(3, 0, 1, 2), &Point::new(7, 7, 7, 7)), 7);
     }
 
     #[test]
     fn test_delta_min() {
-        assert_eq!(delta_min(&Point::of(0, 1, 2, 3), &Point::of(10, 10, 10, 10)), 7);
-        assert_eq!(delta_min(&Point::of(1, 2, 3, 0), &Point::of(9, 9, 9, 9)), 6);
-        assert_eq!(delta_min(&Point::of(2, 3, 0, 1), &Point::of(8, 8, 8, 8)), 5);
-        assert_eq!(delta_min(&Point::of(3, 0, 1, 1), &Point::of(7, 7, 7, 7)), 4);
+        assert_eq!(delta_min(&Point::new(0, 1, 2, 3), &Point::new(10, 10, 10, 10)), 7);
+        assert_eq!(delta_min(&Point::new(1, 2, 3, 0), &Point::new(9, 9, 9, 9)), 6);
+        assert_eq!(delta_min(&Point::new(2, 3, 0, 1), &Point::new(8, 8, 8, 8)), 5);
+        assert_eq!(delta_min(&Point::new(3, 0, 1, 1), &Point::new(7, 7, 7, 7)), 4);
     }
 
     #[test]

@@ -11,23 +11,23 @@ mod tests {
 
     #[test]
     fn edges() {
-        assert_eq!(matrix_to_cartesian(&Matrix::min()), Cartesian::of(0, u32::MAX));
-        assert_eq!(matrix_to_cartesian(&Matrix::of(u32::MAX, 0)), Cartesian::min());
-        assert_eq!(matrix_to_cartesian(&Matrix::of(0, u32::MAX)), Cartesian::max());
-        assert_eq!(matrix_to_cartesian(&Matrix::max()), Cartesian::of(u32::MAX, 0));
+        assert_eq!(matrix_to_cartesian(&Matrix::min()), Cartesian::new(0, u32::MAX));
+        assert_eq!(matrix_to_cartesian(&Matrix::new(u32::MAX, 0)), Cartesian::min());
+        assert_eq!(matrix_to_cartesian(&Matrix::new(0, u32::MAX)), Cartesian::max());
+        assert_eq!(matrix_to_cartesian(&Matrix::max()), Cartesian::new(u32::MAX, 0));
     }
 
     #[test]
     fn sequence_min() {
-        assert_eq!(matrix_to_cartesian(&Matrix::of(1, 1)), Cartesian::of(1, u32::MAX - 1));
-        assert_eq!(matrix_to_cartesian(&Matrix::of(2, 2)), Cartesian::of(2, u32::MAX - 2));
-        assert_eq!(matrix_to_cartesian(&Matrix::of(3, 3)), Cartesian::of(3, u32::MAX - 3));
+        assert_eq!(matrix_to_cartesian(&Matrix::new(1, 1)), Cartesian::new(1, u32::MAX - 1));
+        assert_eq!(matrix_to_cartesian(&Matrix::new(2, 2)), Cartesian::new(2, u32::MAX - 2));
+        assert_eq!(matrix_to_cartesian(&Matrix::new(3, 3)), Cartesian::new(3, u32::MAX - 3));
     }
 
     #[test]
     fn sequence_max() {
-        assert_eq!(matrix_to_cartesian(&Matrix::of(u32::MAX - 1, u32::MAX - 1)), Cartesian::of(u32::MAX - 1, 1));
-        assert_eq!(matrix_to_cartesian(&Matrix::of(u32::MAX - 2, u32::MAX - 2)), Cartesian::of(u32::MAX - 2, 2));
-        assert_eq!(matrix_to_cartesian(&Matrix::of(u32::MAX - 3, u32::MAX - 3)), Cartesian::of(u32::MAX - 3, 3));
+        assert_eq!(matrix_to_cartesian(&Matrix::new(u32::MAX - 1, u32::MAX - 1)), Cartesian::new(u32::MAX - 1, 1));
+        assert_eq!(matrix_to_cartesian(&Matrix::new(u32::MAX - 2, u32::MAX - 2)), Cartesian::new(u32::MAX - 2, 2));
+        assert_eq!(matrix_to_cartesian(&Matrix::new(u32::MAX - 3, u32::MAX - 3)), Cartesian::new(u32::MAX - 3, 3));
     }
 }

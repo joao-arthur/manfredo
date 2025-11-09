@@ -11,23 +11,23 @@ mod tests {
 
     #[test]
     fn bounds() {
-        assert_eq!(cartesian_to_matrix(&Cartesian::min()), Matrix::of(u64::MAX, 0));
-        assert_eq!(cartesian_to_matrix(&Cartesian::of(u64::MAX, 0)), Matrix::max());
-        assert_eq!(cartesian_to_matrix(&Cartesian::of(0, u64::MAX)), Matrix::min());
-        assert_eq!(cartesian_to_matrix(&Cartesian::max()), Matrix::of(0, u64::MAX));
+        assert_eq!(cartesian_to_matrix(&Cartesian::min()), Matrix::new(u64::MAX, 0));
+        assert_eq!(cartesian_to_matrix(&Cartesian::new(u64::MAX, 0)), Matrix::max());
+        assert_eq!(cartesian_to_matrix(&Cartesian::new(0, u64::MAX)), Matrix::min());
+        assert_eq!(cartesian_to_matrix(&Cartesian::max()), Matrix::new(0, u64::MAX));
     }
 
     #[test]
     fn sequence_min() {
-        assert_eq!(cartesian_to_matrix(&Cartesian::of(1, 1)), Matrix::of(u64::MAX - 1, 1));
-        assert_eq!(cartesian_to_matrix(&Cartesian::of(2, 2)), Matrix::of(u64::MAX - 2, 2));
-        assert_eq!(cartesian_to_matrix(&Cartesian::of(3, 3)), Matrix::of(u64::MAX - 3, 3));
+        assert_eq!(cartesian_to_matrix(&Cartesian::new(1, 1)), Matrix::new(u64::MAX - 1, 1));
+        assert_eq!(cartesian_to_matrix(&Cartesian::new(2, 2)), Matrix::new(u64::MAX - 2, 2));
+        assert_eq!(cartesian_to_matrix(&Cartesian::new(3, 3)), Matrix::new(u64::MAX - 3, 3));
     }
 
     #[test]
     fn sequence_max() {
-        assert_eq!(cartesian_to_matrix(&Cartesian::of(u64::MAX - 1, u64::MAX - 1)), Matrix::of(1, u64::MAX - 1));
-        assert_eq!(cartesian_to_matrix(&Cartesian::of(u64::MAX - 2, u64::MAX - 2)), Matrix::of(2, u64::MAX - 2));
-        assert_eq!(cartesian_to_matrix(&Cartesian::of(u64::MAX - 3, u64::MAX - 3)), Matrix::of(3, u64::MAX - 3));
+        assert_eq!(cartesian_to_matrix(&Cartesian::new(u64::MAX - 1, u64::MAX - 1)), Matrix::new(1, u64::MAX - 1));
+        assert_eq!(cartesian_to_matrix(&Cartesian::new(u64::MAX - 2, u64::MAX - 2)), Matrix::new(2, u64::MAX - 2));
+        assert_eq!(cartesian_to_matrix(&Cartesian::new(u64::MAX - 3, u64::MAX - 3)), Matrix::new(3, u64::MAX - 3));
     }
 }

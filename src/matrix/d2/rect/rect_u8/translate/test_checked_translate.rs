@@ -3,6 +3,6 @@ use crate::matrix::d2::{point::point_i8::Point, rect::rect_u8::Rect};
 
 #[test]
 fn test() {
-    assert_eq!(checked_translate(&Rect::of((0, 0), (12, 15)), &Point::of(5, 4)), Rect::of((5, 4), (17, 19)));
-    assert_eq!(checked_translate(&Rect::of((5, 4), (17, 19)), &Point::of(-4, -2)), Rect::of((1, 2), (13, 17)));
+    assert_eq!(checked_translate(&Rect::new((0, 0), (12, 15)), &Point::new(5, 4)), Rect::new((5, 4), (17, 19)));
+    assert_eq!(checked_translate(&Rect::new((5, 4), (17, 19)), &Point::new(-4, -2)), Rect::new((1, 2), (13, 17)));
 }

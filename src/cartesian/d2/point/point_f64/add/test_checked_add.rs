@@ -3,6 +3,6 @@ use crate::cartesian::d2::point::point_f64::Point;
 
 #[test]
 fn test() {
-    assert_eq!(checked_add(&Point::zero(), &Point::of(10.0, 13.0)), Point::of(10.0, 13.0));
-    assert_eq!(checked_add(&Point::of(10.0, 13.0), &Point::of(-5.0, -3.0)), Point::of(5.0, 10.0));
+    assert_eq!(checked_add(&Point::zero(), &Point::new(10.0, 13.0)), Point::new(10.0, 13.0));
+    assert_eq!(checked_add(&Point::new(10.0, 13.0), &Point::new(-5.0, -3.0)), Point::new(5.0, 10.0));
 }

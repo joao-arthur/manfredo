@@ -22,49 +22,49 @@ mod tests {
 
     #[test]
     fn test_len_x() {
-        assert_eq!(len_x(&Rect::of((0.0, 0.0), (0.0, MAX))), 1.0);
-        assert_eq!(len_x(&Rect::of((0.0, -8_388_608.0), (0.0, 8_388_607.0))), 1.0);
-        assert_eq!(len_x(&Rect::of((0.0, 0.0), (MAX - 1.0, 0.0))), MAX);
-        assert_eq!(len_x(&Rect::of((-8_388_608.0, 0.0), (8_388_606.0, 0.0))), MAX);
+        assert_eq!(len_x(&Rect::new((0.0, 0.0), (0.0, MAX))), 1.0);
+        assert_eq!(len_x(&Rect::new((0.0, -8_388_608.0), (0.0, 8_388_607.0))), 1.0);
+        assert_eq!(len_x(&Rect::new((0.0, 0.0), (MAX - 1.0, 0.0))), MAX);
+        assert_eq!(len_x(&Rect::new((-8_388_608.0, 0.0), (8_388_606.0, 0.0))), MAX);
     }
 
     #[test]
     fn test_len_y() {
-        assert_eq!(len_y(&Rect::of((0.0, 0.0), (MAX, 0.0))), 1.0);
-        assert_eq!(len_y(&Rect::of((-8_388_608.0, 0.0), (8_388_607.0, 0.0))), 1.0);
-        assert_eq!(len_y(&Rect::of((0.0, 0.0), (0.0, MAX - 1.0))), MAX);
-        assert_eq!(len_y(&Rect::of((0.0, -8_388_608.0), (0.0, 8_388_606.0))), MAX);
+        assert_eq!(len_y(&Rect::new((0.0, 0.0), (MAX, 0.0))), 1.0);
+        assert_eq!(len_y(&Rect::new((-8_388_608.0, 0.0), (8_388_607.0, 0.0))), 1.0);
+        assert_eq!(len_y(&Rect::new((0.0, 0.0), (0.0, MAX - 1.0))), MAX);
+        assert_eq!(len_y(&Rect::new((0.0, -8_388_608.0), (0.0, 8_388_606.0))), MAX);
     }
 
     #[test]
     fn test_len_max() {
-        assert_eq!(len_max(&Rect::of((0.0, 5.0), (10.0, 10.0))), 11.0);
-        assert_eq!(len_max(&Rect::of((-10.0, -10.0), (-5.0, 0.0))), 11.0);
-        assert_eq!(len_max(&Rect::of((-5.0, 0.0), (5.0, 5.0))), 11.0);
+        assert_eq!(len_max(&Rect::new((0.0, 5.0), (10.0, 10.0))), 11.0);
+        assert_eq!(len_max(&Rect::new((-10.0, -10.0), (-5.0, 0.0))), 11.0);
+        assert_eq!(len_max(&Rect::new((-5.0, 0.0), (5.0, 5.0))), 11.0);
     }
 
     #[test]
     fn len_max_1() {
         assert_eq!(len_max(&Rect::zero()), 1.0);
-        assert_eq!(len_max(&Rect::of((1.0, 1.0), (1.0, 1.0))), 1.0);
-        assert_eq!(len_max(&Rect::of((-1.0, -1.0), (-1.0, -1.0))), 1.0);
-        assert_eq!(len_max(&Rect::of((5.0, 10.0), (5.0, 10.0))), 1.0);
+        assert_eq!(len_max(&Rect::new((1.0, 1.0), (1.0, 1.0))), 1.0);
+        assert_eq!(len_max(&Rect::new((-1.0, -1.0), (-1.0, -1.0))), 1.0);
+        assert_eq!(len_max(&Rect::new((5.0, 10.0), (5.0, 10.0))), 1.0);
     }
 
     #[test]
     fn len_max_2() {
-        assert_eq!(len_max(&Rect::of((0.0, 0.0), (1.0, 1.0))), 2.0);
-        assert_eq!(len_max(&Rect::of((5.0, 5.0), (6.0, 6.0))), 2.0);
-        assert_eq!(len_max(&Rect::of((-6.0, -6.0), (-5.0, -5.0))), 2.0);
-        assert_eq!(len_max(&Rect::of((0.0, 0.0), (0.0, 1.0))), 2.0);
-        assert_eq!(len_max(&Rect::of((5.0, 9.0), (5.0, 10.0))), 2.0);
+        assert_eq!(len_max(&Rect::new((0.0, 0.0), (1.0, 1.0))), 2.0);
+        assert_eq!(len_max(&Rect::new((5.0, 5.0), (6.0, 6.0))), 2.0);
+        assert_eq!(len_max(&Rect::new((-6.0, -6.0), (-5.0, -5.0))), 2.0);
+        assert_eq!(len_max(&Rect::new((0.0, 0.0), (0.0, 1.0))), 2.0);
+        assert_eq!(len_max(&Rect::new((5.0, 9.0), (5.0, 10.0))), 2.0);
     }
 
     #[test]
     fn len_max_bounds() {
-        assert_eq!(len_max(&Rect::of((MIN + 2.0, MIN + 3.0), (0.0, 0.0))), MAX);
-        assert_eq!(len_max(&Rect::of((MIN + 3.0, MIN + 2.0), (0.0, 0.0))), MAX);
-        assert_eq!(len_max(&Rect::of((0.0, 0.0), (MAX - 2.0, MAX - 1.0))), MAX);
-        assert_eq!(len_max(&Rect::of((0.0, 0.0), (MAX - 1.0, MAX - 2.0))), MAX);
+        assert_eq!(len_max(&Rect::new((MIN + 2.0, MIN + 3.0), (0.0, 0.0))), MAX);
+        assert_eq!(len_max(&Rect::new((MIN + 3.0, MIN + 2.0), (0.0, 0.0))), MAX);
+        assert_eq!(len_max(&Rect::new((0.0, 0.0), (MAX - 2.0, MAX - 1.0))), MAX);
+        assert_eq!(len_max(&Rect::new((0.0, 0.0), (MAX - 1.0, MAX - 2.0))), MAX);
     }
 }

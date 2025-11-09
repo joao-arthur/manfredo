@@ -32,7 +32,7 @@ pub fn saturating_add_assign(p: &mut Point, delta: &Point) {
 
 pub fn saturating_add(p: &Point, delta: &Point) -> Point {
     let temp_x = p.x + delta.x;
-    Point::of(temp_x.clamp(MIN, MAX))
+    Point::new(temp_x.clamp(MIN, MAX))
 }
 
 pub fn wrapping_add_assign(p: &mut Point, delta: &Point) {

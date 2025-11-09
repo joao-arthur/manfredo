@@ -36,7 +36,7 @@ pub struct Rect {
 }
 
 impl Rect {
-    pub fn of(min: (f64, f64), max: (f64, f64)) -> Self {
+    pub fn new(min: (f64, f64), max: (f64, f64)) -> Self {
         Rect { min: Point { x: min.0, y: min.1 }, max: Point { x: max.0, y: max.1 } }
     }
 
@@ -45,7 +45,7 @@ impl Rect {
     }
 
     pub fn largest_min() -> Self {
-        Rect { min: Point::min(), max: Point::of(-1.0, -1.0) }
+        Rect { min: Point::min(), max: Point::new(-1.0, -1.0) }
     }
 
     pub fn largest_max() -> Self {
@@ -98,7 +98,7 @@ mod tests {
 
     #[test]
     fn rect() {
-        assert_eq!(Rect::of((MIN, -0.0), (0.0, MAX)), Rect { min: Point { x: MIN, y: -0.0 }, max: Point { x: 0.0, y: MAX } });
+        assert_eq!(Rect::new((MIN, -0.0), (0.0, MAX)), Rect { min: Point { x: MIN, y: -0.0 }, max: Point { x: 0.0, y: MAX } });
         assert_eq!(Rect::largest(), Rect { min: Point { x: MIN, y: MIN }, max: Point { x: MAX, y: MAX } });
         assert_eq!(Rect::largest_min(), Rect { min: Point { x: MIN, y: MIN }, max: Point { x: -1.0, y: -1.0 } });
         assert_eq!(Rect::largest_max(), Rect { min: Point { x: 0.0, y: 0.0 }, max: Point { x: MAX, y: MAX } });
@@ -109,7 +109,7 @@ mod tests {
 
     #[test]
     fn to_string() {
-        assert_eq!(Rect::of((MIN, -0.0), (0.0, MAX)).to_string(), "((-9007199254740992, -0), (0, 9007199254740991))");
+        assert_eq!(Rect::new((MIN, -0.0), (0.0, MAX)).to_string(), "((-9007199254740992, -0), (0, 9007199254740991))");
         assert_eq!(Rect::largest().to_string(), "((-9007199254740992, -9007199254740992), (9007199254740991, 9007199254740991))");
         assert_eq!(Rect::largest_min().to_string(), "((-9007199254740992, -9007199254740992), (-1, -1))");
         assert_eq!(Rect::largest_max().to_string(), "((0, 0), (9007199254740991, 9007199254740991))");
@@ -128,21 +128,21 @@ mod tests {
 
     #[test]
     fn iter_x() {
-        assert_eq!(Rect::of((-8.0, -7.0), (-9.0, -6.0)).iter_x().collect::<Vec<f64>>(), []);
-        assert_eq!(Rect::of((-8.0, -7.0), (-8.0, -6.0)).iter_x().collect::<Vec<f64>>(), [-8.0]);
-        assert_eq!(Rect::of((-8.0, -7.0), (-7.0, -6.0)).iter_x().collect::<Vec<f64>>(), [-8.0, -7.0]);
-        assert_eq!(Rect::of((-8.0, -7.0), (-7.0, -6.0)).iter_x().rev().collect::<Vec<f64>>(), [-7.0, -8.0]);
-        assert_eq!(Rect::of((-8.0, -7.0), (-8.0, -6.0)).iter_x().rev().collect::<Vec<f64>>(), [-8.0]);
-        assert_eq!(Rect::of((-8.0, -7.0), (-9.0, -6.0)).iter_x().rev().collect::<Vec<f64>>(), []);
+        assert_eq!(Rect::new((-8.0, -7.0), (-9.0, -6.0)).iter_x().collect::<Vec<f64>>(), []);
+        assert_eq!(Rect::new((-8.0, -7.0), (-8.0, -6.0)).iter_x().collect::<Vec<f64>>(), [-8.0]);
+        assert_eq!(Rect::new((-8.0, -7.0), (-7.0, -6.0)).iter_x().collect::<Vec<f64>>(), [-8.0, -7.0]);
+        assert_eq!(Rect::new((-8.0, -7.0), (-7.0, -6.0)).iter_x().rev().collect::<Vec<f64>>(), [-7.0, -8.0]);
+        assert_eq!(Rect::new((-8.0, -7.0), (-8.0, -6.0)).iter_x().rev().collect::<Vec<f64>>(), [-8.0]);
+        assert_eq!(Rect::new((-8.0, -7.0), (-9.0, -6.0)).iter_x().rev().collect::<Vec<f64>>(), []);
     }
 
     #[test]
     fn iter_y() {
-        assert_eq!(Rect::of((-8.0, -7.0), (-7.0, -8.0)).iter_y().collect::<Vec<f64>>(), []);
-        assert_eq!(Rect::of((-8.0, -7.0), (-7.0, -7.0)).iter_y().collect::<Vec<f64>>(), [-7.0]);
-        assert_eq!(Rect::of((-8.0, -7.0), (-7.0, -6.0)).iter_y().collect::<Vec<f64>>(), [-7.0, -6.0]);
-        assert_eq!(Rect::of((-8.0, -7.0), (-7.0, -6.0)).iter_y().rev().collect::<Vec<f64>>(), [-6.0, -7.0]);
-        assert_eq!(Rect::of((-8.0, -7.0), (-7.0, -7.0)).iter_y().rev().collect::<Vec<f64>>(), [-7.0]);
-        assert_eq!(Rect::of((-8.0, -7.0), (-7.0, -8.0)).iter_y().rev().collect::<Vec<f64>>(), []);
+        assert_eq!(Rect::new((-8.0, -7.0), (-7.0, -8.0)).iter_y().collect::<Vec<f64>>(), []);
+        assert_eq!(Rect::new((-8.0, -7.0), (-7.0, -7.0)).iter_y().collect::<Vec<f64>>(), [-7.0]);
+        assert_eq!(Rect::new((-8.0, -7.0), (-7.0, -6.0)).iter_y().collect::<Vec<f64>>(), [-7.0, -6.0]);
+        assert_eq!(Rect::new((-8.0, -7.0), (-7.0, -6.0)).iter_y().rev().collect::<Vec<f64>>(), [-6.0, -7.0]);
+        assert_eq!(Rect::new((-8.0, -7.0), (-7.0, -7.0)).iter_y().rev().collect::<Vec<f64>>(), [-7.0]);
+        assert_eq!(Rect::new((-8.0, -7.0), (-7.0, -8.0)).iter_y().rev().collect::<Vec<f64>>(), []);
     }
 }

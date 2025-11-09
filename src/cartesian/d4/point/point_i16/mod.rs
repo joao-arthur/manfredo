@@ -14,7 +14,7 @@ pub struct Point {
 }
 
 impl Point {
-    pub fn of(x: i16, y: i16, z: i16, w: i16) -> Self {
+    pub fn new(x: i16, y: i16, z: i16, w: i16) -> Self {
         Point { x, y, z, w }
     }
 
@@ -53,8 +53,8 @@ mod tests {
 
     #[test]
     fn point() {
-        assert_eq!(Point::of(-2, -1, 1, 2), Point { x: -2, y: -1, z: 1, w: 2 });
-        assert_eq!(Point::of(2, 1, -1, -2), Point { x: 2, y: 1, z: -1, w: -2 });
+        assert_eq!(Point::new(-2, -1, 1, 2), Point { x: -2, y: -1, z: 1, w: 2 });
+        assert_eq!(Point::new(2, 1, -1, -2), Point { x: 2, y: 1, z: -1, w: -2 });
         assert_eq!(Point::min(), Point { x: MIN, y: MIN, z: MIN, w: MIN });
         assert_eq!(Point::max(), Point { x: MAX, y: MAX, z: MAX, w: MAX });
         assert_eq!(Point::zero(), Point { x: 0, y: 0, z: 0, w: 0 });
@@ -62,7 +62,7 @@ mod tests {
 
     #[test]
     fn to_string() {
-        assert_eq!(Point::of(-2, -1, 1, 2).to_string(), "(-2, -1, 1, 2)");
+        assert_eq!(Point::new(-2, -1, 1, 2).to_string(), "(-2, -1, 1, 2)");
         assert_eq!(Point::min().to_string(), "(-32768, -32768, -32768, -32768)");
         assert_eq!(Point::max().to_string(), "(32767, 32767, 32767, 32767)");
         assert_eq!(Point::zero().to_string(), "(0, 0, 0, 0)");

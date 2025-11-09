@@ -6,68 +6,68 @@ use crate::matrix::{
 
 #[test]
 fn min_bounds() {
-    let mut r = Rect::of((MIN + 7, MIN + 3), (MIN + 9, MIN + 13));
+    let mut r = Rect::new((MIN + 7, MIN + 3), (MIN + 9, MIN + 13));
     wrapping_inflate_assign(&mut r);
-    assert_eq!(r, Rect::of((MIN + 6, MIN + 2), (MIN + 10, MIN + 14)));
+    assert_eq!(r, Rect::new((MIN + 6, MIN + 2), (MIN + 10, MIN + 14)));
     wrapping_inflate_assign(&mut r);
-    assert_eq!(r, Rect::of((MIN + 5, MIN + 1), (MIN + 11, MIN + 15)));
+    assert_eq!(r, Rect::new((MIN + 5, MIN + 1), (MIN + 11, MIN + 15)));
     wrapping_inflate_assign(&mut r);
-    assert_eq!(r, Rect::of((MIN + 4, MIN), (MIN + 12, MIN + 16)));
+    assert_eq!(r, Rect::new((MIN + 4, MIN), (MIN + 12, MIN + 16)));
 }
 
 #[test]
 fn max_bounds() {
-    let mut r = Rect::of((MAX - 33, MAX - 17), (MAX - 5, MAX - 3));
+    let mut r = Rect::new((MAX - 33, MAX - 17), (MAX - 5, MAX - 3));
     wrapping_inflate_assign(&mut r);
-    assert_eq!(r, Rect::of((MAX - 34, MAX - 18), (MAX - 4, MAX - 2)));
+    assert_eq!(r, Rect::new((MAX - 34, MAX - 18), (MAX - 4, MAX - 2)));
     wrapping_inflate_assign(&mut r);
-    assert_eq!(r, Rect::of((MAX - 35, MAX - 19), (MAX - 3, MAX - 1)));
+    assert_eq!(r, Rect::new((MAX - 35, MAX - 19), (MAX - 3, MAX - 1)));
     wrapping_inflate_assign(&mut r);
-    assert_eq!(r, Rect::of((MAX - 36, MAX - 20), (MAX - 2, MAX)));
+    assert_eq!(r, Rect::new((MAX - 36, MAX - 20), (MAX - 2, MAX)));
 }
 
 #[test]
 fn to_bounds() {
-    let mut r = Rect::of((MIN + 1, MIN + 1), (MAX - 1, MAX - 1));
+    let mut r = Rect::new((MIN + 1, MIN + 1), (MAX - 1, MAX - 1));
     wrapping_inflate_assign(&mut r);
     assert_eq!(r, Rect::largest());
 
-    let mut r_min_row = Rect::of((MIN + 1, MIN + 10), (MAX - 10, MAX - 10));
+    let mut r_min_row = Rect::new((MIN + 1, MIN + 10), (MAX - 10, MAX - 10));
     wrapping_inflate_assign(&mut r_min_row);
-    assert_eq!(r_min_row, Rect::of((MIN, MIN + 9), (MAX - 9, MAX - 9)));
+    assert_eq!(r_min_row, Rect::new((MIN, MIN + 9), (MAX - 9, MAX - 9)));
 
-    let mut r_min_y = Rect::of((MIN + 10, MIN + 1), (MAX - 10, MAX - 10));
+    let mut r_min_y = Rect::new((MIN + 10, MIN + 1), (MAX - 10, MAX - 10));
     wrapping_inflate_assign(&mut r_min_y);
-    assert_eq!(r_min_y, Rect::of((MIN + 9, MIN), (MAX - 9, MAX - 9)));
+    assert_eq!(r_min_y, Rect::new((MIN + 9, MIN), (MAX - 9, MAX - 9)));
 
-    let mut r_max_x = Rect::of((MIN + 10, MIN + 10), (MAX - 1, MAX - 10));
+    let mut r_max_x = Rect::new((MIN + 10, MIN + 10), (MAX - 1, MAX - 10));
     wrapping_inflate_assign(&mut r_max_x);
-    assert_eq!(r_max_x, Rect::of((MIN + 9, MIN + 9), (MAX, MAX - 9)));
+    assert_eq!(r_max_x, Rect::new((MIN + 9, MIN + 9), (MAX, MAX - 9)));
 
-    let mut r_max_y = Rect::of((MIN + 10, MIN + 10), (MAX - 10, MAX - 1));
+    let mut r_max_y = Rect::new((MIN + 10, MIN + 10), (MAX - 10, MAX - 1));
     wrapping_inflate_assign(&mut r_max_y);
-    assert_eq!(r_max_y, Rect::of((MIN + 9, MIN + 9), (MAX - 9, MAX)));
+    assert_eq!(r_max_y, Rect::new((MIN + 9, MIN + 9), (MAX - 9, MAX)));
 }
 
 #[test]
 fn out_of_bounds() {
     let mut r = Rect::largest();
     wrapping_inflate_assign(&mut r);
-    assert_eq!(r, Rect::of((MAX, MAX), (MIN, MIN)));
+    assert_eq!(r, Rect::new((MAX, MAX), (MIN, MIN)));
 
-    let mut r_min_row = Rect::of((MIN, MIN + 10), (MAX - 10, MAX - 10));
+    let mut r_min_row = Rect::new((MIN, MIN + 10), (MAX - 10, MAX - 10));
     wrapping_inflate_assign(&mut r_min_row);
-    assert_eq!(r_min_row, Rect::of((MAX, MIN + 9), (MAX - 9, MAX - 9)));
+    assert_eq!(r_min_row, Rect::new((MAX, MIN + 9), (MAX - 9, MAX - 9)));
 
-    let mut r_min_y = Rect::of((MIN + 10, MIN), (MAX - 10, MAX - 10));
+    let mut r_min_y = Rect::new((MIN + 10, MIN), (MAX - 10, MAX - 10));
     wrapping_inflate_assign(&mut r_min_y);
-    assert_eq!(r_min_y, Rect::of((MIN + 9, MAX), (MAX - 9, MAX - 9)));
+    assert_eq!(r_min_y, Rect::new((MIN + 9, MAX), (MAX - 9, MAX - 9)));
 
-    let mut r_max_x = Rect::of((MIN + 10, MIN + 10), (MAX, MAX - 10));
+    let mut r_max_x = Rect::new((MIN + 10, MIN + 10), (MAX, MAX - 10));
     wrapping_inflate_assign(&mut r_max_x);
-    assert_eq!(r_max_x, Rect::of((MIN + 9, MIN + 9), (MIN, MAX - 9)));
+    assert_eq!(r_max_x, Rect::new((MIN + 9, MIN + 9), (MIN, MAX - 9)));
 
-    let mut r_max_y = Rect::of((MIN + 10, MIN + 10), (MAX - 10, MAX));
+    let mut r_max_y = Rect::new((MIN + 10, MIN + 10), (MAX - 10, MAX));
     wrapping_inflate_assign(&mut r_max_y);
-    assert_eq!(r_max_y, Rect::of((MIN + 9, MIN + 9), (MAX - 9, MIN)));
+    assert_eq!(r_max_y, Rect::new((MIN + 9, MIN + 9), (MAX - 9, MIN)));
 }

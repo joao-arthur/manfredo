@@ -14,6 +14,6 @@ mod tests {
         assert_eq!(delta(&Point::zero(), &Point::zero()), 0.0);
         assert_eq!(delta(&Point::zero(), &Point::max()), MAX);
         assert_eq!(delta(&Point::min(), &Point::zero()), MAX + 1.0);
-        assert_eq!(delta(&Point::of(-4_503_599_627_370_496.0), &Point::of(4_503_599_627_370_495.0)), MAX);
+        assert_eq!(delta(&Point::new(-4_503_599_627_370_496.0), &Point::new(4_503_599_627_370_495.0)), MAX);
     }
 }

@@ -62,8 +62,8 @@ functions**.
 For example, the following code:
 
 ```rust
-let a = rect_i32::Rect::of((-20, -10), (10, 20));
-let b = rect_i32::Rect::of((-20, -10), (10, 20));
+let a = rect_i32::Rect::new((-20, -10), (10, 20));
+let b = rect_i32::Rect::new((-20, -10), (10, 20));
 let c = a + b;
 let d = a + b;
 let e = a + b;
@@ -77,8 +77,8 @@ This kind of code, altough providing a good developer experience, hide two probl
 For this reason, Manfredo exposes this operation instead as:
 
 ```rust
-let mut a = rect_i32::Rect::of((-20, -10), (10, 20));
-let b = rect_i32::Rect::of((-20, -10), (10, 20));
+let mut a = rect_i32::Rect::new((-20, -10), (10, 20));
+let b = rect_i32::Rect::new((-20, -10), (10, 20));
 let c = rect_i32::try_checked_add(&a, &b);
 let d = rect_i32::saturating_add(&a, &b);
 let e = rect_i32::wrapping_add_assign(&mut a, &b);
@@ -236,10 +236,6 @@ let e = rect_i32::wrapping_add_assign(&mut a, &b);
   - [ ] 3D
   - [ ] 4D
 - [ ] Polar plane
-
-
-padronizar line e rect. os dois tem que ser identicos
-
 
 ## 📜 License
 

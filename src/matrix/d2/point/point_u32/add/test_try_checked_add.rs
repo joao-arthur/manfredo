@@ -6,38 +6,38 @@ use crate::matrix::{
 
 #[test]
 fn test() {
-    assert_eq!(try_checked_add(&Point::min(), &PointI::of(10, 13)), Some(Point::of(10, 13)));
-    assert_eq!(try_checked_add(&Point::of(10, 10), &PointI::of(-5, -3)), Some(Point::of(5, 7)));
+    assert_eq!(try_checked_add(&Point::min(), &PointI::new(10, 13)), Some(Point::new(10, 13)));
+    assert_eq!(try_checked_add(&Point::new(10, 10), &PointI::new(-5, -3)), Some(Point::new(5, 7)));
 }
 
 #[test]
 fn to_bounds() {
-    assert_eq!(try_checked_add(&Point::of(2, 5), &PointI::of(-2, -5)), Some(Point::min()));
-    assert_eq!(try_checked_add(&Point::of(MAX - 2, MAX - 5), &PointI::of(2, 5)), Some(Point::max()));
+    assert_eq!(try_checked_add(&Point::new(2, 5), &PointI::new(-2, -5)), Some(Point::min()));
+    assert_eq!(try_checked_add(&Point::new(MAX - 2, MAX - 5), &PointI::new(2, 5)), Some(Point::max()));
 }
 
 #[test]
 fn out_of_bounds() {
-    let p_min = Point::of(2, 5);
-    assert_eq!(try_checked_add(&p_min, &PointI::of(-10, 0)), None);
-    assert_eq!(try_checked_add(&p_min, &PointI::of(0, -10)), None);
-    assert_eq!(try_checked_add(&p_min, &PointI::of(-10, -10)), None);
+    let p_min = Point::new(2, 5);
+    assert_eq!(try_checked_add(&p_min, &PointI::new(-10, 0)), None);
+    assert_eq!(try_checked_add(&p_min, &PointI::new(0, -10)), None);
+    assert_eq!(try_checked_add(&p_min, &PointI::new(-10, -10)), None);
 
-    let p_max = Point::of(MAX - 2, MAX - 5);
-    assert_eq!(try_checked_add(&p_max, &PointI::of(10, 0)), None);
-    assert_eq!(try_checked_add(&p_max, &PointI::of(0, 10)), None);
-    assert_eq!(try_checked_add(&p_max, &PointI::of(10, 10)), None);
+    let p_max = Point::new(MAX - 2, MAX - 5);
+    assert_eq!(try_checked_add(&p_max, &PointI::new(10, 0)), None);
+    assert_eq!(try_checked_add(&p_max, &PointI::new(0, 10)), None);
+    assert_eq!(try_checked_add(&p_max, &PointI::new(10, 10)), None);
 }
 
 #[test]
 fn limits_out_of_bounds() {
-    let p_min = Point::of(1, 1);
-    assert_eq!(try_checked_add(&p_min, &PointI::of(i32::MIN, 0)), None);
-    assert_eq!(try_checked_add(&p_min, &PointI::of(0, i32::MIN)), None);
+    let p_min = Point::new(1, 1);
+    assert_eq!(try_checked_add(&p_min, &PointI::new(i32::MIN, 0)), None);
+    assert_eq!(try_checked_add(&p_min, &PointI::new(0, i32::MIN)), None);
     assert_eq!(try_checked_add(&p_min, &PointI::min()), None);
 
-    let p_max = Point::of(MAX - 1, MAX - 1);
-    assert_eq!(try_checked_add(&p_max, &PointI::of(i32::MAX, 0)), None);
-    assert_eq!(try_checked_add(&p_max, &PointI::of(0, i32::MAX)), None);
+    let p_max = Point::new(MAX - 1, MAX - 1);
+    assert_eq!(try_checked_add(&p_max, &PointI::new(i32::MAX, 0)), None);
+    assert_eq!(try_checked_add(&p_max, &PointI::new(0, i32::MAX)), None);
     assert_eq!(try_checked_add(&p_max, &PointI::max()), None);
 }

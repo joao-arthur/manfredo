@@ -6,24 +6,24 @@ use crate::matrix::d1::point::{
 
 #[test]
 fn test() {
-    assert_eq!(wrapping_add(&Point::min(), &PointI::of(10)), Point::of(10));
-    assert_eq!(wrapping_add(&Point::of(10), &PointI::of(-5)), Point::of(5));
+    assert_eq!(wrapping_add(&Point::min(), &PointI::new(10)), Point::new(10));
+    assert_eq!(wrapping_add(&Point::new(10), &PointI::new(-5)), Point::new(5));
 }
 
 #[test]
 fn to_bounds() {
-    assert_eq!(wrapping_add(&Point::of(2), &PointI::of(-2)), Point::min());
-    assert_eq!(wrapping_add(&Point::of(MAX - 2), &PointI::of(2)), Point::max());
+    assert_eq!(wrapping_add(&Point::new(2), &PointI::new(-2)), Point::min());
+    assert_eq!(wrapping_add(&Point::new(MAX - 2), &PointI::new(2)), Point::max());
 }
 
 #[test]
 fn out_of_bounds() {
-    assert_eq!(wrapping_add(&Point::of(2), &PointI::of(-10)), Point::of(MAX - 7));
-    assert_eq!(wrapping_add(&Point::of(MAX - 2), &PointI::of(10)), Point::of(7));
+    assert_eq!(wrapping_add(&Point::new(2), &PointI::new(-10)), Point::new(MAX - 7));
+    assert_eq!(wrapping_add(&Point::new(MAX - 2), &PointI::new(10)), Point::new(7));
 }
 
 #[test]
 fn limits_out_of_bounds() {
-    assert_eq!(wrapping_add(&Point::of(1), &PointI::min()), Point::of(9223372036854775809));
-    assert_eq!(wrapping_add(&Point::of(MAX - 1), &PointI::max()), Point::of(9223372036854775805));
+    assert_eq!(wrapping_add(&Point::new(1), &PointI::min()), Point::new(9223372036854775809));
+    assert_eq!(wrapping_add(&Point::new(MAX - 1), &PointI::max()), Point::new(9223372036854775805));
 }
